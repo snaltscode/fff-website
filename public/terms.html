@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions — Founder for Founder</title>
+  <meta name="description" content="Official Terms & Conditions for Founder for Founder, operated by SnaLts.co. Review our membership agreement, community rules, and service terms.">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css?v=9.0">
+  <style>
+    /* Terms & Conditions Dedicated Page Styles */
+    :root {
+      --terms-max-w: 860px;
+    }
+
+    body {
+      background-color: #F8FAF9;
+      color: #1A202C;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: normal !important;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    * {
+      font-style: normal !important;
+      box-sizing: border-box;
+    }
+
+    .terms-hero {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+      padding: 110px 20px 48px;
+      text-align: center;
+      position: relative;
+    }
+
+    .terms-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .terms-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 6px !important;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #065F46;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .terms-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      color: #0F172A;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .terms-subtitle {
+      font-size: 1.1rem;
+      color: #475569;
+      max-width: 680px;
+      margin: 0 auto 24px;
+    }
+
+    .terms-meta-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.88rem;
+      color: #475569;
+      background: #FFFFFF;
+      padding: 10px 20px;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .terms-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .terms-meta-item strong {
+      color: #0F172A;
+      font-weight: 600;
+    }
+
+    /* Layout: Sidebar + Document */
+    .terms-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 40px;
+      margin: 48px auto 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .terms-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    /* Sticky Sidebar Navigation */
+    .terms-sidebar {
+      position: sticky;
+      top: 90px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 960px) {
+      .terms-sidebar {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    .sidebar-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0F172A;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 7px 10px;
+      font-size: 0.86rem;
+      color: #475569;
+      text-decoration: none;
+      border-radius: 6px !important;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+
+    .sidebar-link:hover, .sidebar-link.active {
+      background: #ECFDF5;
+      color: #065F46;
+      font-weight: 600;
+      transform: translateX(3px);
+    }
+
+    /* Document Body */
+    .terms-doc {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      padding: 44px 48px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    @media (max-width: 640px) {
+      .terms-doc {
+        padding: 24px 20px;
+      }
+    }
+
+    .terms-section {
+      margin-bottom: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #F1F5F9;
+      scroll-margin-top: 100px;
+    }
+
+    .terms-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .terms-h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.85rem;
+      color: #0F172A;
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #ECFDF5;
+      color: #065F46;
+      border-radius: 6px !important;
+      font-size: 0.95rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .terms-h3 {
+      font-size: 1.15rem;
+      color: #1E293B;
+      font-weight: 700;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .terms-p {
+      color: #334155;
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .terms-ul, .terms-ol {
+      margin: 14px 0 20px 24px;
+      padding: 0;
+      color: #334155;
+    }
+
+    .terms-ul li, .terms-ol li {
+      margin-bottom: 10px;
+      line-height: 1.65;
+      padding-left: 4px;
+    }
+
+    .terms-ul li::marker {
+      color: #10B981;
+    }
+
+    .terms-callout {
+      background: #F0FDF4;
+      border-left: 4px solid #10B981;
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0 !important;
+      margin: 20px 0;
+    }
+
+    .terms-callout.warning {
+      background: #FFFBEB;
+      border-left-color: #F59E0B;
+    }
+
+    .terms-callout p {
+      margin: 0;
+      color: #1E293B;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .terms-callout strong {
+      color: #0F172A;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: #FFFFFF;
+      border: 1px solid #0F4C3A;
+      color: #0F4C3A;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 6px !important;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .back-home-btn:hover {
+      background: #0F4C3A;
+      color: #FFFFFF;
+    }
+
+    .contact-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      padding: 24px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .contact-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-item strong {
+      color: #0F172A;
+      min-width: 140px;
+    }
+
+    .contact-item a {
+      color: #065F46;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    /* Print styles */
+    @media print {
+      .navbar, .terms-sidebar, .footer, .scroll-progress-bar {
+        display: none !important;
+      }
+      .terms-layout {
+        display: block !important;
+      }
+      .terms-doc {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Top Navbar -->
+  <header class="navbar" id="mainNavbar">
+    <div class="nav-container">
+      <a href="/" class="nav-brand">
+        <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="nav-logo" width="42" height="42" decoding="async">
+        <div class="nav-brand-text">
+          <div class="nav-title">FOUNDER FOR FOUNDER</div>
+          <div class="nav-subtitle">CREATE. CONNECT. COLLABORATE.</div>
+        </div>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="/" class="back-home-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="terms-hero">
+    <div class="terms-container">
+      <div class="terms-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Membership Agreement &amp; Governance
+      </div>
+      <h1 class="terms-title">Terms &amp; Conditions</h1>
+      <p class="terms-subtitle">These Terms govern your membership, participation, and usage of Founder for Founder, operated by SnaLts.co.</p>
+      
+      <div class="terms-meta-bar">
+        <div class="terms-meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Effective Date: <strong>October 11, 2026</strong></span>
+        </div>
+        <div class="terms-meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Last Updated: <strong>October 11, 2026</strong></span>
+        </div>
+        <div class="terms-meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10 Batt"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Operating Entity: <strong>SnaLts.co</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="terms-container">
+    <div class="terms-layout">
+
+      <!-- Sticky Table of Contents Sidebar -->
+      <aside class="terms-sidebar" aria-label="Table of Contents">
+        <div class="sidebar-title">
+          <span>Table of Contents</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+        <nav>
+          <ul class="sidebar-nav-list">
+            <li><a href="#sec-1" class="sidebar-link">1. Introduction</a></li>
+            <li><a href="#sec-2" class="sidebar-link">2. Eligibility</a></li>
+            <li><a href="#sec-3" class="sidebar-link">3. Application &amp; Approval</a></li>
+            <li><a href="#sec-4" class="sidebar-link">4. Plans, Fees &amp; Payments</a></li>
+            <li><a href="#sec-5" class="sidebar-link">5. Account &amp; OTP Security</a></li>
+            <li><a href="#sec-6" class="sidebar-link">6. Acceptable Use Policy</a></li>
+            <li><a href="#sec-7" class="sidebar-link">7. Member Networking</a></li>
+            <li><a href="#sec-8" class="sidebar-link">8. Events &amp; Meetups</a></li>
+            <li><a href="#sec-9" class="sidebar-link">9. Intellectual Property</a></li>
+            <li><a href="#sec-10" class="sidebar-link">10. Confidentiality</a></li>
+            <li><a href="#sec-11" class="sidebar-link">11. Third-Party Services</a></li>
+            <li><a href="#sec-12" class="sidebar-link">12. Disclaimers of Warranties</a></li>
+            <li><a href="#sec-13" class="sidebar-link">13. Limitation of Liability</a></li>
+            <li><a href="#sec-14" class="sidebar-link">14. Indemnification</a></li>
+            <li><a href="#sec-15" class="sidebar-link">15. Suspension &amp; Termination</a></li>
+            <li><a href="#sec-16" class="sidebar-link">16. Governing Law &amp; Disputes</a></li>
+            <li><a href="#sec-17" class="sidebar-link">17. Contact &amp; Governance</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Document Content -->
+      <article class="terms-doc">
+
+        <!-- 1. Introduction -->
+        <section class="terms-section" id="sec-1">
+          <h2 class="terms-h2"><span class="section-num">1</span> Introduction</h2>
+          <p class="terms-p">Welcome to Founder for Founder (&ldquo;Platform,&rdquo; &ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;), operated by <strong>SnaLts.co</strong>.</p>
+          <p class="terms-p">Founder for Founder is a curated business network designed to connect founders, entrepreneurs, business owners, and professionals through meaningful networking, business opportunities, leads, referrals, events, and collaboration.</p>
+          <p class="terms-p">These Terms &amp; Conditions (&ldquo;Terms&rdquo;) govern your access to and use of our website, member portal, membership services, community features, events, and related services.</p>
+          <p class="terms-p">By accessing the website, submitting a membership application, creating an account, purchasing a membership, or using the Platform, you agree to these Terms and any applicable policies referenced herein.</p>
+          <div class="terms-callout warning">
+            <p><strong>Important Notice:</strong> If you do not agree with these Terms, you must not use the Platform or its services.</p>
+          </div>
+        </section>
+
+        <!-- 2. Eligibility -->
+        <section class="terms-section" id="sec-2">
+          <h2 class="terms-h2"><span class="section-num">2</span> Eligibility</h2>
+          <p class="terms-p">You must be legally capable of entering into a binding agreement under applicable law to use the Platform and purchase membership services.</p>
+          <p class="terms-p">Founder for Founder is intended for founders, entrepreneurs, business owners, professionals, and individuals seeking legitimate business connections.</p>
+          <p class="terms-p">You agree that:</p>
+          <ul class="terms-ul">
+            <li>The information you provide is accurate, current, and complete.</li>
+            <li>You will update information that becomes inaccurate or outdated.</li>
+            <li>You will use the Platform for lawful professional and business purposes.</li>
+            <li>You will not impersonate another person or misrepresent your business, qualifications, or authority.</li>
+          </ul>
+          <p class="terms-p">We may request additional information where reasonably necessary to verify an application or investigate suspected misuse.</p>
+        </section>
+
+        <!-- 3. Membership Application and Approval -->
+        <section class="terms-section" id="sec-3">
+          <h2 class="terms-h2"><span class="section-num">3</span> Membership Application and Approval</h2>
+          <p class="terms-p">Founder for Founder operates an application-based membership model.</p>
+          <p class="terms-p">Submitting an application or clicking &ldquo;SHOW INTEREST&rdquo; does not guarantee acceptance, membership, access to member-only features, or any particular business opportunity.</p>
+          <p class="terms-p">We may review applications and decide whether to approve, decline, or defer an application in accordance with our membership criteria and applicable law.</p>
+          <p class="terms-p">Applicants may be contacted for clarification or additional information.</p>
+          <p class="terms-p">If an application is approved, the applicant may receive an invitation to complete registration and activate a membership.</p>
+          <p class="terms-p">Membership becomes active only after all required registration steps are completed and any applicable payment has been successfully confirmed.</p>
+          <p class="terms-p">We reserve the right to decline an application where reasonably justified, subject to applicable law.</p>
+        </section>
+
+        <!-- 4. Membership Plans, Fees, and Payment -->
+        <section class="terms-section" id="sec-4">
+          <h2 class="terms-h2"><span class="section-num">4</span> Membership Plans, Fees, and Payment</h2>
+          <p class="terms-p">Membership fees, billing frequency, applicable taxes, benefits, and payment conditions will be disclosed through the relevant membership invitation, activation, or checkout process.</p>
+          <p class="terms-p">Any price displayed during checkout is subject to the terms presented before payment.</p>
+          <p class="terms-p">Unless expressly stated otherwise, applicable statutory taxes, GST, or payment processing surcharges may apply to transactions and will be clearly itemized prior to final payment authorization.</p>
+          <div class="terms-callout">
+            <p><strong>Non-Refundability:</strong> Unless specified otherwise in our written Refund &amp; Cancellation Policy or required by mandatory provisions of applicable law, all paid membership dues are non-refundable once membership credentials and platform access have been activated.</p>
+          </div>
+        </section>
+
+        <!-- 5. Account Registration & OTP Security -->
+        <section class="terms-section" id="sec-5">
+          <h2 class="terms-h2"><span class="section-num">5</span> Account Registration &amp; OTP Security</h2>
+          <p class="terms-p">To safeguard our member community, accounts are authenticated via verified email addresses and cryptographic One-Time Passwords (OTPs) or authorized Single Sign-On (Google Authentication).</p>
+          <p class="terms-p">You are solely responsible for safeguarding the credentials and devices used to access your Founder for Founder account. You agree to notify us immediately at <a href="mailto:connect.f4f@gmail.com" style="color: #065F46; font-weight: 600;">connect.f4f@gmail.com</a> if you discover or suspect unauthorized access to your account.</p>
+          <p class="terms-p">Each membership account is individual and non-transferable. You may not sell, lease, share, or assign your login access or credentials to any third party without our explicit written consent.</p>
+        </section>
+
+        <!-- 6. Community Standards & Acceptable Use Policy -->
+        <section class="terms-section" id="sec-6">
+          <h2 class="terms-h2"><span class="section-num">6</span> Community Standards &amp; Acceptable Use Policy</h2>
+          <p class="terms-p">Founder for Founder is built upon mutual trust, discretion, and professional etiquette. You agree to adhere strictly to our community standards.</p>
+          <p class="terms-p">You must not:</p>
+          <ul class="terms-ul">
+            <li>Engage in aggressive, unsolicited mass marketing, cold pitch spam, or chain solicitations toward fellow members.</li>
+            <li>Harvest, crawl, scrape, extract, or index member directory information, emails, or phone numbers using automated tools, scripts, or bots.</li>
+            <li>Upload, transmit, or share false, misleading, defamatory, offensive, or infringing material.</li>
+            <li>Circumvent or attempt to compromise security controls, rate limiters, or authentication mechanisms.</li>
+            <li>Promote multi-level marketing (MLM), illegal schemes, fraudulent investment opportunities, or unauthorized financial products.</li>
+          </ul>
+          <p class="terms-p">Violation of these standards may lead to immediate suspension or permanent revocation of membership without refund.</p>
+        </section>
+
+        <!-- 7. Member Networking & Professional Engagements -->
+        <section class="terms-section" id="sec-7">
+          <h2 class="terms-h2"><span class="section-num">7</span> Member Directory &amp; Professional Engagements</h2>
+          <p class="terms-p">Founder for Founder provides a platform for members to discover, connect, and collaborate with other business owners. However, all contracts, agreements, investments, partnerships, or transactions entered into between members are solely between those respective members.</p>
+          <div class="terms-callout">
+            <p><strong>Independent Discretion:</strong> Founder for Founder is not an agent, broker, guarantor, partner, or legal representative for any member. We do not endorse, guarantee, or assume liability for the quality, legality, or outcome of business deals, contracts, or commercial transactions conducted between members.</p>
+          </div>
+          <p class="terms-p">Members are expected to exercise independent due diligence before sharing commercial secrets, entering into contracts, or executing financial transactions.</p>
+        </section>
+
+        <!-- 8. Events, Meetups & Experience Policies -->
+        <section class="terms-section" id="sec-8">
+          <h2 class="terms-h2"><span class="section-num">8</span> Events, Meetups &amp; Experience Policies</h2>
+          <p class="terms-p">We host and coordinate curated networking dinners, masterclasses, roundtables, and retreats (&ldquo;Events&rdquo;).</p>
+          <p class="terms-p">When registering for or attending an Event, you agree to:</p>
+          <ul class="terms-ul">
+            <li>Comply with event registration requirements, ticket rules, and venue codes of conduct.</li>
+            <li>Treat attendees, hosts, and venue staff with respect and professional decency.</li>
+            <li>Acknowledge that event schedules, guest speakers, and venues may be modified if unavoidable operational constraints arise.</li>
+          </ul>
+          <p class="terms-p">We reserve the right to deny admission or remove any attendee whose behavior is disruptive, abusive, or contrary to the spirit of the community.</p>
+        </section>
+
+        <!-- 9. Intellectual Property Rights -->
+        <section class="terms-section" id="sec-9">
+          <h2 class="terms-h2"><span class="section-num">9</span> Intellectual Property Rights</h2>
+          <p class="terms-p">All trademarks, logos, visual brand identities, graphic designs, software code, databases, and platform content are the exclusive intellectual property of SnaLts.co or our licensors.</p>
+          <p class="terms-p">You retain ownership of any business profile text, logos, or content you submit. By publishing content on the Platform, you grant SnaLts.co a non-exclusive, worldwide, royalty-free license to host, display, and format that content strictly for community operations and discovery features.</p>
+        </section>
+
+        <!-- 10. Confidentiality & Business Disclosures -->
+        <section class="terms-section" id="sec-10">
+          <h2 class="terms-h2"><span class="section-num">10</span> Confidentiality &amp; Business Disclosures</h2>
+          <p class="terms-p">Members frequently share entrepreneurial journeys, operational challenges, and growth goals during community discussions and roundtables.</p>
+          <p class="terms-p">We uphold the Chatham House Rule for private member mastermind sessions: insights may be applied, but the identity and affiliation of speakers must remain confidential unless explicitly permitted.</p>
+          <p class="terms-p">Do not disclose sensitive proprietary trade secrets, unpatented inventions, or material non-public financial information on public forums or channels.</p>
+        </section>
+
+        <!-- 11. Third-Party Services & Integrations -->
+        <section class="terms-section" id="sec-11">
+          <h2 class="terms-h2"><span class="section-num">11</span> Third-Party Services &amp; Integrations</h2>
+          <p class="terms-p">The Platform integrates with third-party providers including cloud hosting partners, payment gateways, and WhatsApp Business infrastructure.</p>
+          <p class="terms-p">Your interactions with third-party service providers are governed by their respective terms of service and privacy policies. SnaLts.co is not responsible for interruptions, service failures, or security breaches resulting from external providers.</p>
+        </section>
+
+        <!-- 12. Disclaimers of Warranties -->
+        <section class="terms-section" id="sec-12">
+          <h2 class="terms-h2"><span class="section-num">12</span> Disclaimers of Warranties</h2>
+          <p class="terms-p">The Platform, member portal, directory, and events are provided on an &ldquo;AS IS&rdquo; and &ldquo;AS AVAILABLE&rdquo; basis without warranties of any kind, whether express, implied, statutory, or otherwise.</p>
+          <p class="terms-p">We do not warrant or guarantee that:</p>
+          <ul class="terms-ul">
+            <li>Membership will lead to funding, business profit, client acquisitions, or any specific financial outcome.</li>
+            <li>Platform access will be uninterrupted, continuous, or completely error-free.</li>
+            <li>Information posted by members in the directory is verified or accurate in every detail.</li>
+          </ul>
+        </section>
+
+        <!-- 13. Limitation of Liability -->
+        <section class="terms-section" id="sec-13">
+          <h2 class="terms-h2"><span class="section-num">13</span> Limitation of Liability</h2>
+          <p class="terms-p">To the maximum extent permitted by applicable law, SnaLts.co, its founders, directors, employees, and affiliates will not be liable for any indirect, incidental, consequential, special, or punitive damages, including loss of profits, data loss, business interruption, or goodwill impairment.</p>
+          <p class="terms-p">In no event will our aggregate liability arising out of or related to these Terms or the Platform exceed the total membership fees actually paid by you to SnaLts.co in the twelve (12) months preceding the event giving rise to the claim.</p>
+        </section>
+
+        <!-- 14. Indemnification -->
+        <section class="terms-section" id="sec-14">
+          <h2 class="terms-h2"><span class="section-num">14</span> Indemnification</h2>
+          <p class="terms-p">You agree to defend, indemnify, and hold harmless SnaLts.co, its affiliates, directors, officers, agents, and successors from and against any claims, damages, liabilities, costs, and expenses (including reasonable legal fees) resulting from:</p>
+          <ul class="terms-ul">
+            <li>Your breach of these Terms or community guidelines.</li>
+            <li>Your violation of any applicable law or third-party right.</li>
+            <li>Disputes or transactions between you and another member or third party.</li>
+          </ul>
+        </section>
+
+        <!-- 15. Suspension & Account Termination -->
+        <section class="terms-section" id="sec-15">
+          <h2 class="terms-h2"><span class="section-num">15</span> Suspension &amp; Account Termination</h2>
+          <p class="terms-p">We may suspend or terminate your membership or access to the Platform at any time if you violate these Terms, breach community guidelines, engage in fraud or harassment, or misrepresent your qualifications.</p>
+          <p class="terms-p">You may terminate your membership at any time by contacting our support team. Termination does not relieve either party of accrued obligations or liabilities arising prior to the termination date.</p>
+        </section>
+
+        <!-- 16. Governing Law & Dispute Resolution -->
+        <section class="terms-section" id="sec-16">
+          <h2 class="terms-h2"><span class="section-num">16</span> Governing Law &amp; Dispute Resolution</h2>
+          <p class="terms-p">These Terms shall be governed by, construed, and enforced in accordance with the laws of <strong>India</strong>, without regard to conflict of law principles.</p>
+          <p class="terms-p">Any dispute, controversy, or claim arising out of or relating to these Terms or the Platform shall first be subjected to good-faith mutual consultation and mediation. In the event mutual resolution cannot be reached within thirty (30) days, the competent courts having jurisdiction over the registered operations of SnaLts.co in Maharashtra, India, shall have exclusive jurisdiction.</p>
+        </section>
+
+        <!-- 17. Contact & Official Governance -->
+        <section class="terms-section" id="sec-17">
+          <h2 class="terms-h2"><span class="section-num">17</span> Contact &amp; Official Governance</h2>
+          <p class="terms-p">If you have questions, feedback, or legal inquiries concerning these Terms &amp; Conditions, please reach out through our official channels:</p>
+          
+          <div class="contact-box">
+            <div class="contact-item">
+              <strong>Platform:</strong>
+              <span>Founder for Founder</span>
+            </div>
+            <div class="contact-item">
+              <strong>Operating Entity:</strong>
+              <span>SnaLts.co</span>
+            </div>
+            <div class="contact-item">
+              <strong>Email:</strong>
+              <a href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <strong>Admin Email:</strong>
+              <a href="mailto:admin@founderforfounder.in">admin@founderforfounder.in</a>
+            </div>
+            <div class="contact-item">
+              <strong>Phone / WhatsApp:</strong>
+              <span>+91 7972923690</span>
+            </div>
+            <div class="contact-item">
+              <strong>Website:</strong>
+              <a href="https://founderforfounder.com" target="_blank" rel="noopener noreferrer">founderforfounder.com</a>
+            </div>
+          </div>
+        </section>
+
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Standard Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <img src="/assets/logo.svg" alt="Founder for Founder Logo" width="36" height="36" loading="lazy" decoding="async">
+          <span style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.3rem; color: #fff;">Founder for Founder</span>
+        </div>
+        <p class="footer-text">A private, curated business network connecting entrepreneurs, founders, and industry leaders to share insights, build trust, and collaborate across India.</p>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="/" class="footer-link">Home</a></li>
+          <li><a href="/#about" class="footer-link">About Community</a></li>
+          <li><a href="/#events" class="footer-link">Experiences</a></li>
+          <li><a href="/#manifesto" class="footer-link">Our Manifesto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Contact &amp; Entity</h4>
+        <ul class="footer-links">
+          <li>Email: <a href="mailto:connect.f4f@gmail.com" class="footer-link">connect.f4f@gmail.com</a></li>
+          <li>Phone: <span style="color: #fff;">+91 7972923690</span></li>
+          <li>Powered by: <span style="color: #fff;">snalts.co</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Legal Disclosures</h4>
+        <ul class="footer-links">
+          <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
+          <li><a href="/terms" class="footer-link" style="color: #fff; font-weight: 700;">Terms &amp; Conditions</a></li>
+          <li><a href="/" class="footer-link">Refund Policy</a></li>
+          <li><a href="/" class="footer-link">Community Guidelines</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 Founder for Founder. All rights reserved. Powered by snalts.co
+    </div>
+  </footer>
+
+  <!-- Scroll Progress & Sidebar Active Highlight Script -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('scrollProgressBar');
+      if (bar) bar.style.width = scrolled + '%';
+
+      // Active section in sidebar
+      const sections = document.querySelectorAll('.terms-section');
+      const navLinks = document.querySelectorAll('.sidebar-link');
+      let currentSectionId = '';
+
+      sections.forEach(section => {
+        const top = section.offsetTop - 150;
+        if (winScroll >= top) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSectionId) {
+          link.classList.add('active');
+        }
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>

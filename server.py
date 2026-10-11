@@ -169,6 +169,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if path == '/privacy-policy':
             path = '/privacy-policy.html'
             self.path = '/privacy-policy.html'
+        elif path in ('/terms', '/terms-and-conditions'):
+            path = '/terms.html'
+            self.path = '/terms.html'
 
         # High-Speed Gzip compression for static text assets
         accept_encoding = self.headers.get('Accept-Encoding', '')

@@ -32,6 +32,14 @@
       "destination": "/public/privacy-policy.html"
     },
     {
+      "source": "/terms",
+      "destination": "/public/terms.html"
+    },
+    {
+      "source": "/terms-and-conditions",
+      "destination": "/public/terms.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/$1"
     }
