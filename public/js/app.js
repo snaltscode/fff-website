@@ -709,7 +709,44 @@ function renderAuthenticatedUI(data) {
   }
 }
 
+// Mobile Navigation Drawer Toggle Handlers
+function toggleMobileNav() {
+  const drawer = document.getElementById('navDrawer');
+  const toggle = document.getElementById('mobileNavToggle');
+  const backdrop = document.getElementById('navDrawerBackdrop');
+  if (!drawer || !toggle) return;
+  const isOpen = drawer.classList.toggle('active');
+  toggle.classList.toggle('active', isOpen);
+  toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  if (backdrop) backdrop.classList.toggle('active', isOpen);
+  if (isOpen) {
+    document.body.classList.add('mobile-nav-open');
+  } else {
+    document.body.classList.remove('mobile-nav-open');
+  }
+}
+
+function closeMobileNav() {
+  const drawer = document.getElementById('navDrawer');
+  const toggle = document.getElementById('mobileNavToggle');
+  const backdrop = document.getElementById('navDrawerBackdrop');
+  if (drawer && drawer.classList.contains('active')) {
+    drawer.classList.remove('active');
+    if (toggle) {
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+    if (backdrop) backdrop.classList.remove('active');
+    document.body.classList.remove('mobile-nav-open');
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeMobileNav();
+});
+
 function switchPortalTab(tabName, el) {
+  closeMobileNav();
   document.getElementById('publicPage').style.display = 'none';
   document.getElementById('portalPage').classList.add('active');
 
@@ -723,11 +760,15 @@ function switchPortalTab(tabName, el) {
     console.error("Portal tab not found:", tabName);
   }
 
-  if (el) {
-    el.classList.add('active');
-  } else {
-    const match = Array.from(document.querySelectorAll('.sidebar-item')).find(item => item.getAttribute('onclick')?.includes(`'${tabName}'`));
-    if (match) match.classList.add('active');
+  let activeEl = el;
+  if (!activeEl) {
+    activeEl = Array.from(document.querySelectorAll('.sidebar-item')).find(item => item.getAttribute('onclick')?.includes(`'${tabName}'`));
+  }
+  if (activeEl) {
+    activeEl.classList.add('active');
+    if (window.innerWidth < 992) {
+      activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });

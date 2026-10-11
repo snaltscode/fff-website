@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=5.0">
+  <link rel="stylesheet" href="/css/styles.css?v=6.0">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
@@ -27,25 +27,38 @@
       </div>
     </a>
 
-    <ul class="nav-links" id="publicNav">
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#events" class="nav-link">Experiences</a></li>
-      <li><button class="btn btn-outline-emerald" onclick="openLoginModal()">Login</button></li>
-      <li>
-        <button class="btn btn-emerald" onclick="openShowInterestModal()">
-          SHOW INTEREST <span class="btn-circle-icon">→</span>
-        </button>
-      </li>
-    </ul>
+    <!-- Mobile Navigation Toggle Button -->
+    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleMobileNav()">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
 
-    <!-- Authenticated Portal Nav Controls -->
-    <div id="authNavControls" style="display: none; align-items: center; gap: 1rem;">
-      <span id="navUserName" style="font-weight: 700; color: var(--emerald-700);">Welcome, Member</span>
-      <button class="btn btn-outline-emerald" id="navAdminBtn" style="display: none;" onclick="switchPortalTab('admin')">
-        <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Admin CMS
-      </button>
-      <button class="btn btn-emerald" onclick="switchPortalTab('dashboard')">Member Portal</button>
-      <button class="btn btn-outline-emerald" onclick="handleLogout()">Logout</button>
+    <!-- Mobile Drawer Backdrop Overlay -->
+    <div class="nav-drawer-backdrop" id="navDrawerBackdrop" onclick="closeMobileNav()"></div>
+
+    <!-- Navigation Drawer Wrapper (Desktop Row / Mobile Slide Drawer) -->
+    <div class="nav-drawer" id="navDrawer">
+      <ul class="nav-links" id="publicNav">
+        <li><a href="#about" class="nav-link" onclick="closeMobileNav()">About</a></li>
+        <li><a href="#events" class="nav-link" onclick="closeMobileNav()">Experiences</a></li>
+        <li><button class="btn btn-outline-emerald" onclick="openLoginModal(); closeMobileNav();">Login</button></li>
+        <li>
+          <button class="btn btn-emerald" onclick="openShowInterestModal(); closeMobileNav();">
+            SHOW INTEREST <span class="btn-circle-icon">→</span>
+          </button>
+        </li>
+      </ul>
+
+      <!-- Authenticated Portal Nav Controls -->
+      <div id="authNavControls" style="display: none; align-items: center; gap: 1rem;">
+        <span id="navUserName" style="font-weight: 700; color: var(--emerald-700);">Welcome, Member</span>
+        <button class="btn btn-outline-emerald" id="navAdminBtn" style="display: none;" onclick="switchPortalTab('admin'); closeMobileNav();">
+          <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Admin CMS
+        </button>
+        <button class="btn btn-emerald" onclick="switchPortalTab('dashboard'); closeMobileNav();">Member Portal</button>
+        <button class="btn btn-outline-emerald" onclick="handleLogout(); closeMobileNav();">Logout</button>
+      </div>
     </div>
   </header>
 
