@@ -166,6 +166,10 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 print("API GET Exception:", e)
                 return self.send_json({'error': str(e)}, 500)
 
+        if path == '/privacy-policy':
+            path = '/privacy-policy.html'
+            self.path = '/privacy-policy.html'
+
         # High-Speed Gzip compression for static text assets
         accept_encoding = self.headers.get('Accept-Encoding', '')
         if 'gzip' in accept_encoding:

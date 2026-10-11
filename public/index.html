@@ -487,7 +487,7 @@
           <h4 class="footer-title">Legal Disclosures</h4>
           <ul class="footer-links">
             <li><a href="javascript:void(0)" onclick="openModal('termsModal')" class="footer-link">Terms & Conditions</a></li>
-            <li><a href="javascript:void(0)" onclick="openModal('privacyModal')" class="footer-link">Privacy Policy</a></li>
+            <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
             <li><a href="javascript:void(0)" onclick="openModal('refundModal')" class="footer-link">Refund & Cancellation Policy</a></li>
             <li><a href="javascript:void(0)" onclick="openModal('guidelinesModal')" class="footer-link">Community Guidelines</a></li>
           </ul>
@@ -1827,7 +1827,7 @@
         <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 1.5rem;">
           <input type="checkbox" id="app_consent" required style="width: 18px; height: 18px; margin-top: 3px; accent-color: var(--emerald-600);">
           <label for="app_consent" style="font-size: 0.85rem; color: var(--grey-500); line-height: 1.4;">
-            I agree to the Terms of Service & Privacy Policy. I confirm that all submitted business details are accurate and understand that admission is strictly curated.
+            I agree to the Terms of Service &amp; <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-600); text-decoration: underline; font-weight: 600;">Privacy Policy</a>. I confirm that all submitted business details are accurate and understand that admission is strictly curated.
           </label>
         </div>
 
@@ -2077,10 +2077,18 @@
   </div>
 
   <div class="modal-overlay" id="privacyModal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 520px;">
       <button class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
       <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Privacy Policy</h2>
-      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="privacyModalContent">Loading policy content...</p>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="privacyModalContent">
+        Our complete and official Privacy Policy has been published on a dedicated standalone page. It outlines our full 17-section commitment to transparency, data minimization, and security.
+      </p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
+        <a href="/privacy-policy" class="btn btn-emerald" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 0.75rem 1.25rem;">
+          View Full Privacy Policy <span class="btn-circle-icon">→</span>
+        </a>
+        <button class="btn btn-outline-emerald" onclick="closeModal('privacyModal')">Close</button>
+      </div>
     </div>
   </div>
 

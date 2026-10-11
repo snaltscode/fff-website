@@ -28,6 +28,10 @@
       "destination": "/api/index.py"
     },
     {
+      "source": "/privacy-policy",
+      "destination": "/public/privacy-policy.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/$1"
     }
