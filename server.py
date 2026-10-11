@@ -175,6 +175,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         elif path in ('/refund-policy', '/refund-and-cancellation-policy'):
             path = '/refund-policy.html'
             self.path = '/refund-policy.html'
+        elif path in ('/community-guidelines', '/guidelines'):
+            path = '/community-guidelines.html'
+            self.path = '/community-guidelines.html'
 
         # High-Speed Gzip compression for static text assets
         accept_encoding = self.headers.get('Accept-Encoding', '')

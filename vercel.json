@@ -48,6 +48,14 @@
       "destination": "/public/refund-policy.html"
     },
     {
+      "source": "/community-guidelines",
+      "destination": "/public/community-guidelines.html"
+    },
+    {
+      "source": "/guidelines",
+      "destination": "/public/community-guidelines.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/$1"
     }

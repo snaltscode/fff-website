@@ -489,7 +489,7 @@
             <li><a href="/terms" class="footer-link">Terms & Conditions</a></li>
             <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
             <li><a href="/refund-policy" class="footer-link">Refund &amp; Cancellation Policy</a></li>
-            <li><a href="javascript:void(0)" onclick="openModal('guidelinesModal')" class="footer-link">Community Guidelines</a></li>
+            <li><a href="/community-guidelines" class="footer-link">Community Guidelines</a></li>
           </ul>
         </div>
 
@@ -2117,10 +2117,18 @@
   </div>
 
   <div class="modal-overlay" id="guidelinesModal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 520px;">
       <button class="modal-close" onclick="closeModal('guidelinesModal')">&times;</button>
       <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Community Guidelines</h2>
-      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="guidelinesModalContent">Loading policy content...</p>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="guidelinesModalContent">
+        Our official 15-section Community Guidelines set our community standards on professional respect, zero-tolerance spam rules, genuine Needs &amp; Wants, and meeting etiquette.
+      </p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
+        <a href="/community-guidelines" class="btn btn-emerald" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 0.75rem 1.25rem;">
+          View Full Guidelines <span class="btn-circle-icon">→</span>
+        </a>
+        <button class="btn btn-outline-emerald" onclick="closeModal('guidelinesModal')">Close</button>
+      </div>
     </div>
   </div>
 

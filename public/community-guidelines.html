@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Guidelines — Founder for Founder</title>
+  <meta name="description" content="Official Community Guidelines for Founder for Founder. Discover our standards on member respect, zero-tolerance spam policy, leads, referrals, and professional etiquette.">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css?v=9.0">
+  <style>
+    /* Community Guidelines Dedicated Page Styles */
+    :root {
+      --guidelines-max-w: 860px;
+    }
+
+    body {
+      background-color: #F8FAF9;
+      color: #1A202C;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-style: normal !important;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    * {
+      font-style: normal !important;
+      box-sizing: border-box;
+    }
+
+    .guidelines-hero {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+      padding: 110px 20px 48px;
+      text-align: center;
+      position: relative;
+    }
+
+    .guidelines-container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .guidelines-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 6px !important;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #065F46;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .guidelines-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      color: #0F172A;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .guidelines-subtitle {
+      font-size: 1.1rem;
+      color: #475569;
+      max-width: 680px;
+      margin: 0 auto 24px;
+    }
+
+    .guidelines-meta-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      font-size: 0.88rem;
+      color: #475569;
+      background: #FFFFFF;
+      padding: 10px 20px;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .guidelines-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .guidelines-meta-item strong {
+      color: #0F172A;
+      font-weight: 600;
+    }
+
+    /* Layout: Sidebar + Document */
+    .guidelines-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 40px;
+      margin: 48px auto 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .guidelines-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    /* Sticky Sidebar Navigation */
+    .guidelines-sidebar {
+      position: sticky;
+      top: 90px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+
+    @media (max-width: 960px) {
+      .guidelines-sidebar {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    .sidebar-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0F172A;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 7px 10px;
+      font-size: 0.86rem;
+      color: #475569;
+      text-decoration: none;
+      border-radius: 6px !important;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+
+    .sidebar-link:hover, .sidebar-link.active {
+      background: #ECFDF5;
+      color: #065F46;
+      font-weight: 600;
+      transform: translateX(3px);
+    }
+
+    /* Document Body */
+    .guidelines-doc {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      padding: 44px 48px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    @media (max-width: 640px) {
+      .guidelines-doc {
+        padding: 24px 20px;
+      }
+    }
+
+    .guidelines-section {
+      margin-bottom: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #F1F5F9;
+      scroll-margin-top: 100px;
+    }
+
+    .guidelines-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .guidelines-h2 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.85rem;
+      color: #0F172A;
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #ECFDF5;
+      color: #065F46;
+      border-radius: 6px !important;
+      font-size: 0.95rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .guidelines-h3 {
+      font-size: 1.15rem;
+      color: #1E293B;
+      font-weight: 700;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .guidelines-p {
+      color: #334155;
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    .guidelines-ul, .guidelines-ol {
+      margin: 14px 0 20px 24px;
+      padding: 0;
+      color: #334155;
+    }
+
+    .guidelines-ul li, .guidelines-ol li {
+      margin-bottom: 10px;
+      line-height: 1.65;
+      padding-left: 4px;
+    }
+
+    .guidelines-ul li::marker {
+      color: #10B981;
+    }
+
+    .guidelines-callout {
+      background: #F0FDF4;
+      border-left: 4px solid #10B981;
+      padding: 16px 20px;
+      border-radius: 0 6px 6px 0 !important;
+      margin: 20px 0;
+    }
+
+    .guidelines-callout.warning {
+      background: #FFFBEB;
+      border-left-color: #F59E0B;
+    }
+
+    .guidelines-callout p {
+      margin: 0;
+      color: #1E293B;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .guidelines-callout strong {
+      color: #0F172A;
+    }
+
+    .back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: #FFFFFF;
+      border: 1px solid #0F4C3A;
+      color: #0F4C3A;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 6px !important;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .back-home-btn:hover {
+      background: #0F4C3A;
+      color: #FFFFFF;
+    }
+
+    .contact-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 6px !important;
+      padding: 24px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .contact-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-item strong {
+      color: #0F172A;
+      min-width: 140px;
+    }
+
+    .contact-item a {
+      color: #065F46;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    /* Print styles */
+    @media print {
+      .navbar, .guidelines-sidebar, .footer, .scroll-progress-bar {
+        display: none !important;
+      }
+      .guidelines-layout {
+        display: block !important;
+      }
+      .guidelines-doc {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Top Navbar -->
+  <header class="navbar" id="mainNavbar">
+    <div class="nav-container">
+      <a href="/" class="nav-brand">
+        <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="nav-logo" width="42" height="42" decoding="async">
+        <div class="nav-brand-text">
+          <div class="nav-title">FOUNDER FOR FOUNDER</div>
+          <div class="nav-subtitle">CREATE. CONNECT. COLLABORATE.</div>
+        </div>
+      </a>
+
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="/" class="back-home-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="guidelines-hero">
+    <div class="guidelines-container">
+      <div class="guidelines-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community Standards &amp; Code of Conduct
+      </div>
+      <h1 class="guidelines-title">Community Guidelines</h1>
+      <p class="guidelines-subtitle">Create. Connect. Collaborate. Our shared standards of mutual respect, trust, and professional integrity across India&rsquo;s curated founder network.</p>
+      
+      <div class="guidelines-meta-bar">
+        <div class="guidelines-meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>Effective Date: <strong>October 11, 2026</strong></span>
+        </div>
+        <div class="guidelines-meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Last Updated: <strong>October 11, 2026</strong></span>
+        </div>
+        <div class="guidelines-meta-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>Network: <strong>Founder for Founder</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Layout -->
+  <main class="guidelines-container">
+    <div class="guidelines-layout">
+
+      <!-- Sticky Table of Contents Sidebar -->
+      <aside class="guidelines-sidebar" aria-label="Table of Contents">
+        <div class="sidebar-title">
+          <span>Table of Contents</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+        <nav>
+          <ul class="sidebar-nav-list">
+            <li><a href="#sec-1" class="sidebar-link">1. Our Philosophy</a></li>
+            <li><a href="#sec-2" class="sidebar-link">2. Respect Every Member</a></li>
+            <li><a href="#sec-3" class="sidebar-link">3. Zero Tolerance for Spam</a></li>
+            <li><a href="#sec-4" class="sidebar-link">4. Needs &amp; Wants</a></li>
+            <li><a href="#sec-5" class="sidebar-link">5. Leads &amp; Referrals</a></li>
+            <li><a href="#sec-6" class="sidebar-link">6. Disruptive Behaviour</a></li>
+            <li><a href="#sec-7" class="sidebar-link">7. Communication</a></li>
+            <li><a href="#sec-8" class="sidebar-link">8. Privacy &amp; Confidentiality</a></li>
+            <li><a href="#sec-9" class="sidebar-link">9. Authenticity &amp; Truth</a></li>
+            <li><a href="#sec-10" class="sidebar-link">10. Events and Meetings</a></li>
+            <li><a href="#sec-11" class="sidebar-link">11. Fair Feature Use</a></li>
+            <li><a href="#sec-12" class="sidebar-link">12. Moderation Process</a></li>
+            <li><a href="#sec-13" class="sidebar-link">13. Reporting a Concern</a></li>
+            <li><a href="#sec-14" class="sidebar-link">14. Administration</a></li>
+            <li><a href="#sec-15" class="sidebar-link">15. Our Shared Standard</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Document Content -->
+      <article class="guidelines-doc">
+
+        <!-- 1. Our Community Philosophy -->
+        <section class="guidelines-section" id="sec-1">
+          <h2 class="guidelines-h2"><span class="section-num">1</span> Our Community Philosophy</h2>
+          <p class="guidelines-p">Founder for Founder is a curated business network built for founders, entrepreneurs, and professionals who value meaningful relationships, mutual respect, collaboration, and long-term growth.</p>
+          <p class="guidelines-p">Our community is designed to encourage productive conversations, relevant business connections, credible opportunities, and shared learning.</p>
+          <p class="guidelines-p">Every member contributes to the quality of this network. Membership is a privilege accompanied by the responsibility to maintain a respectful, professional, and constructive environment.</p>
+        </section>
+
+        <!-- 2. Respect Every Member -->
+        <section class="guidelines-section" id="sec-2">
+          <h2 class="guidelines-h2"><span class="section-num">2</span> Respect Every Member</h2>
+          <p class="guidelines-p">Treat every member with courtesy and professionalism, regardless of their business size, experience, background, designation, or professional standing.</p>
+          <p class="guidelines-p">Members must not engage in:</p>
+          <ul class="guidelines-ul">
+            <li>Personal attacks, insults, abusive language, harassment, or intimidation.</li>
+            <li>Public shaming, targeted humiliation, or attempts to provoke other members.</li>
+            <li>Discrimination or hateful conduct.</li>
+            <li>Repeated arguments intended to disrupt discussions rather than resolve issues.</li>
+            <li>Threats, bullying, or retaliation against members who disagree or raise genuine concerns.</li>
+          </ul>
+          <div class="guidelines-callout">
+            <p><strong>Golden Rule:</strong> Disagreement is acceptable. Disrespect is not.</p>
+          </div>
+        </section>
+
+        <!-- 3. Zero Tolerance for Spam -->
+        <section class="guidelines-section" id="sec-3">
+          <h2 class="guidelines-h2"><span class="section-num">3</span> Zero Tolerance for Spam</h2>
+          <p class="guidelines-p">The community is not a platform for indiscriminate advertising or unsolicited solicitation.</p>
+          <p class="guidelines-p">The following activities are strictly prohibited unless expressly permitted through an official community feature or authorised by the administration:</p>
+          <ul class="guidelines-ul">
+            <li>Repeated promotional posts, advertisements, or sales pitches.</li>
+            <li>Posting the same message, offer, link, or request multiple times.</li>
+            <li>Unsolicited bulk messages, cold pitches, or repetitive direct messages to members.</li>
+            <li>Irrelevant links, unrelated content, chain messages, or engagement bait.</li>
+            <li>Repeatedly tagging members or administrators to attract attention.</li>
+            <li>Using the community primarily to collect contact details, generate unrelated traffic, or solicit sales.</li>
+            <li>Creating multiple accounts to promote the same business or bypass moderation.</li>
+          </ul>
+          <div class="guidelines-callout warning">
+            <p><strong>Designated Channels:</strong> Promotional content must be relevant, appropriate, and shared exclusively through designated opportunity features or channels.</p>
+          </div>
+        </section>
+
+        <!-- 4. Meaningful Use of Needs & Wants -->
+        <section class="guidelines-section" id="sec-4">
+          <h2 class="guidelines-h2"><span class="section-num">4</span> Meaningful Use of Needs &amp; Wants</h2>
+          <p class="guidelines-p">The Needs &amp; Wants feature exists to help members communicate genuine business requirements and relevant opportunities.</p>
+          <p class="guidelines-p">Members should:</p>
+          <ul class="guidelines-ul">
+            <li>Describe their requirements clearly and honestly.</li>
+            <li>Include relevant details, such as the type of service, product, expertise, or connection required.</li>
+            <li>Share opportunities that are relevant to the network.</li>
+            <li>Avoid vague, misleading, exaggerated, or repeatedly reposted requests.</li>
+            <li>Update or close a request when it has been fulfilled or is no longer relevant.</li>
+            <li>Respect the other party&rsquo;s time, budget, confidentiality, and decision-making process.</li>
+          </ul>
+          <p class="guidelines-p">Do not post fake requirements, fabricated opportunities, misleading offers, or requests designed solely to promote your own business.</p>
+        </section>
+
+        <!-- 5. Leads, Referrals, and Business Conduct -->
+        <section class="guidelines-section" id="sec-5">
+          <h2 class="guidelines-h2"><span class="section-num">5</span> Leads, Referrals, and Business Conduct</h2>
+          <p class="guidelines-p">Business introductions and referrals should be based on relevance, transparency, and mutual consent.</p>
+          <p class="guidelines-p">Members must not:</p>
+          <ul class="guidelines-ul">
+            <li>Fabricate leads, referrals, client relationships, testimonials, or business credentials.</li>
+            <li>Misrepresent their products, services, expertise, pricing, or ability to deliver.</li>
+            <li>Claim a referral or introduction without a reasonable basis.</li>
+            <li>Pressure other members into purchasing, investing, partnering, or making introductions.</li>
+            <li>Share another member&rsquo;s confidential information without permission.</li>
+            <li>Misuse an introduction to repeatedly solicit unrelated products or services.</li>
+          </ul>
+          <p class="guidelines-p">Members are encouraged to communicate expectations clearly and honour commitments made to other members.</p>
+          <div class="guidelines-callout">
+            <p><strong>Note on Facilitation:</strong> Founder for Founder facilitates connections but does not guarantee the quality, accuracy, performance, or commercial outcome of every member or referral.</p>
+          </div>
+        </section>
+
+        <!-- 6. No Unnecessary Drama or Disruptive Behaviour -->
+        <section class="guidelines-section" id="sec-6">
+          <h2 class="guidelines-h2"><span class="section-num">6</span> No Unnecessary Drama or Disruptive Behaviour</h2>
+          <p class="guidelines-p">We encourage members to resolve disagreements constructively and keep community discussions focused on their intended purpose.</p>
+          <p class="guidelines-p">The following behaviours may result in moderation:</p>
+          <ul class="guidelines-ul">
+            <li>Repeatedly derailing discussions with unrelated complaints or personal disputes.</li>
+            <li>Turning professional disagreements into prolonged public arguments.</li>
+            <li>Repeatedly posting provocative messages to attract attention or create conflict.</li>
+            <li>Making baseless allegations, spreading rumours, or deliberately misrepresenting another member&rsquo;s statements.</li>
+            <li>Flooding discussions with complaints after the administration has acknowledged the matter and provided a reasonable response.</li>
+            <li>Organising other members to target, intimidate, or disrupt an individual or the community.</li>
+            <li>Refusing to follow reasonable moderation instructions and repeatedly restarting a closed dispute.</li>
+          </ul>
+          <p class="guidelines-p">Raising a genuine concern is always permitted. Members may contact the administration privately to report misconduct, unfair treatment, suspected fraud, or a moderation issue. Good-faith complaints will not be treated as misconduct simply because they are critical.</p>
+          <p class="guidelines-p">The administration may move sensitive disputes to a private channel to protect members&rsquo; privacy and minimise disruption.</p>
+        </section>
+
+        <!-- 7. Professional Communication -->
+        <section class="guidelines-section" id="sec-7">
+          <h2 class="guidelines-h2"><span class="section-num">7</span> Professional Communication</h2>
+          <p class="guidelines-p">Communicate with clarity, courtesy, and purpose.</p>
+          <p class="guidelines-p">Members should avoid excessive tagging, repeated follow-ups, aggressive demands for immediate responses, and messages that create unnecessary pressure.</p>
+          <p class="guidelines-p">Respect that members have different schedules and responsibilities. No member is obligated to respond to every message, accept every invitation, purchase a service, or enter a business relationship.</p>
+          <div class="guidelines-callout warning">
+            <p><strong>Boundary Respect:</strong> Members must respect a clear refusal and must not continue pursuing another member after being asked to stop.</p>
+          </div>
+        </section>
+
+        <!-- 8. Privacy and Confidentiality -->
+        <section class="guidelines-section" id="sec-8">
+          <h2 class="guidelines-h2"><span class="section-num">8</span> Privacy and Confidentiality</h2>
+          <p class="guidelines-p">Members must respect the privacy of others and the confidentiality of community interactions.</p>
+          <p class="guidelines-p">Without appropriate permission, members must not:</p>
+          <ul class="guidelines-ul">
+            <li>Publish screenshots of private conversations or member-only discussions.</li>
+            <li>Share personal phone numbers, email addresses, financial information, or other non-public details.</li>
+            <li>Distribute confidential business information, proposals, or documents.</li>
+            <li>Record or redistribute private meetings or events where doing so is not authorised.</li>
+            <li>Use member information for unrelated marketing, bulk outreach, or external databases.</li>
+          </ul>
+          <p class="guidelines-p">These restrictions do not prevent lawful reporting of misconduct or sharing information where legally required.</p>
+        </section>
+
+        <!-- 9. Authenticity and Accountability -->
+        <section class="guidelines-section" id="sec-9">
+          <h2 class="guidelines-h2"><span class="section-num">9</span> Authenticity and Accountability</h2>
+          <p class="guidelines-p">Members are expected to provide accurate information about their identity, professional background, business, and offerings.</p>
+          <p class="guidelines-p">Impersonation, fraudulent activity, fake profiles, misleading claims, manipulated testimonials, and deliberate misrepresentation are strictly prohibited.</p>
+          <p class="guidelines-p">If a member identifies an error in a post or claim, they should correct it promptly. Honest mistakes may be addressed constructively; deliberate or repeated deception may result in disciplinary action.</p>
+        </section>
+
+        <!-- 10. Events and Meetings -->
+        <section class="guidelines-section" id="sec-10">
+          <h2 class="guidelines-h2"><span class="section-num">10</span> Events and Meetings</h2>
+          <p class="guidelines-p">Members participating in Founder for Founder events, meetings, activities, or challenges must:</p>
+          <ul class="guidelines-ul">
+            <li>Respect the event schedule, venue, organisers, speakers, and fellow attendees.</li>
+            <li>Follow registration, attendance, safety, and venue requirements.</li>
+            <li>Avoid aggressive selling, disruptive interruptions, or monopolising group discussions.</li>
+            <li>Seek consent before recording, photographing, or publicly sharing identifiable images or private conversations where appropriate.</li>
+            <li>Honour confirmed commitments or notify the organisers promptly if unable to attend.</li>
+            <li>Behave professionally during introductions, networking, and follow-up interactions.</li>
+          </ul>
+          <p class="guidelines-p">The administration may restrict participation in future events when conduct repeatedly disrupts the experience of others.</p>
+        </section>
+
+        <!-- 11. Fair Use of Community Features -->
+        <section class="guidelines-section" id="sec-11">
+          <h2 class="guidelines-h2"><span class="section-num">11</span> Fair Use of Community Features</h2>
+          <p class="guidelines-p">Members must use the Platform, directory, messaging features, and other community tools for their intended professional purposes.</p>
+          <p class="guidelines-p">Attempts to bypass access restrictions, scrape member information, manipulate engagement, misuse reporting features, or interfere with the operation of the Platform are prohibited.</p>
+          <p class="guidelines-p">Access to member information does not grant permission to use it for unrelated commercial purposes.</p>
+        </section>
+
+        <!-- 12. Moderation and Consequences -->
+        <section class="guidelines-section" id="sec-12">
+          <h2 class="guidelines-h2"><span class="section-num">12</span> Moderation and Consequences</h2>
+          <p class="guidelines-p">Founder for Founder reserves the right to moderate content and take proportionate action when these guidelines or the Platform&rsquo;s Terms &amp; Conditions are violated.</p>
+          <p class="guidelines-p">Depending on the nature, severity, frequency, and impact of the conduct, actions may include:</p>
+          <ul class="guidelines-ul">
+            <li><strong>Informal reminder:</strong> For minor or first-time issues.</li>
+            <li><strong>Formal warning:</strong> For repeated or more serious violations.</li>
+            <li><strong>Content removal or feature restriction:</strong> Where content or behaviour is inappropriate or disruptive.</li>
+            <li><strong>Temporary suspension:</strong> Where further review or a cooling-off period is necessary.</li>
+            <li><strong>Membership termination:</strong> For serious misconduct, fraud, harassment, repeated spam, retaliation, or continued violations after warnings.</li>
+            <li><strong>Immediate protective action:</strong> Where necessary to address credible threats, suspected fraud, serious harassment, or risks to member safety.</li>
+          </ul>
+          <p class="guidelines-p">The administration may skip earlier steps when the seriousness of the situation warrants it. Where reasonably appropriate, members may be given an opportunity to explain their position before a final decision.</p>
+          <p class="guidelines-p">Membership fees and refunds following suspension or termination will be governed by the applicable membership terms and Refund and Cancellation Policy, subject to applicable law.</p>
+        </section>
+
+        <!-- 13. Reporting a Concern -->
+        <section class="guidelines-section" id="sec-13">
+          <h2 class="guidelines-h2"><span class="section-num">13</span> Reporting a Concern</h2>
+          <p class="guidelines-p">If you encounter spam, harassment, misleading business conduct, privacy violations, or other behaviour that breaches these guidelines, report it to the administration at <a href="mailto:connect.f4f@gmail.com" style="color: #065F46; font-weight: 600;">connect.f4f@gmail.com</a>.</p>
+          <p class="guidelines-p">Please provide relevant details and supporting evidence where available. Reports will be reviewed as reasonably practicable and handled with appropriate discretion.</p>
+          <div class="guidelines-callout warning">
+            <p><strong>Integrity in Reporting:</strong> Do not use reporting tools to threaten, harass, retaliate against, or deliberately target another member.</p>
+          </div>
+        </section>
+
+        <!-- 14. Administration and Interpretation -->
+        <section class="guidelines-section" id="sec-14">
+          <h2 class="guidelines-h2"><span class="section-num">14</span> Administration and Interpretation</h2>
+          <p class="guidelines-p">Founder for Founder may interpret and update these guidelines as the community evolves. The administration will seek to apply them consistently, fairly, and in a manner that protects the community&rsquo;s purpose and its members.</p>
+          <p class="guidelines-p">Repeated or serious violations may affect a member&rsquo;s continued participation in the network.</p>
+          <p class="guidelines-p">These Community Guidelines should be read alongside the Platform&rsquo;s Terms &amp; Conditions, Privacy Policy, and Refund and Cancellation Policy. Where a conflict arises, applicable law and the relevant contractual terms will govern.</p>
+        </section>
+
+        <!-- 15. Our Shared Standard -->
+        <section class="guidelines-section" id="sec-15">
+          <h2 class="guidelines-h2"><span class="section-num">15</span> Our Shared Standard</h2>
+          <p class="guidelines-p">Founder for Founder works best when members bring genuine intent, professional integrity, mutual respect, and a willingness to contribute.</p>
+          <p class="guidelines-p">We welcome constructive criticism, different perspectives, honest questions, and ambitious ideas. We do not welcome spam, manipulation, harassment, or behaviour that consistently takes away from the value of the network.</p>
+          
+          <div class="guidelines-callout" style="text-align: center; padding: 24px;">
+            <p style="font-size: 1.15rem; font-weight: 700; color: #065F46; margin-bottom: 6px;">
+              Bring value. Respect boundaries. Build meaningful relationships.
+            </p>
+            <p style="font-size: 0.95rem; color: #334155; margin: 0;">
+              By participating in Founder for Founder, members agree to follow these Community Guidelines.
+            </p>
+          </div>
+
+          <div class="contact-box">
+            <div class="contact-item">
+              <strong>Community Desk:</strong>
+              <span>Founder for Founder Administration</span>
+            </div>
+            <div class="contact-item">
+              <strong>Email Reports:</strong>
+              <a href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a>
+            </div>
+            <div class="contact-item">
+              <strong>Admin Email:</strong>
+              <a href="mailto:admin@founderforfounder.in">admin@founderforfounder.in</a>
+            </div>
+            <div class="contact-item">
+              <strong>Helpline / WhatsApp:</strong>
+              <span>+91 7972923690</span>
+            </div>
+            <div class="contact-item">
+              <strong>Official Website:</strong>
+              <a href="https://founderforfounder.com" target="_blank" rel="noopener noreferrer">founderforfounder.com</a>
+            </div>
+          </div>
+        </section>
+
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Standard Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <img src="/assets/logo.svg" alt="Founder for Founder Logo" width="36" height="36" loading="lazy" decoding="async">
+          <span style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.3rem; color: #fff;">Founder for Founder</span>
+        </div>
+        <p class="footer-text">A private, curated business network connecting entrepreneurs, founders, and industry leaders to share insights, build trust, and collaborate across India.</p>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="/" class="footer-link">Home</a></li>
+          <li><a href="/#about" class="footer-link">About Community</a></li>
+          <li><a href="/#events" class="footer-link">Experiences</a></li>
+          <li><a href="/#manifesto" class="footer-link">Our Manifesto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Contact &amp; Entity</h4>
+        <ul class="footer-links">
+          <li>Email: <a href="mailto:connect.f4f@gmail.com" class="footer-link">connect.f4f@gmail.com</a></li>
+          <li>Phone: <span style="color: #fff;">+91 7972923690</span></li>
+          <li>Powered by: <span style="color: #fff;">snalts.co</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Legal Disclosures</h4>
+        <ul class="footer-links">
+          <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
+          <li><a href="/terms" class="footer-link">Terms &amp; Conditions</a></li>
+          <li><a href="/refund-policy" class="footer-link">Refund &amp; Cancellation</a></li>
+          <li><a href="/community-guidelines" class="footer-link" style="color: #fff; font-weight: 700;">Community Guidelines</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 Founder for Founder. All rights reserved. Powered by snalts.co
+    </div>
+  </footer>
+
+  <!-- Scroll Progress & Sidebar Active Highlight Script -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById('scrollProgressBar');
+      if (bar) bar.style.width = scrolled + '%';
+
+      // Active section in sidebar
+      const sections = document.querySelectorAll('.guidelines-section');
+      const navLinks = document.querySelectorAll('.sidebar-link');
+      let currentSectionId = '';
+
+      sections.forEach(section => {
+        const top = section.offsetTop - 150;
+        if (winScroll >= top) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSectionId) {
+          link.classList.add('active');
+        }
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>
