@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "installCommand": "echo 'Standard library only - no dependencies required'",
+  "buildCommand": "echo 'Build complete'",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/$1"
+    }
+  ]
+}

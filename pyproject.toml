@@ -1,0 +1,6 @@
+[project]
+name = "founder-for-founder"
+version = "1.0.0"
+description = "Founder for Founder Web Platform"
+requires-python = ">=3.9"
+dependencies = []

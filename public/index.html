@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Founder for Founder — Curated Business Network & Member Experience Platform</title>
+  <meta name="description" content="Founder for Founder brings ambitious entrepreneurs, business owners, and professionals into one curated network to share experiences, exchange trusted referrals, and build lasting relationships across India.">
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=5.0">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- 2px Emerald Scroll Progress Bar -->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+  <!-- Top Glassmorphism Navigation Header -->
+  <header class="navbar" id="mainNavbar">
+    <a href="#" class="nav-brand">
+      <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="nav-logo" id="navLogo">
+      <div>
+        <div class="nav-title">FOUNDER FOR FOUNDER</div>
+        <div class="nav-subtitle" id="navSubtitle">CREATE. CONNECT. COLLABORATE.</div>
+      </div>
+    </a>
+
+    <ul class="nav-links" id="publicNav">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#events" class="nav-link">Experiences</a></li>
+      <li><button class="btn btn-outline-emerald" onclick="openLoginModal()">Login</button></li>
+      <li>
+        <button class="btn btn-emerald" onclick="openShowInterestModal()">
+          SHOW INTEREST <span class="btn-circle-icon">→</span>
+        </button>
+      </li>
+    </ul>
+
+    <!-- Authenticated Portal Nav Controls -->
+    <div id="authNavControls" style="display: none; align-items: center; gap: 1rem;">
+      <span id="navUserName" style="font-weight: 700; color: var(--emerald-700);">Welcome, Member</span>
+      <button class="btn btn-outline-emerald" id="navAdminBtn" style="display: none;" onclick="switchPortalTab('admin')">
+        <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Admin CMS
+      </button>
+      <button class="btn btn-emerald" onclick="switchPortalTab('dashboard')">Member Portal</button>
+      <button class="btn btn-outline-emerald" onclick="handleLogout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- PUBLIC HOMEPAGE CONTENT -->
+  <div id="publicPage">
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+      <!-- Floating Dots Background -->
+      <div class="floating-dots">
+        <div class="dot dot-1"></div>
+        <div class="dot dot-2"></div>
+        <div class="dot dot-3"></div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="eyebrow" id="heroBadge"><span class="section-bullet" style="width: 8px; height: 8px; border-radius: 50%; background: var(--emerald-500); display: inline-block; margin-right: 8px; box-shadow: 0 0 8px #10B981;"></span>CURATED FOUNDER NETWORK • BY APPLICATION ONLY</span>
+          <h1 class="hero-title" id="heroTitle">Beyond Networking. Into <span class="text-emerald">Real Connections</span>.</h1>
+          <p class="hero-subtitle" id="heroSubtitle">Founder for Founder brings ambitious entrepreneurs, business owners, and professionals into one curated network. Share experiences, explore opportunities, exchange trusted referrals, and build lasting business relationships across India.</p>
+
+          <div style="margin-bottom: 2rem; background: rgba(255,255,255,0.7); border: 1px solid var(--mint-200); padding: 12px 20px; border-radius: var(--radius-pill); display: inline-flex; align-items: center; gap: 10px;">
+            <span class="icon-inline" style="color: var(--emerald-700);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            <span style="font-weight: 700; font-size: 0.92rem; color: var(--emerald-900);">Business brings us together. Experiences bring us closer.</span>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn btn-emerald" onclick="openShowInterestModal()">
+              SHOW INTEREST <span class="btn-circle-icon">→</span>
+            </button>
+            <a href="#events" class="btn btn-outline-emerald">EXPLORE EXPERIENCES</a>
+          </div>
+        </div>
+
+        <!-- Slanted Capsule Collage Graphics -->
+        <div class="capsule-collage">
+          <div class="capsule-item capsule-item-1">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Founders Meeting" class="capsule-img" id="heroCapsule1">
+          </div>
+          <div class="capsule-item capsule-item-2">
+            <img src="/assets/hero_banner.jpg" alt="Business Leaders Meeting" class="capsule-img" id="heroCapsule2">
+          </div>
+          <div class="capsule-item capsule-item-3">
+            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Founder Discussion" class="capsule-img" id="heroCapsule3">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE DATABASE COUNTER STRIP -->
+    <section style="background: linear-gradient(135deg, #F3FBF7 0%, #E4F7EE 50%, #D6F5E6 100%); border-top: 1px solid var(--mint-200); border-bottom: 1px solid var(--mint-200); padding: 36px 2.5rem;" id="counterStrip">
+      <div style="max-width: 900px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 3rem; text-align: center;">
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #059669 0%, #047857 50%, #064E3B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;" id="counterMembers">1528+</div>
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--emerald-700); text-transform: uppercase; letter-spacing: 0.08em;">Members Part of the Community</div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #059669 0%, #047857 50%, #064E3B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;" id="counterEvents">27</div>
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--emerald-700); text-transform: uppercase; letter-spacing: 0.08em;">Curated Experiences & Gatherings</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY INTRODUCTION -->
+    <section class="section" id="about">
+      <div class="section-header">
+        <span class="eyebrow eyebrow-theme">Core Philosophy</span>
+        <h2 class="section-title">Beyond conventional networking into practical collaboration.</h2>
+        <p class="section-desc">Traditional networking events yield business cards; shared experiences build lasting relationships. Founder for Founder creates spaces where ambitious minds connect with purpose.</p>
+      </div>
+
+      <div class="philosophy-grid">
+        <!-- Card 1: Curated Founder Circle -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Curated Founder Circle" class="format-card-bg" id="philosophyImg1">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Curated Network</span>
+            <div>
+              <h3 class="format-card-title">Curated Founder Circle</h3>
+              <p class="format-card-desc">Connect directly with vetted decision-makers, entrepreneurs, and business owners in high-trust peer circles.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Shared Experiences -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Shared Experiences" class="format-card-bg" id="philosophyImg2">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Real Connections</span>
+            <div>
+              <h3 class="format-card-title">Shared Experiences</h3>
+              <p class="format-card-desc">Connect over sports, dining, adventure, roundtables, and creative learning rather than dull elevator pitches.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Needs & Wants Engine -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Needs & Wants Engine" class="format-card-bg" id="philosophyImg3">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Opportunity Exchange</span>
+            <div>
+              <h3 class="format-card-title">Needs & Wants Engine</h3>
+              <p class="format-card-desc">Post specific commercial requirements or offer high-value solutions directly to trusted peers.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Leads & Introductions -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Leads & Introductions" class="format-card-bg" id="philosophyImg4">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Trusted Referrals</span>
+            <div>
+              <h3 class="format-card-title">Leads & Introductions</h3>
+              <p class="format-card-desc">Generate credible client referrals and track business outcomes with authentic relationship tools.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Our Vision Strip -->
+      <div style="text-align: center; margin-top: 2.5rem; background: linear-gradient(135deg, #F3FBF7 0%, #E4F7EE 50%, #D6F5E6 100%); padding: 1.8rem 2.5rem; border-radius: var(--radius-md); border: 1px solid var(--mint-200); max-width: 860px; margin-left: auto; margin-right: auto; box-shadow: var(--shadow-sm);">
+        <div style="font-family: var(--font-heading); font-size: 1.35rem; color: var(--emerald-900); margin-bottom: 6px;">Our Vision</div>
+        <p style="font-size: 0.95rem; color: var(--emerald-700); line-height: 1.6;">To build a connected ecosystem of founders across India where ideas turn into action, relationships open doors, and collaboration drives business forward.</p>
+      </div>
+    </section>
+
+    <!-- CURATED EXPERIENCE FORMATS -->
+    <section class="section" id="curated-formats" style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-hairline);">
+      <div class="section-header">
+        <span class="eyebrow eyebrow-theme">Ways We Collaborate</span>
+        <h2 class="section-title">Ways We Connect and Collaborate</h2>
+        <p class="section-desc">Our experience formats are designed to foster trust, camaraderie, and strategic business growth.</p>
+      </div>
+
+      <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        
+        <!-- Pillar 1: Play Together -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80" alt="Play Together - Sports and Movement" class="format-card-bg" id="formatImgPlay">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Sports & Movement</span>
+            <div>
+              <h3 class="format-card-title">Play Together</h3>
+              <p class="format-card-desc">Sports, movement, and friendly competition: pickleball, padel, tennis, golf, badminton, cycling, morning runs, chess, and yoga sessions.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Explore Together -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="Explore Together - Outdoor and Adventure" class="format-card-bg" id="formatImgExplore">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Outdoor & Adventure</span>
+            <div>
+              <h3 class="format-card-title">Explore Together</h3>
+              <p class="format-card-desc">Outdoor and adventure activities: mountain treks, nature trails, weekend road trips, founder retreats, and city field trips.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Dine Together -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dine Together - Food and Culinary" class="format-card-bg" id="formatImgDine">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Food & Culinary</span>
+            <div>
+              <h3 class="format-card-title">Dine Together</h3>
+              <p class="format-card-desc">Food and dining gatherings: curated founder dinners, Sunday brunches, chef's tables, coffee cupping, and culinary workshops.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 4: Build Together -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Build Together - Business and Peer Advisory" class="format-card-bg" id="formatImgBuild">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Business & Peer Advisory</span>
+            <div>
+              <h3 class="format-card-title">Build Together</h3>
+              <p class="format-card-desc">Founder and business experiences: peer advisory roundtables, reverse pitching, business problem-solving, founder office hours, and execution sprints.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 5: Celebrate Together -->
+        <div class="format-card">
+          <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Celebrate Together - Socials, Evening Toast, and Celebrations" class="format-card-bg" id="formatImgCelebrate">
+          <div class="format-card-overlay"></div>
+          <div class="format-card-content">
+            <span class="format-badge">Socials & Reflection</span>
+            <div>
+              <h3 class="format-card-title">Celebrate Together</h3>
+              <p class="format-card-desc">Games, socials, and reflection: after-hours socials, trivia, live music, creative learning, storytelling, and milestone celebrations.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (6-Step Timeline) -->
+    <section class="section" id="how-it-works">
+      <div class="section-header">
+        <span class="eyebrow">Application Journey</span>
+        <h2 class="section-title">How To Join Founder for Founder</h2>
+        <p class="section-desc">A structured, application-based onboarding process to ensure high-signal community alignment.</p>
+      </div>
+
+      <div class="timeline-container">
+        <div class="timeline-line">
+          <div class="timeline-line-progress" id="timelineProgressBar"></div>
+        </div>
+
+        <div class="timeline-grid">
+          <div class="timeline-node active">
+            <div class="timeline-badge">1</div>
+            <h4 style="font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Show Interest</h4>
+            <p style="font-size: 0.82rem; color: var(--grey-500);">Submit application details & select role</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-badge">2</div>
+            <h4 style="font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Profile Screening</h4>
+            <p style="font-size: 0.82rem; color: var(--grey-500);">Review of business background & goals</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-badge">3</div>
+            <h4 style="font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Application Review</h4>
+            <p style="font-size: 0.82rem; color: var(--grey-500);">Evaluated by review committee</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-badge">4</div>
+            <h4 style="font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Receive Invitation</h4>
+            <p style="font-size: 0.82rem; color: var(--grey-500);">Approved applicants get invite token</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-badge">5</div>
+            <h4 style="font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Activate Membership</h4>
+            <p style="font-size: 0.82rem; color: var(--grey-500);">Review plan terms & activate account</p>
+          </div>
+          <div class="timeline-node">
+            <div class="timeline-badge">6</div>
+            <h4 style="font-size: 1rem; color: var(--ink-primary); margin-bottom: 4px;">Connect & Collaborate</h4>
+            <p style="font-size: 0.82rem; color: var(--grey-500);">Access dashboard, events & directory</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY FEATURES (Tabbed Showcase) -->
+    <section class="section" id="community">
+      <div class="section-header">
+        <span class="eyebrow">Platform Features</span>
+        <h2 class="section-title">Built for Action and Collaboration</h2>
+        <p class="section-desc">Explore the primary modules designed to facilitate structured founder networking.</p>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tabs-list">
+          <button class="tab-btn active" onclick="switchFeatureTab('network', this)">Curated Founder Network</button>
+          <button class="tab-btn" onclick="switchFeatureTab('needs', this)">Needs & Wants Engine</button>
+          <button class="tab-btn" onclick="switchFeatureTab('crm', this)">Leads & Referrals CRM</button>
+          <button class="tab-btn" onclick="switchFeatureTab('meetings', this)">Founder Experiences</button>
+          <button class="tab-btn" onclick="switchFeatureTab('collaborations', this)">Business Collaborations</button>
+          <button class="tab-btn" onclick="switchFeatureTab('challenges', this)">Monthly Challenges</button>
+        </div>
+
+        <div style="text-align: center;">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" id="featureTabImage" class="tab-display-image" alt="Feature Overview">
+          <div style="margin-top: 1.5rem;" id="featureTabDescription">
+            <h3 style="font-size: 1.4rem; color: var(--ink-primary); margin-bottom: 8px;" id="featureTabTitle">Curated Founder Network</h3>
+            <p style="font-size: 0.95rem; color: var(--grey-500);" id="featureTabText">Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUSINESSES CONNECTED WITH US -->
+    <div class="marquee-header">
+      <span class="eyebrow">Founder Ecosystem</span>
+      <h2 class="section-title">Businesses Connected With Us</h2>
+      <p>Ambitious enterprises, scaling ventures, and industry leaders collaborating across India.</p>
+    </div>
+
+    <!-- MEMBER BUSINESS LOGO MARQUEE -->
+    <div class="marquee-wrapper">
+      <div class="marquee-content">
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Apex Global Tech</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Precision Industries</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Elevate Digital</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Quantum Manufacturing</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Horizon Logistics</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Pinnacle Real Estate</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> snalts.co</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Apex Global Tech</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Precision Industries</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Elevate Digital</span>
+        <span class="marquee-item"><span class="marquee-bullet">◆</span> Quantum Manufacturing</span>
+      </div>
+    </div>
+
+    <!-- EVENTS AND EXPERIENCES HUB -->
+    <section class="section" id="events">
+      <div class="section-header">
+        <span class="eyebrow">Gatherings & Activities</span>
+        <h2 class="section-title">Upcoming Member Experiences</h2>
+        <p class="section-desc">Signature formats beyond routine meetings: The Founder's Table, First Light Club, Roundtables, and Sports Socials.</p>
+      </div>
+
+      <div class="grid-2" id="upcomingEventsGrid" style="gap: 1.5rem; max-width: 1100px; margin: 0 auto;">
+        <!-- Dynamically Populated from Database -->
+      </div>
+    </section>
+
+    <!-- NEEDS & WANTS PREVIEW -->
+    <section class="section" id="opportunities" style="background: var(--mint-100); border-radius: var(--radius-lg);">
+      <div class="section-header">
+        <span class="eyebrow">Opportunity Preview</span>
+        <h2 class="section-title">Active Community Needs & Offers</h2>
+        <p class="section-desc">A controlled preview of requirements posted by verified members.</p>
+      </div>
+
+      <div class="grid-3" id="needsPreviewContainer">
+        <!-- Dynamically Populated -->
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS & FOUNDER STORIES -->
+    <section class="section" id="stories">
+      <div class="section-header">
+        <span class="eyebrow">Community Perspectives</span>
+        <h2 class="section-title">Founder Stories & Endorsements</h2>
+        <p class="section-desc">Perspectives from members growing their businesses through curated relationships.</p>
+      </div>
+
+      <div class="grid-3" id="testimonialsContainer">
+        <!-- Dynamically Populated from Database -->
+      </div>
+    </section>
+
+    <!-- CURATED MEETING PHOTOS SLIDER (16:9 RATIO - CONTINUOUS RIGHT-TO-LEFT SLIDE) -->
+    <section class="section meeting-photos-section" id="meetingPhotosSection" style="padding-bottom: 2.5rem;">
+      <div class="section-header">
+        <span class="eyebrow">FOUNDER INTERACTIONS • MOMENTS OF LEVERAGE</span>
+        <h2 class="section-title" style="margin-bottom: 6px;">Curated Founder Gatherings & Meeting Moments</h2>
+        <p class="section-desc" style="max-width: 720px; margin: 0 auto;">High-trust peer dialogues, confidential executive roundtables, private dinners, and strategic collaboration sessions captured across India.</p>
+      </div>
+
+      <!-- Infinite Right-to-Left 16:9 Slider -->
+      <div class="meeting-slider-wrapper">
+        <div class="meeting-slider-track" id="meetingPhotosTrack">
+          <!-- Dynamically Populated from Database in 16:9 aspect ratio -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FREQUENTLY ASKED QUESTIONS (FAQ) -->
+    <section class="section" id="faqs" style="background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--border-hairline);">
+      <div class="section-header">
+        <span class="eyebrow">Got Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-desc">Everything you need to know about Founder for Founder, curation, privacy, and experiences.</p>
+      </div>
+
+      <div style="max-width: 840px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;" id="faqContainer">
+        <!-- Dynamically Populated from Database -->
+      </div>
+    </section>
+
+    <!-- FINAL CALL TO ACTION BAND -->
+    <section class="final-cta-band">
+      <h2 class="hero-title" style="font-size: 2.8rem; margin-bottom: 1rem;">Your next meaningful business connection starts here.</h2>
+      <p class="hero-subtitle" style="margin: 0 auto 2.2rem auto;">Discover a curated network built around founders, opportunities, and collaboration.</p>
+      <button class="btn btn-emerald" style="font-size: 1.05rem; padding: 0.95rem 2.4rem;" onclick="openShowInterestModal()">
+        SHOW INTEREST <span class="btn-circle-icon">→</span>
+      </button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <img src="/assets/logo.svg" alt="Founder for Founder Logo" style="height: 40px;" id="footerLogo">
+            <span style="font-family: var(--font-heading); font-weight: 700; color: #fff; font-size: 1.1rem;">FOUNDER FOR FOUNDER</span>
+          </div>
+          <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--mint-200);">A curated business network connecting founders, entrepreneurs, business owners, and professionals across India.</p>
+          <p style="font-size: 0.85rem; color: var(--gold-500);">Founder for Founder is powered by <strong>snalts.co</strong></p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#about" class="footer-link">About Us</a></li>
+            <li><a href="#how-it-works" class="footer-link">How It Works</a></li>
+            <li><a href="#events" class="footer-link">Experiences</a></li>
+            <li><a href="#faqs" class="footer-link">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Contact & Entity</h4>
+          <ul class="footer-links">
+            <li>Email: <a href="mailto:connect.f4f@gmail.com" class="footer-link">connect.f4f@gmail.com</a></li>
+            <li>Phone: <span style="color: #fff;">+91 7972923690</span></li>
+            <li>Powered by: <span style="color: #fff;">snalts.co</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Legal Disclosures</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="openModal('termsModal')" class="footer-link">Terms & Conditions</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('privacyModal')" class="footer-link">Privacy Policy</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('refundModal')" class="footer-link">Refund & Cancellation Policy</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('guidelinesModal')" class="footer-link">Community Guidelines</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Official Profiles</h4>
+          <p style="font-size: 0.85rem; color: var(--mint-200); margin-bottom: 14px;">Connect with Founder for Founder across our official channels:</p>
+          <div class="footer-social-row">
+            <a href="https://www.instagram.com/founder_for_founder" target="_blank" rel="noopener noreferrer" class="footer-social-square-btn" title="Founder for Founder on Instagram" aria-label="Instagram">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/share/19ZnPNuhPb/" target="_blank" rel="noopener noreferrer" class="footer-social-square-btn" title="Founder for Founder on Facebook" aria-label="Facebook">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/founder-for-founder/" target="_blank" rel="noopener noreferrer" class="footer-social-square-btn" title="Founder for Founder on LinkedIn" aria-label="LinkedIn">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.69 1.69 0 0 0 1.69-1.68 1.7 1.7 0 0 0-1.69-1.69 1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.07v8.37h2.78z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; 2026 Founder for Founder. All rights reserved. Powered by snalts.co
+      </div>
+    </footer>
+  </div>
+
+  <!-- AUTHENTICATED MEMBER PORTAL & DASHBOARD -->
+  <div id="portalPage" class="portal-container">
+    <div class="portal-sidebar">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <img src="/assets/logo.svg" style="height: 52px; margin-bottom: 8px;">
+        <div style="font-family: var(--font-heading); color: var(--emerald-700); font-weight: 700; font-size: 1rem;">MEMBER PORTAL</div>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="sidebar-item active" onclick="switchPortalTab('dashboard', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('directory', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Discover Founders
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('needs', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg> Needs &amp; Wants
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('crm', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Leads &amp; Referrals
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('attendance', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg> Attendance Tracker
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('meetings', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 11 2 2 4-4"/></svg> 1-to-1 Meetings
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('chat', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> Founders Chat
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('events', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Events &amp; Experiences
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('challenge', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg> Monthly Challenge
+        </li>
+        <li class="sidebar-item" onclick="switchPortalTab('account', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Account &amp; Billing
+        </li>
+        <li class="sidebar-item" id="adminTabLink" style="display: none; color: var(--emerald-700);" onclick="switchPortalTab('admin', this)">
+          <svg class="sidebar-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin CMS Panel
+        </li>
+      </ul>
+    </div>
+
+    <div class="portal-main">
+      
+      <!-- TAB 1: DASHBOARD OVERVIEW -->
+      <div id="tab-dashboard" class="portal-tab active">
+        <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 8px;" id="dashboardWelcome">Welcome, Member</h2>
+        <p style="color: var(--grey-500); margin-bottom: 2rem;">Overview of your curated membership, opportunities, and business metrics.</p>
+
+        <div class="grid-3" style="margin-bottom: 1.5rem;">
+          <div class="card">
+            <div style="font-size: 0.8rem; color: var(--grey-500); text-transform: uppercase; font-weight: 700;">Membership Status</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: var(--emerald-700); margin: 8px 0;" id="dashMembershipStatus">ACTIVE</div>
+            <div style="font-size: 0.85rem; color: var(--emerald-700);" id="dashRenewalText">Renews Monthly</div>
+          </div>
+          <div class="card">
+            <div style="font-size: 0.8rem; color: var(--grey-500); text-transform: uppercase; font-weight: 700;">Community Collaborations</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: var(--ink-primary); margin: 8px 0;" id="dashBizGenerated">Active</div>
+            <div style="font-size: 0.85rem; color: var(--grey-500);">Connected via Community</div>
+          </div>
+          <div class="card">
+            <div style="font-size: 0.8rem; color: var(--grey-500); text-transform: uppercase; font-weight: 700;">Leads & Referrals Pipeline</div>
+            <div style="font-size: 1.8rem; font-weight: 800; color: var(--ink-primary); margin: 8px 0;" id="dashLeadsWon">0</div>
+            <div style="font-size: 0.85rem; color: var(--emerald-700);">Active Deals Pipeline</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Presence & 1-on-1 Accountability Banner -->
+        <div class="accountability-dashboard-banner" style="background: linear-gradient(135deg, #F3FBF7 0%, #E4F7EE 100%); border: 1px solid var(--emerald-200); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem; box-shadow: 0 4px 15px rgba(6,78,59,0.04);">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--emerald-700); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(4,120,87,0.25);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; font-weight: 800; color: var(--emerald-800); text-transform: uppercase; letter-spacing: 0.05em;">Monthly Presence & Peer Leverage</div>
+              <div style="font-size: 1.25rem; font-weight: 800; color: var(--ink-primary); display: flex; align-items: center; gap: 8px;" id="dashAttendanceRate">
+                100% Event Presence <span class="badge-pulse-green" style="font-size: 0.78rem; background: #A7F3D0; color: #064E3B; padding: 2px 8px; border-radius: 12px; font-weight: 800;">Streak: 3 Gatherings</span>
+              </div>
+              <div style="font-size: 0.85rem; color: var(--grey-600);" id="dashMeetingsStat">
+                3 1-to-1 Founder Meetings logged this month
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-outline-emerald" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="switchPortalTab('attendance')">View Attendance Tracker →</button>
+            <button class="btn btn-emerald" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="switchPortalTab('meetings')">Log 1:1 Meeting +</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Recent Community Opportunities</h3>
+          <div id="recentOpportunitiesList" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;"></div>
+        </div>
+      </div>
+
+      <!-- TAB 2: MEMBER DIRECTORY -->
+      <div id="tab-directory" class="portal-tab" style="display: none;">
+        <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 8px;">Discover Founders</h2>
+        <p style="color: var(--grey-500); margin-bottom: 1.5rem;">Connect with verified business leaders and founders across India.</p>
+
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          <input type="text" id="dirSearchInput" class="form-input" style="flex: 2; min-width: 240px;" placeholder="Search by name, business, category, city, expertise, or stage..." onkeyup="filterDirectory()">
+          <select id="dirStageFilter" class="form-select" style="flex: 1; min-width: 160px;" onchange="filterDirectory()">
+            <option value="">All Business Stages</option>
+            <option value="Early">Early</option>
+            <option value="Seed">Seed</option>
+            <option value="Growth">Growth</option>
+            <option value="Established">Established</option>
+            <option value="Scaling">Scaling</option>
+          </select>
+        </div>
+
+        <div class="grid-3" id="directoryContainer"></div>
+      </div>
+
+      <!-- TAB 3: NEEDS & WANTS ENGINE -->
+      <div id="tab-needs" class="portal-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 style="font-size: 2rem; color: var(--ink-primary);">Needs & Wants Engine</h2>
+            <p style="color: var(--grey-500);">Structured opportunity board for community members.</p>
+          </div>
+          <button class="btn btn-emerald" onclick="openPostNeedModal()">+ POST A NEED / OFFER</button>
+        </div>
+
+        <div class="grid-3" id="needsContainer"></div>
+      </div>
+
+      <!-- TAB 4: LEADS & REFERRALS CRM -->
+      <div id="tab-crm" class="portal-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 style="font-size: 2rem; color: var(--ink-primary);">Leads & Referrals CRM</h2>
+            <p style="color: var(--grey-500);">Record, introduce, and track your business deals and peer referrals.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-outline-emerald" onclick="openRecordDealModal()">+ RECORD BUSINESS DEAL</button>
+            <button class="btn btn-emerald" onclick="openAddLeadModal()">+ ADD LEAD</button>
+          </div>
+        </div>
+
+        <div style="background: var(--mint-100); border: 1px solid var(--mint-200); padding: 14px 20px; border-radius: var(--radius-md); margin-bottom: 1.5rem; font-size: 0.88rem; color: var(--emerald-900);">
+          <span class="icon-inline" style="color: var(--emerald-800);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span> <strong>Consent Disclaimer:</strong> Leads and referrals shared within Founder for Founder are business opportunities and trusted peer introductions, not guaranteed commercial outcomes. Always confirm consent before sharing external contact details.
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">My Active Opportunities & Leads</h3>
+          <div id="leadsList" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 12px;"></div>
+        </div>
+      </div>
+
+      <!-- TAB: MONTHLY ATTENDANCE TRACKER -->
+      <div id="tab-attendance" class="portal-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: var(--emerald-50); border: 1px solid var(--emerald-200); border-radius: var(--radius-pill); font-size: 0.78rem; font-weight: 800; color: var(--emerald-800); text-transform: uppercase; margin-bottom: 8px;">
+              <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> MONTHLY PRESENCE &amp; ACCOUNTABILITY
+            </div>
+            <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 4px;">Monthly Event Attendance Tracker</h2>
+            <p style="color: var(--grey-500);">Verify your presence across all curated gatherings, private roundtables, and retreats hosted each month.</p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <select id="attendanceMonthSelect" class="form-select" style="min-width: 170px; font-weight: 700; color: var(--emerald-900);" onchange="filterAttendanceMonth()">
+              <option value="2026-10">October 2026</option>
+              <option value="2026-11">November 2026</option>
+            </select>
+            <button class="btn btn-emerald" onclick="openCheckinModal()"><svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> PIN CHECK-IN</button>
+          </div>
+        </div>
+
+        <!-- Attendance Stats KPI Cards -->
+        <div class="grid-4" style="margin-bottom: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">Monthly Attendance Rate</div>
+            <div style="display: flex; align-items: baseline; gap: 6px; margin: 8px 0;">
+              <span style="font-size: 2.2rem; font-weight: 800; color: var(--emerald-700);" id="attRateValue">100%</span>
+              <span style="font-size: 0.85rem; color: var(--grey-500);" id="attEventsAttendedRatio">(3/3 Completed)</span>
+            </div>
+            <div class="progress-bar-wrap" style="height: 8px; background: var(--mint-100); border-radius: 4px; overflow: hidden; margin-top: 6px;">
+              <div id="attRateBar" style="height: 100%; width: 100%; background: linear-gradient(90deg, #10B981, #047857); border-radius: 4px; transition: width 0.8s ease;"></div>
+            </div>
+          </div>
+
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">Events Hosted This Month</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ink-primary); margin: 8px 0;" id="attTotalEvents">4</div>
+            <div style="font-size: 0.85rem; color: var(--emerald-700);">Across All Signature Formats</div>
+          </div>
+
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">Active Presence Streak</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: #D97706; margin: 8px 0;" id="attStreakValue">3</div>
+            <div style="font-size: 0.85rem; color: var(--grey-500);">Consecutive Gatherings Attended</div>
+          </div>
+
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">Accountability Standing</div>
+            <div style="font-size: 1.05rem; font-weight: 800; color: var(--emerald-800); margin: 10px 0 6px 0;" id="attStandingTier"><svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> High-Signal Founder</div>
+            <div style="font-size: 0.82rem; color: var(--emerald-600);">High-Trust & Full Peer Leverage</div>
+          </div>
+        </div>
+
+        <!-- Monthly Event Presence Table / Feed -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 8px;">
+            <h3 class="card-title" style="margin: 0;" id="attendanceListTitle">Gatherings Hosted in October 2026</h3>
+            <span style="font-size: 0.85rem; color: var(--grey-500);">Real-time check-in and attendance verification log</span>
+          </div>
+
+          <div id="attendanceEventsList" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Dynamically populated from /api/attendance/summary -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: 1-TO-1 FOUNDER MEETINGS TRACKER -->
+      <div id="tab-meetings" class="portal-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: var(--emerald-50); border: 1px solid var(--emerald-200); border-radius: var(--radius-pill); font-size: 0.78rem; font-weight: 800; color: var(--emerald-800); text-transform: uppercase; margin-bottom: 8px;">
+              <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> PEER-TO-PEER ENGAGEMENT
+            </div>
+            <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 4px;">1-to-1 Founder Meetings Tracker</h2>
+            <p style="color: var(--grey-500);">Log, review, and track individual 1:1 conversations, strategic synergies, and relationship outcomes with fellow members.</p>
+          </div>
+          <button class="btn btn-emerald" onclick="openLogMeetingModal()">+ LOG 1:1 FOUNDER MEETING</button>
+        </div>
+
+        <!-- 1:1 Meeting KPI Stats -->
+        <div class="grid-3" style="margin-bottom: 1.5rem;">
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">1:1 Meetings This Month</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--emerald-700); margin: 8px 0;" id="meetingsThisMonth">3</div>
+            <div style="font-size: 0.85rem; color: var(--emerald-700);" id="meetingsMonthName">October 2026</div>
+          </div>
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">Synergies & Deals Spawned</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ink-primary); margin: 8px 0;" id="meetingsSynergies">2</div>
+            <div style="font-size: 0.85rem; color: var(--grey-500);">Referrals & Partnerships in Progress</div>
+          </div>
+          <div class="card card-kpi-emerald">
+            <div style="font-size: 0.78rem; color: var(--grey-500); text-transform: uppercase; font-weight: 800;">Lifetime 1:1 Conversations</div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ink-primary); margin: 8px 0;" id="meetingsTotal">3</div>
+            <div style="font-size: 0.85rem; color: var(--grey-500);">High-Trust Peer Exchanges</div>
+          </div>
+        </div>
+
+        <!-- 1:1 Meetings Feed -->
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 8px;">
+            <h3 class="card-title" style="margin: 0;">Recorded 1-to-1 Meetings</h3>
+            <span style="font-size: 0.85rem; color: var(--grey-500);">Confidential record for your personal CRM & peer leverage</span>
+          </div>
+
+          <div id="meetingsFeedContainer" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Dynamically populated from /api/founder-meetings -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: EVENTS & EXPERIENCES HUB -->
+      <div id="tab-events" class="portal-tab" style="display: none;">
+        <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 8px;">Events & Experiences Hub</h2>
+        <p style="color: var(--grey-500); margin-bottom: 1.5rem;">Activities across our 5 Pillars: Play, Explore, Dine, Build, and Celebrate.</p>
+        
+        <div id="eventsContainer" style="display: flex; flex-direction: column; gap: 1.5rem;"></div>
+      </div>
+
+      <!-- TAB 6: CHALLENGES -->
+      <div id="tab-challenge" class="portal-tab" style="display: none;">
+        <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 8px;">Monthly Founder Challenge</h2>
+        <div id="challengeDetailsCard" class="card" style="border-color: var(--emerald-500); margin-bottom: 2rem;"></div>
+
+        <div class="card">
+          <h3 class="card-title">Community Leaderboard</h3>
+          <div id="leaderboardList" style="margin-top: 1rem; display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+      </div>
+
+      <!-- TAB 7: FOUNDERS COLLECTIVE CHAT -->
+      <div id="tab-chat" class="portal-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="badge badge-active" style="background: #A7F3D0; color: #064E3B; font-weight: 800;">ACTIVE MEMBERS ONLY</span>
+              <span style="font-size: 0.8rem; color: var(--emerald-700); font-weight: 700;"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Confidential &amp; Curated</span>
+            </div>
+            <h2 style="font-size: 2rem; color: var(--ink-primary); margin: 6px 0 2px 0;">Founders Collective Chat</h2>
+            <p style="color: var(--grey-500); margin: 0;">Unfiltered peer discussions, deal flow, strategic introductions, and collaboration with verified founders across India.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981;"></span>
+            <span style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-800);">Vetted Founders Room</span>
+          </div>
+        </div>
+
+        <!-- Membership Active Room -->
+        <div id="chatActiveContainer" class="chat-container">
+          <div class="chat-layout single-room">
+            <!-- Messages Stream Area -->
+            <div class="chat-main-pane">
+              <div class="chat-main-header">
+                <div>
+                  <h4 style="margin: 0; font-size: 1.1rem; color: var(--forest-900); font-weight: 800;">
+                    <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> Founders Collective Lounge
+                  </h4>
+                  <div style="font-size: 0.78rem; color: var(--grey-500); margin-top: 2px;">Unified founder room for all verified members — discuss challenges, exchange warm intros, and collaborate.</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 0.78rem; color: var(--emerald-800); background: #EAF6F0; padding: 4px 10px; border-radius: 20px; font-weight: 700;">
+                    <svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Honor Code: Confidential
+                  </span>
+                  <button type="button" class="btn btn-outline-emerald" onclick="loadChatMessages()" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                    <svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Refresh
+                  </button>
+                </div>
+              </div>
+
+              <div class="chat-messages-area" id="chatMessagesArea">
+                <!-- Dynamically populated messages -->
+              </div>
+
+              <!-- Chat Composer Area -->
+              <div class="chat-composer-area">
+                <textarea id="chatInputText" class="chat-input-field" placeholder="Type your message to the founder community... (Press Enter to send, Shift+Enter for new line)" rows="1" onkeydown="handleChatKeyDown(event)"></textarea>
+                <button type="button" class="btn btn-emerald chat-send-btn" id="chatSendBtn" onclick="handleSendChatMessage()">
+                  Send <svg class="icon-inline" style="margin-left: 6px; margin-right: 0;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Membership Gate Fallback for Non-Members -->
+        <div id="chatGateCard" class="chat-gate-overlay" style="display: none;">
+          <div class="chat-gate-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-600)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 class="chat-gate-title">Founders Collective Chat Requires an Active Membership</h3>
+          <p class="chat-gate-text">
+            To maintain a high-trust, confidential environment, access to the Founders Collective Chat is exclusively reserved for vetted, active community members. Activate your membership to join live conversations, explore deal flows, and connect directly with fellow founders across India.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+            <button class="btn btn-emerald" onclick="switchPortalTab('account')">
+              Activate Membership Plan →
+            </button>
+            <button class="btn btn-outline-emerald" onclick="switchPortalTab('dashboard')">
+              Back to Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 8: ACCOUNT & BILLING SETTINGS -->
+      <div id="tab-account" class="portal-tab" style="display: none;">
+        <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 8px;">Account & Billing Settings</h2>
+        <p style="color: var(--grey-500); margin-bottom: 2rem;">Manage your active membership, billing details, and privacy preferences.</p>
+
+        <div class="card" style="margin-bottom: 2rem;">
+          <h3 class="card-title">Active Membership Plan</h3>
+          <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <div style="font-size: 1.3rem; font-weight: 800; color: var(--emerald-900);">Founder Membership</div>
+              <div style="font-size: 0.95rem; color: var(--grey-500);">₹1,500.00 / month + 18% GST (Total ₹1,770.00/mo)</div>
+              <div style="font-size: 0.85rem; color: var(--emerald-700); font-weight: 700; margin-top: 4px;" id="accountRenewalDate">Auto-renews next cycle</div>
+            </div>
+            <button class="btn btn-outline-emerald" onclick="handleCancelAutoRenew()">Cancel Auto-Renewal</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Privacy & Visibility Preferences</h3>
+          <form id="privacyForm" onsubmit="handleSavePrivacy(event)" style="margin-top: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Preferred Contact Method</label>
+              <select id="acc_contact_method" class="form-select">
+                <option value="In-App">In-App Messaging</option>
+                <option value="Email">Email</option>
+                <option value="WhatsApp">WhatsApp</option>
+              </select>
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="acc_phone_visible" checked style="width: 18px; height: 18px;">
+              <label style="font-size: 0.9rem; color: var(--ink-primary);">Show my phone number to approved members</label>
+            </div>
+            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+              <input type="checkbox" id="acc_email_visible" checked style="width: 18px; height: 18px;">
+              <label style="font-size: 0.9rem; color: var(--ink-primary);">Show my email to approved members</label>
+            </div>
+            <button type="submit" class="btn btn-emerald">Save Preferences</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 9: ADMIN DASHBOARD & CMS -->
+      <div id="tab-admin" class="portal-tab" style="display: none;">
+        <h2 style="font-size: 2rem; color: var(--ink-primary); margin-bottom: 8px;">Admin Console & CMS Panel</h2>
+        <p style="color: var(--grey-500); margin-bottom: 2rem;">Manage applications, member invitations, hero banner copy, branding, and event creation.</p>
+
+        <div class="grid-3" style="margin-bottom: 2rem;" id="adminMetricsGrid"></div>
+
+        <!-- Export CSV Section -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <h3 class="card-title">Export Community Data (CSV)</h3>
+          <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+            <a href="/api/admin/export/csv?type=members" target="_blank" class="btn btn-outline-emerald">Export Members CSV</a>
+            <a href="/api/admin/export/csv?type=applications" target="_blank" class="btn btn-outline-emerald">Export Applications CSV</a>
+          </div>
+        </div>
+
+        <!-- APPLICATIONS MANAGEMENT TABLE -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <h3 class="card-title">Manage Membership Applications & Send Invitations</h3>
+          <div id="applicationsTable" style="margin-top: 1rem; overflow-x: auto;"></div>
+        </div>
+
+        <!-- AUDIT LOGS TABLE -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <h3 class="card-title">
+            <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> System Audit &amp; Security Logs
+          </h3>
+          <div id="auditLogsTable" style="margin-top: 1rem; overflow-x: auto;"></div>
+        </div>
+
+        <!-- MEETING PHOTOS GALLERY MANAGER (16:9 SLIDER) -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <h3 class="card-title" style="margin-bottom: 4px;">
+                <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Meeting Photos Gallery (16:9 Slider)
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--grey-500); margin: 0;">Photos displayed in the continuous steady right-to-left slider on the home page. All photos maintain a 16:9 aspect ratio.</p>
+            </div>
+            <button type="button" class="btn btn-emerald" onclick="openAddMeetingPhotoModal()" style="padding: 0.6rem 1.4rem; font-size: 0.88rem;">
+              + Add New Meeting Photo (Modal)
+            </button>
+          </div>
+
+          <!-- Direct In-Card Add Photo Form -->
+          <div style="background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--emerald-900); margin: 0 0 1rem 0; display: flex; align-items: center; gap: 8px;">
+              <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Quick Add Meeting Photo Directly
+            </h4>
+            <form id="adminQuickAddPhotoForm" onsubmit="handleAdminQuickAddPhoto(event)">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px;">
+                <div>
+                  <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Meeting Title *</label>
+                  <input type="text" id="quickPhotoTitle" class="form-input" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;" placeholder="e.g. Founders Executive Dinner — Bengaluru" required>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Category / Format *</label>
+                  <select id="quickPhotoTag" class="form-select" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+                    <option value="Founder Dinner">Founder Dinner</option>
+                    <option value="Closed-Door Salon">Closed-Door Salon</option>
+                    <option value="1:1 Meeting">1:1 Founder Meeting</option>
+                    <option value="Mastermind">Mastermind Roundtable</option>
+                    <option value="Experiential">Experiential &amp; Walks</option>
+                    <option value="Founder Retreat">Founder Retreat</option>
+                    <option value="Curated Gathering">Curated Gathering</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Photo Source (16:9 Dimension) *</label>
+                  <div style="display: flex; gap: 6px;">
+                    <input type="url" id="quickPhotoUrl" class="form-input" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;" placeholder="Paste image URL..." required oninput="previewQuickPhoto(this.value)">
+                    <label class="btn btn-outline-emerald" style="padding: 0.5rem 0.75rem; font-size: 0.78rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                      <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleQuickPhotoUpload(this)">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: flex-end;">
+                <div>
+                  <label class="form-label" style="font-size: 0.8rem; font-weight: 700;">Short Caption / Highlights</label>
+                  <input type="text" id="quickPhotoCaption" class="form-input" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;" placeholder="e.g. Scale-up founders discussing international expansion and capital efficiency...">
+                </div>
+                <button type="submit" class="btn btn-emerald" style="padding: 0.55rem 1.4rem; font-size: 0.85rem; height: 38px;">
+                  + Add to 16:9 Slider
+                </button>
+              </div>
+              <div id="quickPhotoStatus" style="font-size: 0.75rem; color: var(--emerald-600); font-weight: 600; margin-top: 6px;"></div>
+            </form>
+          </div>
+
+          <div id="adminMeetingPhotosList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- DYNAMIC MEDIA & WEBSITE IMAGES CMS -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <h3 class="card-title" style="margin-bottom: 4px;">
+                <svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Dynamic Website Media &amp; Images Manager
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--grey-500); margin: 0;">Change any image on the website dynamically. Upload local image files directly or paste external URLs.</p>
+            </div>
+            <button type="submit" form="adminSettingsForm" class="btn btn-emerald" style="padding: 0.6rem 1.4rem; font-size: 0.88rem;">
+              <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save All Media Changes
+            </button>
+          </div>
+
+          <form id="adminSettingsForm" onsubmit="handleSaveSettings(event)">
+            
+            <!-- SECTION 1: BRAND LOGO & HERO BANNER -->
+            <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--mint-200); padding-bottom: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
+                <span class="section-bullet">•</span> Brand Identity &amp; Hero Banner
+              </h4>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem;">
+                <!-- Brand Logo -->
+                <div style="display: flex; gap: 1rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_logo_url" src="/assets/logo.svg" alt="Logo Preview" style="width: 70px; height: 50px; object-fit: contain; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; padding: 4px; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Navbar &amp; Footer Logo</label>
+                      <span id="upload_status_logo_url" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_logo_url" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="/assets/logo.svg" oninput="previewImageInput(this.value, 'prev_logo_url')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.75rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_logo_url', 'prev_logo_url', 'upload_status_logo_url')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Hero Banner Background -->
+                <div style="display: flex; gap: 1rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_hero_banner_url" src="/assets/hero_banner.jpg" alt="Hero Banner Preview" style="width: 70px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Hero Background Image</label>
+                      <span id="upload_status_hero_banner_url" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_hero_banner_url" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="/assets/hero_banner.jpg" oninput="previewImageInput(this.value, 'prev_hero_banner_url')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.75rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_hero_banner_url', 'prev_hero_banner_url', 'upload_status_hero_banner_url')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Hero Texts -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Hero Headline</label>
+                  <input type="text" id="set_hero_heading" class="form-input" style="padding: 0.45rem 0.75rem; font-size: 0.82rem;" placeholder="Beyond Networking. Into Real Connections.">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 0.82rem; font-weight: 700;">Hero Subheading</label>
+                  <input type="text" id="set_hero_subheading" class="form-input" style="padding: 0.45rem 0.75rem; font-size: 0.82rem;" placeholder="Founder for Founder brings ambitious entrepreneurs...">
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 2: HERO CAPSULE COLLAGE (3 IMAGES) -->
+            <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--mint-200); padding-bottom: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
+                <span class="section-bullet">•</span> Hero Capsule Collage (3 Angled Showcase Images)
+              </h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                
+                <!-- Capsule 1 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_hero_capsule_1_url" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Capsule 1" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Capsule 1 (Left)</label>
+                      <span id="upload_status_hero_capsule_1_url" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_hero_capsule_1_url" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_hero_capsule_1_url')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_hero_capsule_1_url', 'prev_hero_capsule_1_url', 'upload_status_hero_capsule_1_url')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Capsule 2 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_hero_capsule_2_url" src="/assets/hero_banner.jpg" alt="Capsule 2" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Capsule 2 (Center)</label>
+                      <span id="upload_status_hero_capsule_2_url" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_hero_capsule_2_url" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_hero_capsule_2_url')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_hero_capsule_2_url', 'prev_hero_capsule_2_url', 'upload_status_hero_capsule_2_url')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Capsule 3 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_hero_capsule_3_url" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Capsule 3" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Capsule 3 (Right)</label>
+                      <span id="upload_status_hero_capsule_3_url" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_hero_capsule_3_url" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_hero_capsule_3_url')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_hero_capsule_3_url', 'prev_hero_capsule_3_url', 'upload_status_hero_capsule_3_url')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SECTION 3: CORE PHILOSOPHY CARDS (4 IMAGES) -->
+            <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--mint-200); padding-bottom: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
+                <span class="section-bullet">•</span> Core Philosophy Cards (4 Images)
+              </h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                
+                <!-- Philosophy 1 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_philosophy_img_1" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Philosophy 1" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">1. Curated Founder Circle</label>
+                      <span id="upload_status_philosophy_img_1" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_philosophy_img_1" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_philosophy_img_1')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_philosophy_img_1', 'prev_philosophy_img_1', 'upload_status_philosophy_img_1')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Philosophy 2 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_philosophy_img_2" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Philosophy 2" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">2. Shared Experiences</label>
+                      <span id="upload_status_philosophy_img_2" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_philosophy_img_2" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_philosophy_img_2')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_philosophy_img_2', 'prev_philosophy_img_2', 'upload_status_philosophy_img_2')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Philosophy 3 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_philosophy_img_3" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Philosophy 3" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">3. Needs & Wants Engine</label>
+                      <span id="upload_status_philosophy_img_3" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_philosophy_img_3" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_philosophy_img_3')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_philosophy_img_3', 'prev_philosophy_img_3', 'upload_status_philosophy_img_3')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Philosophy 4 -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_philosophy_img_4" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Philosophy 4" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">4. Leads & Introductions</label>
+                      <span id="upload_status_philosophy_img_4" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_philosophy_img_4" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_philosophy_img_4')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_philosophy_img_4', 'prev_philosophy_img_4', 'upload_status_philosophy_img_4')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SECTION 4: WAYS WE CONNECT AND COLLABORATE (5 IMAGES) -->
+            <div style="margin-bottom: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
+                <span class="section-bullet">•</span> Ways We Connect &amp; Collaborate (5 Pillars)
+              </h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                
+                <!-- Format 1: Play -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_format_img_play" src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80" alt="Play Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">1. Play Together</label>
+                      <span id="upload_status_format_img_play" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_format_img_play" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_format_img_play')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_format_img_play', 'prev_format_img_play', 'upload_status_format_img_play')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Format 2: Explore -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_format_img_explore" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="Explore Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">2. Explore Together</label>
+                      <span id="upload_status_format_img_explore" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_format_img_explore" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_format_img_explore')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_format_img_explore', 'prev_format_img_explore', 'upload_status_format_img_explore')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Format 3: Dine -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_format_img_dine" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dine Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">3. Dine Together</label>
+                      <span id="upload_status_format_img_dine" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_format_img_dine" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_format_img_dine')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_format_img_dine', 'prev_format_img_dine', 'upload_status_format_img_dine')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Format 4: Build -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_format_img_build" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Build Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">4. Build Together</label>
+                      <span id="upload_status_format_img_build" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_format_img_build" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_format_img_build')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_format_img_build', 'prev_format_img_build', 'upload_status_format_img_build')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Format 5: Celebrate -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_format_img_celebrate" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Celebrate Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">5. Celebrate Together</label>
+                      <span id="upload_status_format_img_celebrate" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_format_img_celebrate" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_format_img_celebrate')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_format_img_celebrate', 'prev_format_img_celebrate', 'upload_status_format_img_celebrate')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SECTION 5: PLATFORM FEATURE TAB IMAGES (6 TABS) -->
+            <div style="margin-bottom: 1.5rem; border-top: 1px solid var(--mint-200); padding-top: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px;">
+                <span class="section-bullet">•</span> Platform Feature Tab Images (6 Tabs)
+              </h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                
+                <!-- Tab 1: Curated Founder Network -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_feature_img_network" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Network Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">1. Founder Network</label>
+                      <span id="upload_status_feature_img_network" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_feature_img_network" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_feature_img_network')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_feature_img_network', 'prev_feature_img_network', 'upload_status_feature_img_network')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab 2: Needs & Wants -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_feature_img_needs" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Needs Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">2. Needs & Wants</label>
+                      <span id="upload_status_feature_img_needs" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_feature_img_needs" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_feature_img_needs')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_feature_img_needs', 'prev_feature_img_needs', 'upload_status_feature_img_needs')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab 3: CRM -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_feature_img_crm" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="CRM Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">3. Leads & CRM</label>
+                      <span id="upload_status_feature_img_crm" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_feature_img_crm" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_feature_img_crm')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_feature_img_crm', 'prev_feature_img_crm', 'upload_status_feature_img_crm')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab 4: Experiences -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_feature_img_meetings" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Experiences Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">4. Founder Experiences</label>
+                      <span id="upload_status_feature_img_meetings" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_feature_img_meetings" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_feature_img_meetings')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_feature_img_meetings', 'prev_feature_img_meetings', 'upload_status_feature_img_meetings')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab 5: Collaborations -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_feature_img_collaborations" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Collaborations Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">5. Collaborations</label>
+                      <span id="upload_status_feature_img_collaborations" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_feature_img_collaborations" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_feature_img_collaborations')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_feature_img_collaborations', 'prev_feature_img_collaborations', 'upload_status_feature_img_collaborations')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tab 6: Challenges -->
+                <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
+                  <img id="prev_feature_img_challenges" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Challenges Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                      <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">6. Challenges</label>
+                      <span id="upload_status_feature_img_challenges" style="font-size: 0.72rem; color: var(--emerald-600); font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; gap: 0.4rem; align-items: center;">
+                      <input type="text" id="set_feature_img_challenges" class="form-input" style="padding: 0.4rem 0.65rem; font-size: 0.8rem;" placeholder="Image URL..." oninput="previewImageInput(this.value, 'prev_feature_img_challenges')">
+                      <label class="btn btn-outline-emerald" style="padding: 0.4rem 0.65rem; font-size: 0.76rem; cursor: pointer; white-space: nowrap; margin: 0;">
+                        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> <input type="file" accept="image/*" style="display: none;" onchange="handleAdminFileUpload(this, 'set_feature_img_challenges', 'prev_feature_img_challenges', 'upload_status_feature_img_challenges')">
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- SECTION 5: GOOGLE AUTHENTICATION CONFIGURATION -->
+            <div style="margin-bottom: 2rem; border-bottom: 1px solid var(--mint-200); padding-bottom: 1.5rem;">
+              <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                <span class="section-bullet"> </span> Google OAuth 2.0 &amp; Authentication
+              </h4>
+              <p style="font-size: 0.85rem; color: var(--grey-500); margin-bottom: 1rem;">
+                Enable 1-click Google Sign-In for community members. Get your Client ID from <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-700); font-weight: 700; text-decoration: underline;">Google Cloud Console</a>.
+              </p>
+              <div style="background: var(--mint-50); border: 1px solid var(--mint-200); padding: 1rem; border-radius: var(--radius-md);">
+                <label class="form-label" style="font-weight: 700; font-size: 0.82rem; color: var(--emerald-900); margin-bottom: 6px;">Google OAuth Client ID</label>
+                <input type="text" id="set_google_client_id" class="form-input" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;" placeholder="e.g. 1234567890-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com">
+                <span style="font-size: 0.75rem; color: var(--grey-500); display: block; margin-top: 6px;">
+                  Authorized JavaScript origins must include your local domain (<code>http://localhost:8000</code>) and your production domain.
+                </span>
+              </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <div style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+              <button type="submit" class="btn btn-emerald" style="padding: 0.75rem 2rem; font-size: 0.95rem;">
+                <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save All Website Media &amp; CMS Settings
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- CREATE NEW EVENT FORM -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <h3 class="card-title"><svg class="icon-inline" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Publish New Event or Gathering</h3>
+          <form id="adminCreateEventForm" onsubmit="handleAdminCreateEvent(event)" style="margin-top: 1rem;">
+            <div class="form-group">
+              <label class="form-label">Event Title</label>
+              <input type="text" id="evt_title" class="form-input" required placeholder="e.g. Founder Field Trip — Factory & Office Tour">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Category</label>
+                <select id="evt_category" class="form-select">
+                  <option value="Founder / Business">Founder / Business</option>
+                  <option value="Sports & Movement">Sports & Movement</option>
+                  <option value="Outdoor & Adventure">Outdoor & Adventure</option>
+                  <option value="Food & Dining">Food & Dining</option>
+                  <option value="Games & Socials">Games & Socials</option>
+                  <option value="Creative Learning">Creative Learning</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Signature Format</label>
+                <select id="evt_signature_format" class="form-select">
+                  <option value="The Founder Table">The Founder Table</option>
+                  <option value="Founder Playbook">Founder Playbook</option>
+                  <option value="First Light Club">First Light Club</option>
+                  <option value="The Inner Circle Roundtable">The Inner Circle Roundtable</option>
+                  <option value="After Hours">After Hours</option>
+                  <option value="Founder Field Trip">Founder Field Trip</option>
+                  <option value="Members Host">Members Host</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Event Date & Time</label>
+                <input type="text" id="evt_date" class="form-input" required placeholder="2026-11-20 18:00:00">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Time Display</label>
+                <input type="text" id="evt_time_str" class="form-input" required placeholder="06:00 PM - 09:00 PM">
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Venue / Meeting Address</label>
+                <input type="text" id="evt_venue" class="form-input" required placeholder="e.g. Executive Lounge, Indiranagar" oninput="autoSuggestMapUrl()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <input type="text" id="evt_city" class="form-input" required placeholder="e.g. Bengaluru" value="Bengaluru" oninput="autoSuggestMapUrl()">
+              </div>
+            </div>
+
+            <!-- GOOGLE MAPS LOCATION PROVISION -->
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+                <label class="form-label" style="margin: 0; display: flex; align-items: center; gap: 6px;">
+                  <svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Google Maps Location Link (URL)
+                </label>
+                <button type="button" class="btn btn-outline-emerald" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 6px !important;" onclick="generateMapLinkFromVenue()">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Generate Link
+                </button>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="url" id="evt_google_maps_url" class="form-input" placeholder="e.g. https://maps.app.goo.gl/... or https://www.google.com/maps/search/?api=1&query=..." style="border-radius: 6px !important;" oninput="updateMapPreview(this.value)">
+                <a id="evt_map_preview_btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-outline-emerald" style="display: none; padding: 0.65rem 0.9rem; font-size: 0.78rem; white-space: nowrap; border-radius: 6px !important;" title="Test Map Link">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Test
+                </a>
+              </div>
+              <span style="font-size: 0.74rem; color: var(--grey-500); margin-top: 4px; display: block;">
+                Paste a Google Maps share link, or click "Generate Link" to auto-link your venue and city.
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Event Description</label>
+              <textarea id="evt_description" class="form-textarea" rows="2" required placeholder="Describe agenda and highlights..."></textarea>
+            </div>
+
+            <!-- REGISTRATION PRICING & INCLUSIONS (OPTIONAL) -->
+            <div style="background: var(--mint-50); border: 1px solid var(--mint-200); padding: 1rem; border-radius: 6px; margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 8px;">
+                <label style="font-weight: 700; color: var(--emerald-900); font-size: 0.88rem; display: flex; align-items: center; gap: 6px; margin: 0;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+                  Registration Fee (Optional)
+                </label>
+                <div style="display: flex; gap: 12px;">
+                  <label style="font-size: 0.8rem; font-weight: 700; color: var(--grey-600); display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="evt_pricing_type" value="free" checked onchange="toggleEventPricingFields(false)" style="accent-color: var(--emerald-600);"> Free for Members (₹0)
+                  </label>
+                  <label style="font-size: 0.8rem; font-weight: 700; color: var(--emerald-800); display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                    <input type="radio" name="evt_pricing_type" value="paid" onchange="toggleEventPricingFields(true)" style="accent-color: var(--emerald-600);"> Paid Gathering
+                  </label>
+                </div>
+              </div>
+              <div id="evt_paid_fields_container" style="display: none; grid-template-columns: 1fr 2fr; gap: 1rem; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px dashed var(--mint-200);">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 0.78rem;">Entry Fee (₹ INR)</label>
+                  <input type="number" id="evt_price_amount" class="form-input" min="0" step="1" placeholder="e.g. 1499" value="0" style="border-radius: 6px !important;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" style="font-size: 0.78rem;">Ticket Inclusions & Experience Notes</label>
+                  <input type="text" id="evt_what_is_included" class="form-input" placeholder="e.g. Curated dinner, keynote deck access, networking drinks" value="Full session access, curated networking, refreshments" style="border-radius: 6px !important;">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-emerald" style="border-radius: 6px !important;">Publish Event</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL 1: SHOW INTEREST APPLICATION -->
+  <div class="modal-overlay" id="showInterestModal">
+    <div class="modal-content modal-content-lg">
+      <button class="modal-close" onclick="closeModal('showInterestModal')">&times;</button>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <span class="badge badge-active">MEMBERSHIP APPLICATION</span>
+        <span style="font-size: 0.8rem; color: var(--gold-500); font-weight: 700;">Curated Network</span>
+      </div>
+      <h2 style="font-size: 1.85rem; color: var(--ink-primary); margin-bottom: 4px;">Show Interest — Founder for Founder</h2>
+      <p style="color: var(--grey-500); margin-bottom: 1.25rem; font-size: 0.92rem;">
+        Join a vetted, high-trust network of ambitious startup founders and scale-up leaders across India. Please provide complete business details for our admissions committee review.
+      </p>
+
+      <div class="segmented-control" style="margin-bottom: 1.25rem;">
+        <div class="segmented-option active" id="segFounder" onclick="setApplicantType('Founder')">Founder / Co-Founder</div>
+        <div class="segmented-option" id="segBizOwner" onclick="setApplicantType('Business Owner')">Business Owner / MD</div>
+        <div class="segmented-option" id="segProfessional" onclick="setApplicantType('Professional')">CXO / Growth Leader</div>
+      </div>
+
+      <form id="showInterestForm" onsubmit="handleShowInterestSubmit(event)">
+        <input type="hidden" id="app_applicant_type" value="Founder">
+
+        <!-- SECTION 1: APPLICANT IDENTITY & CONTACT -->
+        <div class="form-section-header">
+          <span class="form-section-tag">Step 1</span>
+          <h4 class="form-section-title">Applicant Identity & Role</h4>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="app_full_name" class="form-input" required placeholder="e.g. Rahul Sharma">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role / Designation *</label>
+            <input type="text" id="app_designation" class="form-input" required placeholder="e.g. Founder & CEO / Managing Director">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Work Email Address *</label>
+            <input type="email" id="app_email" class="form-input" required placeholder="name@company.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City / Primary Base *</label>
+            <input type="text" id="app_city" class="form-input" required placeholder="e.g. Bengaluru / Mumbai / Delhi-NCR">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Phone Number (with Country Code) *</label>
+            <input type="tel" id="app_phone" class="form-input" required placeholder="+91 9876543210">
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp Number *</label>
+            <input type="tel" id="app_whatsapp" class="form-input" required placeholder="+91 9876543210">
+          </div>
+        </div>
+
+        <!-- SECTION 2: BUSINESS DETAILS & FOUNDATION -->
+        <div class="form-section-header">
+          <span class="form-section-tag">Step 2</span>
+          <h4 class="form-section-title">Business Profile & Operations</h4>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Name of Business *</label>
+            <input type="text" id="app_business_name" class="form-input" required placeholder="e.g. Apex Tech Solutions">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category of Business *</label>
+            <select id="app_business_model_category" class="form-select" required>
+              <option value="Product Based">Product Based (SaaS / D2C / Hardware / Tech Product)</option>
+              <option value="Service Based">Service Based (Agencies / IT Services / Consulting / Operations)</option>
+              <option value="Manufacturing">Manufacturing (Industrial / Production / Factory / OEM)</option>
+              <option value="Hybrid (Product & Service)">Hybrid (Product & Service)</option>
+              <option value="Other">Other Category</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label class="form-label">Type of Firm *</label>
+            <select id="app_firm_type" class="form-select" required>
+              <option value="Private Limited (Pvt Ltd)">Private Limited (Pvt Ltd)</option>
+              <option value="Limited Liability Partnership (LLP)">Limited Liability Partnership (LLP)</option>
+              <option value="Partnership Firm">Partnership Firm</option>
+              <option value="Sole Proprietorship">Sole Proprietorship</option>
+              <option value="Public Limited Company">Public Limited Company</option>
+              <option value="One Person Company (OPC)">One Person Company (OPC)</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Years in Business *</label>
+            <select id="app_years_in_business" class="form-select" required>
+              <option value="Less than 1 Year">Less than 1 Year (Early / MVP)</option>
+              <option value="1 to 2 Years">1 to 2 Years</option>
+              <option value="3 to 5 Years" selected>3 to 5 Years</option>
+              <option value="5 to 10 Years">5 to 10 Years</option>
+              <option value="10+ Years">10+ Years (Established Business)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Team Size *</label>
+            <select id="app_team_size" class="form-select" required>
+              <option value="Solo Founder (1)">Solo Founder (1)</option>
+              <option value="2 - 10 Members" selected>2 - 10 Members</option>
+              <option value="11 - 50 Members">11 - 50 Members</option>
+              <option value="51 - 200 Members">51 - 200 Members</option>
+              <option value="200+ Members">200+ Members</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Industry Sector *</label>
+            <select id="app_business_category" class="form-select" required>
+              <option value="Technology & Software">Technology & Software (SaaS / AI / Cloud)</option>
+              <option value="Manufacturing & Industrial">Manufacturing & Industrial</option>
+              <option value="FinTech & Financial Services">FinTech & Financial Services</option>
+              <option value="D2C, Retail & Consumer">D2C, Retail & Consumer</option>
+              <option value="Healthcare & Wellness">Healthcare & Wellness</option>
+              <option value="Real Estate & Construction">Real Estate & Construction</option>
+              <option value="Logistics & Supply Chain">Logistics & Supply Chain</option>
+              <option value="Professional Services & Consulting">Professional Services & Consulting</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Growth Stage *</label>
+            <select id="app_business_stage" class="form-select" required>
+              <option value="Early">Early Stage / Bootstrapped</option>
+              <option value="Seed">Seed Funded</option>
+              <option value="Growth">Growth Stage</option>
+              <option value="Established" selected>Established & Profitable</option>
+              <option value="Scaling">Scaling Pan-India</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Brief About Business *</label>
+          <textarea id="app_business_description" class="form-textarea" rows="2" required placeholder="Describe what your business does, your core products/services, target audience, and scale..."></textarea>
+        </div>
+
+        <!-- SECTION 3: WEB & SOCIAL LINKS -->
+        <div class="form-section-header">
+          <span class="form-section-tag">Step 3</span>
+          <h4 class="form-section-title">Web & Social Presence (If Any)</h4>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label class="form-label">Website of Business (Optional)</label>
+            <input type="url" id="app_website" class="form-input" placeholder="https://yourcompany.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">LinkedIn of Founder (Optional)</label>
+            <input type="url" id="app_linkedin" class="form-input" placeholder="https://linkedin.com/in/username">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Instagram Link (Optional)</label>
+            <input type="url" id="app_instagram" class="form-input" placeholder="https://instagram.com/handle">
+          </div>
+        </div>
+
+        <!-- SECTION 4: COMMUNITY VALUE EXCHANGE -->
+        <div class="form-section-header">
+          <span class="form-section-tag">Step 4</span>
+          <h4 class="form-section-title">Community Contribution & Needs</h4>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">What Can You Contribute to the Community? *</label>
+          <textarea id="app_what_offer" class="form-textarea" rows="2" required placeholder="What value, mentorship, domain expertise, strategic vendor introductions, or resources can you share?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">What Are You Looking For from the Community? *</label>
+          <textarea id="app_what_need" class="form-textarea" rows="2" required placeholder="What key bottlenecks, advisory, co-founder synergies, or strategic connections are you seeking?"></textarea>
+        </div>
+
+        <!-- SECTION 5: COLLABORATION PREFERENCES -->
+        <div class="form-section-header">
+          <span class="form-section-tag">Step 5</span>
+          <h4 class="form-section-title">How Would You Like to Collaborate & Connect? (Select All That Apply)</h4>
+        </div>
+
+        <div class="collab-choice-grid">
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="Curated Founders Dinners" checked>
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2v20M6 2v20M2 7h8a4 4 0 0 1-8 0zM14 15a4 4 0 0 0 8 0v-4h-8v4z"/></svg></span> Curated Founders Dinners</span>
+              <span class="collab-choice-desc">Private dining & candid, off-the-record growth talks</span>
+            </div>
+          </label>
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="Executive Roundtables" checked>
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="4" rx="1"/><rect x="4" y="18" width="16" height="4" rx="1"/><line x1="6" y1="6" x2="6" y2="18"/><line x1="12" y1="6" x2="12" y2="18"/><line x1="18" y1="6" x2="18" y2="18"/></svg></span> Executive Roundtables &amp; Salons</span>
+              <span class="collab-choice-desc">Problem-solving masterminds & confidential playbooks</span>
+            </div>
+          </label>
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="Sports & Movement">
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"/></svg></span> Sports &amp; Movement</span>
+              <span class="collab-choice-desc">Pickleball, Badminton, Golf, Morning Walks & Fitness</span>
+            </div>
+          </label>
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="1-to-1 Coffee Syncs" checked>
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></span> 1-to-1 Founder Coffee Meetings</span>
+              <span class="collab-choice-desc">Deep-dive strategic peer dialogues & mutual introductions</span>
+            </div>
+          </label>
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="Annual Weekend Retreats">
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 22 22 22"/></svg></span> Annual Weekend Retreats</span>
+              <span class="collab-choice-desc">3-day immersive offsites, wellness & annual strategy</span>
+            </div>
+          </label>
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="Peer Advisory Pods">
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></span> Peer Advisory &amp; Accountability Pods</span>
+              <span class="collab-choice-desc">Closed-pod monthly sprints & quarterly OKR reviews</span>
+            </div>
+          </label>
+          <label class="collab-choice-card">
+            <input type="checkbox" name="collab_pref" value="Virtual Strategy Syncs">
+            <div class="collab-choice-info">
+              <span class="collab-choice-label"><span class="collab-choice-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span> Virtual Strategy Syncs</span>
+              <span class="collab-choice-desc">Focused online roundtables & lightning AMAs</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- SECTION 6: WHY JOIN & CONSENT -->
+        <div class="form-section-header">
+          <span class="form-section-tag">Step 6</span>
+          <h4 class="form-section-title">Why Join & Final Consent</h4>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Why do you wish to join Founder for Founder? *</label>
+          <textarea id="app_why_join" class="form-textarea" rows="2" required placeholder="What are your goals for joining this closed-loop founder community?"></textarea>
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 1.5rem;">
+          <input type="checkbox" id="app_consent" required style="width: 18px; height: 18px; margin-top: 3px; accent-color: var(--emerald-600);">
+          <label for="app_consent" style="font-size: 0.85rem; color: var(--grey-500); line-height: 1.4;">
+            I agree to the Terms of Service & Privacy Policy. I confirm that all submitted business details are accurate and understand that admission is strictly curated.
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-emerald" style="width: 100%; padding: 0.95rem; font-size: 1.05rem;">
+          SUBMIT APPLICATION FOR REVIEW <span class="btn-circle-icon">→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: APPLICATION DETAIL INSPECTION FOR ADMIN -->
+  <div class="modal-overlay" id="appDetailModal">
+    <div class="modal-content modal-content-lg">
+      <button class="modal-close" onclick="closeModal('appDetailModal')">&times;</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span class="badge badge-active" id="detail_app_status">SUBMITTED</span>
+        <span style="font-size: 0.8rem; color: var(--grey-500);" id="detail_app_date"></span>
+      </div>
+      <h2 style="font-size: 1.6rem; color: var(--ink-primary); margin-bottom: 4px;" id="detail_app_name">Applicant Name</h2>
+      <p style="color: var(--grey-500); font-size: 0.9rem; margin-bottom: 1.25rem;" id="detail_app_headline">Role at Business</p>
+
+      <div id="detail_app_body" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <!-- Hydrated dynamically by JavaScript -->
+      </div>
+
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-hairline); display: flex; gap: 10px; justify-content: flex-end;" id="detail_app_actions">
+        <!-- Action buttons hydrated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: MANDATORY EMAIL OTP VERIFICATION -->
+  <div class="modal-overlay" id="otpModal">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('otpModal')">&times;</button>
+      <div class="modal-icon-badge"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-600)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 6px;">Verify Your Email</h2>
+      <p style="color: var(--grey-500); margin-bottom: 1.25rem;" id="otpModalSubtitle">We have sent a 6-digit verification code to your email.</p>
+
+      <div id="otpDemoAlert" style="background: var(--mint-100); border: 1px solid var(--mint-200); padding: 10px; border-radius: 8px; margin-bottom: 1.5rem; color: var(--emerald-700); font-weight: 700;"></div>
+
+      <form id="otpForm" onsubmit="handleVerifyOTP(event)">
+        <div class="form-group">
+          <input type="text" id="otpInput" class="form-input" style="font-size: 1.8rem; text-align: center; letter-spacing: 8px; font-weight: 800;" maxlength="6" required placeholder="000000">
+        </div>
+
+        <button type="submit" class="btn btn-emerald" style="width: 100%; margin-bottom: 1rem;">VERIFY OTP & SUBMIT APPLICATION</button>
+      </form>
+
+      <div style="font-size: 0.85rem; color: var(--grey-500);">
+        Didn't receive code? <button id="resendOtpBtn" style="background: none; border: none; color: var(--emerald-700); cursor: pointer; text-decoration: underline; font-weight: 700;" onclick="resendOTP()">Resend OTP</button>
+        <span id="cooldownTimer" style="display: none; color: var(--emerald-700); font-weight: 700;">in <span id="timerSeconds">30</span>s</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: APPROVED INVITATION ACTIVATION & BILLING CHECKOUT -->
+  <div class="modal-overlay" id="activationModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('activationModal')">&times;</button>
+      <span class="badge badge-verified" style="margin-bottom: 8px;">APPROVED INVITATION</span>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 6px;">Membership Activation</h2>
+      <p style="color: var(--grey-500); margin-bottom: 1.25rem;">Congratulations! Your application has been approved by the Founder for Founder committee.</p>
+
+      <div style="background: var(--mint-50); border: 1px solid var(--mint-200); padding: 1.25rem; border-radius: 12px; margin-bottom: 1.5rem;">
+        <h4 style="font-size: 1rem; color: var(--emerald-900); margin-bottom: 8px;">Membership Investment Breakdown</h4>
+        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 4px; color: var(--ink-primary);">
+          <span>Founder Monthly Plan</span>
+          <span>₹1,500.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: var(--grey-500);">
+          <span>GST (18%)</span>
+          <span>₹270.00</span>
+        </div>
+        <div style="border-top: 1px dashed var(--mint-200); padding-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-size: 1.1rem; color: var(--emerald-900);">
+          <span>Total Monthly Investment</span>
+          <span>₹1,770.00</span>
+        </div>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--grey-500); line-height: 1.4; margin-bottom: 1.5rem;">
+        <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> <strong>Billing Terms:</strong> Automatic monthly recurring subscription. Payments are non-refundable except where required by applicable law. You may cancel auto-renewal anytime in Account Settings prior to your next renewal date.
+      </p>
+
+      <button class="btn btn-emerald" style="width: 100%;" onclick="handleProceedActivationPayment()">
+        CONFIRM & ACTIVATE MEMBERSHIP (₹1,770/mo) <span class="btn-circle-icon">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL 4: MEMBER LOGIN -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-content" style="max-width: 440px;">
+      <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div class="modal-icon-badge" style="margin: 0 auto 12px auto;">
+          <svg class="icon-inline" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        </div>
+        <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 6px;">Member Access</h2>
+        <p style="color: var(--grey-500); font-size: 0.88rem; margin: 0;">Sign in to the Founder for Founder member portal.</p>
+      </div>
+
+      <!-- GOOGLE AUTHENTICATION SECTION -->
+      <div style="margin-bottom: 1rem;">
+        <div id="googleSignInBtn" style="display: flex; justify-content: center; margin-bottom: 0.5rem; min-height: 44px;"></div>
+        <button type="button" class="btn-google-auth" id="customGoogleAuthBtn" onclick="initiateGoogleLogin()">
+          <svg class="google-logo-svg" width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+      </div>
+
+      <!-- SEPARATOR -->
+      <div class="auth-divider">
+        <span class="auth-divider-line"></span>
+        <span class="auth-divider-text">or sign in with password</span>
+        <span class="auth-divider-line"></span>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="login_email" class="form-input" required placeholder="admin@founderforfounder.in or your email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login_password" class="form-input" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-emerald" style="width: 100%; justify-content: center;">
+          LOGIN TO PORTAL
+        </button>
+      </form>
+
+      <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-hairline); text-align: center; font-size: 0.82rem; color: var(--grey-500);">
+        Looking to join? <a href="javascript:void(0)" onclick="closeModal('loginModal'); openShowInterestModal();" style="color: var(--emerald-700); font-weight: 700; text-decoration: underline;">Apply for Membership</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GOOGLE AUTH SETUP & TEST -->
+  <div class="modal-overlay" id="googleDemoModal">
+    <div class="modal-content" style="max-width: 520px;">
+      <button class="modal-close" onclick="closeModal('googleDemoModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.25rem;">
+        <div class="modal-icon-badge" style="margin: 0 auto 10px auto; background: #e8f0fe; color: #1a73e8;">
+          <svg class="google-logo-svg" width="22" height="22" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+        </div>
+        <h2 style="font-size: 1.6rem; color: var(--ink-primary); margin-bottom: 4px;">Google Sign-In Connected</h2>
+        <p style="color: var(--grey-500); font-size: 0.85rem; margin: 0;">Sign in with Google OAuth 2.0 or test immediately.</p>
+      </div>
+
+      <!-- Quick Test Form -->
+      <div style="background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.25rem;">
+        <h4 style="font-size: 0.92rem; color: var(--emerald-900); margin-bottom: 6px; font-weight: 700;">Instant Google Test Sign-In</h4>
+        <p style="font-size: 0.8rem; color: var(--grey-600); margin-bottom: 12px;">Sign in immediately as a verified Google member without waiting for Google Cloud Console setup:</p>
+        
+        <form onsubmit="handleDemoGoogleLogin(event)">
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label class="form-label" style="font-size: 0.72rem;">Your Name / Founder Name</label>
+            <input type="text" id="demo_google_name" class="form-input" required placeholder="e.g. Rahul Sharma" value="Founder Member">
+          </div>
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" style="font-size: 0.72rem;">Your Google Email</label>
+            <input type="email" id="demo_google_email" class="form-input" required placeholder="founder@gmail.com" value="founder.demo@gmail.com">
+          </div>
+          <button type="submit" class="btn btn-emerald" style="width: 100%; justify-content: center; font-size: 0.85rem;">
+            Sign In with this Google Account
+          </button>
+        </form>
+      </div>
+
+      <!-- Google Cloud Client ID Configuration Guide -->
+      <div style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: var(--radius-md); padding: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 0.8rem; font-weight: 700; color: var(--ink-primary); text-transform: uppercase;">Google Cloud Client ID</span>
+          <span id="googleClientIdBadge" class="badge badge-active" style="font-size: 0.7rem;">Not Configured</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--grey-500); margin-bottom: 10px; line-height: 1.4;">
+          To connect your official Google Cloud project: Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-700); font-weight: 700; text-decoration: underline;">Google Cloud Console</a> &gt; Create <strong>OAuth 2.0 Client ID</strong> (Web application) &gt; Add Authorized JavaScript Origin (<code>http://localhost:8000</code> or your live URL).
+        </p>
+        <div style="display: flex; gap: 6px;">
+          <input type="text" id="modal_google_client_id" class="form-input" style="font-size: 0.78rem; padding: 0.45rem 0.65rem;" placeholder="e.g. 1234567890-xxx.apps.googleusercontent.com">
+          <button type="button" class="btn btn-outline-emerald" style="padding: 0.45rem 0.85rem; font-size: 0.78rem; white-space: nowrap;" onclick="saveGoogleClientIdFromModal()">
+            Save Key
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5: POST NEED / WANT -->
+  <div class="modal-overlay" id="postNeedModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('postNeedModal')">&times;</button>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Post a Need or Want</h2>
+      <form id="postNeedForm" onsubmit="handlePostNeedSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Post Type</label>
+          <select id="need_type" class="form-select">
+            <option value="NEED">I NEED (Requirement)</option>
+            <option value="WANT">I WANT / CAN OFFER (Opportunity / Service)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" id="need_title" class="form-input" required placeholder="e.g. Seeking corporate gifting partner for 500 hampers">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="need_category" class="form-select">
+            <option value="Technology & Software">Technology & Software</option>
+            <option value="Manufacturing & Industrial">Manufacturing & Industrial</option>
+            <option value="Real Estate & Construction">Real Estate & Construction</option>
+            <option value="Retail & Corporate Gifting">Retail & Corporate Gifting</option>
+            <option value="Professional Services">Professional Services</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Budget / Deal Range (Optional)</label>
+          <input type="text" id="need_budget" class="form-input" placeholder="e.g. ₹2,00,000 budget">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea id="need_description" class="form-textarea" rows="3" required placeholder="Provide clear context so members can help..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-emerald" style="width: 100%;">POST OPPORTUNITY</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LEGAL POLICY MODALS -->
+  <div class="modal-overlay" id="termsModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Terms & Conditions</h2>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="termsModalContent">Loading policy content...</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="privacyModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Privacy Policy</h2>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="privacyModalContent">Loading policy content...</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="refundModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('refundModal')">&times;</button>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Refund & Cancellation Policy</h2>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="refundModalContent">Loading policy content...</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="guidelinesModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('guidelinesModal')">&times;</button>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Community Guidelines</h2>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="guidelinesModalContent">Loading policy content...</p>
+    </div>
+  </div>
+
+  <!-- MODAL: EVENT REGISTRATION PAYMENT GATEWAY -->
+  <div class="modal-overlay" id="eventPaymentModal">
+    <div class="modal-content" style="max-width: 540px;">
+      <button class="modal-close" onclick="closeModal('eventPaymentModal')">&times;</button>
+      
+      <!-- Checkout View (active by default) -->
+      <div id="eventPaymentCheckoutView">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <span class="badge badge-active">EVENT REGISTRATION</span>
+          <span id="evtPayFormatBadge" style="font-size: 0.78rem; font-weight: 800; color: var(--gold-600); text-transform: uppercase;"></span>
+        </div>
+
+        <h2 id="evtPayTitle" style="font-size: 1.5rem; color: var(--ink-primary); margin-bottom: 6px; line-height: 1.3;">Event Registration</h2>
+        <div style="font-size: 0.84rem; color: var(--grey-600); margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 4px;">
+          <span id="evtPayDateTime" style="display: flex; align-items: center; gap: 6px;">
+            <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="evtPayDateTimeText"></span>
+          </span>
+          <span id="evtPayVenue" style="display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap;">
+            <span style="display: flex; align-items: center; gap: 6px;">
+              <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span id="evtPayVenueText"></span>
+            </span>
+            <a id="evtPayMapLink" href="#" target="_blank" rel="noopener noreferrer" style="display: none; font-size: 0.76rem; color: var(--emerald-700); font-weight: 700; text-decoration: underline; white-space: nowrap;">
+              View Map &rarr;
+            </a>
+          </span>
+        </div>
+
+        <!-- Inclusions Box -->
+        <div style="background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem 1rem; border-radius: 6px; margin-bottom: 1.25rem;">
+          <div style="font-size: 0.76rem; font-weight: 800; text-transform: uppercase; color: var(--emerald-900); margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            What is Included
+          </div>
+          <p id="evtPayInclusions" style="font-size: 0.84rem; color: var(--emerald-950); margin: 0; line-height: 1.4;"></p>
+        </div>
+
+        <!-- Payment Fee Breakdown -->
+        <div style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 6px; padding: 1.1rem; margin-bottom: 1.25rem;">
+          <h4 style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--grey-600); margin-bottom: 10px; letter-spacing: 0.05em;">Order Summary</h4>
+          <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; color: var(--ink-primary);">
+            <span>Registration Fee</span>
+            <span id="evtPaySubtotal" style="font-weight: 700;">₹0.00</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 8px; color: var(--grey-500);">
+            <span>GST (18%)</span>
+            <span id="evtPayGst">₹0.00</span>
+          </div>
+          <div style="border-top: 1px dashed var(--border-hairline); padding-top: 10px; display: flex; justify-content: space-between; font-weight: 800; font-size: 1.15rem; color: var(--emerald-900);">
+            <span>Total Payable</span>
+            <span id="evtPayTotal">₹0.00</span>
+          </div>
+        </div>
+
+        <!-- Payment Gateway Selection -->
+        <div style="margin-bottom: 1.25rem;">
+          <label style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--grey-600); display: block; margin-bottom: 8px;">Select Payment Method</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <label class="collab-choice-card" style="padding: 10px; border-radius: 6px; margin: 0; cursor: pointer;">
+              <input type="radio" name="evt_payment_method" value="UPI" checked style="accent-color: var(--emerald-600);">
+              <div class="collab-choice-info" style="margin-left: 6px;">
+                <span class="collab-choice-label" style="font-size: 0.84rem; font-weight: 700;">UPI / QR Code</span>
+                <span class="collab-choice-desc" style="font-size: 0.72rem;">GPay, PhonePe, Paytm</span>
+              </div>
+            </label>
+            <label class="collab-choice-card" style="padding: 10px; border-radius: 6px; margin: 0; cursor: pointer;">
+              <input type="radio" name="evt_payment_method" value="CARD" style="accent-color: var(--emerald-600);">
+              <div class="collab-choice-info" style="margin-left: 6px;">
+                <span class="collab-choice-label" style="font-size: 0.84rem; font-weight: 700;">Cards</span>
+                <span class="collab-choice-desc" style="font-size: 0.72rem;">Credit / Debit (Visa, MC)</span>
+              </div>
+            </label>
+            <label class="collab-choice-card" style="padding: 10px; border-radius: 6px; margin: 0; cursor: pointer;">
+              <input type="radio" name="evt_payment_method" value="NETBANKING" style="accent-color: var(--emerald-600);">
+              <div class="collab-choice-info" style="margin-left: 6px;">
+                <span class="collab-choice-label" style="font-size: 0.84rem; font-weight: 700;">NetBanking</span>
+                <span class="collab-choice-desc" style="font-size: 0.72rem;">All Indian Banks</span>
+              </div>
+            </label>
+            <label class="collab-choice-card" style="padding: 10px; border-radius: 6px; margin: 0; cursor: pointer;">
+              <input type="radio" name="evt_payment_method" value="RAZORPAY_SANDBOX" style="accent-color: var(--emerald-600);">
+              <div class="collab-choice-info" style="margin-left: 6px;">
+                <span class="collab-choice-label" style="font-size: 0.84rem; font-weight: 700;">1-Click Pay</span>
+                <span class="collab-choice-desc" style="font-size: 0.72rem;">Razorpay Simulator</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <input type="hidden" id="evtPayEventId">
+
+        <button type="button" id="evtPaySubmitBtn" class="btn btn-emerald" style="width: 100%; padding: 0.85rem; font-weight: 800; font-size: 0.95rem; border-radius: 6px !important;" onclick="handleEventPaymentSubmit()">
+          COMPLETE PAYMENT &amp; CONFIRM SEAT
+        </button>
+
+        <p style="font-size: 0.74rem; color: var(--grey-500); text-align: center; margin-top: 10px; margin-bottom: 0;">
+          <svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> 256-Bit SSL Encrypted &bull; Instant Confirmation &bull; GST Invoice
+        </p>
+      </div>
+
+      <!-- Success Confirmation View (shown after payment) -->
+      <div id="eventPaymentSuccessView" style="display: none; text-align: center; padding: 1rem 0;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--emerald-50); border: 2px solid var(--emerald-500); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem auto; color: var(--emerald-700);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="badge badge-verified" style="margin-bottom: 8px;">TICKET &amp; SEAT CONFIRMED</span>
+        <h3 id="evtPaySuccessTitle" style="font-size: 1.45rem; color: var(--ink-primary); margin-bottom: 6px;">Payment Successful!</h3>
+        <p style="font-size: 0.88rem; color: var(--grey-600); margin-bottom: 1.25rem;">Your registration payment has been verified. We have reserved your seat.</p>
+
+        <div style="background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: 6px; padding: 1rem; text-align: left; margin-bottom: 1.5rem; font-size: 0.85rem;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--grey-600);">Invoice Number:</span>
+            <strong id="evtPaySuccessInvoice" style="color: var(--ink-primary); font-family: monospace;"></strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--grey-600);">Transaction ID:</span>
+            <strong id="evtPaySuccessTxId" style="color: var(--ink-primary); font-family: monospace;"></strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+            <span style="color: var(--grey-600);">Amount Paid:</span>
+            <strong id="evtPaySuccessAmount" style="color: var(--emerald-800);"></strong>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: var(--grey-600);">Status:</span>
+            <span class="badge badge-active" style="padding: 2px 8px; font-size: 0.72rem;">ATTENDING &amp; PAID</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-emerald" style="width: 100%; border-radius: 6px !important;" onclick="closeModal('eventPaymentModal'); loadEventsTab();">
+          DONE &amp; VIEW MY PASSES
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EVENT CHECK-IN MODAL -->
+  <div class="modal-overlay" id="checkinModal">
+    <div class="modal-content" style="max-width: 480px; text-align: center;">
+      <button class="modal-close" onclick="closeModal('checkinModal')">&times;</button>
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: var(--emerald-50); border: 2px solid var(--emerald-400); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; box-shadow: 0 4px 14px rgba(4,120,87,0.2); color: var(--emerald-700);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 style="font-size: 1.5rem; color: var(--ink-primary); margin-bottom: 6px;">Event Presence Check-In</h3>
+      <p style="font-size: 0.88rem; color: var(--grey-500); margin-bottom: 1.5rem;">Enter the 4-digit or alphanumeric check-in PIN announced by your gathering host to confirm presence.</p>
+      
+      <form id="checkinForm" onsubmit="handleCheckinSubmit(event)">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">Select Gathering / Event</label>
+          <select id="checkinEventSelect" class="form-select" required>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">Host Check-in PIN / Code</label>
+          <input type="text" id="checkinCodeInput" class="form-input" placeholder="e.g. F4F2026" style="text-transform: uppercase; font-size: 1.25rem; font-weight: 800; text-align: center; letter-spacing: 0.12em; color: var(--emerald-800);" required>
+          <span style="font-size: 0.78rem; color: var(--grey-500); margin-top: 4px; display: block;">Default gathering host PIN is <strong>F4F2026</strong></span>
+        </div>
+        <button type="submit" class="btn btn-emerald" style="width: 100%; margin-top: 10px; font-weight: 800; padding: 0.85rem;">VERIFY & CONFIRM PRESENCE</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOG 1-TO-1 FOUNDER MEETING MODAL -->
+  <div class="modal-overlay" id="logMeetingModal">
+    <div class="modal-content" style="max-width: 640px;">
+      <button class="modal-close" onclick="closeModal('logMeetingModal')">&times;</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+        <svg class="icon-inline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 11 2 2 4-4"/></svg>
+        <h3 style="font-size: 1.5rem; color: var(--ink-primary); margin: 0;">Log 1-to-1 Founder Meeting</h3>
+      </div>
+      <p style="font-size: 0.88rem; color: var(--grey-500); margin-bottom: 1.5rem;">Record peer discussions, strategic connections, and mutual value created with fellow community founders.</p>
+      
+      <form id="logMeetingForm" onsubmit="handleLogMeetingSubmit(event)">
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">Founder Met With *</label>
+            <input type="text" id="meetPartnerName" class="form-input" placeholder="e.g. Vikram K." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company / Startup *</label>
+            <input type="text" id="meetPartnerCompany" class="form-input" placeholder="e.g. Apex Global Tech" required>
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">Meeting Date *</label>
+            <input type="date" id="meetDate" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meeting Format *</label>
+            <select id="meetType" class="form-select">
+              <option value="Coffee / Lunch">Coffee / Lunch Meeting</option>
+              <option value="In-Person">In-Person Office / Coworking</option>
+              <option value="Virtual Video">Virtual Video Call</option>
+              <option value="Dinner">Dinner / Evening Drinks</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Venue / Meeting Location</label>
+          <input type="text" id="meetVenue" class="form-input" placeholder="e.g. Third Wave Coffee, Indiranagar or Google Meet">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Agenda / Primary Discussion Topic *</label>
+          <input type="text" id="meetAgenda" class="form-input" placeholder="e.g. Enterprise GTM & Cloud Co-selling" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Key Discussion Takeaways & Next Steps</label>
+          <textarea id="meetNotes" class="form-textarea" rows="3" placeholder="Key points discussed, mutual learnings, introductions promised..."></textarea>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">Collaboration Outcome *</label>
+            <select id="meetOutcome" class="form-select">
+              <option value="Synergy Explored">Synergy Explored</option>
+              <option value="Referral Exchanged">Referral Exchanged</option>
+              <option value="Deal In Progress">Deal In Progress</option>
+              <option value="Follow-up Scheduled">Follow-up Scheduled</option>
+              <option value="Completed">General Connection Completed</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meeting Value Rating</label>
+            <select id="meetRating" class="form-select">
+              <option value="5">5 / 5 — Outstanding High-Signal</option>
+              <option value="4">4 / 5 — Highly Actionable</option>
+              <option value="3">3 / 5 — Good Conversation</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem;">
+          <button type="button" class="btn btn-outline-emerald" onclick="closeModal('logMeetingModal')">Cancel</button>
+          <button type="submit" class="btn btn-emerald" style="padding: 0.8rem 1.6rem;">RECORD 1:1 MEETING</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MEETING PHOTO (16:9 SLIDER) -->
+  <div class="modal-overlay" id="addMeetingPhotoModal">
+    <div class="modal-content" style="max-width: 560px;">
+      <button class="modal-close" onclick="closeModal('addMeetingPhotoModal')">&times;</button>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+        <svg class="icon-inline" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <h2 style="font-size: 1.6rem; color: var(--ink-primary); margin: 0;">Add Meeting Photo</h2>
+      </div>
+      <p style="color: var(--grey-500); font-size: 0.88rem; margin-bottom: 1.25rem;">Upload or link a 16:9 meeting or gathering photo to showcase in the live steady-sliding community reel.</p>
+
+      <form id="addMeetingPhotoForm" onsubmit="handleAddMeetingPhotoSubmit(event)">
+        <!-- Photo Title -->
+        <div class="form-group">
+          <label class="form-label">Meeting / Gathering Title *</label>
+          <input type="text" id="photoTitle" class="form-input" placeholder="e.g. Founders Executive Dinner — Bengaluru" required>
+        </div>
+
+        <!-- Format Tag & Date -->
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">Meeting Format / Tag *</label>
+            <select id="photoTag" class="form-select">
+              <option value="Founder Dinner">Founder Dinner</option>
+              <option value="Closed-Door Salon">Closed-Door Salon</option>
+              <option value="1:1 Meeting">1:1 Founder Meeting</option>
+              <option value="Mastermind">Mastermind Roundtable</option>
+              <option value="Experiential">Experiential &amp; Walks</option>
+              <option value="Founder Retreat">Founder Retreat</option>
+              <option value="Curated Gathering">Curated Gathering</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Event Date</label>
+            <input type="date" id="photoEventDate" class="form-input">
+          </div>
+        </div>
+
+        <!-- Image URL & File Upload with 16:9 Live Preview -->
+        <div class="form-group">
+          <label class="form-label">Photo Source (16:9 Dimension) *</label>
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <input type="url" id="photoImageUrl" class="form-input" placeholder="Paste image URL (https://...)" required oninput="previewMeetingPhoto(this.value)">
+            <label class="btn btn-outline-emerald" style="cursor: pointer; white-space: nowrap; margin: 0; padding: 0.65rem 1rem;">
+              <svg class="icon-inline" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload <input type="file" accept="image/*" style="display: none;" onchange="handleMeetingPhotoUpload(this)">
+            </label>
+          </div>
+          <span id="photoUploadStatus" style="font-size: 0.78rem; color: var(--emerald-600); font-weight: 600;"></span>
+        </div>
+
+        <!-- 16:9 Aspect Ratio Live Preview Box -->
+        <div style="margin-bottom: 1rem;">
+          <div style="font-size: 0.76rem; font-weight: 700; color: var(--grey-600); text-transform: uppercase; margin-bottom: 4px;">Live Preview (16:9 Ratio):</div>
+          <div style="aspect-ratio: 16 / 9; width: 100%; border-radius: 8px; overflow: hidden; background: #042F2C; border: 1px solid var(--mint-200); position: relative; display: flex; align-items: center; justify-content: center;">
+            <img id="photoPreviewImg" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80" alt="16:9 Preview" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9;">
+          </div>
+        </div>
+
+        <!-- Caption / Highlights -->
+        <div class="form-group">
+          <label class="form-label">Short Caption / Key Highlight</label>
+          <textarea id="photoCaption" class="form-textarea" rows="2" placeholder="e.g. 12 Scale-up founders discussing international GTM and SaaS playbooks..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 1.2rem;">
+          <button type="button" class="btn btn-outline-emerald" onclick="closeModal('addMeetingPhotoModal')">Cancel</button>
+          <button type="submit" class="btn btn-emerald" style="padding: 0.8rem 1.6rem;">ADD PHOTO TO SLIDER</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/app.js?v=6.0"></script>
+</body>
+</html>
