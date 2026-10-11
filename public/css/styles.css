@@ -2686,5 +2686,18 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
   color: var(--grey-500);
 }
 
+/* High-Performance Rendering & Speed Optimizations */
+#how-it-works,
+#community,
+#stories,
+#meetingPhotosSection,
+#faqs,
+.final-cta-band,
+footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 550px;
+}
 
-
+img {
+  image-rendering: auto;
+}

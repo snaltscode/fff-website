@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 import secrets
 import base64
 import re
+import gzip
 import database
 
 def load_dotenv():
@@ -127,14 +128,22 @@ def sanitize_csv_cell(val):
         return "'" + s
     return s
 
+STATIC_GZIP_CACHE = {}
+
 class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=PUBLIC_DIR, **kwargs)
 
     def end_headers(self):
-        self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-        self.send_header('Pragma', 'no-cache')
-        self.send_header('Expires', '0')
+        effective_path = getattr(self, 'path', '')
+        if effective_path.startswith('/api/'):
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        elif any(effective_path.startswith(p) for p in ('/assets/', '/css/', '/js/')) or any(effective_path.split('?')[0].endswith(ext) for ext in ('.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico', '.woff2', '.woff')):
+            self.send_header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+        else:
+            self.send_header('Cache-Control', 'public, max-age=0, must-revalidate')
         super().end_headers()
 
     def get_effective_path(self):
@@ -156,6 +165,44 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 print("API GET Exception:", e)
                 return self.send_json({'error': str(e)}, 500)
+
+        # High-Speed Gzip compression for static text assets
+        accept_encoding = self.headers.get('Accept-Encoding', '')
+        if 'gzip' in accept_encoding:
+            clean_path = path
+            if clean_path in ('', '/'):
+                clean_path = '/index.html'
+            rel_file = clean_path.lstrip('/')
+            full_file = os.path.join(PUBLIC_DIR, rel_file)
+            if os.path.isfile(full_file):
+                ext = os.path.splitext(full_file)[1].lower()
+                content_types = {
+                    '.html': 'text/html; charset=utf-8',
+                    '.css': 'text/css; charset=utf-8',
+                    '.js': 'application/javascript; charset=utf-8',
+                    '.svg': 'image/svg+xml',
+                    '.json': 'application/json; charset=utf-8'
+                }
+                if ext in content_types:
+                    try:
+                        mtime = os.path.getmtime(full_file)
+                        cache_key = (full_file, mtime)
+                        compressed = STATIC_GZIP_CACHE.get(cache_key)
+                        if not compressed:
+                            with open(full_file, 'rb') as f:
+                                raw_bytes = f.read()
+                            compressed = gzip.compress(raw_bytes, compresslevel=6)
+                            STATIC_GZIP_CACHE[cache_key] = compressed
+
+                        self.send_response(200)
+                        self.send_header('Content-Type', content_types[ext])
+                        self.send_header('Content-Encoding', 'gzip')
+                        self.send_header('Content-Length', str(len(compressed)))
+                        self.end_headers()
+                        self.wfile.write(compressed)
+                        return
+                    except Exception:
+                        pass
 
         return super().do_GET()
 
@@ -196,6 +243,19 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def send_json(self, data, status_code=200):
         body = json.dumps(data, default=str).encode('utf-8')
+        accept_encoding = self.headers.get('Accept-Encoding', '')
+        if 'gzip' in accept_encoding and len(body) > 350:
+            compressed = gzip.compress(body, compresslevel=6)
+            self.send_response(status_code)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Encoding', 'gzip')
+            self.send_header('Content-Length', str(len(compressed)))
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+            self.end_headers()
+            self.wfile.write(compressed)
+            return
+
         self.send_response(status_code)
         self.send_header('Content-Type', 'application/json')
         self.send_header('Content-Length', str(len(body)))

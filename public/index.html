@@ -8,8 +8,12 @@
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css?v=8.0">
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="dns-prefetch" href="https://accounts.google.com">
+  <link rel="preload" as="image" href="/assets/hero_banner.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/styles.css?v=9.0">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
@@ -21,7 +25,7 @@
   <header class="navbar" id="mainNavbar">
     <div class="nav-container">
       <a href="#" class="nav-brand">
-        <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="nav-logo" id="navLogo">
+        <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="nav-logo" id="navLogo" width="42" height="42" decoding="async">
         <div class="nav-brand-text">
           <div class="nav-title">FOUNDER FOR FOUNDER</div>
           <div class="nav-subtitle" id="navSubtitle">CREATE. CONNECT. COLLABORATE.</div>
@@ -98,13 +102,13 @@
         <!-- Slanted Capsule Collage Graphics -->
         <div class="capsule-collage">
           <div class="capsule-item capsule-item-1">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Founders Meeting" class="capsule-img" id="heroCapsule1">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Founders Meeting" class="capsule-img" id="heroCapsule1" width="140" height="280" fetchpriority="high" decoding="async">
           </div>
           <div class="capsule-item capsule-item-2">
-            <img src="/assets/hero_banner.jpg" alt="Business Leaders Meeting" class="capsule-img" id="heroCapsule2">
+            <img src="/assets/hero_banner.jpg" alt="Business Leaders Meeting" class="capsule-img" id="heroCapsule2" width="160" height="320" fetchpriority="high" decoding="async">
           </div>
           <div class="capsule-item capsule-item-3">
-            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Founder Discussion" class="capsule-img" id="heroCapsule3">
+            <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Founder Discussion" class="capsule-img" id="heroCapsule3" width="130" height="260" fetchpriority="high" decoding="async">
           </div>
         </div>
       </div>
@@ -135,7 +139,7 @@
       <div class="philosophy-grid">
         <!-- Card 1: Curated Founder Circle -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Curated Founder Circle" class="format-card-bg" id="philosophyImg1">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Curated Founder Circle" class="format-card-bg" id="philosophyImg1" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Curated Network</span>
@@ -148,7 +152,7 @@
 
         <!-- Card 2: Shared Experiences -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Shared Experiences" class="format-card-bg" id="philosophyImg2">
+          <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Shared Experiences" class="format-card-bg" id="philosophyImg2" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Real Connections</span>
@@ -161,7 +165,7 @@
 
         <!-- Card 3: Needs & Wants Engine -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Needs & Wants Engine" class="format-card-bg" id="philosophyImg3">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Needs & Wants Engine" class="format-card-bg" id="philosophyImg3" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Opportunity Exchange</span>
@@ -174,7 +178,7 @@
 
         <!-- Card 4: Leads & Introductions -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Leads & Introductions" class="format-card-bg" id="philosophyImg4">
+          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Leads & Introductions" class="format-card-bg" id="philosophyImg4" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Trusted Referrals</span>
@@ -205,7 +209,7 @@
         
         <!-- Pillar 1: Play Together -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80" alt="Play Together - Sports and Movement" class="format-card-bg" id="formatImgPlay">
+          <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80" alt="Play Together - Sports and Movement" class="format-card-bg" id="formatImgPlay" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Sports & Movement</span>
@@ -218,7 +222,7 @@
 
         <!-- Pillar 2: Explore Together -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="Explore Together - Outdoor and Adventure" class="format-card-bg" id="formatImgExplore">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="Explore Together - Outdoor and Adventure" class="format-card-bg" id="formatImgExplore" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Outdoor & Adventure</span>
@@ -231,7 +235,7 @@
 
         <!-- Pillar 3: Dine Together -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dine Together - Food and Culinary" class="format-card-bg" id="formatImgDine">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dine Together - Food and Culinary" class="format-card-bg" id="formatImgDine" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Food & Culinary</span>
@@ -244,7 +248,7 @@
 
         <!-- Pillar 4: Build Together -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Build Together - Business and Peer Advisory" class="format-card-bg" id="formatImgBuild">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Build Together - Business and Peer Advisory" class="format-card-bg" id="formatImgBuild" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Business & Peer Advisory</span>
@@ -257,7 +261,7 @@
 
         <!-- Pillar 5: Celebrate Together -->
         <div class="format-card">
-          <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Celebrate Together - Socials, Evening Toast, and Celebrations" class="format-card-bg" id="formatImgCelebrate">
+          <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Celebrate Together - Socials, Evening Toast, and Celebrations" class="format-card-bg" id="formatImgCelebrate" loading="lazy" decoding="async" width="400" height="225">
           <div class="format-card-overlay"></div>
           <div class="format-card-content">
             <span class="format-badge">Socials & Reflection</span>
@@ -338,7 +342,7 @@
         </div>
 
         <div style="text-align: center;">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" id="featureTabImage" class="tab-display-image" alt="Feature Overview">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" id="featureTabImage" class="tab-display-image" alt="Feature Overview" loading="lazy" decoding="async" width="800" height="450">
           <div style="margin-top: 1.5rem;" id="featureTabDescription">
             <h3 style="font-size: 1.4rem; color: var(--ink-primary); margin-bottom: 8px;" id="featureTabTitle">Curated Founder Network</h3>
             <p style="font-size: 0.95rem; color: var(--grey-500);" id="featureTabText">Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth.</p>
@@ -453,7 +457,7 @@
       <div class="footer-grid">
         <div>
           <div class="footer-brand">
-            <img src="/assets/logo.svg" alt="Founder for Founder Logo" style="height: 40px;" id="footerLogo">
+            <img src="/assets/logo.svg" alt="Founder for Founder Logo" style="height: 40px; width: 40px;" id="footerLogo" loading="lazy" decoding="async" width="40" height="40">
             <span style="font-family: var(--font-heading); font-weight: 700; color: #fff; font-size: 1.1rem;">FOUNDER FOR FOUNDER</span>
           </div>
           <p style="font-size: 0.9rem; margin-bottom: 1rem; color: var(--mint-200);">A curated business network connecting founders, entrepreneurs, business owners, and professionals across India.</p>
@@ -516,7 +520,7 @@
   <div id="portalPage" class="portal-container">
     <div class="portal-sidebar">
       <div style="text-align: center; margin-bottom: 2rem;">
-        <img src="/assets/logo.svg" style="height: 52px; margin-bottom: 8px;">
+        <img src="/assets/logo.svg" style="height: 52px; width: 52px; margin-bottom: 8px;" alt="Member Portal Logo" loading="lazy" decoding="async" width="52" height="52">
         <div style="font-family: var(--font-heading); color: var(--emerald-700); font-weight: 700; font-size: 1rem;">MEMBER PORTAL</div>
       </div>
 
@@ -1029,7 +1033,7 @@
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem;">
                 <!-- Brand Logo -->
                 <div style="display: flex; gap: 1rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_logo_url" src="/assets/logo.svg" alt="Logo Preview" style="width: 70px; height: 50px; object-fit: contain; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; padding: 4px; flex-shrink: 0;">
+                  <img id="prev_logo_url" src="/assets/logo.svg" alt="Logo Preview" loading="lazy" decoding="async" style="width: 70px; height: 50px; object-fit: contain; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; padding: 4px; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Navbar &amp; Footer Logo</label>
@@ -1046,7 +1050,7 @@
 
                 <!-- Hero Banner Background -->
                 <div style="display: flex; gap: 1rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_hero_banner_url" src="/assets/hero_banner.jpg" alt="Hero Banner Preview" style="width: 70px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_hero_banner_url" src="/assets/hero_banner.jpg" alt="Hero Banner Preview" loading="lazy" decoding="async" style="width: 70px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Hero Background Image</label>
@@ -1084,7 +1088,7 @@
                 
                 <!-- Capsule 1 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_hero_capsule_1_url" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Capsule 1" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_hero_capsule_1_url" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Capsule 1" loading="lazy" decoding="async" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Capsule 1 (Left)</label>
@@ -1101,7 +1105,7 @@
 
                 <!-- Capsule 2 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_hero_capsule_2_url" src="/assets/hero_banner.jpg" alt="Capsule 2" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_hero_capsule_2_url" src="/assets/hero_banner.jpg" alt="Capsule 2" loading="lazy" decoding="async" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Capsule 2 (Center)</label>
@@ -1118,7 +1122,7 @@
 
                 <!-- Capsule 3 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_hero_capsule_3_url" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Capsule 3" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_hero_capsule_3_url" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Capsule 3" loading="lazy" decoding="async" style="width: 50px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">Capsule 3 (Right)</label>
@@ -1145,7 +1149,7 @@
                 
                 <!-- Philosophy 1 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_philosophy_img_1" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Philosophy 1" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_philosophy_img_1" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Philosophy 1" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">1. Curated Founder Circle</label>
@@ -1162,7 +1166,7 @@
 
                 <!-- Philosophy 2 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_philosophy_img_2" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Philosophy 2" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_philosophy_img_2" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Philosophy 2" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">2. Shared Experiences</label>
@@ -1179,7 +1183,7 @@
 
                 <!-- Philosophy 3 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_philosophy_img_3" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Philosophy 3" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_philosophy_img_3" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Philosophy 3" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">3. Needs & Wants Engine</label>
@@ -1196,7 +1200,7 @@
 
                 <!-- Philosophy 4 -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_philosophy_img_4" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Philosophy 4" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_philosophy_img_4" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Philosophy 4" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">4. Leads & Introductions</label>
@@ -1223,7 +1227,7 @@
                 
                 <!-- Format 1: Play -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_format_img_play" src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80" alt="Play Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_format_img_play" src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80" alt="Play Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">1. Play Together</label>
@@ -1240,7 +1244,7 @@
 
                 <!-- Format 2: Explore -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_format_img_explore" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="Explore Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_format_img_explore" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="Explore Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">2. Explore Together</label>
@@ -1257,7 +1261,7 @@
 
                 <!-- Format 3: Dine -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_format_img_dine" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dine Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_format_img_dine" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dine Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">3. Dine Together</label>
@@ -1274,7 +1278,7 @@
 
                 <!-- Format 4: Build -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_format_img_build" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Build Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_format_img_build" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Build Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">4. Build Together</label>
@@ -1291,7 +1295,7 @@
 
                 <!-- Format 5: Celebrate -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_format_img_celebrate" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Celebrate Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_format_img_celebrate" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Celebrate Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">5. Celebrate Together</label>
@@ -1318,7 +1322,7 @@
                 
                 <!-- Tab 1: Curated Founder Network -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_feature_img_network" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Network Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_feature_img_network" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Network Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">1. Founder Network</label>
@@ -1335,7 +1339,7 @@
 
                 <!-- Tab 2: Needs & Wants -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_feature_img_needs" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Needs Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_feature_img_needs" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Needs Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">2. Needs & Wants</label>
@@ -1352,7 +1356,7 @@
 
                 <!-- Tab 3: CRM -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_feature_img_crm" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="CRM Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_feature_img_crm" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="CRM Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">3. Leads & CRM</label>
@@ -1369,7 +1373,7 @@
 
                 <!-- Tab 4: Experiences -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_feature_img_meetings" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Experiences Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_feature_img_meetings" src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80" alt="Experiences Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">4. Founder Experiences</label>
@@ -1386,7 +1390,7 @@
 
                 <!-- Tab 5: Collaborations -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_feature_img_collaborations" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Collaborations Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_feature_img_collaborations" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Collaborations Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">5. Collaborations</label>
@@ -1403,7 +1407,7 @@
 
                 <!-- Tab 6: Challenges -->
                 <div style="display: flex; gap: 0.85rem; align-items: center; background: var(--mint-50); border: 1px solid var(--mint-200); padding: 0.85rem; border-radius: var(--radius-md);">
-                  <img id="prev_feature_img_challenges" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Challenges Preview" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
+                  <img id="prev_feature_img_challenges" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Challenges Preview" loading="lazy" decoding="async" style="width: 65px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--grey-300); background: #fff; flex-shrink: 0;">
                   <div style="flex: 1; min-width: 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
                       <label class="form-label" style="font-weight: 700; font-size: 0.82rem; margin: 0; color: var(--emerald-900);">6. Challenges</label>
@@ -2395,7 +2399,7 @@
         <div style="margin-bottom: 1rem;">
           <div style="font-size: 0.76rem; font-weight: 700; color: var(--grey-600); text-transform: uppercase; margin-bottom: 4px;">Live Preview (16:9 Ratio):</div>
           <div style="aspect-ratio: 16 / 9; width: 100%; border-radius: 8px; overflow: hidden; background: #042F2C; border: 1px solid var(--mint-200); position: relative; display: flex; align-items: center; justify-content: center;">
-            <img id="photoPreviewImg" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80" alt="16:9 Preview" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9;">
+            <img id="photoPreviewImg" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80" alt="16:9 Preview" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9;">
           </div>
         </div>
 
@@ -2413,6 +2417,6 @@
     </div>
   </div>
 
-  <script src="/js/app.js?v=6.0"></script>
+  <script src="/js/app.js?v=8.0" defer></script>
 </body>
 </html>

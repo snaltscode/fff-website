@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchAuthConfig();
   fetchPublicContent();
   initScrollListeners();
+  initVisibilityObservers();
   checkURLHash();
   if (state.token) {
     checkAuthSession();
@@ -69,13 +70,47 @@ function checkURLHash() {
   }
 }
 
-// Scroll Event Listeners
+// Throttled Scroll Event Listeners for 60/120fps Smooth Scrolling
+let isScrollTicking = false;
 function initScrollListeners() {
   window.addEventListener('scroll', () => {
-    updateScrollProgress();
-    updateTimelineProgress();
-    handleNavbarScroll();
-  });
+    if (!isScrollTicking) {
+      window.requestAnimationFrame(() => {
+        updateScrollProgress();
+        updateTimelineProgress();
+        handleNavbarScroll();
+        isScrollTicking = false;
+      });
+      isScrollTicking = true;
+    }
+  }, { passive: true });
+}
+
+// Pause offscreen infinite animations to conserve GPU/CPU & battery
+function initVisibilityObservers() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const sliderTrack = document.getElementById('meetingPhotosTrack');
+  const sliderSection = document.getElementById('meetingPhotosSection');
+  if (sliderTrack && sliderSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        sliderTrack.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+      });
+    }, { rootMargin: '200px 0px', threshold: 0 });
+    observer.observe(sliderSection);
+  }
+
+  const marqueeContent = document.querySelector('.marquee-content');
+  const marqueeWrapper = document.querySelector('.marquee-wrapper');
+  if (marqueeContent && marqueeWrapper) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        marqueeContent.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+      });
+    }, { rootMargin: '200px 0px', threshold: 0 });
+    observer.observe(marqueeWrapper);
+  }
 }
 
 function updateScrollProgress() {
@@ -83,17 +118,22 @@ function updateScrollProgress() {
   if (!bar) return;
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollTop / docHeight) * 100;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
   bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
 }
 
+let isNavbarScrolled = false;
 function handleNavbarScroll() {
   const nav = document.getElementById('mainNavbar');
   if (!nav) return;
-  if (window.scrollY > 40) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
+  const shouldBeScrolled = window.scrollY > 40;
+  if (shouldBeScrolled !== isNavbarScrolled) {
+    isNavbarScrolled = shouldBeScrolled;
+    if (isNavbarScrolled) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
   }
 }
 
@@ -159,11 +199,21 @@ function setApplicantType(type) {
   else if (type === 'Professional') document.getElementById('segProfessional').classList.add('active');
 }
 
-// Fetch & Render Public Content
-async function fetchPublicContent() {
+// Fetch & Render Public Content with 60s Client-Side Cache
+let cachedPublicData = null;
+let cachedPublicTimestamp = 0;
+
+async function fetchPublicContent(force = false) {
   try {
-    const res = await fetch('/api/public/content');
-    const data = await res.json();
+    let data;
+    if (!force && cachedPublicData && (Date.now() - cachedPublicTimestamp < 60000)) {
+      data = cachedPublicData;
+    } else {
+      const res = await fetch('/api/public/content');
+      data = await res.json();
+      cachedPublicData = data;
+      cachedPublicTimestamp = Date.now();
+    }
 
     // Dynamic Branding & Settings
     if (data.settings) {
@@ -846,7 +896,7 @@ function renderMembers(members) {
     card.className = 'card';
     card.innerHTML = `
       <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-        <img src="${m.profile_photo || '/assets/logo.svg'}" style="width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--mint-200); object-fit: cover;">
+        <img src="${m.profile_photo || '/assets/logo.svg'}" alt="${m.full_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--mint-200); object-fit: cover;">
         <div>
           <h3 class="card-title" style="font-size: 1.15rem; margin: 0;">${m.full_name}</h3>
           <span style="font-size: 0.85rem; color: var(--emerald-700); font-weight: 700;">${m.designation} at ${m.business_name}</span>
@@ -1796,7 +1846,7 @@ async function loadMeetingsTab() {
       return `
         <div class="meeting-item-card">
           <div style="display: flex; gap: 14px; align-items: flex-start; flex: 2; min-width: 280px;">
-            <img src="${m.partner_avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
+            <img src="${m.partner_avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
             <div>
               <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
                 <span style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary);">${m.partner_name}</span>
@@ -1887,7 +1937,7 @@ function renderMeetingPhotosSlider(photos) {
     const card = document.createElement('div');
     card.className = 'meeting-photo-card';
     card.innerHTML = `
-      <img src="${p.image_url}" alt="${p.title}" class="meeting-photo-img" loading="lazy">
+      <img src="${p.image_url}" alt="${p.title}" class="meeting-photo-img" loading="lazy" decoding="async" width="440" height="248">
       <div class="meeting-photo-overlay">
         <span class="meeting-photo-tag">${p.tag || 'Curated Gathering'}</span>
         <h4 class="meeting-photo-title">${p.title}</h4>
@@ -2004,7 +2054,7 @@ function renderAdminMeetingPhotosList(photos) {
   container.innerHTML = photos.map(p => `
     <div style="background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
       <div style="aspect-ratio: 16 / 9; overflow: hidden; background: #042F2C;">
-        <img src="${p.image_url}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9;">
+        <img src="${p.image_url}" alt="${p.title}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9;">
       </div>
       <div style="padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
@@ -2173,7 +2223,7 @@ async function loadChatMessages() {
 
       return `
         <div class="chat-msg-row ${isMine ? 'mine' : ''}">
-          <img src="${avatar}" alt="${senderName}" class="chat-msg-avatar">
+          <img src="${avatar}" alt="${senderName}" class="chat-msg-avatar" loading="lazy" decoding="async" width="34" height="34">
           <div class="chat-msg-body">
             <div class="chat-msg-sender">
               <strong>${senderName}</strong>
