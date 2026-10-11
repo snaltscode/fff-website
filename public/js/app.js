@@ -46,10 +46,21 @@ const featureTabsData = {
   }
 };
 
-// Initialize App on DOM Loaded
+// Initialize App on DOM Loaded (Instant Hydration + SWR Background Revalidation)
 document.addEventListener('DOMContentLoaded', () => {
-  fetchAuthConfig();
+  // 1. Immediately hydrate DOM from local SWR cache (0ms instant paint)
+  const initialCached = getStoredPublicContent();
+  if (initialCached) {
+    renderPublicContent(initialCached);
+    if (initialCached.settings && initialCached.settings.google_client_id) {
+      state.googleClientId = initialCached.settings.google_client_id;
+      setupGoogleAuth(initialCached.settings.google_client_id);
+    }
+  }
+
+  // 2. Fetch fresh public content in background
   fetchPublicContent();
+  fetchAuthConfig();
   initScrollListeners();
   initVisibilityObservers();
   checkURLHash();
@@ -199,211 +210,247 @@ function setApplicantType(type) {
   else if (type === 'Professional') document.getElementById('segProfessional').classList.add('active');
 }
 
-// Fetch & Render Public Content with 60s Client-Side Cache
+// Persistent Stale-While-Revalidate (SWR) LocalStorage Cache
+const PUBLIC_CACHE_STORAGE_KEY = 'f4f_public_content_cache_v2';
 let cachedPublicData = null;
-let cachedPublicTimestamp = 0;
+
+function getStoredPublicContent() {
+  try {
+    const raw = localStorage.getItem(PUBLIC_CACHE_STORAGE_KEY);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    return obj && obj.data ? obj.data : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function setStoredPublicContent(data) {
+  try {
+    localStorage.setItem(PUBLIC_CACHE_STORAGE_KEY, JSON.stringify({
+      data: data,
+      saved_at: Date.now()
+    }));
+  } catch (e) {}
+}
 
 async function fetchPublicContent(force = false) {
   try {
-    let data;
-    if (!force && cachedPublicData && (Date.now() - cachedPublicTimestamp < 60000)) {
-      data = cachedPublicData;
-    } else {
-      const res = await fetch('/api/public/content');
-      data = await res.json();
-      cachedPublicData = data;
-      cachedPublicTimestamp = Date.now();
-    }
-
-    // Dynamic Branding & Settings
-    if (data.settings) {
-      if (data.settings.club_tagline && document.getElementById('navSubtitle')) {
-        document.getElementById('navSubtitle').innerText = data.settings.club_tagline;
-      }
-      if (data.settings.logo_url) {
-        if (document.getElementById('navLogo')) document.getElementById('navLogo').src = data.settings.logo_url;
-        if (document.getElementById('footerLogo')) document.getElementById('footerLogo').src = data.settings.logo_url;
-      }
-      const heroUrl = data.settings.hero_banner_url || '/assets/hero_banner.jpg';
-      const heroEl = document.getElementById('home');
-      if (heroEl) {
-        heroEl.style.backgroundImage = `linear-gradient(to right, rgba(243, 251, 247, 0.94) 0%, rgba(243, 251, 247, 0.78) 42%, rgba(243, 251, 247, 0.35) 75%, rgba(243, 251, 247, 0.08) 100%), url('${heroUrl}')`;
-        heroEl.style.backgroundSize = 'cover';
-        heroEl.style.backgroundPosition = 'center right';
-        heroEl.style.backgroundRepeat = 'no-repeat';
-      }
-      if (data.settings.terms_policy && document.getElementById('termsModalContent')) document.getElementById('termsModalContent').innerText = data.settings.terms_policy;
-      if (data.settings.privacy_policy && document.getElementById('privacyModalContent')) document.getElementById('privacyModalContent').innerText = data.settings.privacy_policy;
-      if (data.settings.refund_policy && document.getElementById('refundModalContent')) document.getElementById('refundModalContent').innerText = data.settings.refund_policy;
-      if (data.settings.community_guidelines && document.getElementById('guidelinesModalContent')) document.getElementById('guidelinesModalContent').innerText = data.settings.community_guidelines;
-
-      // Dynamic Hero Collage Capsules
-      if (data.settings.hero_capsule_1_url && document.getElementById('heroCapsule1')) {
-        document.getElementById('heroCapsule1').src = data.settings.hero_capsule_1_url;
-      }
-      if (data.settings.hero_capsule_2_url && document.getElementById('heroCapsule2')) {
-        document.getElementById('heroCapsule2').src = data.settings.hero_capsule_2_url;
-      }
-      if (data.settings.hero_capsule_3_url && document.getElementById('heroCapsule3')) {
-        document.getElementById('heroCapsule3').src = data.settings.hero_capsule_3_url;
-      }
-
-      // Dynamic Core Philosophy Images (4 Cards)
-      if (data.settings.philosophy_img_1 && document.getElementById('philosophyImg1')) {
-        document.getElementById('philosophyImg1').src = data.settings.philosophy_img_1;
-      }
-      if (data.settings.philosophy_img_2 && document.getElementById('philosophyImg2')) {
-        document.getElementById('philosophyImg2').src = data.settings.philosophy_img_2;
-      }
-      if (data.settings.philosophy_img_3 && document.getElementById('philosophyImg3')) {
-        document.getElementById('philosophyImg3').src = data.settings.philosophy_img_3;
-      }
-      if (data.settings.philosophy_img_4 && document.getElementById('philosophyImg4')) {
-        document.getElementById('philosophyImg4').src = data.settings.philosophy_img_4;
-      }
-
-      // Dynamic Ways We Connect and Collaborate Images (5 Pillars)
-      if (data.settings.format_img_play && document.getElementById('formatImgPlay')) {
-        document.getElementById('formatImgPlay').src = data.settings.format_img_play;
-      }
-      if (data.settings.format_img_explore && document.getElementById('formatImgExplore')) {
-        document.getElementById('formatImgExplore').src = data.settings.format_img_explore;
-      }
-      if (data.settings.format_img_dine && document.getElementById('formatImgDine')) {
-        document.getElementById('formatImgDine').src = data.settings.format_img_dine;
-      }
-      if (data.settings.format_img_build && document.getElementById('formatImgBuild')) {
-        document.getElementById('formatImgBuild').src = data.settings.format_img_build;
-      }
-      if (data.settings.format_img_celebrate && document.getElementById('formatImgCelebrate')) {
-        document.getElementById('formatImgCelebrate').src = data.settings.format_img_celebrate;
-      }
-
-      // Dynamic Platform Feature Showcase Images
-      if (data.settings.feature_img_network) featureTabsData.network.image = data.settings.feature_img_network;
-      if (data.settings.feature_img_needs) featureTabsData.needs.image = data.settings.feature_img_needs;
-      if (data.settings.feature_img_crm) featureTabsData.crm.image = data.settings.feature_img_crm;
-      if (data.settings.feature_img_meetings) featureTabsData.meetings.image = data.settings.feature_img_meetings;
-      if (data.settings.feature_img_collaborations) featureTabsData.collaborations.image = data.settings.feature_img_collaborations;
-      if (data.settings.feature_img_challenges) featureTabsData.challenges.image = data.settings.feature_img_challenges;
-
-      const activeTabImg = document.getElementById('featureTabImage');
-      if (activeTabImg && data.settings.feature_img_network) {
-        const activeTabBtn = document.querySelector('.tabs-list .tab-btn.active');
-        if (!activeTabBtn || activeTabBtn.textContent.includes('Curated Founder Network')) {
-          activeTabImg.src = data.settings.feature_img_network;
-        }
+    // 1. Immediately hydrate from memory or localStorage if available
+    if (!force && !cachedPublicData) {
+      const stored = getStoredPublicContent();
+      if (stored) {
+        cachedPublicData = stored;
+        renderPublicContent(stored);
       }
     }
 
-    // Hero Copy
-    if (data.hero) {
-      if (document.getElementById('heroTitle')) {
-        let h = data.hero.heading;
-        if (h.includes('Real Connections')) h = h.replace('Real Connections', '<span class="text-emerald">Real Connections</span>');
-        document.getElementById('heroTitle').innerHTML = h;
-      }
-      if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').innerText = data.hero.subheading;
+    // 2. Fetch fresh updates from API in the background
+    const res = await fetch('/api/public/content');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    cachedPublicData = data;
+    setStoredPublicContent(data);
+    renderPublicContent(data);
+
+    // Auto-setup Google OAuth if client ID is provided in public settings
+    if (data.settings && data.settings.google_client_id && !state.googleClientId) {
+      state.googleClientId = data.settings.google_client_id;
+      setupGoogleAuth(data.settings.google_client_id);
     }
-
-    // Live Database Counters
-    if (data.counters) {
-      const activeMembersTotal = 1528 + (data.counters.active_members || 0);
-      if (document.getElementById('counterMembers')) {
-        document.getElementById('counterMembers').innerText = `${activeMembersTotal}+`;
-      }
-      const eventsTotal = Math.max(27, data.counters.published_events || 27);
-      if (document.getElementById('counterEvents')) {
-        document.getElementById('counterEvents').innerText = `${eventsTotal}`;
-      }
-    }
-
-    // Upcoming Experiences Showcase
-    const eventsGrid = document.getElementById('upcomingEventsGrid');
-    if (eventsGrid && data.upcoming_events) {
-      eventsGrid.innerHTML = '';
-      data.upcoming_events.forEach(evt => {
-        const card = document.createElement('div');
-        card.className = 'card';
-          const price = Number(evt.price_amount || 0);
-          const priceBadge = price > 0
-            ? `<span class="badge" style="background: rgba(212,175,55,0.15); color: var(--gold-600); border: 1px solid rgba(212,175,55,0.3); font-weight: 800;">₹${price.toLocaleString('en-IN')} ENTRY FEE</span>`
-            : `<span class="badge badge-active" style="font-size: 0.72rem;">FREE FOR MEMBERS</span>`;
-
-            const mapUrl = evt.google_maps_url || (evt.venue ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((evt.venue || '') + ' ' + (evt.city || ''))}` : null);
-            const mapLink = mapUrl ? `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-700); font-size: 0.76rem; font-weight: 700; text-decoration: underline; margin-left: 6px; display: inline-flex; align-items: center; gap: 3px;" title="View Venue on Google Maps"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Google Maps</a>` : '';
-
-            card.innerHTML = `
-              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
-                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                  <span class="badge badge-verified">${evt.category || 'FOUNDER EXPERIENCE'}</span>
-                  ${priceBadge}
-                </div>
-                <span style="font-size: 0.78rem; font-weight: 800; color: var(--gold-500); text-transform: uppercase;">${evt.signature_format || 'Signature Event'}</span>
-              </div>
-              <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 8px;">${evt.title}</h3>
-              <p class="card-text" style="font-size: 0.88rem; color: var(--emerald-900); font-weight: 700; margin-bottom: 4px;">
-                <span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> 
-                ${evt.venue} (${evt.city})${mapLink}
-              </p>
-              <p class="card-text" style="font-size: 0.85rem; color: var(--grey-500); margin-bottom: 12px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${evt.event_date} | ${evt.time_str}</p>
-              <p class="card-text" style="font-size: 0.9rem; margin-bottom: 16px;">${evt.description}</p>
-              <button class="btn btn-emerald" style="width: 100%; font-size: 0.82rem; padding: 0.6rem 1rem; border-radius: 6px !important;" onclick="openShowInterestModal()">RSVP / SHOW INTEREST <span class="btn-circle-icon">→</span></button>
-            `;
-        eventsGrid.appendChild(card);
-      });
-    }
-
-    // FAQ Accordion
-    const faqContainer = document.getElementById('faqContainer');
-    if (faqContainer && data.faqs) {
-      faqContainer.innerHTML = '';
-      data.faqs.forEach((faq, idx) => {
-        const div = document.createElement('div');
-        div.style.cssText = 'background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: var(--radius-md); padding: 1.25rem; transition: all 0.2s ease; cursor: pointer;';
-        div.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.05rem; color: var(--ink-primary);" onclick="toggleFAQ(${idx})">
-            <span>${faq.question}</span>
-            <span id="faqIcon-${idx}" style="color: var(--emerald-700); font-size: 1.2rem; font-weight: 800;">+</span>
-          </div>
-          <div id="faqBody-${idx}" style="display: none; margin-top: 10px; font-size: 0.92rem; color: var(--grey-500); line-height: 1.6;">
-            ${faq.answer}
-          </div>
-        `;
-        faqContainer.appendChild(div);
-      });
-    }
-
-    // Curated Meeting Photos Slider (16:9 Continuous Steady Slide from Right to Left)
-    const meetingPhotosTrack = document.getElementById('meetingPhotosTrack');
-    if (meetingPhotosTrack && (data.meeting_photos || data.gallery)) {
-      renderMeetingPhotosSlider(data.meeting_photos || data.gallery);
-    }
-
-    // Testimonials
-    const testimonialsContainer = document.getElementById('testimonialsContainer');
-    if (testimonialsContainer && data.testimonials) {
-      testimonialsContainer.innerHTML = '';
-      data.testimonials.forEach(t => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <div style="font-size: 1.6rem; color: var(--emerald-700); margin-bottom: 8px;">“</div>
-          <p class="card-text" style="font-size: 0.95rem; margin-bottom: 16px;">${t.quote}</p>
-          <div style="border-top: 1px solid var(--border-hairline); padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
-            <div>
-              <h4 style="font-size: 0.95rem; color: var(--ink-primary); margin: 0;">${t.author_name}</h4>
-              <span style="font-size: 0.8rem; color: var(--emerald-700); font-weight: 700;">${t.author_title} • ${t.business_name}</span>
-            </div>
-            <span class="badge badge-verified">VERIFIED</span>
-          </div>
-        `;
-        testimonialsContainer.appendChild(card);
-      });
-    }
-
   } catch (err) {
-    console.error("Error loading public content:", err);
+    console.warn("Public content background revalidation notice:", err);
+  }
+}
+
+function renderPublicContent(data) {
+  if (!data) return;
+
+  // Dynamic Branding & Settings
+  if (data.settings) {
+    if (data.settings.club_tagline && document.getElementById('navSubtitle')) {
+      document.getElementById('navSubtitle').innerText = data.settings.club_tagline;
+    }
+    if (data.settings.logo_url) {
+      if (document.getElementById('navLogo')) document.getElementById('navLogo').src = data.settings.logo_url;
+      if (document.getElementById('footerLogo')) document.getElementById('footerLogo').src = data.settings.logo_url;
+    }
+    const heroUrl = data.settings.hero_banner_url || '/assets/hero_banner.jpg';
+    const heroEl = document.getElementById('home');
+    if (heroEl) {
+      heroEl.style.backgroundImage = `linear-gradient(to right, rgba(243, 251, 247, 0.94) 0%, rgba(243, 251, 247, 0.78) 42%, rgba(243, 251, 247, 0.35) 75%, rgba(243, 251, 247, 0.08) 100%), url('${heroUrl}')`;
+      heroEl.style.backgroundSize = 'cover';
+      heroEl.style.backgroundPosition = 'center right';
+      heroEl.style.backgroundRepeat = 'no-repeat';
+    }
+    if (data.settings.terms_policy && document.getElementById('termsModalContent')) document.getElementById('termsModalContent').innerText = data.settings.terms_policy;
+    if (data.settings.privacy_policy && document.getElementById('privacyModalContent')) document.getElementById('privacyModalContent').innerText = data.settings.privacy_policy;
+    if (data.settings.refund_policy && document.getElementById('refundModalContent')) document.getElementById('refundModalContent').innerText = data.settings.refund_policy;
+    if (data.settings.community_guidelines && document.getElementById('guidelinesModalContent')) document.getElementById('guidelinesModalContent').innerText = data.settings.community_guidelines;
+
+    // Dynamic Hero Collage Capsules
+    if (data.settings.hero_capsule_1_url && document.getElementById('heroCapsule1')) {
+      document.getElementById('heroCapsule1').src = data.settings.hero_capsule_1_url;
+    }
+    if (data.settings.hero_capsule_2_url && document.getElementById('heroCapsule2')) {
+      document.getElementById('heroCapsule2').src = data.settings.hero_capsule_2_url;
+    }
+    if (data.settings.hero_capsule_3_url && document.getElementById('heroCapsule3')) {
+      document.getElementById('heroCapsule3').src = data.settings.hero_capsule_3_url;
+    }
+
+    // Dynamic Core Philosophy Images (4 Cards)
+    if (data.settings.philosophy_img_1 && document.getElementById('philosophyImg1')) {
+      document.getElementById('philosophyImg1').src = data.settings.philosophy_img_1;
+    }
+    if (data.settings.philosophy_img_2 && document.getElementById('philosophyImg2')) {
+      document.getElementById('philosophyImg2').src = data.settings.philosophy_img_2;
+    }
+    if (data.settings.philosophy_img_3 && document.getElementById('philosophyImg3')) {
+      document.getElementById('philosophyImg3').src = data.settings.philosophy_img_3;
+    }
+    if (data.settings.philosophy_img_4 && document.getElementById('philosophyImg4')) {
+      document.getElementById('philosophyImg4').src = data.settings.philosophy_img_4;
+    }
+
+    // Dynamic Ways We Connect and Collaborate Images (5 Pillars)
+    if (data.settings.format_img_play && document.getElementById('formatImgPlay')) {
+      document.getElementById('formatImgPlay').src = data.settings.format_img_play;
+    }
+    if (data.settings.format_img_explore && document.getElementById('formatImgExplore')) {
+      document.getElementById('formatImgExplore').src = data.settings.format_img_explore;
+    }
+    if (data.settings.format_img_dine && document.getElementById('formatImgDine')) {
+      document.getElementById('formatImgDine').src = data.settings.format_img_dine;
+    }
+    if (data.settings.format_img_build && document.getElementById('formatImgBuild')) {
+      document.getElementById('formatImgBuild').src = data.settings.format_img_build;
+    }
+    if (data.settings.format_img_celebrate && document.getElementById('formatImgCelebrate')) {
+      document.getElementById('formatImgCelebrate').src = data.settings.format_img_celebrate;
+    }
+
+    // Dynamic Platform Feature Showcase Images
+    if (data.settings.feature_img_network) featureTabsData.network.image = data.settings.feature_img_network;
+    if (data.settings.feature_img_needs) featureTabsData.needs.image = data.settings.feature_img_needs;
+    if (data.settings.feature_img_crm) featureTabsData.crm.image = data.settings.feature_img_crm;
+    if (data.settings.feature_img_meetings) featureTabsData.meetings.image = data.settings.feature_img_meetings;
+    if (data.settings.feature_img_collaborations) featureTabsData.collaborations.image = data.settings.feature_img_collaborations;
+    if (data.settings.feature_img_challenges) featureTabsData.challenges.image = data.settings.feature_img_challenges;
+
+    const activeTabImg = document.getElementById('featureTabImage');
+    if (activeTabImg && data.settings.feature_img_network) {
+      const activeTabBtn = document.querySelector('.tabs-list .tab-btn.active');
+      if (!activeTabBtn || activeTabBtn.textContent.includes('Curated Founder Network')) {
+        activeTabImg.src = data.settings.feature_img_network;
+      }
+    }
+  }
+
+  // Hero Copy
+  if (data.hero) {
+    if (document.getElementById('heroTitle')) {
+      let h = data.hero.heading;
+      if (h.includes('Real Connections')) h = h.replace('Real Connections', '<span class="text-emerald">Real Connections</span>');
+      document.getElementById('heroTitle').innerHTML = h;
+    }
+    if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').innerText = data.hero.subheading;
+  }
+
+  // Live Database Counters
+  if (data.counters) {
+    const activeMembersTotal = 1528 + (data.counters.active_members || 0);
+    if (document.getElementById('counterMembers')) {
+      document.getElementById('counterMembers').innerText = `${activeMembersTotal}+`;
+    }
+    const eventsTotal = Math.max(27, data.counters.published_events || 27);
+    if (document.getElementById('counterEvents')) {
+      document.getElementById('counterEvents').innerText = `${eventsTotal}`;
+    }
+  }
+
+  // Upcoming Experiences Showcase
+  const eventsGrid = document.getElementById('upcomingEventsGrid');
+  if (eventsGrid && data.upcoming_events) {
+    eventsGrid.innerHTML = '';
+    data.upcoming_events.forEach(evt => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const price = Number(evt.price_amount || 0);
+      const priceBadge = price > 0
+        ? `<span class="badge" style="background: rgba(212,175,55,0.15); color: var(--gold-600); border: 1px solid rgba(212,175,55,0.3); font-weight: 800;">₹${price.toLocaleString('en-IN')} ENTRY FEE</span>`
+        : `<span class="badge badge-active" style="font-size: 0.72rem;">FREE FOR MEMBERS</span>`;
+
+      const mapUrl = evt.google_maps_url || (evt.venue ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((evt.venue || '') + ' ' + (evt.city || ''))}` : null);
+      const mapLink = mapUrl ? `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-700); font-size: 0.76rem; font-weight: 700; text-decoration: underline; margin-left: 6px; display: inline-flex; align-items: center; gap: 3px;" title="View Venue on Google Maps"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Google Maps</a>` : '';
+
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <span class="badge badge-verified">${evt.category || 'FOUNDER EXPERIENCE'}</span>
+            ${priceBadge}
+          </div>
+          <span style="font-size: 0.78rem; font-weight: 800; color: var(--gold-500); text-transform: uppercase;">${evt.signature_format || 'Signature Event'}</span>
+        </div>
+        <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 8px;">${evt.title}</h3>
+        <p class="card-text" style="font-size: 0.88rem; color: var(--emerald-900); font-weight: 700; margin-bottom: 4px;">
+          <span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> 
+          ${evt.venue} (${evt.city})${mapLink}
+        </p>
+        <p class="card-text" style="font-size: 0.85rem; color: var(--grey-500); margin-bottom: 12px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${evt.event_date} | ${evt.time_str}</p>
+        <p class="card-text" style="font-size: 0.9rem; margin-bottom: 16px;">${evt.description}</p>
+        <button class="btn btn-emerald" style="width: 100%; font-size: 0.82rem; padding: 0.6rem 1rem; border-radius: 6px !important;" onclick="openShowInterestModal()">RSVP / SHOW INTEREST <span class="btn-circle-icon">→</span></button>
+      `;
+      eventsGrid.appendChild(card);
+    });
+  }
+
+  // FAQ Accordion
+  const faqContainer = document.getElementById('faqContainer');
+  if (faqContainer && data.faqs) {
+    faqContainer.innerHTML = '';
+    data.faqs.forEach((faq, idx) => {
+      const div = document.createElement('div');
+      div.style.cssText = 'background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: var(--radius-md); padding: 1.25rem; transition: all 0.2s ease; cursor: pointer;';
+      div.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.05rem; color: var(--ink-primary);" onclick="toggleFAQ(${idx})">
+          <span>${faq.question}</span>
+          <span id="faqIcon-${idx}" style="color: var(--emerald-700); font-size: 1.2rem; font-weight: 800;">+</span>
+        </div>
+        <div id="faqBody-${idx}" style="display: none; margin-top: 10px; font-size: 0.92rem; color: var(--grey-500); line-height: 1.6;">
+          ${faq.answer}
+        </div>
+      `;
+      faqContainer.appendChild(div);
+    });
+  }
+
+  // Curated Meeting Photos Slider (16:9 Continuous Steady Slide from Right to Left)
+  const meetingPhotosTrack = document.getElementById('meetingPhotosTrack');
+  if (meetingPhotosTrack && (data.meeting_photos || data.gallery)) {
+    renderMeetingPhotosSlider(data.meeting_photos || data.gallery);
+  }
+
+  // Testimonials
+  const testimonialsContainer = document.getElementById('testimonialsContainer');
+  if (testimonialsContainer && data.testimonials) {
+    testimonialsContainer.innerHTML = '';
+    data.testimonials.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div style="font-size: 1.6rem; color: var(--emerald-700); margin-bottom: 8px;">“</div>
+        <p class="card-text" style="font-size: 0.95rem; margin-bottom: 16px;">${t.quote}</p>
+        <div style="border-top: 1px solid var(--border-hairline); padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <h4 style="font-size: 0.95rem; color: var(--ink-primary); margin: 0;">${t.author_name}</h4>
+            <span style="font-size: 0.8rem; color: var(--emerald-700); font-weight: 700;">${t.author_title} • ${t.business_name}</span>
+          </div>
+          <span class="badge badge-verified">VERIFIED</span>
+        </div>
+      `;
+      testimonialsContainer.appendChild(card);
+    });
   }
 }
 
@@ -748,14 +795,18 @@ function renderAuthenticatedUI(data) {
   if (document.getElementById('navAdminBtn')) document.getElementById('navAdminBtn').style.display = isAdmin ? 'inline-flex' : 'none';
 
   loadDashboardTab();
-  loadDirectoryTab();
-  loadNeedsTab();
-  loadCRMTab();
-  loadEventsTab();
-  loadChallengeTab();
 
-  if (isAdmin) {
-    loadAdminTab();
+  // Pre-fetch secondary tabs during browser idle to make subsequent clicks instant
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(() => {
+      loadDirectoryTab();
+      loadEventsTab();
+    }, { timeout: 2500 });
+  } else {
+    setTimeout(() => {
+      loadDirectoryTab();
+      loadEventsTab();
+    }, 800);
   }
 }
 
@@ -835,48 +886,83 @@ function switchPortalTab(tabName, el) {
   else if (tabName === 'challenge') loadChallengeTab();
 }
 
-// Dashboard Tab Loader
-async function loadDashboardTab() {
-  try {
-    const res = await fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    const metrics = await res.json();
-
+// Dashboard Tab Loader with SWR Instant Rendering & Consolidated Single-Roundtrip API
+function renderDashboardMetrics(data) {
+  if (!data) return;
+  if (data.crm) {
     if (document.getElementById('dashBizGenerated')) {
-      document.getElementById('dashBizGenerated').innerText = `${metrics.referrals_received || 0} Deals`;
+      document.getElementById('dashBizGenerated').innerText = `${data.crm.referrals_received || 0} Deals`;
     }
     if (document.getElementById('dashLeadsWon')) {
-      document.getElementById('dashLeadsWon').innerText = metrics.leads_won || 0;
+      document.getElementById('dashLeadsWon').innerText = data.crm.leads_won || 0;
     }
+  }
+  if (data.attendance && document.getElementById('dashAttendanceRate')) {
+    document.getElementById('dashAttendanceRate').innerHTML = `${data.attendance.attendance_rate}% Event Presence <span class="badge-pulse-green" style="font-size: 0.78rem; background: #A7F3D0; color: #064E3B; padding: 2px 8px; border-radius: 12px; font-weight: 800;">Streak: ${data.attendance.attendance_streak} Gatherings</span>`;
+  }
+  if (data.meetings && document.getElementById('dashMeetingsStat')) {
+    document.getElementById('dashMeetingsStat').innerText = `${data.meetings.this_month} 1-to-1 Founder Meetings logged in ${data.meetings.current_month_name}`;
+  }
+}
 
-    // Attendance summary for dashboard
-    fetch('/api/attendance/summary', { headers: { 'Authorization': `Bearer ${state.token}` } })
-      .then(r => r.json())
-      .then(d => {
-        if (d && !d.error && document.getElementById('dashAttendanceRate')) {
-          document.getElementById('dashAttendanceRate').innerHTML = `${d.attendance_rate}% Event Presence <span class="badge-pulse-green" style="font-size: 0.78rem; background: #A7F3D0; color: #064E3B; padding: 2px 8px; border-radius: 12px; font-weight: 800;">Streak: ${d.attendance_streak} Gatherings</span>`;
-        }
-      })
-      .catch(() => {});
+async function loadDashboardTab() {
+  if (!state.token) return;
 
-    // Meetings summary for dashboard
-    fetch('/api/founder-meetings', { headers: { 'Authorization': `Bearer ${state.token}` } })
-      .then(r => r.json())
-      .then(d => {
-        if (d && d.stats && document.getElementById('dashMeetingsStat')) {
-          document.getElementById('dashMeetingsStat').innerText = `${d.stats.this_month} 1-to-1 Founder Meetings logged in ${d.stats.current_month_name}`;
-        }
-      })
-      .catch(() => {});
+  // 1. Instant SWR render from sessionStorage (0ms latency!)
+  try {
+    const cached = sessionStorage.getItem('f4f_dash_cache');
+    if (cached) {
+      renderDashboardMetrics(JSON.parse(cached));
+    }
+  } catch (e) {}
+
+  // 2. High-speed single consolidated endpoint with parallel fallback
+  try {
+    const res = await fetch('/api/portal/dashboard-summary', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    if (res.ok) {
+      const data = await res.json();
+      renderDashboardMetrics(data);
+      try { sessionStorage.setItem('f4f_dash_cache', JSON.stringify(data)); } catch (e) {}
+      return;
+    }
+  } catch (e) {}
+
+  // Fallback: Parallel Promise.allSettled across individual endpoints
+  try {
+    const [crmRes, attRes, meetRes] = await Promise.allSettled([
+      fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } }).then(r => r.json()),
+      fetch('/api/attendance/summary', { headers: { 'Authorization': `Bearer ${state.token}` } }).then(r => r.json()),
+      fetch('/api/founder-meetings', { headers: { 'Authorization': `Bearer ${state.token}` } }).then(r => r.json())
+    ]);
+
+    const combined = {
+      crm: crmRes.status === 'fulfilled' && !crmRes.value.error ? crmRes.value : {},
+      attendance: attRes.status === 'fulfilled' && !attRes.value.error ? attRes.value : {},
+      meetings: meetRes.status === 'fulfilled' && meetRes.value.stats ? meetRes.value.stats : {}
+    };
+    renderDashboardMetrics(combined);
+    try { sessionStorage.setItem('f4f_dash_cache', JSON.stringify(combined)); } catch (e) {}
   } catch (err) {
     console.error("Dashboard metrics error:", err);
   }
 }
 
-// Directory Loader
+// Directory Loader with SWR Cache
+let _cachedDirectoryMembers = null;
 async function loadDirectoryTab() {
-  const res = await fetch('/api/members', { headers: { 'Authorization': `Bearer ${state.token}` } });
-  const data = await res.json();
-  renderMembers(data.members || []);
+  if (_cachedDirectoryMembers) {
+    renderMembers(_cachedDirectoryMembers);
+  }
+  try {
+    const res = await fetch('/api/members', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    if (res.ok) {
+      const data = await res.json();
+      _cachedDirectoryMembers = data.members || [];
+      renderMembers(_cachedDirectoryMembers);
+    }
+  } catch (err) {
+    console.error("Directory fetch error:", err);
+  }
 }
 
 function filterDirectory() {
@@ -884,7 +970,11 @@ function filterDirectory() {
   const stage = document.getElementById('dirStageFilter').value;
   fetch(`/api/members?q=${encodeURIComponent(query)}&stage=${encodeURIComponent(stage)}`, { headers: { 'Authorization': `Bearer ${state.token}` } })
     .then(r => r.json())
-    .then(d => renderMembers(d.members || []));
+    .then(d => {
+      _cachedDirectoryMembers = d.members || [];
+      renderMembers(_cachedDirectoryMembers);
+    })
+    .catch(() => {});
 }
 
 function renderMembers(members) {
@@ -910,15 +1000,13 @@ function renderMembers(members) {
   });
 }
 
-// Needs Loader
-async function loadNeedsTab() {
-  const res = await fetch('/api/needs', { headers: { 'Authorization': `Bearer ${state.token}` } });
-  const data = await res.json();
+// Needs Loader with SWR Cache
+let _cachedNeedsList = null;
+function renderNeedsCards(needs) {
   const container = document.getElementById('needsContainer');
   if (!container) return;
   container.innerHTML = '';
-
-  (data.needs || []).forEach(n => {
+  (needs || []).forEach(n => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -932,6 +1020,22 @@ async function loadNeedsTab() {
     `;
     container.appendChild(card);
   });
+}
+
+async function loadNeedsTab() {
+  if (_cachedNeedsList) {
+    renderNeedsCards(_cachedNeedsList);
+  }
+  try {
+    const res = await fetch('/api/needs', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    if (res.ok) {
+      const data = await res.json();
+      _cachedNeedsList = data.needs || [];
+      renderNeedsCards(_cachedNeedsList);
+    }
+  } catch (err) {
+    console.error("Needs fetch error:", err);
+  }
 }
 
 async function handlePostNeedSubmit(e) {
@@ -956,14 +1060,14 @@ async function handlePostNeedSubmit(e) {
 }
 
 // CRM Loader
-async function loadCRMTab() {
-  const res = await fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } });
-  const data = await res.json();
+let _cachedCRMData = null;
+
+function renderCRMLeads(leads) {
   const list = document.getElementById('leadsList');
   if (!list) return;
   list.innerHTML = '';
 
-  (data.leads || []).forEach(l => {
+  (leads || []).forEach(l => {
     const div = document.createElement('div');
     div.style.cssText = 'padding: 12px; background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;';
     div.innerHTML = `
@@ -980,17 +1084,31 @@ async function loadCRMTab() {
   });
 }
 
+async function loadCRMTab() {
+  if (_cachedCRMData) {
+    renderCRMLeads(_cachedCRMData.leads || []);
+  }
+  try {
+    const res = await fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    if (res.ok) {
+      const data = await res.json();
+      _cachedCRMData = data;
+      renderCRMLeads(data.leads || []);
+    }
+  } catch (err) {
+    console.error("CRM fetch error:", err);
+  }
+}
+
 // Events Loader
-async function loadEventsTab() {
-  const res = await fetch('/api/events', { headers: { 'Authorization': `Bearer ${state.token}` } });
-  const data = await res.json();
+let _cachedEventsList = null;
+
+function renderEventsTabList(events) {
   const container = document.getElementById('eventsContainer');
   if (!container) return;
   container.innerHTML = '';
 
-  state.eventsList = data.events || [];
-
-  state.eventsList.forEach(evt => {
+  (events || []).forEach(evt => {
     const card = document.createElement('div');
     card.className = 'card';
 
@@ -1056,6 +1174,23 @@ async function loadEventsTab() {
     `;
     container.appendChild(card);
   });
+}
+
+async function loadEventsTab() {
+  if (_cachedEventsList) {
+    renderEventsTabList(_cachedEventsList);
+  }
+  try {
+    const res = await fetch('/api/events', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    if (res.ok) {
+      const data = await res.json();
+      state.eventsList = data.events || [];
+      _cachedEventsList = state.eventsList;
+      renderEventsTabList(_cachedEventsList);
+    }
+  } catch (err) {
+    console.error("Events fetch error:", err);
+  }
 }
 
 async function handleRSVP(eventId) {
@@ -1206,130 +1341,128 @@ async function loadChallengeTab() {
   }
 }
 
-// Admin CMS Loader
+// Admin CMS Loader (Parallel Execution of Overview, Logs, Settings, and Photos)
 async function loadAdminTab() {
   try {
-    const res = await fetch('/api/admin/overview', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    if (!res.ok) {
-      console.error("Forbidden or error fetching admin overview");
-      return;
-    }
-    const data = await res.json();
+    const authHeaders = { 'Authorization': `Bearer ${state.token}` };
+    const [overviewRes, auditRes, setRes, photosRes] = await Promise.allSettled([
+      fetch('/api/admin/overview', { headers: authHeaders }),
+      fetch('/api/admin/audit-logs', { headers: authHeaders }),
+      fetch('/api/admin/settings', { headers: authHeaders }),
+      fetch('/api/meeting-photos')
+    ]);
 
-    if (document.getElementById('adminMetricsGrid') && data.metrics) {
-      document.getElementById('adminMetricsGrid').innerHTML = `
-        <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">Total Members</div><div style="font-size:1.8rem; font-weight:800; color:var(--ink-primary); margin-top:4px;">${data.metrics.total_members}</div></div>
-        <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">Active MRR</div><div style="font-size:1.8rem; font-weight:800; color:var(--emerald-700); margin-top:4px;">₹${(data.metrics.mrr || 0).toLocaleString('en-IN')}</div></div>
-        <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">New Applications</div><div style="font-size:1.8rem; font-weight:800; color:var(--emerald-700); margin-top:4px;">${data.metrics.new_applications}</div></div>
-      `;
-    }
-
-    // Applications Table
-    if (document.getElementById('applicationsTable')) {
-      state.adminApplications = data.recent_applications || [];
-      let html = `<table style="width:100%; text-align:left; border-collapse:collapse; color:var(--ink-primary);">
-        <thead>
-          <tr style="border-bottom:1px solid var(--mint-200); font-size:0.82rem; text-transform:uppercase; color:var(--grey-500);">
-            <th style="padding:10px;">Applicant</th>
-            <th>Type / Role</th>
-            <th>Business & Model</th>
-            <th>Contact</th>
-            <th>Status</th>
-            <th>Update Status</th>
-            <th>Inspection & Actions</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-      (data.recent_applications || []).forEach(app => {
-        const inviteLink = app.invitation_token ? `${window.location.origin}/#activate?token=${app.invitation_token}` : '';
-        const badgeClass = app.status === 'APPROVED' || app.status === 'INVITED' || app.status === 'CONVERTED' ? 'badge-verified' : (app.status === 'DECLINED' ? 'badge-pending' : 'badge-active');
-
-        html += `<tr style="border-bottom:1px solid var(--border-hairline); font-size:0.88rem;">
-          <td style="padding:10px; font-weight:700;">${app.full_name}</td>
-          <td><span class="badge badge-active">${app.applicant_type || 'Founder'}</span><br><span style="font-size:0.75rem; color:var(--grey-500);">${app.designation || ''}</span></td>
-          <td>${app.business_name || 'N/A'}<br><span style="font-size:0.75rem; color:var(--emerald-700); font-weight:600;">${app.business_model_category || 'Product Based'}</span> • <span style="font-size:0.75rem; color:var(--grey-500);">${app.city || 'Pan India'}</span></td>
-          <td>${app.email}<br><span style="font-size:0.75rem; color:var(--grey-500);">${app.phone}</span></td>
-          <td><span class="badge ${badgeClass}">${app.status}</span></td>
-          <td>
-            <select class="form-select" style="padding:4px 8px; font-size:0.78rem; min-width:130px;" onchange="updateAppStatus('${app.id}', this.value)">
-              <option value="SUBMITTED" ${app.status === 'SUBMITTED' ? 'selected' : ''}>SUBMITTED</option>
-              <option value="UNDER_REVIEW" ${app.status === 'UNDER_REVIEW' ? 'selected' : ''}>UNDER_REVIEW</option>
-              <option value="APPROVED" ${app.status === 'APPROVED' ? 'selected' : ''}>APPROVED</option>
-              <option value="INVITED" ${app.status === 'INVITED' ? 'selected' : ''}>INVITED</option>
-              <option value="WAITLISTED" ${app.status === 'WAITLISTED' ? 'selected' : ''}>WAITLISTED</option>
-              <option value="DECLINED" ${app.status === 'DECLINED' ? 'selected' : ''}>DECLINED</option>
-            </select>
-          </td>
-          <td>
-            <div style="display:flex; gap:6px; align-items:center;">
-              <button class="btn btn-outline-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="openViewApplicationModal('${app.id}')">View Details</button>
-              ${inviteLink ? `
-                <button class="btn btn-outline-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="navigator.clipboard.writeText('${inviteLink}'); alert('Invitation Link Copied:\\n${inviteLink}');">Copy Link</button>
-              ` : `
-                <button class="btn btn-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="updateAppStatus('${app.id}', 'APPROVED')">Approve</button>
-              `}
-            </div>
-          </td>
-        </tr>`;
-      });
-      html += `</tbody></table>`;
-      document.getElementById('applicationsTable').innerHTML = html;
-    }
-
-    // Load Audit Logs
-    try {
-      const auditRes = await fetch('/api/admin/audit-logs', { headers: { 'Authorization': `Bearer ${state.token}` } });
-      if (auditRes.ok) {
-        const auditData = await auditRes.json();
-        if (document.getElementById('auditLogsTable')) {
-          let auditHtml = `<table style="width:100%; text-align:left; border-collapse:collapse; color:var(--ink-primary);">
-            <thead>
-              <tr style="border-bottom:1px solid var(--mint-200); font-size:0.82rem; text-transform:uppercase; color:var(--grey-500);">
-                <th style="padding:8px;">Timestamp</th>
-                <th>Action</th>
-                <th>User / Entity</th>
-                <th>IP Address</th>
-              </tr>
-            </thead>
-            <tbody>`;
-          (auditData.audit_logs || []).forEach(log => {
-            auditHtml += `<tr style="border-bottom:1px solid var(--border-hairline); font-size:0.82rem;">
-              <td style="padding:8px; color:var(--grey-500);">${log.created_at || ''}</td>
-              <td style="font-weight:700; color:var(--emerald-900);">${log.action_type || ''}</td>
-              <td>${log.entity_type || ''} (${log.user_id || 'System'})</td>
-              <td style="color:var(--grey-500);">${log.ip_address || '127.0.0.1'}</td>
-            </tr>`;
-          });
-          auditHtml += `</tbody></table>`;
-          document.getElementById('auditLogsTable').innerHTML = auditHtml;
-        }
+    // 1. Process Overview & Recent Applications
+    if (overviewRes.status === 'fulfilled' && overviewRes.value.ok) {
+      const data = await overviewRes.value.json();
+      if (document.getElementById('adminMetricsGrid') && data.metrics) {
+        document.getElementById('adminMetricsGrid').innerHTML = `
+          <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">Total Members</div><div style="font-size:1.8rem; font-weight:800; color:var(--ink-primary); margin-top:4px;">${data.metrics.total_members}</div></div>
+          <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">Active MRR</div><div style="font-size:1.8rem; font-weight:800; color:var(--emerald-700); margin-top:4px;">₹${(data.metrics.mrr || 0).toLocaleString('en-IN')}</div></div>
+          <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">New Applications</div><div style="font-size:1.8rem; font-weight:800; color:var(--emerald-700); margin-top:4px;">${data.metrics.new_applications}</div></div>
+        `;
       }
-    } catch (err) {
-      console.error("Error loading audit logs:", err);
-    }
 
-    // Pre-fill Site Settings Customizer
-    try {
-      const setRes = await fetch('/api/admin/settings', { headers: { 'Authorization': `Bearer ${state.token}` } });
-      if (setRes.ok) {
-        const setData = await setRes.json();
-        if (setData.settings) {
-          setData.settings.forEach(s => {
-            const input = document.getElementById(`set_${s.key_name}`);
-            if (input) input.value = s.key_value || '';
-            const prev = document.getElementById(`prev_${s.key_name}`);
-            if (prev && s.key_value) prev.src = s.key_value;
-          });
-        }
+      if (document.getElementById('applicationsTable')) {
+        state.adminApplications = data.recent_applications || [];
+        let html = `<table style="width:100%; text-align:left; border-collapse:collapse; color:var(--ink-primary);">
+          <thead>
+            <tr style="border-bottom:1px solid var(--mint-200); font-size:0.82rem; text-transform:uppercase; color:var(--grey-500);">
+              <th style="padding:10px;">Applicant</th>
+              <th>Type / Role</th>
+              <th>Business & Model</th>
+              <th>Contact</th>
+              <th>Status</th>
+              <th>Update Status</th>
+              <th>Inspection & Actions</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+        (data.recent_applications || []).forEach(app => {
+          const inviteLink = app.invitation_token ? `${window.location.origin}/#activate?token=${app.invitation_token}` : '';
+          const badgeClass = app.status === 'APPROVED' || app.status === 'INVITED' || app.status === 'CONVERTED' ? 'badge-verified' : (app.status === 'DECLINED' ? 'badge-pending' : 'badge-active');
+
+          html += `<tr style="border-bottom:1px solid var(--border-hairline); font-size:0.88rem;">
+            <td style="padding:10px; font-weight:700;">${app.full_name}</td>
+            <td><span class="badge badge-active">${app.applicant_type || 'Founder'}</span><br><span style="font-size:0.75rem; color:var(--grey-500);">${app.designation || ''}</span></td>
+            <td>${app.business_name || 'N/A'}<br><span style="font-size:0.75rem; color:var(--emerald-700); font-weight:600;">${app.business_model_category || 'Product Based'}</span> • <span style="font-size:0.75rem; color:var(--grey-500);">${app.city || 'Pan India'}</span></td>
+            <td>${app.email}<br><span style="font-size:0.75rem; color:var(--grey-500);">${app.phone}</span></td>
+            <td><span class="badge ${badgeClass}">${app.status}</span></td>
+            <td>
+              <select class="form-select" style="padding:4px 8px; font-size:0.78rem; min-width:130px;" onchange="updateAppStatus('${app.id}', this.value)">
+                <option value="SUBMITTED" ${app.status === 'SUBMITTED' ? 'selected' : ''}>SUBMITTED</option>
+                <option value="UNDER_REVIEW" ${app.status === 'UNDER_REVIEW' ? 'selected' : ''}>UNDER_REVIEW</option>
+                <option value="APPROVED" ${app.status === 'APPROVED' ? 'selected' : ''}>APPROVED</option>
+                <option value="INVITED" ${app.status === 'INVITED' ? 'selected' : ''}>INVITED</option>
+                <option value="WAITLISTED" ${app.status === 'WAITLISTED' ? 'selected' : ''}>WAITLISTED</option>
+                <option value="DECLINED" ${app.status === 'DECLINED' ? 'selected' : ''}>DECLINED</option>
+              </select>
+            </td>
+            <td>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <button class="btn btn-outline-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="openViewApplicationModal('${app.id}')">View Details</button>
+                ${inviteLink ? `
+                  <button class="btn btn-outline-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="navigator.clipboard.writeText('${inviteLink}'); alert('Invitation Link Copied:\\n${inviteLink}');">Copy Link</button>
+                ` : `
+                  <button class="btn btn-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="updateAppStatus('${app.id}', 'APPROVED')">Approve</button>
+                `}
+              </div>
+            </td>
+          </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('applicationsTable').innerHTML = html;
       }
-    } catch (err) {
-      console.error("Error pre-filling settings:", err);
     }
 
-    // Load Admin Meeting Photos Gallery (16:9)
-    loadAdminMeetingPhotos();
+    // 2. Process Audit Logs
+    if (auditRes.status === 'fulfilled' && auditRes.value.ok) {
+      const auditData = await auditRes.value.json();
+      if (document.getElementById('auditLogsTable')) {
+        let auditHtml = `<table style="width:100%; text-align:left; border-collapse:collapse; color:var(--ink-primary);">
+          <thead>
+            <tr style="border-bottom:1px solid var(--mint-200); font-size:0.82rem; text-transform:uppercase; color:var(--grey-500);">
+              <th style="padding:8px;">Timestamp</th>
+              <th>Action</th>
+              <th>User / Entity</th>
+              <th>IP Address</th>
+            </tr>
+          </thead>
+          <tbody>`;
+        (auditData.audit_logs || []).forEach(log => {
+          auditHtml += `<tr style="border-bottom:1px solid var(--border-hairline); font-size:0.82rem;">
+            <td style="padding:8px; color:var(--grey-500);">${log.created_at || ''}</td>
+            <td style="font-weight:700; color:var(--emerald-900);">${log.action_type || ''}</td>
+            <td>${log.entity_type || ''} (${log.user_id || 'System'})</td>
+            <td style="color:var(--grey-500);">${log.ip_address || '127.0.0.1'}</td>
+          </tr>`;
+        });
+        auditHtml += `</tbody></table>`;
+        document.getElementById('auditLogsTable').innerHTML = auditHtml;
+      }
+    }
 
+    // 3. Process Site Settings Customizer
+    if (setRes.status === 'fulfilled' && setRes.value.ok) {
+      const setData = await setRes.value.json();
+      if (setData.settings) {
+        setData.settings.forEach(s => {
+          const input = document.getElementById(`set_${s.key_name}`);
+          if (input) input.value = s.key_value || '';
+          const prev = document.getElementById(`prev_${s.key_name}`);
+          if (prev && s.key_value) prev.src = s.key_value;
+        });
+      }
+    }
+
+    // 4. Process Admin Meeting Photos Gallery (16:9)
+    if (photosRes.status === 'fulfilled' && photosRes.value.ok) {
+      const photosData = await photosRes.value.json();
+      if (photosData.photos) {
+        renderAdminMeetingPhotosList(photosData.photos);
+      }
+    }
   } catch (err) {
     console.error("Error loading admin tab:", err);
   }
@@ -1673,7 +1806,86 @@ async function handleAdminCreateEvent(e) {
 // ==========================================================================
 let currentAttendanceData = null;
 
+function renderAttendanceData(data) {
+  if (!data) return;
+
+  // Populate month select if options changed
+  const sel = document.getElementById('attendanceMonthSelect');
+  if (sel && data.available_months && data.available_months.length > 0) {
+    sel.innerHTML = data.available_months.map(m => {
+      let label = m;
+      try {
+        const parts = m.split('-');
+        const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
+        label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
+      } catch (e) {}
+      return `<option value="${m}" ${m === data.selected_month ? 'selected' : ''}>${label}</option>`;
+    }).join('');
+  }
+
+  // Update KPI metrics
+  if (document.getElementById('attRateValue')) document.getElementById('attRateValue').innerText = `${data.attendance_rate}%`;
+  if (document.getElementById('attEventsAttendedRatio')) document.getElementById('attEventsAttendedRatio').innerText = `(${data.events_attended}/${data.completed_events || data.total_events} Attended)`;
+  if (document.getElementById('attRateBar')) document.getElementById('attRateBar').style.width = `${data.attendance_rate}%`;
+  if (document.getElementById('attTotalEvents')) document.getElementById('attTotalEvents').innerText = data.total_events;
+  if (document.getElementById('attStreakValue')) document.getElementById('attStreakValue').innerText = `Streak: ${data.attendance_streak} Gatherings`;
+  if (document.getElementById('attStandingTier')) document.getElementById('attStandingTier').innerHTML = `<svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${data.accountability_tier}`;
+  if (document.getElementById('attendanceListTitle')) document.getElementById('attendanceListTitle').innerText = `Gatherings Hosted in ${data.month_name}`;
+
+  // Render Events List
+  const container = document.getElementById('attendanceEventsList');
+  if (!container) return;
+
+  if (!data.events || data.events.length === 0) {
+    container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--grey-500);">No gatherings scheduled or hosted for ${data.month_name}.</div>`;
+    return;
+  }
+
+  container.innerHTML = data.events.map(ev => {
+    let badgeHtml = '';
+    let actionBtnHtml = '';
+
+    if (ev.calculated_status === 'PRESENT') {
+      badgeHtml = `<span class="badge-status-present"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Attended &amp; Verified</span>`;
+      actionBtnHtml = `<span style="font-size: 0.82rem; color: var(--emerald-700); font-weight: 700;">Check-in Confirmed</span>`;
+    } else if (ev.calculated_status === 'MISSED') {
+      badgeHtml = `<span class="badge-status-missed">Missed Gathering</span>`;
+      actionBtnHtml = `<span style="font-size: 0.82rem; color: #b45309; font-weight: 600;">Absent</span>`;
+    } else if (ev.calculated_status === 'RSVP_CONFIRMED') {
+      badgeHtml = `<span class="badge-status-rsvp"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> RSVP Confirmed</span>`;
+      actionBtnHtml = `<button class="btn btn-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In Now</button>`;
+    } else {
+      badgeHtml = `<span class="badge-status-upcoming">Upcoming Event</span>`;
+      actionBtnHtml = `<button class="btn btn-outline-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In</button>`;
+    }
+
+    return `
+      <div class="meeting-item-card" style="border-left: 4px solid ${ev.calculated_status === 'PRESENT' ? 'var(--emerald-500)' : 'var(--mint-200)'};">
+        <div style="flex: 2; min-width: 260px;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+            <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 3px 8px; border-radius: 4px;">${ev.event_date.split(' ')[0]}</span>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--grey-500);">${ev.time_str || ''}</span>
+            <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold-500);">${ev.signature_format || 'Gathering'}</span>
+            ${badgeHtml}
+          </div>
+          <div style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary); margin-bottom: 4px;">${ev.title}</div>
+          <div style="font-size: 0.85rem; color: var(--grey-600); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${ev.venue || 'Private Location'}, ${ev.city || 'Pan India'}</span>
+            <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Host: ${ev.host_name || 'Community Team'}</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          ${actionBtnHtml}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 async function loadAttendanceTab(selectedMonth) {
+  if (currentAttendanceData && (!selectedMonth || selectedMonth === currentAttendanceData.selected_month)) {
+    renderAttendanceData(currentAttendanceData);
+  }
   try {
     const url = selectedMonth ? `/api/attendance/summary?month=${encodeURIComponent(selectedMonth)}` : '/api/attendance/summary';
     const res = await fetch(url, { headers: { 'Authorization': `Bearer ${state.token}` } });
@@ -1683,79 +1895,7 @@ async function loadAttendanceTab(selectedMonth) {
       return;
     }
     currentAttendanceData = data;
-
-    // Populate month select if options changed
-    const sel = document.getElementById('attendanceMonthSelect');
-    if (sel && data.available_months && data.available_months.length > 0) {
-      sel.innerHTML = data.available_months.map(m => {
-        let label = m;
-        try {
-          const parts = m.split('-');
-          const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
-          label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
-        } catch (e) {}
-        return `<option value="${m}" ${m === data.selected_month ? 'selected' : ''}>${label}</option>`;
-      }).join('');
-    }
-
-    // Update KPI metrics
-    if (document.getElementById('attRateValue')) document.getElementById('attRateValue').innerText = `${data.attendance_rate}%`;
-    if (document.getElementById('attEventsAttendedRatio')) document.getElementById('attEventsAttendedRatio').innerText = `(${data.events_attended}/${data.completed_events || data.total_events} Attended)`;
-    if (document.getElementById('attRateBar')) document.getElementById('attRateBar').style.width = `${data.attendance_rate}%`;
-    if (document.getElementById('attTotalEvents')) document.getElementById('attTotalEvents').innerText = data.total_events;
-    if (document.getElementById('attStreakValue')) document.getElementById('attStreakValue').innerText = `Streak: ${data.attendance_streak} Gatherings`;
-    if (document.getElementById('attStandingTier')) document.getElementById('attStandingTier').innerText = `<svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${data.accountability_tier}`;
-    if (document.getElementById('attendanceListTitle')) document.getElementById('attendanceListTitle').innerText = `Gatherings Hosted in ${data.month_name}`;
-
-    // Render Events List
-    const container = document.getElementById('attendanceEventsList');
-    if (!container) return;
-
-    if (!data.events || data.events.length === 0) {
-      container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--grey-500);">No gatherings scheduled or hosted for ${data.month_name}.</div>`;
-      return;
-    }
-
-    container.innerHTML = data.events.map(ev => {
-      let badgeHtml = '';
-      let actionBtnHtml = '';
-
-      if (ev.calculated_status === 'PRESENT') {
-        badgeHtml = `<span class="badge-status-present"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Attended &amp; Verified</span>`;
-        actionBtnHtml = `<span style="font-size: 0.82rem; color: var(--emerald-700); font-weight: 700;">Check-in Confirmed</span>`;
-      } else if (ev.calculated_status === 'MISSED') {
-        badgeHtml = `<span class="badge-status-missed">Missed Gathering</span>`;
-        actionBtnHtml = `<span style="font-size: 0.82rem; color: #b45309; font-weight: 600;">Absent</span>`;
-      } else if (ev.calculated_status === 'RSVP_CONFIRMED') {
-        badgeHtml = `<span class="badge-status-rsvp"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> RSVP Confirmed</span>`;
-        actionBtnHtml = `<button class="btn btn-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In Now</button>`;
-      } else {
-        badgeHtml = `<span class="badge-status-upcoming">Upcoming Event</span>`;
-        actionBtnHtml = `<button class="btn btn-outline-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In</button>`;
-      }
-
-      return `
-        <div class="meeting-item-card" style="border-left: 4px solid ${ev.calculated_status === 'PRESENT' ? 'var(--emerald-500)' : 'var(--mint-200)'};">
-          <div style="flex: 2; min-width: 260px;">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
-              <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 3px 8px; border-radius: 4px;">${ev.event_date.split(' ')[0]}</span>
-              <span style="font-size: 0.78rem; font-weight: 700; color: var(--grey-500);">${ev.time_str || ''}</span>
-              <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold-500);">${ev.signature_format || 'Gathering'}</span>
-              ${badgeHtml}
-            </div>
-            <div style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary); margin-bottom: 4px;">${ev.title}</div>
-            <div style="font-size: 0.85rem; color: var(--grey-600); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${ev.venue || 'Private Location'}, ${ev.city || 'Pan India'}</span>
-              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Host: ${ev.host_name || 'Community Team'}</span>
-            </div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 10px;">
-            ${actionBtnHtml}
-          </div>
-        </div>
-      `;
-    }).join('');
-
+    renderAttendanceData(data);
   } catch (err) {
     console.error("loadAttendanceTab error:", err);
   }
@@ -1796,6 +1936,7 @@ async function handleCheckinSubmit(event) {
     }
     alert(data.message || 'Presence confirmed successfully!');
     closeModal('checkinModal');
+    currentAttendanceData = null;
     loadAttendanceTab(document.getElementById('attendanceMonthSelect')?.value);
     loadDashboardTab();
   } catch (err) {
@@ -1806,70 +1947,80 @@ async function handleCheckinSubmit(event) {
 // ==========================================================================
 // 1-TO-1 FOUNDER MEETINGS TRACKER
 // ==========================================================================
+let _cachedMeetingsData = null;
+
+function renderMeetingsData(data) {
+  if (!data) return;
+
+  if (data.stats) {
+    if (document.getElementById('meetingsThisMonth')) document.getElementById('meetingsThisMonth').innerText = data.stats.this_month;
+    if (document.getElementById('meetingsMonthName')) document.getElementById('meetingsMonthName').innerText = data.stats.current_month_name;
+    if (document.getElementById('meetingsSynergies')) document.getElementById('meetingsSynergies').innerText = data.stats.synergies;
+    if (document.getElementById('meetingsTotal')) document.getElementById('meetingsTotal').innerText = data.stats.total;
+  }
+
+  const container = document.getElementById('meetingsFeedContainer');
+  if (!container) return;
+
+  if (!data.meetings || data.meetings.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 3rem 1rem; color: var(--grey-500);">
+        <div class="empty-state-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="1.75"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 11 2 2 4-4"/></svg></div>
+        <div style="font-weight: 700; color: var(--ink-primary); font-size: 1.1rem; margin-bottom: 4px;">No 1-to-1 Meetings Logged Yet</div>
+        <p style="font-size: 0.9rem;">Record individual coffee chats, strategy sessions, and partnerships with fellow founders.</p>
+        <button class="btn btn-emerald" style="margin-top: 1rem;" onclick="openLogMeetingModal()">+ Log First 1:1 Meeting</button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = data.meetings.map(m => {
+    let outcomeClass = 'outcome-synergy';
+    if (m.collaboration_outcome === 'Referral Exchanged') outcomeClass = 'outcome-referral';
+    else if (m.collaboration_outcome === 'Deal In Progress') outcomeClass = 'outcome-deal';
+    else if (m.collaboration_outcome === 'Follow-up Scheduled') outcomeClass = 'outcome-followup';
+
+    const starCount = Math.max(1, Math.min(5, parseInt(m.rating, 10) || 5));
+    const stars = Array(starCount).fill('<svg class="star-svg" width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('');
+
+    return `
+      <div class="meeting-item-card">
+        <div style="display: flex; gap: 14px; align-items: flex-start; flex: 2; min-width: 280px;">
+          <img src="${m.partner_avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+              <span style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary);">${m.partner_name}</span>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-700);">(${m.partner_company})</span>
+              <span class="outcome-pill ${outcomeClass}">${m.collaboration_outcome || 'Synergy'}</span>
+            </div>
+            <div style="font-size: 0.88rem; font-weight: 700; color: var(--ink-primary); margin-bottom: 4px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span> ${m.agenda_topic}</div>
+            ${m.discussion_notes ? `<p style="font-size: 0.85rem; color: var(--grey-600); margin-bottom: 6px; line-height: 1.5;">${m.discussion_notes}</p>` : ''}
+            <div style="font-size: 0.8rem; color: var(--grey-500); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${m.meeting_date ? m.meeting_date.split(' ')[0] : 'Recent'}</span>
+              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span> ${m.meeting_type || 'In-Person'}</span>
+              ${m.location_venue ? `<span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${m.location_venue}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-800);">${stars}</div>
+          <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 2px 8px; border-radius: 4px;">Verified Record</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 async function loadMeetingsTab() {
+  if (_cachedMeetingsData) {
+    renderMeetingsData(_cachedMeetingsData);
+  }
   try {
     const res = await fetch('/api/founder-meetings', { headers: { 'Authorization': `Bearer ${state.token}` } });
     const data = await res.json();
     if (data.error) return;
-
-    if (data.stats) {
-      if (document.getElementById('meetingsThisMonth')) document.getElementById('meetingsThisMonth').innerText = data.stats.this_month;
-      if (document.getElementById('meetingsMonthName')) document.getElementById('meetingsMonthName').innerText = data.stats.current_month_name;
-      if (document.getElementById('meetingsSynergies')) document.getElementById('meetingsSynergies').innerText = data.stats.synergies;
-      if (document.getElementById('meetingsTotal')) document.getElementById('meetingsTotal').innerText = data.stats.total;
-    }
-
-    const container = document.getElementById('meetingsFeedContainer');
-    if (!container) return;
-
-    if (!data.meetings || data.meetings.length === 0) {
-      container.innerHTML = `
-        <div style="text-align: center; padding: 3rem 1rem; color: var(--grey-500);">
-          <div class="empty-state-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="1.75"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 11 2 2 4-4"/></svg></div>
-          <div style="font-weight: 700; color: var(--ink-primary); font-size: 1.1rem; margin-bottom: 4px;">No 1-to-1 Meetings Logged Yet</div>
-          <p style="font-size: 0.9rem;">Record individual coffee chats, strategy sessions, and partnerships with fellow founders.</p>
-          <button class="btn btn-emerald" style="margin-top: 1rem;" onclick="openLogMeetingModal()">+ Log First 1:1 Meeting</button>
-        </div>
-      `;
-      return;
-    }
-
-    container.innerHTML = data.meetings.map(m => {
-      let outcomeClass = 'outcome-synergy';
-      if (m.collaboration_outcome === 'Referral Exchanged') outcomeClass = 'outcome-referral';
-      else if (m.collaboration_outcome === 'Deal In Progress') outcomeClass = 'outcome-deal';
-      else if (m.collaboration_outcome === 'Follow-up Scheduled') outcomeClass = 'outcome-followup';
-
-      const starCount = Math.max(1, Math.min(5, parseInt(m.rating, 10) || 5));
-    const stars = Array(starCount).fill('<svg class="star-svg" width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('');
-
-      return `
-        <div class="meeting-item-card">
-          <div style="display: flex; gap: 14px; align-items: flex-start; flex: 2; min-width: 280px;">
-            <img src="${m.partner_avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
-            <div>
-              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
-                <span style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary);">${m.partner_name}</span>
-                <span style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-700);">(${m.partner_company})</span>
-                <span class="outcome-pill ${outcomeClass}">${m.collaboration_outcome || 'Synergy'}</span>
-              </div>
-              <div style="font-size: 0.88rem; font-weight: 700; color: var(--ink-primary); margin-bottom: 4px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span> ${m.agenda_topic}</div>
-              ${m.discussion_notes ? `<p style="font-size: 0.85rem; color: var(--grey-600); margin-bottom: 6px; line-height: 1.5;">${m.discussion_notes}</p>` : ''}
-              <div style="font-size: 0.8rem; color: var(--grey-500); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${m.meeting_date ? m.meeting_date.split(' ')[0] : 'Recent'}</span>
-                <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span> ${m.meeting_type || 'In-Person'}</span>
-                ${m.location_venue ? `<span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${m.location_venue}</span>` : ''}
-              </div>
-            </div>
-          </div>
-          <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-            <div style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-800);">${stars}</div>
-            <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 2px 8px; border-radius: 4px;">Verified Record</span>
-          </div>
-        </div>
-      `;
-    }).join('');
-
+    _cachedMeetingsData = data;
+    renderMeetingsData(data);
   } catch (err) {
     console.error("loadMeetingsTab error:", err);
   }
@@ -1909,6 +2060,7 @@ async function handleLogMeetingSubmit(event) {
     alert("1-to-1 Founder Meeting logged successfully!");
     closeModal('logMeetingModal');
     document.getElementById('logMeetingForm').reset();
+    _cachedMeetingsData = null;
     loadMeetingsTab();
     loadDashboardTab();
   } catch (err) {

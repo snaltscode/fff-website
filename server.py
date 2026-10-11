@@ -14,6 +14,7 @@ import secrets
 import base64
 import re
 import gzip
+import time
 import database
 
 def load_dotenv():
@@ -130,20 +131,41 @@ def sanitize_csv_cell(val):
 
 STATIC_GZIP_CACHE = {}
 
+# Server-side in-memory micro-cache for instant public data delivery
+_PUBLIC_CONTENT_CACHE = {
+    'data': None,
+    'json_bytes': None,
+    'gzip_bytes': None,
+    'timestamp': 0,
+    'ttl': 60.0
+}
+
+def invalidate_public_content_cache():
+    _PUBLIC_CONTENT_CACHE['data'] = None
+    _PUBLIC_CONTENT_CACHE['json_bytes'] = None
+    _PUBLIC_CONTENT_CACHE['gzip_bytes'] = None
+    _PUBLIC_CONTENT_CACHE['timestamp'] = 0
+
 class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=PUBLIC_DIR, **kwargs)
 
     def end_headers(self):
-        effective_path = getattr(self, 'path', '')
-        if effective_path.startswith('/api/'):
-            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-            self.send_header('Pragma', 'no-cache')
-            self.send_header('Expires', '0')
-        elif any(effective_path.startswith(p) for p in ('/assets/', '/css/', '/js/')) or any(effective_path.split('?')[0].endswith(ext) for ext in ('.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico', '.woff2', '.woff')):
-            self.send_header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+        custom_cache = getattr(self, '_custom_cache_control', None)
+        if custom_cache:
+            self.send_header('Cache-Control', custom_cache)
         else:
-            self.send_header('Cache-Control', 'public, max-age=0, must-revalidate')
+            effective_path = getattr(self, 'path', '')
+            if effective_path.startswith('/api/public/') or effective_path in ('/api/meeting-photos', '/api/auth/config'):
+                self.send_header('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300')
+            elif effective_path.startswith('/api/'):
+                self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+                self.send_header('Pragma', 'no-cache')
+                self.send_header('Expires', '0')
+            elif any(effective_path.startswith(p) for p in ('/assets/', '/css/', '/js/')) or any(effective_path.split('?')[0].endswith(ext) for ext in ('.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico', '.woff2', '.woff')):
+                self.send_header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+            else:
+                self.send_header('Cache-Control', 'public, max-age=0, must-revalidate')
         super().end_headers()
 
     def get_effective_path(self):
@@ -254,7 +276,8 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({'error': str(e)}, 500)
         self.send_error(404, "Endpoint Not Found")
 
-    def send_json(self, data, status_code=200):
+    def send_json(self, data, status_code=200, cache_control=None):
+        self._custom_cache_control = cache_control
         body = json.dumps(data, default=str).encode('utf-8')
         accept_encoding = self.headers.get('Accept-Encoding', '')
         if 'gzip' in accept_encoding and len(body) > 350:
@@ -299,6 +322,33 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # Public Content Endpoint
         if path == '/api/public/content':
+            now = time.time()
+            if _PUBLIC_CONTENT_CACHE['data'] is not None and (now - _PUBLIC_CONTENT_CACHE['timestamp'] < _PUBLIC_CONTENT_CACHE['ttl']):
+                conn.close()
+                accept_encoding = self.headers.get('Accept-Encoding', '')
+                if 'gzip' in accept_encoding and _PUBLIC_CONTENT_CACHE.get('gzip_bytes'):
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Content-Encoding', 'gzip')
+                    self.send_header('Content-Length', str(len(_PUBLIC_CONTENT_CACHE['gzip_bytes'])))
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+                    self.send_header('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300')
+                    self.end_headers()
+                    self.wfile.write(_PUBLIC_CONTENT_CACHE['gzip_bytes'])
+                    return
+                elif _PUBLIC_CONTENT_CACHE.get('json_bytes'):
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Content-Length', str(len(_PUBLIC_CONTENT_CACHE['json_bytes'])))
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+                    self.send_header('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300')
+                    self.end_headers()
+                    self.wfile.write(_PUBLIC_CONTENT_CACHE['json_bytes'])
+                    return
+                return self.send_json(_PUBLIC_CONTENT_CACHE['data'], cache_control='public, max-age=30, s-maxage=60, stale-while-revalidate=300')
+
             hero = conn.execute("SELECT * FROM hero_banners WHERE is_active = 1 LIMIT 1").fetchone()
             reels = conn.execute("SELECT * FROM instagram_reels WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             youtube_vids = conn.execute("SELECT * FROM youtube_videos WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
@@ -316,11 +366,12 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             settings = {r['key_name']: r['key_value'] for r in settings_rows}
             if not settings.get('hero_banner_url'):
                 settings['hero_banner_url'] = '/assets/hero_banner.jpg'
-                conn.execute("INSERT INTO site_settings (key_name, key_value) VALUES ('hero_banner_url', '/assets/hero_banner.jpg') ON CONFLICT(key_name) DO UPDATE SET key_value = '/assets/hero_banner.jpg'")
-                conn.commit()
+
+            google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '').strip() or settings.get('google_client_id', '')
+            settings['google_client_id'] = google_client_id
 
             conn.close()
-            return self.send_json({
+            payload = {
                 'hero': dict(hero) if hero else None,
                 'reels': [dict(r) for r in reels],
                 'youtube_videos': [dict(y) for y in youtube_vids],
@@ -336,7 +387,14 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     'verified_business': verified_biz_sum
                 },
                 'settings': settings
-            })
+            }
+            json_bytes = json.dumps(payload, default=str).encode('utf-8')
+            gzip_bytes = gzip.compress(json_bytes, compresslevel=6) if len(json_bytes) > 350 else None
+            _PUBLIC_CONTENT_CACHE['data'] = payload
+            _PUBLIC_CONTENT_CACHE['json_bytes'] = json_bytes
+            _PUBLIC_CONTENT_CACHE['gzip_bytes'] = gzip_bytes
+            _PUBLIC_CONTENT_CACHE['timestamp'] = now
+            return self.send_json(payload, cache_control='public, max-age=30, s-maxage=60, stale-while-revalidate=300')
 
         # Public FAQs Endpoint
         elif path == '/api/public/faqs':
@@ -477,6 +535,80 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.send_json({
                 'need': dict(need),
                 'responses': [dict(r) for r in responses]
+            })
+
+        # Consolidated Portal Dashboard Summary (Zero-Waterfall Data Loading)
+        elif path == '/api/portal/dashboard-summary':
+            if not user:
+                conn.close()
+                return self.send_json({'error': 'Unauthorized'}, 401)
+
+            leads_won = conn.execute("SELECT COUNT(*) FROM leads WHERE user_id = ? AND status = 'WON'", (user['id'],)).fetchone()[0]
+            ref_rec = conn.execute("SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?", (user['id'],)).fetchone()[0]
+
+            now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            req_month = datetime.now().strftime('%Y-%m')
+            events_in_month = conn.execute("""
+                SELECT e.*, 
+                       (SELECT status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_rsvp,
+                       (SELECT attended FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attended,
+                       (SELECT status FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attendance_status
+                FROM events e
+                WHERE strftime('%Y-%m', e.event_date) = ?
+            """, (user['id'], user['id'], user['id'], req_month)).fetchall()
+
+            events_attended = 0
+            completed_events = 0
+            for ev in events_in_month:
+                ed = dict(ev)
+                is_completed = (ed.get('status') == 'COMPLETED' or (ed.get('event_date') and ed['event_date'] < now_str))
+                if is_completed:
+                    completed_events += 1
+                if ed.get('attended') == 1 or ed.get('attendance_status') == 'PRESENT':
+                    events_attended += 1
+
+            total_events = len(events_in_month)
+            attendance_rate = 100
+            if completed_events > 0:
+                attendance_rate = round((events_attended / completed_events) * 100)
+            elif total_events > 0:
+                attendance_rate = 100
+
+            past_attended = conn.execute("""
+                SELECT ea.attended
+                FROM events e
+                LEFT JOIN event_attendance ea ON e.id = ea.event_id AND ea.user_id = ?
+                WHERE (e.status = 'COMPLETED' OR e.event_date < ?)
+                ORDER BY e.event_date DESC
+            """, (user['id'], now_str)).fetchall()
+            streak = 0
+            for pa in past_attended:
+                if pa['attended'] == 1:
+                    streak += 1
+                else:
+                    break
+
+            curr_month_prefix = datetime.now().strftime('%Y-%m')
+            curr_month_name = datetime.now().strftime('%B')
+            this_month_meetings = conn.execute("""
+                SELECT COUNT(*) FROM one_on_one_meetings
+                WHERE (user_id = ? OR partner_id = ?) AND strftime('%Y-%m', meeting_date) = ?
+            """, (user['id'], user['id'], curr_month_prefix)).fetchone()[0]
+
+            conn.close()
+            return self.send_json({
+                'crm': {
+                    'referrals_received': ref_rec,
+                    'leads_won': leads_won
+                },
+                'attendance': {
+                    'attendance_rate': attendance_rate,
+                    'attendance_streak': streak
+                },
+                'meetings': {
+                    'this_month': this_month_meetings,
+                    'current_month_name': curr_month_name
+                }
             })
 
         # CRM Metrics & Active Leads
@@ -1602,6 +1734,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 VALUES (?, ?, ?, ?, ?, ?, 1, ?)
             """, (photo_id, title, caption, image_url, event_date, display_order, tag))
             conn.commit()
+            invalidate_public_content_cache()
 
             new_photo = conn.execute("SELECT * FROM event_gallery WHERE id = ?", (photo_id,)).fetchone()
             conn.close()
@@ -1618,6 +1751,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({'error': 'Photo ID required.'}, 400)
             conn.execute("DELETE FROM event_gallery WHERE id = ?", (del_id,))
             conn.commit()
+            invalidate_public_content_cache()
             conn.close()
             return self.send_json({'success': True, 'message': 'Meeting photo deleted successfully.'})
 
@@ -1712,6 +1846,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 else:
                     conn.execute("INSERT INTO site_settings (key_name, key_value) VALUES (?, ?) ON CONFLICT(key_name) DO UPDATE SET key_value = ?", (k, str(v), str(v)))
             conn.commit()
+            invalidate_public_content_cache()
             conn.close()
             return self.send_json({'success': True, 'message': 'Brand & CMS settings updated successfully.'})
 
@@ -1740,6 +1875,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 body.get('what_is_included', 'Included in Membership'), float(body.get('price_amount', 0)), body.get('cancellation_terms', 'Free cancellation 24h prior')
             ))
             conn.commit()
+            invalidate_public_content_cache()
             conn.close()
             return self.send_json({'success': True, 'event_id': evt_id, 'google_maps_url': google_maps_url, 'message': 'Event created successfully.'})
 
