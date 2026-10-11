@@ -1161,7 +1161,8 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             # Log Notifications
             conn.execute("INSERT INTO notifications (id, user_id, title, message) VALUES (?, ?, 'Membership Activated!', 'Welcome to Founder for Founder. Your membership is active.')", (str(uuid.uuid4()), user['id']))
-            conn.execute("INSERT INTO whatsapp_logs (id, phone_number, message, notification_type, status) VALUES (?, '+91 7972923690', 'Membership Activated! Welcome to Founder for Founder.', 'GENERAL', 'DELIVERED')", (str(uuid.uuid4()),))
+            user_phone = user.get('phone') or user.get('whatsapp') or ''
+            conn.execute("INSERT INTO whatsapp_logs (id, phone_number, message, notification_type, status) VALUES (?, ?, 'Membership Activated! Welcome to Founder for Founder.', 'GENERAL', 'DELIVERED')", (str(uuid.uuid4()), user_phone))
 
             conn.commit()
             conn.close()

@@ -167,7 +167,7 @@ def seed_default_data():
                 business_description, years_in_business, what_i_need, what_i_can_offer, why_i_joined, verified_member,
                 business_stage, expertise, interests, preferred_contact_method
             ) VALUES (
-                ?, ?, 'Founder for Founder Admin', '/assets/logo.svg', '+91 7972923690', '+91 7972923690', 1,
+                ?, ?, 'Founder for Founder Admin', '/assets/logo.svg', '', '', 1,
                 'snalts.co', 'Business Network', 'Community Director', 'Pan India', 'https://snalts.co',
                 'https://www.linkedin.com/company/founder-for-founder/',
                 'Founder for Founder is a curated business network connecting founders, entrepreneurs, business owners, and professionals across India.', 5,
@@ -310,7 +310,7 @@ def seed_default_data():
         'powered_by': ('snalts.co', 'Attribution copy'),
         'registered_city': ('Pan India', 'Registered operating base'),
         'contact_email': ('connect.f4f@gmail.com', 'Official contact email'),
-        'contact_phone': ('+91 7972923690', 'Official contact phone'),
+        'contact_phone': ('', 'Official contact phone'),
         'membership_fee': ('1500', 'Monthly fee in INR'),
         'gst_rate': ('18', 'GST percentage'),
         'instagram_url': ('https://www.instagram.com/founder_for_founder', 'Instagram profile URL'),
