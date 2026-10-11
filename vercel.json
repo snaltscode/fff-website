@@ -40,6 +40,14 @@
       "destination": "/public/terms.html"
     },
     {
+      "source": "/refund-policy",
+      "destination": "/public/refund-policy.html"
+    },
+    {
+      "source": "/refund-and-cancellation-policy",
+      "destination": "/public/refund-policy.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/public/$1"
     }

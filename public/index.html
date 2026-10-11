@@ -488,7 +488,7 @@
           <ul class="footer-links">
             <li><a href="/terms" class="footer-link">Terms & Conditions</a></li>
             <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
-            <li><a href="javascript:void(0)" onclick="openModal('refundModal')" class="footer-link">Refund & Cancellation Policy</a></li>
+            <li><a href="/refund-policy" class="footer-link">Refund &amp; Cancellation Policy</a></li>
             <li><a href="javascript:void(0)" onclick="openModal('guidelinesModal')" class="footer-link">Community Guidelines</a></li>
           </ul>
         </div>
@@ -2101,10 +2101,18 @@
   </div>
 
   <div class="modal-overlay" id="refundModal">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 520px;">
       <button class="modal-close" onclick="closeModal('refundModal')">&times;</button>
-      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Refund & Cancellation Policy</h2>
-      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="refundModalContent">Loading policy content...</p>
+      <h2 style="font-size: 1.8rem; color: var(--ink-primary); margin-bottom: 8px;">Refund &amp; Cancellation Policy</h2>
+      <p style="color: var(--grey-500); line-height: 1.6; margin-top: 1rem;" id="refundModalContent">
+        Our official Refund &amp; Cancellation Policy is available on our dedicated legal page, covering voluntary application terms, cancellation process, and genuine refund review criteria.
+      </p>
+      <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
+        <a href="/refund-policy" class="btn btn-emerald" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 0.75rem 1.25rem;">
+          View Full Refund Policy <span class="btn-circle-icon">→</span>
+        </a>
+        <button class="btn btn-outline-emerald" onclick="closeModal('refundModal')">Close</button>
+      </div>
     </div>
   </div>
 
