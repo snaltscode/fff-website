@@ -521,20 +521,52 @@ CREATE TABLE IF NOT EXISTS community_chat_messages (
 
 -- Performance Indexes for Rapid Sub-Millisecond Queries
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_users_google_id ON users(google_id);
+CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
 CREATE INDEX IF NOT EXISTS idx_memberships_user_status ON memberships(user_id, status);
+CREATE INDEX IF NOT EXISTS idx_memberships_status ON memberships(status);
+
+CREATE INDEX IF NOT EXISTS idx_member_profiles_user ON member_profiles(user_id);
+CREATE INDEX IF NOT EXISTS idx_member_profiles_created ON member_profiles(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_member_profiles_category ON member_profiles(business_category);
+CREATE INDEX IF NOT EXISTS idx_member_profiles_stage ON member_profiles(business_stage);
+CREATE INDEX IF NOT EXISTS idx_member_profiles_city ON member_profiles(city);
+
 CREATE INDEX IF NOT EXISTS idx_events_status_date ON events(status, event_date);
+CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date);
+CREATE INDEX IF NOT EXISTS idx_events_category ON events(category);
 CREATE INDEX IF NOT EXISTS idx_event_gallery_active ON event_gallery(is_active, display_order, created_at);
+CREATE INDEX IF NOT EXISTS idx_event_rsvps_lookup ON event_rsvps(event_id, user_id);
+CREATE INDEX IF NOT EXISTS idx_event_rsvps_status ON event_rsvps(event_id, status);
+CREATE INDEX IF NOT EXISTS idx_event_rsvps_user ON event_rsvps(user_id);
+CREATE INDEX IF NOT EXISTS idx_event_attendance_lookup ON event_attendance(event_id, user_id);
+CREATE INDEX IF NOT EXISTS idx_event_attendance_user ON event_attendance(user_id);
+
+CREATE INDEX IF NOT EXISTS idx_needs_status ON needs_offers(status, created_at);
+CREATE INDEX IF NOT EXISTS idx_needs_creator ON needs_offers(creator_id);
+CREATE INDEX IF NOT EXISTS idx_needs_type_cat ON needs_offers(type, category, urgency);
+CREATE INDEX IF NOT EXISTS idx_need_responses_need ON need_responses(need_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_need_responses_responder ON need_responses(responder_id);
+
+CREATE INDEX IF NOT EXISTS idx_leads_user ON leads(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_leads_user_status ON leads(user_id, status);
+CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);
+CREATE INDEX IF NOT EXISTS idx_referrals_referred ON referrals(referred_member_id);
+CREATE INDEX IF NOT EXISTS idx_deals_verified ON business_deals(verified_by_admin);
+CREATE INDEX IF NOT EXISTS idx_deals_user_verified ON business_deals(user_id, verified_by_admin);
+
+CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_host ON one_on_one_meetings(host_id, meeting_date);
+CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_partner ON one_on_one_meetings(partner_id, meeting_date);
+
+CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status, created_at);
+CREATE INDEX IF NOT EXISTS idx_applications_email ON applications(email);
+CREATE INDEX IF NOT EXISTS idx_notifications_user_date ON notifications(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_date ON audit_logs(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_otp_email_verified ON otp_records(email, verified_at);
+CREATE INDEX IF NOT EXISTS idx_chat_channel ON community_chat_messages(channel, created_at);
 CREATE INDEX IF NOT EXISTS idx_site_settings_key ON site_settings(key_name);
 CREATE INDEX IF NOT EXISTS idx_testimonials_active ON testimonials(is_active, display_order);
 CREATE INDEX IF NOT EXISTS idx_faqs_active ON faqs(is_active, display_order);
-CREATE INDEX IF NOT EXISTS idx_needs_status ON needs_offers(status, created_at);
-CREATE INDEX IF NOT EXISTS idx_deals_verified ON business_deals(verified_by_admin);
-CREATE INDEX IF NOT EXISTS idx_chat_channel ON community_chat_messages(channel, created_at);
-CREATE INDEX IF NOT EXISTS idx_event_rsvps_lookup ON event_rsvps(event_id, user_id);
-CREATE INDEX IF NOT EXISTS idx_event_rsvps_status ON event_rsvps(event_id, status);
-CREATE INDEX IF NOT EXISTS idx_event_attendance_lookup ON event_attendance(event_id, user_id);
-CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status, created_at);
-CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_users ON one_on_one_meetings(user_id, meeting_date);
-CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_partners ON one_on_one_meetings(partner_id, meeting_date);
+
 
 

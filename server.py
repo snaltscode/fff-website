@@ -113,12 +113,20 @@ def get_auth_user(request_handler):
         token = auth_header.split(' ')[1]
         user = SESSIONS.get(token)
         if user:
+            now = time.time()
+            if now - user.get('_last_verified', 0) < 30.0:
+                return user
             # Refresh user status from DB
             conn = database.get_db_connection()
             db_user = conn.execute("SELECT id, email, role, status, email_verified FROM users WHERE id = ?", (user['id'],)).fetchone()
             conn.close()
             if db_user:
-                return dict(db_user)
+                updated_user = dict(db_user)
+                updated_user['_last_verified'] = now
+                SESSIONS[token] = updated_user
+                return updated_user
+            else:
+                SESSIONS.pop(token, None)
     return None
 
 def sanitize_csv_cell(val):
@@ -140,11 +148,43 @@ _PUBLIC_CONTENT_CACHE = {
     'ttl': 60.0
 }
 
+_SETTINGS_CACHE = {
+    'data': None,
+    'timestamp': 0,
+    'ttl': 300.0
+}
+
 def invalidate_public_content_cache():
     _PUBLIC_CONTENT_CACHE['data'] = None
     _PUBLIC_CONTENT_CACHE['json_bytes'] = None
     _PUBLIC_CONTENT_CACHE['gzip_bytes'] = None
     _PUBLIC_CONTENT_CACHE['timestamp'] = 0
+
+def invalidate_site_settings_cache():
+    _SETTINGS_CACHE['data'] = None
+    _SETTINGS_CACHE['timestamp'] = 0
+
+def get_site_settings(conn=None):
+    now = time.time()
+    if _SETTINGS_CACHE['data'] is not None and (now - _SETTINGS_CACHE['timestamp'] < _SETTINGS_CACHE['ttl']):
+        return _SETTINGS_CACHE['data']
+    close_after = False
+    if conn is None:
+        conn = database.get_db_connection()
+        close_after = True
+    try:
+        rows = conn.execute("SELECT key_name, key_value FROM site_settings").fetchall()
+        settings = {r['key_name']: r['key_value'] for r in rows}
+        if not settings.get('hero_banner_url'):
+            settings['hero_banner_url'] = '/assets/hero_banner.jpg'
+        google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '').strip() or settings.get('google_client_id', '')
+        settings['google_client_id'] = google_client_id
+        _SETTINGS_CACHE['data'] = settings
+        _SETTINGS_CACHE['timestamp'] = now
+        return settings
+    finally:
+        if close_after:
+            conn.close()
 
 class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -317,14 +357,10 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def handle_api_get(self, path, query):
-        user = get_auth_user(self)
-        conn = database.get_db_connection()
-
-        # Public Content Endpoint
+        # Public Content Endpoint - Instant zero-DB-connection cache hit
         if path == '/api/public/content':
             now = time.time()
             if _PUBLIC_CONTENT_CACHE['data'] is not None and (now - _PUBLIC_CONTENT_CACHE['timestamp'] < _PUBLIC_CONTENT_CACHE['ttl']):
-                conn.close()
                 accept_encoding = self.headers.get('Accept-Encoding', '')
                 if 'gzip' in accept_encoding and _PUBLIC_CONTENT_CACHE.get('gzip_bytes'):
                     self.send_response(200)
@@ -349,6 +385,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     return
                 return self.send_json(_PUBLIC_CONTENT_CACHE['data'], cache_control='public, max-age=30, s-maxage=60, stale-while-revalidate=300')
 
+            conn = database.get_db_connection()
             hero = conn.execute("SELECT * FROM hero_banners WHERE is_active = 1 LIMIT 1").fetchone()
             reels = conn.execute("SELECT * FROM instagram_reels WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             youtube_vids = conn.execute("SELECT * FROM youtube_videos WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
@@ -357,20 +394,20 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             faqs = conn.execute("SELECT * FROM faqs WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             events = conn.execute("SELECT * FROM events WHERE status = 'UPCOMING' ORDER BY event_date ASC LIMIT 4").fetchall()
             
-            # Live Database Counters
-            active_members_count = conn.execute("SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE'").fetchone()[0]
-            published_events_count = conn.execute("SELECT COUNT(*) FROM events").fetchone()[0]
-            verified_biz_sum = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1").fetchone()[0]
+            # Live Database Counters in 1 single fast query
+            counters_row = conn.execute("""
+                SELECT 
+                    (SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE') as active_members,
+                    (SELECT COUNT(*) FROM events) as published_events,
+                    (SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1) as verified_business
+            """).fetchone()
+            active_members_count = counters_row['active_members'] if counters_row else 0
+            published_events_count = counters_row['published_events'] if counters_row else 0
+            verified_biz_sum = counters_row['verified_business'] if counters_row else 0
 
-            settings_rows = conn.execute("SELECT key_name, key_value FROM site_settings").fetchall()
-            settings = {r['key_name']: r['key_value'] for r in settings_rows}
-            if not settings.get('hero_banner_url'):
-                settings['hero_banner_url'] = '/assets/hero_banner.jpg'
-
-            google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '').strip() or settings.get('google_client_id', '')
-            settings['google_client_id'] = google_client_id
-
+            settings = get_site_settings(conn)
             conn.close()
+
             payload = {
                 'hero': dict(hero) if hero else None,
                 'reels': [dict(r) for r in reels],
@@ -396,8 +433,11 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             _PUBLIC_CONTENT_CACHE['timestamp'] = now
             return self.send_json(payload, cache_control='public, max-age=30, s-maxage=60, stale-while-revalidate=300')
 
+        user = get_auth_user(self)
+        conn = database.get_db_connection()
+
         # Public FAQs Endpoint
-        elif path == '/api/public/faqs':
+        if path == '/api/public/faqs':
             faqs = conn.execute("SELECT * FROM faqs WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             conn.close()
             return self.send_json({'faqs': [dict(f) for f in faqs]})
@@ -424,14 +464,10 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # Auth Config Endpoint (Google Client ID & Auth Status)
         elif path == '/api/auth/config':
-            google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '').strip()
-            if not google_client_id:
-                row = conn.execute("SELECT key_value FROM site_settings WHERE key_name = 'google_client_id'").fetchone()
-                if row and row['key_value']:
-                    google_client_id = row['key_value'].strip()
+            settings = get_site_settings(conn)
             conn.close()
             return self.send_json({
-                'google_client_id': google_client_id,
+                'google_client_id': settings.get('google_client_id', ''),
                 'google_auth_enabled': True
             })
 
@@ -476,7 +512,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 sql += " AND p.business_stage = ?"
                 params.append(stage)
 
-            sql += " ORDER BY p.created_at DESC"
+            sql += " ORDER BY p.created_at DESC LIMIT 200"
             members = conn.execute(sql, params).fetchall()
             conn.close()
             return self.send_json({'members': [dict(m) for m in members]})
@@ -493,9 +529,14 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             sql = """
                 SELECT n.*, p.full_name as creator_name, p.business_name, p.profile_photo, p.city as creator_city,
-                       (SELECT COUNT(*) FROM need_responses WHERE need_id = n.id) as response_count
+                       COALESCE(nr.response_count, 0) as response_count
                 FROM needs_offers n 
                 JOIN member_profiles p ON n.creator_id = p.user_id 
+                LEFT JOIN (
+                    SELECT need_id, COUNT(*) as response_count 
+                    FROM need_responses 
+                    GROUP BY need_id
+                ) nr ON nr.need_id = n.id
                 WHERE n.status != 'CLOSED'
             """
             params = []
@@ -543,57 +584,70 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
-            leads_won = conn.execute("SELECT COUNT(*) FROM leads WHERE user_id = ? AND status = 'WON'", (user['id'],)).fetchone()[0]
-            ref_rec = conn.execute("SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?", (user['id'],)).fetchone()[0]
+            uid = user['id']
+            now_dt = datetime.now()
+            now_str = now_dt.strftime('%Y-%m-%d %H:%M:%S')
+            start_of_month = now_dt.strftime('%Y-%m-01 00:00:00')
+            if now_dt.month == 12:
+                next_month_start = f"{now_dt.year + 1}-01-01 00:00:00"
+            else:
+                next_month_start = f"{now_dt.year}-{now_dt.month + 1:02d}-01 00:00:00"
 
-            now_str = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            req_month = datetime.now().strftime('%Y-%m')
+            # 1. Combined CRM & Meeting stats query (1 single indexed query)
+            crm_stats = conn.execute("""
+                SELECT 
+                    (SELECT COUNT(*) FROM leads WHERE user_id = ? AND status = 'WON') as leads_won,
+                    (SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?) as ref_rec,
+                    (SELECT COUNT(*) FROM one_on_one_meetings 
+                     WHERE (host_id = ? OR partner_id = ?) 
+                       AND meeting_date >= ? AND meeting_date < ?) as this_month_meetings
+            """, (uid, uid, uid, uid, start_of_month, next_month_start)).fetchone()
+
+            leads_won = crm_stats['leads_won'] if crm_stats else 0
+            ref_rec = crm_stats['ref_rec'] if crm_stats else 0
+            this_month_meetings = crm_stats['this_month_meetings'] if crm_stats else 0
+
+            # 2. Optimized Events for Current Month using LEFT JOINs (NO correlated subqueries)
             events_in_month = conn.execute("""
-                SELECT e.*, 
-                       (SELECT status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_rsvp,
-                       (SELECT attended FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attended,
-                       (SELECT status FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attendance_status
+                SELECT e.id, e.status, e.event_date,
+                       r.status as user_rsvp,
+                       a.attended as attended,
+                       a.status as attendance_status
                 FROM events e
-                WHERE strftime('%Y-%m', e.event_date) = ?
-            """, (user['id'], user['id'], user['id'], req_month)).fetchall()
+                LEFT JOIN event_rsvps r ON r.event_id = e.id AND r.user_id = ?
+                LEFT JOIN event_attendance a ON a.event_id = e.id AND a.user_id = ?
+                WHERE e.event_date >= ? AND e.event_date < ?
+            """, (uid, uid, start_of_month, next_month_start)).fetchall()
 
             events_attended = 0
             completed_events = 0
             for ev in events_in_month:
-                ed = dict(ev)
-                is_completed = (ed.get('status') == 'COMPLETED' or (ed.get('event_date') and ed['event_date'] < now_str))
+                is_completed = (ev['status'] == 'COMPLETED' or (ev['event_date'] and ev['event_date'] < now_str))
                 if is_completed:
                     completed_events += 1
-                if ed.get('attended') == 1 or ed.get('attendance_status') == 'PRESENT':
+                if ev['attended'] == 1 or ev['attendance_status'] == 'PRESENT':
                     events_attended += 1
 
             total_events = len(events_in_month)
             attendance_rate = 100
             if completed_events > 0:
                 attendance_rate = round((events_attended / completed_events) * 100)
-            elif total_events > 0:
-                attendance_rate = 100
 
+            # 3. Optimized streak query with LIMIT 30
             past_attended = conn.execute("""
                 SELECT ea.attended
                 FROM events e
                 LEFT JOIN event_attendance ea ON e.id = ea.event_id AND ea.user_id = ?
                 WHERE (e.status = 'COMPLETED' OR e.event_date < ?)
                 ORDER BY e.event_date DESC
-            """, (user['id'], now_str)).fetchall()
+                LIMIT 30
+            """, (uid, now_str)).fetchall()
             streak = 0
             for pa in past_attended:
                 if pa['attended'] == 1:
                     streak += 1
                 else:
                     break
-
-            curr_month_prefix = datetime.now().strftime('%Y-%m')
-            curr_month_name = datetime.now().strftime('%B')
-            this_month_meetings = conn.execute("""
-                SELECT COUNT(*) FROM one_on_one_meetings
-                WHERE (user_id = ? OR partner_id = ?) AND strftime('%Y-%m', meeting_date) = ?
-            """, (user['id'], user['id'], curr_month_prefix)).fetchone()[0]
 
             conn.close()
             return self.send_json({
@@ -607,7 +661,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 },
                 'meetings': {
                     'this_month': this_month_meetings,
-                    'current_month_name': curr_month_name
+                    'current_month_name': now_dt.strftime('%B')
                 }
             })
 
@@ -617,21 +671,27 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
-            leads_rec = conn.execute("SELECT COUNT(*) FROM leads WHERE user_id = ?", (user['id'],)).fetchone()[0]
-            leads_won = conn.execute("SELECT COUNT(*) FROM leads WHERE user_id = ? AND status = 'WON'", (user['id'],)).fetchone()[0]
-            ref_given = conn.execute("SELECT COUNT(*) FROM referrals WHERE referrer_id = ?", (user['id'],)).fetchone()[0]
-            ref_rec = conn.execute("SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?", (user['id'],)).fetchone()[0]
-            biz_gen = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE user_id = ? AND verified_by_admin = 1", (user['id'],)).fetchone()[0]
+            uid = user['id']
+            # Fetch leads first
+            leads_list = conn.execute("SELECT * FROM leads WHERE user_id = ? ORDER BY created_at DESC", (uid,)).fetchall()
+            leads_rec = len(leads_list)
+            leads_won = sum(1 for l in leads_list if l['status'] == 'WON')
 
-            leads_list = conn.execute("SELECT * FROM leads WHERE user_id = ? ORDER BY created_at DESC", (user['id'],)).fetchall()
+            # Combined scalar query for referrals and deals in 1 fast roundtrip
+            stats = conn.execute("""
+                SELECT 
+                    (SELECT COUNT(*) FROM referrals WHERE referrer_id = ?) as ref_given,
+                    (SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?) as ref_rec,
+                    (SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE user_id = ? AND verified_by_admin = 1) as biz_gen
+            """, (uid, uid, uid)).fetchone()
 
             conn.close()
             return self.send_json({
                 'leads_received': leads_rec,
                 'leads_won': leads_won,
-                'referrals_given': ref_given,
-                'referrals_received': ref_rec,
-                'verified_business_generated': biz_gen,
+                'referrals_given': stats['ref_given'] if stats else 0,
+                'referrals_received': stats['ref_rec'] if stats else 0,
+                'verified_business_generated': stats['biz_gen'] if stats else 0,
                 'leads': [dict(l) for l in leads_list]
             })
 
@@ -645,13 +705,21 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             fmt = query.get('signature_format', [''])[0]
 
             sql = """SELECT e.*, 
-                     (SELECT COUNT(*) FROM event_rsvps WHERE event_id = e.id AND status = 'ATTENDING') as rsvp_count, 
-                     (SELECT status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_rsvp,
-                     (SELECT payment_status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_payment_status,
-                     (SELECT amount_paid FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_amount_paid,
-                     (SELECT payment_id FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_payment_id
-                     FROM events e WHERE 1=1"""
-            params = [user['id'], user['id'], user['id'], user['id']]
+                     COALESCE(rc.rsvp_count, 0) as rsvp_count, 
+                     r.status as user_rsvp,
+                     r.payment_status as user_payment_status,
+                     r.amount_paid as user_amount_paid,
+                     r.payment_id as user_payment_id
+                     FROM events e
+                     LEFT JOIN event_rsvps r ON r.event_id = e.id AND r.user_id = ?
+                     LEFT JOIN (
+                         SELECT event_id, COUNT(*) as rsvp_count 
+                         FROM event_rsvps 
+                         WHERE status = 'ATTENDING' 
+                         GROUP BY event_id
+                     ) rc ON rc.event_id = e.id
+                     WHERE 1=1"""
+            params = [user['id']]
 
             if cat:
                 sql += " AND e.category = ?"
@@ -676,22 +744,38 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 req_month = datetime.now().strftime('%Y-%m')
 
             # Get distinct available months from events
-            available_rows = conn.execute("SELECT DISTINCT strftime('%Y-%m', event_date) as m FROM events WHERE event_date IS NOT NULL ORDER BY m DESC").fetchall()
+            available_rows = conn.execute("SELECT DISTINCT substr(event_date, 1, 7) as m FROM events WHERE event_date IS NOT NULL ORDER BY m DESC LIMIT 24").fetchall()
             available_months = [r['m'] for r in available_rows if r['m']]
             if req_month not in available_months and available_months:
                 req_month = available_months[0]
 
-            # Fetch all events hosted in requested month with user's attendance & RSVP status
+            # Calculate date bounds for req_month (e.g. 2026-10-01 to 2026-11-01)
+            try:
+                dt_obj = datetime.strptime(req_month, '%Y-%m')
+                month_start = dt_obj.strftime('%Y-%m-01 00:00:00')
+                if dt_obj.month == 12:
+                    month_end = f"{dt_obj.year + 1}-01-01 00:00:00"
+                else:
+                    month_end = f"{dt_obj.year}-{dt_obj.month + 1:02d}-01 00:00:00"
+                month_name = dt_obj.strftime('%B %Y')
+            except Exception:
+                month_start = f"{req_month}-01 00:00:00"
+                month_end = f"{req_month}-31 23:59:59"
+                month_name = req_month
+
+            # Fetch all events hosted in requested month with user's attendance & RSVP status via indexed LEFT JOINs
             events_in_month = conn.execute("""
                 SELECT e.*, 
-                       (SELECT status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_rsvp,
-                       (SELECT attended FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attended,
-                       (SELECT status FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attendance_status,
-                       (SELECT marked_at FROM event_attendance WHERE event_id = e.id AND user_id = ?) as marked_at
+                       r.status as user_rsvp,
+                       a.attended as attended,
+                       a.status as attendance_status,
+                       a.marked_at as marked_at
                 FROM events e
-                WHERE strftime('%Y-%m', e.event_date) = ?
+                LEFT JOIN event_rsvps r ON r.event_id = e.id AND r.user_id = ?
+                LEFT JOIN event_attendance a ON a.event_id = e.id AND a.user_id = ?
+                WHERE e.event_date >= ? AND e.event_date < ?
                 ORDER BY e.event_date ASC
-            """, (user['id'], user['id'], user['id'], user['id'], req_month)).fetchall()
+            """, (user['id'], user['id'], month_start, month_end)).fetchall()
 
             events_list = []
             events_attended = 0
@@ -731,6 +815,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 LEFT JOIN event_attendance ea ON e.id = ea.event_id AND ea.user_id = ?
                 WHERE (e.status = 'COMPLETED' OR e.event_date < ?)
                 ORDER BY e.event_date DESC
+                LIMIT 50
             """, (user['id'], now_str)).fetchall()
 
             streak = 0
@@ -851,9 +936,12 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
-            mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
             is_admin = user.get('role') in ('ADMIN', 'SUPER_ADMIN')
-            has_active_membership = (mem and mem['status'] == 'ACTIVE') or is_admin
+            if is_admin:
+                has_active_membership = True
+            else:
+                mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
+                has_active_membership = bool(mem and mem['status'] == 'ACTIVE')
 
             if not has_active_membership:
                 conn.close()
@@ -888,10 +976,18 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Forbidden'}, 403)
 
-            total_members = conn.execute("SELECT COUNT(*) FROM users WHERE role = 'MEMBER'").fetchone()[0]
-            active_members = conn.execute("SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE'").fetchone()[0]
-            new_applications = conn.execute("SELECT COUNT(*) FROM applications WHERE status IN ('SUBMITTED', 'UNDER_REVIEW')").fetchone()[0]
-            total_business = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1").fetchone()[0]
+            metrics_row = conn.execute("""
+                SELECT 
+                    (SELECT COUNT(*) FROM users WHERE role = 'MEMBER') as total_members,
+                    (SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE') as active_members,
+                    (SELECT COUNT(*) FROM applications WHERE status IN ('SUBMITTED', 'UNDER_REVIEW')) as new_applications,
+                    (SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1) as verified_business
+            """).fetchone()
+
+            total_members = metrics_row['total_members'] if metrics_row else 0
+            active_members = metrics_row['active_members'] if metrics_row else 0
+            new_applications = metrics_row['new_applications'] if metrics_row else 0
+            total_business = metrics_row['verified_business'] if metrics_row else 0
             mrr = active_members * 1500
 
             applications = conn.execute("SELECT * FROM applications ORDER BY created_at DESC LIMIT 30").fetchall()
@@ -1103,6 +1199,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             token = secrets.token_hex(32)
             user_dict = dict(user)
+            user_dict['_last_verified'] = time.time()
             SESSIONS[token] = user_dict
 
             profile = conn.execute("SELECT * FROM member_profiles WHERE user_id = ?", (user['id'],)).fetchone()
@@ -1213,6 +1310,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.close()
 
             user_dict = dict(db_user)
+            user_dict['_last_verified'] = time.time()
             token = secrets.token_hex(32)
             SESSIONS[token] = user_dict
 
@@ -1762,9 +1860,12 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
-            mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
             is_admin = user.get('role') in ('ADMIN', 'SUPER_ADMIN')
-            has_active_membership = (mem and mem['status'] == 'ACTIVE') or is_admin
+            if is_admin:
+                has_active_membership = True
+            else:
+                mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
+                has_active_membership = bool(mem and mem['status'] == 'ACTIVE')
 
             if not has_active_membership:
                 conn.close()
@@ -1847,6 +1948,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     conn.execute("INSERT INTO site_settings (key_name, key_value) VALUES (?, ?) ON CONFLICT(key_name) DO UPDATE SET key_value = ?", (k, str(v), str(v)))
             conn.commit()
             invalidate_public_content_cache()
+            invalidate_site_settings_cache()
             conn.close()
             return self.send_json({'success': True, 'message': 'Brand & CMS settings updated successfully.'})
 

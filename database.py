@@ -8,7 +8,14 @@ import json
 import uuid
 from datetime import datetime, timedelta
 
+import queue
+
+_RESOLVED_DB_PATH = None
+
 def get_db_path():
+    global _RESOLVED_DB_PATH
+    if _RESOLVED_DB_PATH:
+        return _RESOLVED_DB_PATH
     # If running in Vercel or AWS Lambda serverless environment
     if os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
         tmp_db = '/tmp/f4f_community.db'
@@ -18,31 +25,87 @@ def get_db_path():
                 shutil.copy2(seed_db, tmp_db)
             except Exception as e:
                 print("Could not copy seed DB to /tmp:", e)
+        _RESOLVED_DB_PATH = tmp_db
         return tmp_db
-    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'f4f_community.db')
+    _RESOLVED_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'f4f_community.db')
+    return _RESOLVED_DB_PATH
 
 DB_PATH = get_db_path()
 SCHEMA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
 
+class PooledConnection:
+    """Thread-safe connection wrapper that returns raw connection to pool on close."""
+    def __init__(self, raw_conn, pool):
+        self._raw = raw_conn
+        self._pool = pool
+        self._closed = False
+
+    def close(self):
+        if not self._closed:
+            self._closed = True
+            try:
+                self._raw.rollback()
+            except Exception:
+                pass
+            try:
+                self._pool.put_nowait(self._raw)
+            except Exception:
+                try:
+                    self._raw.close()
+                except Exception:
+                    pass
+
+    def __getattr__(self, name):
+        return getattr(self._raw, name)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
+class SQLiteConnectionPool:
+    """High-performance SQLite connection pool with pre-warmed PRAGMAs."""
+    def __init__(self, max_size=16):
+        self._pool = queue.Queue(maxsize=max_size)
+        self.max_size = max_size
+
+    def get_connection(self):
+        db_path = get_db_path()
+        if not os.path.exists(db_path):
+            init_db()
+        while not self._pool.empty():
+            try:
+                raw = self._pool.get_nowait()
+                # Verify connection liveness
+                try:
+                    raw.execute("SELECT 1;")
+                    return PooledConnection(raw, self._pool)
+                except (sqlite3.ProgrammingError, sqlite3.OperationalError):
+                    continue
+            except queue.Empty:
+                break
+
+        # Create new connection and apply all performance PRAGMAs once
+        raw = sqlite3.connect(db_path, timeout=30.0, check_same_thread=False)
+        raw.row_factory = sqlite3.Row
+        raw.execute("PRAGMA foreign_keys = ON;")
+        raw.execute("PRAGMA busy_timeout = 30000;")
+        raw.execute("PRAGMA synchronous = NORMAL;")
+        raw.execute("PRAGMA cache_size = -64000;")
+        raw.execute("PRAGMA temp_store = MEMORY;")
+        raw.execute("PRAGMA mmap_size = 268435456;")
+        if not os.environ.get('VERCEL') and not os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+            try:
+                raw.execute("PRAGMA journal_mode = WAL;")
+            except Exception:
+                pass
+        return PooledConnection(raw, self._pool)
+
+_GLOBAL_POOL = SQLiteConnectionPool(max_size=16)
+
 def get_db_connection():
-    db_path = get_db_path()
-    # Auto-initialize if db file doesn't exist
-    if not os.path.exists(db_path):
-        init_db()
-    conn = sqlite3.connect(db_path, timeout=30.0)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA foreign_keys = ON;")
-    conn.execute("PRAGMA busy_timeout = 30000;")
-    conn.execute("PRAGMA synchronous = NORMAL;")
-    conn.execute("PRAGMA cache_size = -64000;")
-    conn.execute("PRAGMA temp_store = MEMORY;")
-    conn.execute("PRAGMA mmap_size = 268435456;")
-    if not os.environ.get('VERCEL') and not os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
-        try:
-            conn.execute("PRAGMA journal_mode = WAL;")
-        except Exception:
-            pass
-    return conn
+    return _GLOBAL_POOL.get_connection()
 
 def hash_password(password, salt=None):
     if not salt:
@@ -147,22 +210,60 @@ def is_db_initialized(conn):
 
 def ensure_performance_indexes(conn):
     indexes = [
+        # Users & Memberships
         ("idx_users_email", "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);"),
+        ("idx_users_google_id", "CREATE INDEX IF NOT EXISTS idx_users_google_id ON users(google_id);"),
+        ("idx_users_role", "CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);"),
         ("idx_memberships_user_status", "CREATE INDEX IF NOT EXISTS idx_memberships_user_status ON memberships(user_id, status);"),
+        ("idx_memberships_status", "CREATE INDEX IF NOT EXISTS idx_memberships_status ON memberships(status);"),
+
+        # Member Profiles
+        ("idx_member_profiles_user", "CREATE INDEX IF NOT EXISTS idx_member_profiles_user ON member_profiles(user_id);"),
+        ("idx_member_profiles_created", "CREATE INDEX IF NOT EXISTS idx_member_profiles_created ON member_profiles(created_at DESC);"),
+        ("idx_member_profiles_category", "CREATE INDEX IF NOT EXISTS idx_member_profiles_category ON member_profiles(business_category);"),
+        ("idx_member_profiles_stage", "CREATE INDEX IF NOT EXISTS idx_member_profiles_stage ON member_profiles(business_stage);"),
+        ("idx_member_profiles_city", "CREATE INDEX IF NOT EXISTS idx_member_profiles_city ON member_profiles(city);"),
+
+        # Events, RSVPs & Attendance
         ("idx_events_status_date", "CREATE INDEX IF NOT EXISTS idx_events_status_date ON events(status, event_date);"),
+        ("idx_events_date", "CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date);"),
+        ("idx_events_category", "CREATE INDEX IF NOT EXISTS idx_events_category ON events(category);"),
         ("idx_event_gallery_active", "CREATE INDEX IF NOT EXISTS idx_event_gallery_active ON event_gallery(is_active, display_order, created_at);"),
-        ("idx_site_settings_key", "CREATE INDEX IF NOT EXISTS idx_site_settings_key ON site_settings(key_name);"),
-        ("idx_testimonials_active", "CREATE INDEX IF NOT EXISTS idx_testimonials_active ON testimonials(is_active, display_order);"),
-        ("idx_faqs_active", "CREATE INDEX IF NOT EXISTS idx_faqs_active ON faqs(is_active, display_order);"),
-        ("idx_needs_status", "CREATE INDEX IF NOT EXISTS idx_needs_status ON needs_offers(status, created_at);"),
-        ("idx_deals_verified", "CREATE INDEX IF NOT EXISTS idx_deals_verified ON business_deals(verified_by_admin);"),
-        ("idx_chat_channel", "CREATE INDEX IF NOT EXISTS idx_chat_channel ON community_chat_messages(channel, created_at);"),
         ("idx_event_rsvps_lookup", "CREATE INDEX IF NOT EXISTS idx_event_rsvps_lookup ON event_rsvps(event_id, user_id);"),
         ("idx_event_rsvps_status", "CREATE INDEX IF NOT EXISTS idx_event_rsvps_status ON event_rsvps(event_id, status);"),
+        ("idx_event_rsvps_user", "CREATE INDEX IF NOT EXISTS idx_event_rsvps_user ON event_rsvps(user_id);"),
         ("idx_event_attendance_lookup", "CREATE INDEX IF NOT EXISTS idx_event_attendance_lookup ON event_attendance(event_id, user_id);"),
+        ("idx_event_attendance_user", "CREATE INDEX IF NOT EXISTS idx_event_attendance_user ON event_attendance(user_id);"),
+
+        # Needs & Responses
+        ("idx_needs_status", "CREATE INDEX IF NOT EXISTS idx_needs_status ON needs_offers(status, created_at);"),
+        ("idx_needs_creator", "CREATE INDEX IF NOT EXISTS idx_needs_creator ON needs_offers(creator_id);"),
+        ("idx_needs_type_cat", "CREATE INDEX IF NOT EXISTS idx_needs_type_cat ON needs_offers(type, category, urgency);"),
+        ("idx_need_responses_need", "CREATE INDEX IF NOT EXISTS idx_need_responses_need ON need_responses(need_id, created_at DESC);"),
+        ("idx_need_responses_responder", "CREATE INDEX IF NOT EXISTS idx_need_responses_responder ON need_responses(responder_id);"),
+
+        # Leads, Referrals & Deals
+        ("idx_leads_user", "CREATE INDEX IF NOT EXISTS idx_leads_user ON leads(user_id, created_at DESC);"),
+        ("idx_leads_user_status", "CREATE INDEX IF NOT EXISTS idx_leads_user_status ON leads(user_id, status);"),
+        ("idx_referrals_referrer", "CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);"),
+        ("idx_referrals_referred", "CREATE INDEX IF NOT EXISTS idx_referrals_referred ON referrals(referred_member_id);"),
+        ("idx_deals_verified", "CREATE INDEX IF NOT EXISTS idx_deals_verified ON business_deals(verified_by_admin);"),
+        ("idx_deals_user_verified", "CREATE INDEX IF NOT EXISTS idx_deals_user_verified ON business_deals(user_id, verified_by_admin);"),
+
+        # 1-to-1 Meetings (Correct host_id and partner_id)
+        ("idx_one_on_one_meetings_host", "CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_host ON one_on_one_meetings(host_id, meeting_date);"),
+        ("idx_one_on_one_meetings_partner", "CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_partner ON one_on_one_meetings(partner_id, meeting_date);"),
+
+        # Applications, Notifications, Audit, Settings & Chat
         ("idx_applications_status", "CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status, created_at);"),
-        ("idx_one_on_one_meetings_users", "CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_users ON one_on_one_meetings(user_id, meeting_date);"),
-        ("idx_one_on_one_meetings_partners", "CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_partners ON one_on_one_meetings(partner_id, meeting_date);")
+        ("idx_applications_email", "CREATE INDEX IF NOT EXISTS idx_applications_email ON applications(email);"),
+        ("idx_notifications_user_date", "CREATE INDEX IF NOT EXISTS idx_notifications_user_date ON notifications(user_id, created_at DESC);"),
+        ("idx_audit_logs_date", "CREATE INDEX IF NOT EXISTS idx_audit_logs_date ON audit_logs(created_at DESC);"),
+        ("idx_otp_email_verified", "CREATE INDEX IF NOT EXISTS idx_otp_email_verified ON otp_records(email, verified_at);"),
+        ("idx_chat_channel", "CREATE INDEX IF NOT EXISTS idx_chat_channel ON community_chat_messages(channel, created_at);"),
+        ("idx_site_settings_key", "CREATE INDEX IF NOT EXISTS idx_site_settings_key ON site_settings(key_name);"),
+        ("idx_testimonials_active", "CREATE INDEX IF NOT EXISTS idx_testimonials_active ON testimonials(is_active, display_order);"),
+        ("idx_faqs_active", "CREATE INDEX IF NOT EXISTS idx_faqs_active ON faqs(is_active, display_order);")
     ]
     for _, ddl in indexes:
         try:
