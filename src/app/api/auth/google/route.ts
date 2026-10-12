@@ -14,24 +14,13 @@ export async function POST(req: NextRequest) {
     const setting = get("SELECT key_value FROM site_settings WHERE key_name = 'google_client_id'");
     const googleClientId = process.env.GOOGLE_CLIENT_ID || (setting ? setting.key_value : '');
 
-    let payload: any = null;
-    if (credential) {
-      const { payload: p, error } = await verifyGoogleIdToken(credential, googleClientId);
-      if (error) {
-        return NextResponse.json({ error: `Google Sign-In Error: ${error}` }, { status: 400 });
-      }
-      payload = p;
-    } else if (demoEmail && demoEmail.includes('@')) {
-      const emailClean = demoEmail.trim().toLowerCase();
-      payload = {
-        sub: 'demo_google_' + crypto.createHash('md5').update(emailClean).digest('hex').substring(0, 12),
-        email: emailClean,
-        email_verified: true,
-        name: body.name || emailClean.split('@')[0].replace('.', ' '),
-        picture: body.picture || '/assets/logo.svg',
-      };
-    } else {
-      return NextResponse.json({ error: 'Missing Google authentication credential.' }, { status: 400 });
+    if (!credential) {
+      return NextResponse.json({ error: 'Valid Google authentication credential (ID token) is required.' }, { status: 400 });
+    }
+
+    const { payload, error } = await verifyGoogleIdToken(credential, googleClientId);
+    if (error || !payload) {
+      return NextResponse.json({ error: `Google Sign-In Error: ${error || 'Invalid token'}` }, { status: 401 });
     }
 
     const email = (payload.email || '').trim().toLowerCase();

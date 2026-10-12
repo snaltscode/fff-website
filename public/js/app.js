@@ -46,6 +46,17 @@ const featureTabsData = {
   }
 };
 
+// Clean branded initials avatar helper (eliminates stock photo placeholders)
+function getInitialsAvatar(name) {
+  const n = (name || 'Member').trim();
+  const initials = n.split(' ').map(p => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || 'FF';
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="20" fill="#064E3B"/>
+    <text x="50" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="36" font-weight="700" fill="#F3FBF7" text-anchor="middle" dominant-baseline="middle">${initials}</text>
+  </svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 // Initialize App on DOM Loaded (Instant Hydration + SWR Background Revalidation)
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Immediately hydrate DOM from local SWR cache (0ms instant paint)
@@ -357,15 +368,15 @@ function renderPublicContent(data) {
     if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').innerText = data.hero.subheading;
   }
 
-  // Live Database Counters
+  // Live Database Counters (Authentic figures from verified database records)
   if (data.counters) {
-    const activeMembersTotal = 1528 + (data.counters.active_members || 0);
+    const activeMembersTotal = data.counters.active_members || 0;
     if (document.getElementById('counterMembers')) {
-      document.getElementById('counterMembers').innerText = `${activeMembersTotal}+`;
+      document.getElementById('counterMembers').innerText = activeMembersTotal > 0 ? `${activeMembersTotal}+` : 'Curated';
     }
-    const eventsTotal = Math.max(27, data.counters.published_events || 27);
+    const eventsTotal = data.counters.published_events || 0;
     if (document.getElementById('counterEvents')) {
-      document.getElementById('counterEvents').innerText = `${eventsTotal}`;
+      document.getElementById('counterEvents').innerText = eventsTotal > 0 ? `${eventsTotal}+` : 'Pan-India';
     }
   }
 
@@ -431,26 +442,32 @@ function renderPublicContent(data) {
     renderMeetingPhotosSlider(data.meeting_photos || data.gallery);
   }
 
-  // Testimonials
+  // Testimonials (Display only genuine, verified endorsements; hide section if none exist)
+  const storiesSection = document.getElementById('stories');
   const testimonialsContainer = document.getElementById('testimonialsContainer');
-  if (testimonialsContainer && data.testimonials) {
-    testimonialsContainer.innerHTML = '';
-    data.testimonials.forEach(t => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
-        <div style="font-size: 1.6rem; color: var(--emerald-700); margin-bottom: 8px;">“</div>
-        <p class="card-text" style="font-size: 0.95rem; margin-bottom: 16px;">${t.quote}</p>
-        <div style="border-top: 1px solid var(--border-hairline); padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
-          <div>
-            <h4 style="font-size: 0.95rem; color: var(--ink-primary); margin: 0;">${t.author_name}</h4>
-            <span style="font-size: 0.8rem; color: var(--emerald-700); font-weight: 700;">${t.author_title} • ${t.business_name}</span>
+  if (storiesSection) {
+    if (!data.testimonials || data.testimonials.length === 0) {
+      storiesSection.style.display = 'none';
+    } else if (testimonialsContainer) {
+      storiesSection.style.display = 'block';
+      testimonialsContainer.innerHTML = '';
+      data.testimonials.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div style="font-size: 1.6rem; color: var(--emerald-700); margin-bottom: 8px;">“</div>
+          <p class="card-text" style="font-size: 0.95rem; margin-bottom: 16px;">${t.quote}</p>
+          <div style="border-top: 1px solid var(--border-hairline); padding-top: 12px; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <h4 style="font-size: 0.95rem; color: var(--ink-primary); margin: 0;">${t.author_name}</h4>
+              <span style="font-size: 0.8rem; color: var(--emerald-700); font-weight: 700;">${t.author_title} • ${t.business_name}</span>
+            </div>
+            <span class="badge badge-verified">VERIFIED</span>
           </div>
-          <span class="badge badge-verified">VERIFIED</span>
-        </div>
-      `;
-      testimonialsContainer.appendChild(card);
-    });
+        `;
+        testimonialsContainer.appendChild(card);
+      });
+    }
   }
 }
 
@@ -984,9 +1001,10 @@ function renderMembers(members) {
   members.forEach(m => {
     const card = document.createElement('div');
     card.className = 'card';
+    const avatarSrc = (m.profile_photo && !m.profile_photo.includes('unsplash.com')) ? m.profile_photo : getInitialsAvatar(m.full_name);
     card.innerHTML = `
       <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-        <img src="${m.profile_photo || '/assets/logo.svg'}" alt="${m.full_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--mint-200); object-fit: cover;">
+        <img src="${avatarSrc}" alt="${m.full_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--mint-200); object-fit: cover;">
         <div>
           <h3 class="card-title" style="font-size: 1.15rem; margin: 0;">${m.full_name}</h3>
           <span style="font-size: 0.85rem; color: var(--emerald-700); font-weight: 700;">${m.designation} at ${m.business_name}</span>
@@ -1983,10 +2001,11 @@ function renderMeetingsData(data) {
     const starCount = Math.max(1, Math.min(5, parseInt(m.rating, 10) || 5));
     const stars = Array(starCount).fill('<svg class="star-svg" width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('');
 
+    const partnerAvatarSrc = (m.partner_avatar && !m.partner_avatar.includes('unsplash.com')) ? m.partner_avatar : getInitialsAvatar(m.partner_name);
     return `
       <div class="meeting-item-card">
         <div style="display: flex; gap: 14px; align-items: flex-start; flex: 2; min-width: 280px;">
-          <img src="${m.partner_avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
+          <img src="${partnerAvatarSrc}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
           <div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
               <span style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary);">${m.partner_name}</span>
@@ -2073,7 +2092,13 @@ async function handleLogMeetingSubmit(event) {
 // ==========================================
 function renderMeetingPhotosSlider(photos) {
   const track = document.getElementById('meetingPhotosTrack');
-  if (!track || !photos || photos.length === 0) return;
+  const section = document.getElementById('meetingPhotosSection');
+  if (!photos || photos.length === 0) {
+    if (section) section.style.display = 'none';
+    return;
+  }
+  if (section) section.style.display = 'block';
+  if (!track) return;
   track.innerHTML = '';
 
   // Ensure enough items for a wide continuous slider track

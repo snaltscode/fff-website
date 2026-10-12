@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
           error: 'Membership required',
           has_membership: false,
           message:
-            'Founders Collective Chat is an exclusive space reserved for verified active members.',
+            'Founders Collective Chat is a curated space reserved for verified active members.',
         },
         { status: 403 }
       );

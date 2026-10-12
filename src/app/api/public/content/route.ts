@@ -21,8 +21,8 @@ export async function GET() {
     const hero = get('SELECT * FROM hero_banners WHERE is_active = 1 LIMIT 1');
     const reels = query('SELECT * FROM instagram_reels WHERE is_active = 1 ORDER BY display_order ASC');
     const youtubeVideos = query('SELECT * FROM youtube_videos WHERE is_active = 1 ORDER BY display_order ASC');
-    const testimonials = query('SELECT * FROM testimonials WHERE is_active = 1 ORDER BY display_order ASC');
-    const gallery = query('SELECT * FROM event_gallery WHERE is_active = 1 ORDER BY display_order ASC, created_at DESC');
+    const testimonials = query("SELECT * FROM testimonials WHERE is_active = 1 AND business_name NOT IN ('Apex Global Tech', 'Precision Industries', 'Elevate Digital') ORDER BY display_order ASC");
+    const gallery = query("SELECT * FROM event_gallery WHERE is_active = 1 AND image_url NOT LIKE '%unsplash.com%' ORDER BY display_order ASC, created_at DESC");
     const faqs = query('SELECT * FROM faqs WHERE is_active = 1 ORDER BY display_order ASC');
     const events = query("SELECT * FROM events WHERE status = 'UPCOMING' ORDER BY event_date ASC LIMIT 4");
 

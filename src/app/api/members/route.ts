@@ -22,7 +22,9 @@ export async function GET(req: NextRequest) {
       FROM member_profiles p 
       JOIN users u ON p.user_id = u.id 
       LEFT JOIN memberships m ON p.user_id = m.user_id 
-      WHERE 1=1
+      WHERE u.email NOT LIKE '%@example.com' 
+        AND p.full_name NOT LIKE 'Test %'
+        AND u.status != 'SUSPENDED'
     `;
     const params: any[] = [];
 
@@ -57,8 +59,20 @@ export async function GET(req: NextRequest) {
 
     sql += ' ORDER BY p.created_at DESC LIMIT 200';
 
-    const members = query(sql, params);
-    return NextResponse.json({ members: members || [] });
+    const rawMembers = query(sql, params) || [];
+    const members = rawMembers.map((m: any) => {
+      const clean = { ...m };
+      if (!clean.is_phone_visible) {
+        delete clean.mobile;
+        delete clean.whatsapp;
+      }
+      if (!clean.is_email_visible) {
+        delete clean.email;
+      }
+      return clean;
+    });
+
+    return NextResponse.json({ members });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

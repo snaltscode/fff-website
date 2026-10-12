@@ -50,7 +50,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message: `Verification OTP sent to ${email}.`,
-      demo_otp: otp,
     });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || 'Failed to send OTP.' }, { status: 500 });

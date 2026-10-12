@@ -20,14 +20,31 @@ export async function POST(req: NextRequest) {
     }
 
     const parts = dataUrl.split('base64,');
+    if (parts.length < 2 || !parts[1]) {
+      return NextResponse.json({ error: 'Malformed base64 image data.' }, { status: 400 });
+    }
+
     const mimeMatch = parts[0].match(/:(.*?);/);
-    const mimeType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
-    let ext = '.jpg';
-    if (mimeType.includes('png')) ext = '.png';
-    else if (mimeType.includes('webp')) ext = '.webp';
-    else if (mimeType.includes('svg')) ext = '.svg';
+    const mimeType = mimeMatch ? mimeMatch[1].toLowerCase() : '';
+    
+    const allowedMimes: Record<string, string> = {
+      'image/jpeg': '.jpg',
+      'image/jpg': '.jpg',
+      'image/png': '.png',
+      'image/webp': '.webp',
+      'image/svg+xml': '.svg',
+    };
+
+    const ext = allowedMimes[mimeType];
+    if (!ext) {
+      return NextResponse.json({ error: 'Unsupported file type. Only JPEG, PNG, WebP, and SVG images are accepted.' }, { status: 400 });
+    }
 
     const buffer = Buffer.from(parts[1], 'base64');
+    if (buffer.length > 5 * 1024 * 1024) {
+      return NextResponse.json({ error: 'File size exceeds maximum allowed limit of 5MB.' }, { status: 400 });
+    }
+
     const filename = `${crypto.randomBytes(8).toString('hex')}_upload${ext}`;
     const uploadDir = path.resolve(process.cwd(), 'public', 'assets', 'uploads');
 

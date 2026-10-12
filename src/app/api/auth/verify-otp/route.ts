@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { get, run } from '@/lib/db';
-import { hashOtp } from '@/lib/auth';
+import { hashOtp, createSession } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
@@ -50,7 +50,29 @@ export async function POST(req: NextRequest) {
     run('UPDATE otp_records SET verified_at = CURRENT_TIMESTAMP WHERE id = ?', [record.id]);
     run('UPDATE users SET email_verified = 1, email_verified_at = CURRENT_TIMESTAMP WHERE email = ?', [email]);
 
-    return NextResponse.json({ success: true, email, verified: true });
+    const user = get('SELECT * FROM users WHERE email = ?', [email]);
+    let token = null;
+    let profile = null;
+    let membership = null;
+    let userClean = null;
+
+    if (user) {
+      token = createSession(user);
+      profile = get('SELECT * FROM member_profiles WHERE user_id = ?', [user.id]);
+      membership = get('SELECT * FROM memberships WHERE user_id = ?', [user.id]);
+      userClean = { ...user };
+      delete userClean.password_hash;
+    }
+
+    return NextResponse.json({
+      success: true,
+      email,
+      verified: true,
+      token,
+      user: userClean,
+      profile: profile || null,
+      membership: membership || null,
+    });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || 'OTP verification failed.' }, { status: 500 });
   }
