@@ -17,8 +17,8 @@ function assert(condition, message) {
 }
 
 // 1. Verify CSS Files Synchronized
-const publicCss = fs.readFileSync('public/css/styles.css', 'utf8');
-const globalsCss = fs.readFileSync('src/app/globals.css', 'utf8');
+const publicCss = fs.readFileSync('public/css/styles.css', 'utf8').replace(/\r\n/g, '\n');
+const globalsCss = fs.readFileSync('src/app/globals.css', 'utf8').replace(/\r\n/g, '\n');
 assert(publicCss === globalsCss, 'public/css/styles.css and src/app/globals.css are 100% identical and synchronized');
 
 // 2. Verify Universal Anti-Horizontal Scroll Guard
