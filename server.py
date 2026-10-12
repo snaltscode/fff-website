@@ -1782,7 +1782,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             meeting_id = str(uuid.uuid4())
             partner_name = (body.get('partner_name') or 'Fellow Founder').strip()
             partner_company = (body.get('partner_company') or '').strip()
-            partner_avatar = body.get('partner_avatar') or 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+            partner_avatar = body.get('partner_avatar') or '/assets/logo.svg'
             meeting_date = body.get('meeting_date') or datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             meeting_type = body.get('meeting_type', 'In-Person')
             location_venue = (body.get('location_venue') or 'Bangalore / Virtual').strip()

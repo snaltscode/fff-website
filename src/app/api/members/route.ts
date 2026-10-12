@@ -23,7 +23,9 @@ export async function GET(req: NextRequest) {
       JOIN users u ON p.user_id = u.id 
       LEFT JOIN memberships m ON p.user_id = m.user_id 
       WHERE u.email NOT LIKE '%@example.com' 
+        AND u.email NOT LIKE '%demo%'
         AND p.full_name NOT LIKE 'Test %'
+        AND p.full_name NOT LIKE '%Demo%'
         AND u.status != 'SUSPENDED'
     `;
     const params: any[] = [];

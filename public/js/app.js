@@ -17,32 +17,32 @@ const featureTabsData = {
   network: {
     title: 'Curated Founder Network',
     text: 'Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth.',
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'
+    image: '/assets/hero_banner.jpg'
   },
   needs: {
     title: 'Needs & Wants Engine',
     text: 'A structured post engine allowing members to list explicit commercial requirements or high-value business offerings.',
-    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80'
+    image: '/assets/hero_banner.jpg'
   },
   crm: {
     title: 'Leads & Referrals CRM',
     text: 'Record peer introductions, manage client deal pipelines, and track administrator-verified business generated.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'
+    image: '/assets/hero_banner.jpg'
   },
   meetings: {
     title: 'Founder Experiences',
     text: 'Activities spanning Play, Explore, Dine, Build, and Celebrate—from closed-door roundtables to sunrise trails and dinners.',
-    image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80'
+    image: '/assets/hero_banner.jpg'
   },
   collaborations: {
     title: 'Business Collaborations',
     text: 'Work alongside peers on strategic joint ventures, supplier partnerships, co-marketing, and co-founder alliances.',
-    image: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80'
+    image: '/assets/hero_banner.jpg'
   },
   challenges: {
     title: 'Monthly Challenges',
     text: 'Participate in community milestone challenges focused on business growth, peer referrals, and introductions.',
-    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80'
+    image: '/assets/hero_banner.jpg'
   }
 };
 
@@ -639,23 +639,7 @@ function initiateGoogleLogin() {
       return;
     }
   }
-  openGoogleDemoModal();
-}
-
-function openGoogleDemoModal() {
-  const input = document.getElementById('modal_google_client_id');
-  if (input && state.googleClientId) input.value = state.googleClientId;
-  const badge = document.getElementById('googleClientIdBadge');
-  if (badge) {
-    if (state.googleClientId) {
-      badge.className = 'badge badge-verified';
-      badge.innerText = 'Connected';
-    } else {
-      badge.className = 'badge badge-active';
-      badge.innerText = 'Not Configured';
-    }
-  }
-  openModal('googleDemoModal');
+  alert("Google Sign-In is being configured. Please sign in using your registered email and password or request an email OTP.");
 }
 
 async function handleGoogleCredentialResponse(response) {
@@ -678,72 +662,78 @@ async function handleGoogleCredentialResponse(response) {
     state.user = data.user;
     localStorage.setItem('f4f_token', data.token);
     closeModal('loginModal');
-    closeModal('googleDemoModal');
     renderAuthenticatedUI(data);
   } catch (err) {
     alert("Google authentication request failed. Please check your network connection.");
   }
 }
 
-async function handleDemoGoogleLogin(event) {
-  event.preventDefault();
-  const name = document.getElementById('demo_google_name').value.trim();
-  const email = document.getElementById('demo_google_email').value.trim();
+// Passwordless Login / Verification via Email OTP
+async function handleSendLoginOtp() {
+  const emailInput = document.getElementById('login_email');
+  const email = (emailInput ? emailInput.value : '').trim().toLowerCase();
   if (!email || !email.includes('@')) {
-    alert("Please enter a valid Google email address.");
+    alert("Please enter your registered email address first.");
+    if (emailInput) emailInput.focus();
     return;
   }
   try {
-    const res = await fetch('/api/auth/google', {
+    const res = await fetch('/api/auth/send-otp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        name: name,
-        sub: 'demo_google_' + Date.now()
-      })
+      body: JSON.stringify({ email })
     });
     const data = await res.json();
     if (data.error) {
       alert(data.error);
       return;
     }
-    state.token = data.token;
-    state.user = data.user;
-    localStorage.setItem('f4f_token', data.token);
-    closeModal('loginModal');
-    closeModal('googleDemoModal');
-    renderAuthenticatedUI(data);
-  } catch (err) {
-    alert("Failed to complete Google sign-in.");
+    const otpSection = document.getElementById('loginOtpSection');
+    if (otpSection) {
+      otpSection.style.display = 'block';
+      const otpInput = document.getElementById('login_otp');
+      if (otpInput) otpInput.focus();
+    }
+    alert(`Verification OTP sent to ${email}. Please check your inbox.`);
+  } catch (e) {
+    alert("Failed to send OTP. Please check your network connection.");
   }
 }
 
-async function saveGoogleClientIdFromModal() {
-  const val = document.getElementById('modal_google_client_id').value.trim();
-  if (!val) {
-    alert("Please enter a valid Google Client ID.");
+async function handleVerifyLoginOtp() {
+  const email = (document.getElementById('login_email') ? document.getElementById('login_email').value : '').trim().toLowerCase();
+  const otpInput = document.getElementById('login_otp');
+  const otp = (otpInput ? otpInput.value : '').trim();
+  if (!otp || otp.length < 4) {
+    alert("Please enter the verification code sent to your email.");
+    if (otpInput) otpInput.focus();
     return;
   }
   try {
-    await fetch('/api/admin/settings', {
+    const res = await fetch('/api/auth/verify-otp', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(state.token ? { 'Authorization': `Bearer ${state.token}` } : {})
-      },
-      body: JSON.stringify({ google_client_id: val })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, otp })
     });
-    state.googleClientId = val;
-    alert("Google Client ID saved successfully! Initializing Google Sign-In button...");
-    setupGoogleAuth(val);
-    closeModal('googleDemoModal');
-  } catch (err) {
-    state.googleClientId = val;
-    setupGoogleAuth(val);
-    closeModal('googleDemoModal');
+    const data = await res.json();
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+    if (data.token) {
+      state.token = data.token;
+      state.user = data.user;
+      localStorage.setItem('f4f_token', data.token);
+      closeModal('loginModal');
+      renderAuthenticatedUI(data);
+    } else {
+      alert("Email verified successfully! You can now log in.");
+    }
+  } catch (e) {
+    alert("Verification failed. Please check your network connection.");
   }
 }
+
 
 // Login
 async function handleLoginSubmit(event) {
@@ -2129,7 +2119,7 @@ function openAddMeetingPhotoModal() {
   const form = document.getElementById('addMeetingPhotoForm');
   if (form) form.reset();
   const prev = document.getElementById('photoPreviewImg');
-  if (prev) prev.src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80';
+  if (prev) prev.src = '/assets/hero_banner.jpg';
   const dateInput = document.getElementById('photoEventDate');
   if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
   const statusSpan = document.getElementById('photoUploadStatus');
@@ -2393,8 +2383,8 @@ async function loadChatMessages() {
     const currentUserId = state.user ? state.user.id : null;
     container.innerHTML = messages.map(m => {
       const isMine = currentUserId && (m.user_id === currentUserId);
-      const avatar = m.profile_photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80';
       const senderName = m.full_name || m.email || 'Fellow Founder';
+      const avatar = (m.profile_photo && !m.profile_photo.includes('unsplash.com')) ? m.profile_photo : getInitialsAvatar(senderName);
       const senderBiz = m.business_name ? ` • ${m.business_name}` : '';
       const timeStr = m.created_at ? new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
 

@@ -374,38 +374,11 @@ def seed_default_data():
                 VALUES (?, ?, ?, ?, ?, ?, 1)
             """, (str(uuid.uuid4()), url, ytid, title, cap, order))
 
-    # 3.5 Testimonials
-    cursor.execute("SELECT COUNT(*) FROM testimonials")
-    if cursor.fetchone()[0] == 0:
-        testimonials = [
-            ("Vikram K.", "Founder & CEO", "Apex Global Tech", "Founder for Founder is the network where every introduction leads to real business. Authentic relationships and high-signal collaborations.", 1),
-            ("Ananya M.", "Managing Director", "Precision Industries", "The Needs & Wants engine helped us source key enterprise partners. The curated network environment is unmatched.", 2),
-            ("Rohan S.", "Co-Founder", "Elevate Digital", "Monthly founder meetings are insightful and actionable. It has accelerated our peer referral network across cities.", 3)
-        ]
-        for name, title, biz, quote, order in testimonials:
-            cursor.execute("""
-                INSERT INTO testimonials (id, author_name, author_title, business_name, quote, display_order, is_active)
-                VALUES (?, ?, ?, ?, ?, ?, 1)
-            """, (str(uuid.uuid4()), name, title, biz, quote, order))
+    # 3.5 Testimonials (Populated through Admin CMS with verified members)
+    pass
 
-    # 3.6 Event Gallery (Meeting Photos 16:9)
-    cursor.execute("SELECT COUNT(*) FROM event_gallery")
-    if cursor.fetchone()[0] < 6:
-        cursor.execute("DELETE FROM event_gallery")
-        meeting_photos = [
-            ("Private Executive Roundtable", "Scale-up founders debating international expansion playbooks and capital efficiency.", "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80", 1, "Closed-Door Salon"),
-            ("Curated Founders Dinner — Bengaluru", "12 Tech founders sharing unfiltered growth bottlenecks over private fine dining.", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1280&q=80", 2, "Founder Dinner"),
-            ("1-to-1 Founder Synergy Session", "Strategic partnership dialogue, cross-selling intros, and shared technical advisory.", "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1280&q=80", 3, "1:1 Meeting"),
-            ("Peer Advisory Council Meeting", "Quarterly advisory session evaluating unit economics and talent retention strategies.", "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1280&q=80", 4, "Mastermind"),
-            ("Founder Field Trip & Strategy Walk", "Morning walk and strategy reflection before high-impact quarterly sprints.", "https://images.unsplash.com/photo-1511578314322-64af69704e6a?auto=format&fit=crop&w=1280&q=80", 5, "Experiential"),
-            ("Annual Founder Retreat — Coorg", "Immersive 3-day retreat focused on mental resilience, scale milestones, and peer bonds.", "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1280&q=80", 6, "Founder Retreat")
-        ]
-        for title, cap, url, order, tag in meeting_photos:
-            cursor.execute("""
-                INSERT INTO event_gallery (id, title, caption, image_url, display_order, is_active, tag)
-                VALUES (?, ?, ?, ?, ?, 1, ?)
-            """, (str(uuid.uuid4()), title, cap, url, order, tag))
-        conn.commit()
+    # 3.6 Event Gallery (Populated through Admin CMS with verified gathering photos)
+    pass
 
     # 3.7 FAQs
     cursor.execute("SELECT COUNT(*) FROM faqs")
@@ -562,22 +535,8 @@ def seed_default_data():
         )
     """)
 
-    cursor.execute("SELECT COUNT(*) FROM one_on_one_meetings")
-    if cursor.fetchone()[0] == 0:
-        cursor.execute("SELECT id FROM users WHERE role = 'ADMIN' LIMIT 1")
-        admin_row = cursor.fetchone()
-        if admin_row:
-            admin_uid = admin_row['id']
-            sample_meetings = [
-                (str(uuid.uuid4()), admin_uid, "Vikram K.", "Apex Global Tech", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80", "2026-10-06 11:00:00", "Coffee / Lunch", "Third Wave Coffee, Indiranagar", "Enterprise GTM & Cloud Co-selling", "Agreed to exchange 3 enterprise introductions in BFSI. Shared playbook on sales incentives.", "Referral Exchanged", 5, "COMPLETED"),
-                (str(uuid.uuid4()), admin_uid, "Ananya M.", "Precision Industries", "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80", "2026-10-14 15:30:00", "Virtual Video", "Google Meet Room", "Supply Chain Software Architecture", "Reviewed enterprise requirements and supplier integration points. Scheduled follow-up pilot demo.", "Deal In Progress", 5, "COMPLETED"),
-                (str(uuid.uuid4()), admin_uid, "Rohan S.", "Elevate Digital", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80", "2026-10-21 16:00:00", "In-Person", "WeWork Galaxy, Residency Road", "Fractional CMO & Talent Acquisition", "Introduced vetted growth marketing lead. Brainstormed co-hosting a closed-door fintech salon.", "Follow-up Scheduled", 5, "COMPLETED")
-            ]
-            for mid, hid, pname, pcomp, pavatar, mdate, mtype, mloc, magenda, mnotes, mout, mrate, mstat in sample_meetings:
-                cursor.execute("""
-                    INSERT INTO one_on_one_meetings (id, host_id, partner_name, partner_company, partner_avatar, meeting_date, meeting_type, location_venue, agenda_topic, discussion_notes, collaboration_outcome, rating, status)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (mid, hid, pname, pcomp, pavatar, mdate, mtype, mloc, magenda, mnotes, mout, mrate, mstat))
+    # 8. 1-to-1 Meetings (Populated through member dashboard)
+    pass
 
     # 9. Founders Collective Chat Table & Seed
     cursor.execute("""
@@ -604,7 +563,7 @@ def seed_default_data():
             uid2 = member_rows[1]['user_id'] if len(member_rows) > 1 else admin_uid
 
             sample_chats = [
-                (str(uuid.uuid4()), admin_uid, 'collective', 'Welcome founders to the Founder for Founder Collective Chat! This is an exclusive, confidential space for active members across India to discuss bottlenecks, exchange deal flow, and collaborate. Drop a message to introduce yourself or ask a question.', '2026-10-10 10:00:00'),
+                (str(uuid.uuid4()), admin_uid, 'collective', 'Welcome founders to the Founder for Founder Collective Chat! This is a curated, confidential space for active members across India to discuss bottlenecks, exchange deal flow, and collaborate. Drop a message to introduce yourself or ask a question.', '2026-10-10 10:00:00'),
                 (str(uuid.uuid4()), uid1, 'collective', 'Excited to be part of the network! We recently scaled our B2B SaaS platform across India. Happy to exchange playbooks on enterprise GTM, SOC2 compliance, and sales compensation.', '2026-10-10 11:15:00'),
                 (str(uuid.uuid4()), uid2, 'collective', 'Hey everyone! If any founder here is navigating pan-India supply chain logistics or cold-chain warehousing, happy to share our vetted vendor list and unit economics model.', '2026-10-10 14:30:00'),
                 (str(uuid.uuid4()), admin_uid, 'collective', 'Reminder: Our upcoming Curated Founders Dinner in Bengaluru has only 3 seats remaining. Check the Experiences tab to reserve your seat!', '2026-10-10 16:45:00')
