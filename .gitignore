@@ -5,7 +5,18 @@ __pycache__/
 
 # Environment variables
 .env
+*-wal
+*-shm
+*.db-journal
 
 # Scratch and debug files
 scratch/
 *.log
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+.vercel/
