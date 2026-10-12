@@ -1,0 +1,260 @@
+<!-- Section 6: Event Creation & Ticketing Publisher -->
+
+<section class="bg-surface-card rounded-xl shadow-sm p-space-lg flex flex-col gap-space-lg" id="event-publisher-section">
+
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+
+<div class="flex flex-col gap-1">
+
+<div class="flex items-center gap-2">
+
+<span class="font-headline-md text-headline-md text-text-primary font-semibold">Event Creation &amp; Ticketing Publisher</span>
+
+<span class="bg-primary-fixed text-on-primary-fixed font-label-caps text-label-caps px-2 py-0.5 rounded">NEW GATHERING</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-text-secondary">
+
+            Publish exclusive roundtables, signature founder dinners, and private salon experiences directly to active members.
+
+          </p>
+
+</div>
+
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold">DISPATCH ENGINE • INDIA</span>
+
+</div>
+
+<form class="flex flex-col gap-space-lg" id="eventPublishForm" onsubmit="event.preventDefault();">
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+
+<div class="flex flex-col gap-1 md:col-span-2">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Event Title</label>
+
+<input class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="e.g. Founders Executive Roundtable — Q4 Scaling &amp; Cross-Border Capital" required="" type="text" value="Founders Executive Roundtable — Q4 Scaling"/>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Event Category</label>
+
+<select class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+
+<option selected="">Closed-Door Mastermind</option>
+
+<option>Signature Founder Dinner</option>
+
+<option>Experiential Walk &amp; Coffee</option>
+
+<option>Founders Retreat</option>
+
+<option>Angel Syndicate Pitch</option>
+
+</select>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Signature Format Program</label>
+
+<select class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+
+<option>The Founder Table</option>
+
+<option>Founder Playbook</option>
+
+<option>First Light Club</option>
+
+<option selected="">The Inner Circle Roundtable</option>
+
+<option>After Hours</option>
+
+<option>Founder Field Trip</option>
+
+</select>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Event Date</label>
+
+<input class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" required="" type="date" value="2026-11-06"/>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Display Time Window</label>
+
+<input class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" required="" type="text" value="06:00 PM - 09:00 PM IST"/>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Venue Name / Address</label>
+
+<input class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" required="" type="text" value="Executive Lounge, 12th Main, Indiranagar"/>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Host City Chapter</label>
+
+<select class="h-11 px-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+
+<option selected="">Bengaluru</option>
+
+<option>Mumbai</option>
+
+<option>Delhi NCR</option>
+
+<option>Hyderabad</option>
+
+<option>Goa (Retreat Only)</option>
+
+</select>
+
+</div>
+
+</div>
+
+<!-- Google Maps Integration Row -->
+
+<div class="bg-surface-subtle rounded-lg p-space-md flex flex-col gap-space-sm">
+
+<div class="flex items-center justify-between">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Google Maps Navigation URL</label>
+
+<div class="flex items-center gap-2">
+
+<button class="text-primary hover:underline text-[12px] font-medium flex items-center gap-1" type="button">
+
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span> Generate Link from Venue
+
+              </button>
+
+<span class="text-text-tertiary">•</span>
+
+<a class="text-secondary hover:underline text-[12px] font-medium flex items-center gap-1" href="#">
+
+<span class="material-symbols-outlined text-[14px]">open_in_new</span> Test Link
+
+              </a>
+
+</div>
+
+</div>
+
+<input class="h-10 px-3 rounded bg-surface-card text-on-surface font-mono text-[12px] focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" type="url" value="https://maps.google.com/?q=Executive+Lounge+Indiranagar+Bengaluru"/>
+
+</div>
+
+<!-- Event Description & Agenda -->
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Event Agenda, Focus Topics &amp; Speaker Notes</label>
+
+<textarea class="p-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary resize-none leading-relaxed" rows="4">Exclusive 12-founder dinner and mastermind diving into post-Series A org architecture, managing secondary liquidity for early angels, and international expansion frameworks. Includes private dining and curated single-malt tasting.</textarea>
+
+</div>
+
+<!-- Registration Pricing Options -->
+
+<div class="bg-surface-subtle rounded-lg p-space-md flex flex-col gap-space-md">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Registration &amp; Ticketing Access</label>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+
+<label class="flex items-start gap-3 p-3 rounded bg-surface-card cursor-pointer shadow-sm">
+
+<input checked="" class="mt-1 text-primary focus:ring-primary" name="pricingType" type="radio" value="free"/>
+
+<div class="flex flex-col">
+
+<span class="font-label-md text-label-md font-semibold text-text-primary">Complimentary Guild Gathering (₹0)</span>
+
+<span class="text-text-secondary text-[12px]">Included with sovereign annual membership pass. Strict RSVP cap enforced.</span>
+
+</div>
+
+</label>
+
+<label class="flex items-start gap-3 p-3 rounded bg-surface-card cursor-pointer shadow-sm">
+
+<input class="mt-1 text-primary focus:ring-primary" name="pricingType" type="radio" value="paid"/>
+
+<div class="flex flex-col">
+
+<span class="font-label-md text-label-md font-semibold text-text-primary">Paid Curated Experience</span>
+
+<span class="text-text-secondary text-[12px]">Requires entry fee to cover fine dining or multi-day retreat hospitality.</span>
+
+</div>
+
+</label>
+
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-1">
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Entry Fee (INR ₹)</label>
+
+<input class="h-10 px-3 rounded bg-surface-card text-on-surface font-mono text-[13px] focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" placeholder="0" type="number" value="0"/>
+
+</div>
+
+<div class="flex flex-col gap-1">
+
+<label class="font-label-caps text-label-caps text-text-tertiary uppercase">Ticket Inclusions Note</label>
+
+<input class="h-10 px-3 rounded bg-surface-card text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" type="text" value="3-Course Private Chef Dinner + Sommelier Curations"/>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Action CTA -->
+
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-xs">
+
+<div class="flex items-center gap-2 text-text-tertiary text-[12px]">
+
+<span class="material-symbols-outlined text-[16px] text-secondary">mark_email_read</span>
+
+<span>Will trigger instant push alerts &amp; calendar ICS invites to verified chapter members</span>
+
+</div>
+
+<button class="w-full sm:w-auto h-12 px-space-xl bg-primary-container hover:bg-emerald-deep text-on-primary font-label-md text-label-md rounded flex items-center justify-center gap-2 shadow-md transition-all" type="submit">
+
+<span class="material-symbols-outlined text-[20px]">send_and_archive</span>
+
+<span>Publish Event to Member Network</span>
+
+</button>
+
+</div>
+
+</form>
+
+</section>
+
+</div>
+
+</div>
+

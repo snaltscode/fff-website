@@ -1,0 +1,490 @@
+<!-- Section 2: Membership Application Management Table -->
+
+<section class="bg-surface-card rounded-xl shadow-sm overflow-hidden flex flex-col" id="applications-section">
+
+<div class="p-space-lg flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-card">
+
+<div class="flex flex-col gap-1">
+
+<div class="flex items-center gap-2">
+
+<span class="font-headline-md text-headline-md text-text-primary font-semibold">Membership Application Queue</span>
+
+<span class="bg-primary-fixed text-on-primary-fixed font-label-caps text-label-caps px-2 py-0.5 rounded-full">18 Pending Vetting</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-text-secondary">Direct vetting panel for high-conviction founders and verified business leaders.</p>
+
+</div>
+
+<!-- Filter Controls -->
+
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm">
+
+<div class="relative w-full sm:w-64">
+
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary text-[18px]">search</span>
+
+<input class="w-full h-10 pl-9 pr-3 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary" id="appSearch" placeholder="Filter name, company, city..." type="text"/>
+
+</div>
+
+<div class="flex items-center gap-1 bg-surface-subtle p-1 rounded">
+
+<button class="filter-tab px-3 py-1.5 rounded font-label-md text-label-md bg-surface-card text-primary shadow-sm" data-filter="all">All (18)</button>
+
+<button class="filter-tab px-3 py-1.5 rounded font-label-md text-label-md text-text-secondary hover:text-on-surface" data-filter="pending">Pending (12)</button>
+
+<button class="filter-tab px-3 py-1.5 rounded font-label-md text-label-md text-text-secondary hover:text-on-surface" data-filter="review">Under Review (3)</button>
+
+<button class="filter-tab px-3 py-1.5 rounded font-label-md text-label-md text-text-secondary hover:text-on-surface" data-filter="approved">Approved (2)</button>
+
+<button class="filter-tab px-3 py-1.5 rounded font-label-md text-label-md text-text-secondary hover:text-on-surface" data-filter="waitlist">Waitlisted (1)</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Table Wrapper with Momentum Scroll -->
+
+<div class="w-full overflow-x-auto">
+
+<table class="w-full text-left min-w-[1080px]">
+
+<thead>
+
+<tr class="bg-surface-subtle text-text-tertiary font-label-caps text-label-caps uppercase tracking-wider">
+
+<th class="py-3 px-space-md">Applicant</th>
+
+<th class="py-3 px-space-md">Role &amp; Track</th>
+
+<th class="py-3 px-space-md">Company &amp; Model</th>
+
+<th class="py-3 px-space-md">Direct Contact</th>
+
+<th class="py-3 px-space-md">Status</th>
+
+<th class="py-3 px-space-md">Update Status</th>
+
+<th class="py-3 px-space-md text-right">Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody class="divide-y divide-surface-subtle font-body-sm text-body-sm text-on-surface">
+
+<!-- Row 1 -->
+
+<tr class="hover:bg-surface-subtle/50 transition-colors">
+
+<td class="py-4 px-space-md">
+
+<div class="flex items-center gap-3">
+
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary font-semibold flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+
+                    AK
+
+                  </div>
+
+<div class="flex flex-col">
+
+<span class="font-label-md text-label-md text-text-primary font-semibold">Arjun Kapoor</span>
+
+<span class="text-text-tertiary text-[12px] flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[13px]">location_on</span> Bengaluru • 2 hours ago
+
+                    </span>
+
+</div>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col gap-1 items-start">
+
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-subtle text-primary font-label-caps text-label-caps">Founder / Co-Founder</span>
+
+<span class="text-text-tertiary text-[11px]">Second-time founder (10+ yrs)</span>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col">
+
+<span class="font-medium text-text-primary">NexWave Robotics Pvt Ltd</span>
+
+<span class="text-text-secondary text-[12px]">DeepTech • Series A / Scale-Up</span>
+
+<span class="text-text-tertiary text-[11px]">B2B SaaS &amp; Industrial Hardware</span>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col text-[12px]">
+
+<span class="text-primary font-mono select-all">arjun@nexwaverobotics.com</span>
+
+<div class="flex items-center gap-1 text-text-secondary mt-0.5">
+
+<span class="font-mono">+91 98450 XXXXX</span>
+
+<span class="material-symbols-outlined text-[13px] text-secondary" title="Phone verified">verified</span>
+
+</div>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-subtle text-on-surface-variant font-label-caps text-label-caps">
+
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> PENDING
+
+                </span>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<select class="h-9 px-2 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+
+<option selected="">Pending</option>
+
+<option>Under Review</option>
+
+<option>Approved</option>
+
+<option>Waitlisted</option>
+
+<option>Rejected</option>
+
+</select>
+
+</td>
+
+<td class="py-4 px-space-md text-right">
+
+<div class="flex items-center justify-end gap-2">
+
+<button class="h-9 px-3 rounded bg-surface-subtle hover:bg-surface-container font-label-md text-label-md text-on-surface transition-colors" title="Inspect profile">
+
+                    Inspect
+
+                  </button>
+
+<button class="h-9 px-3 rounded bg-primary-container hover:bg-emerald-deep font-label-md text-label-md text-on-primary flex items-center gap-1 transition-all" title="Issue cryptographic token">
+
+<span class="material-symbols-outlined text-[16px]">send</span>
+
+<span>Send Token</span>
+
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+<!-- Row 2 -->
+
+<tr class="hover:bg-surface-subtle/50 transition-colors">
+
+<td class="py-4 px-space-md">
+
+<div class="flex items-center gap-3">
+
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary font-semibold flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+
+                    PS
+
+                  </div>
+
+<div class="flex flex-col">
+
+<span class="font-label-md text-label-md text-text-primary font-semibold">Priya Sundaram</span>
+
+<span class="text-text-tertiary text-[12px] flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[13px]">location_on</span> Mumbai • 5 hours ago
+
+                    </span>
+
+</div>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col gap-1 items-start">
+
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-subtle text-secondary font-label-caps text-label-caps">Managing Director</span>
+
+<span class="text-text-tertiary text-[11px]">Bootstrapped ($3M ARR)</span>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col">
+
+<span class="font-medium text-text-primary">Aura Artisan Supply Co.</span>
+
+<span class="text-text-secondary text-[12px]">Omnichannel D2C &amp; Exports</span>
+
+<span class="text-text-tertiary text-[11px]">Sustainable Consumer Luxury</span>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col text-[12px]">
+
+<span class="text-primary font-mono select-all">priya@aurasupply.in</span>
+
+<div class="flex items-center gap-1 text-text-secondary mt-0.5">
+
+<span class="font-mono">+91 99201 XXXXX</span>
+
+<span class="material-symbols-outlined text-[13px] text-secondary" title="Phone verified">verified</span>
+
+</div>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-caps text-label-caps">
+
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> UNDER REVIEW
+
+                </span>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<select class="h-9 px-2 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+
+<option>Pending</option>
+
+<option selected="">Under Review</option>
+
+<option>Approved</option>
+
+<option>Waitlisted</option>
+
+<option>Rejected</option>
+
+</select>
+
+</td>
+
+<td class="py-4 px-space-md text-right">
+
+<div class="flex items-center justify-end gap-2">
+
+<button class="h-9 px-3 rounded bg-surface-subtle hover:bg-surface-container font-label-md text-label-md text-on-surface transition-colors">
+
+                    Inspect
+
+                  </button>
+
+<button class="h-9 px-3 rounded bg-primary-container hover:bg-emerald-deep font-label-md text-label-md text-on-primary flex items-center gap-1 transition-all">
+
+<span class="material-symbols-outlined text-[16px]">send</span>
+
+<span>Send Token</span>
+
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+<!-- Row 3 -->
+
+<tr class="hover:bg-surface-subtle/50 transition-colors">
+
+<td class="py-4 px-space-md">
+
+<div class="flex items-center gap-3">
+
+<div class="w-9 h-9 rounded-full bg-tertiary text-on-tertiary font-semibold flex items-center justify-center font-label-md text-label-md flex-shrink-0">
+
+                    VR
+
+                  </div>
+
+<div class="flex flex-col">
+
+<span class="font-label-md text-label-md text-text-primary font-semibold">Vikramaditya Rao</span>
+
+<span class="text-text-tertiary text-[12px] flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[13px]">location_on</span> Delhi NCR • 1 day ago
+
+                    </span>
+
+</div>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col gap-1 items-start">
+
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-subtle text-primary font-label-caps text-label-caps">Founder &amp; CEO</span>
+
+<span class="text-text-tertiary text-[11px]">Ex-Unicorn CXO • Seed Funded</span>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col">
+
+<span class="font-medium text-text-primary">Kavach Autonomous AI</span>
+
+<span class="text-text-secondary text-[12px]">Enterprise Cyber Defence</span>
+
+<span class="text-text-tertiary text-[11px]">B2B DeepTech SaaS</span>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<div class="flex flex-col text-[12px]">
+
+<span class="text-primary font-mono select-all">vikram@kavachsecurity.ai</span>
+
+<div class="flex items-center gap-1 text-text-secondary mt-0.5">
+
+<span class="font-mono">+91 98110 XXXXX</span>
+
+<span class="material-symbols-outlined text-[13px] text-secondary" title="Phone verified">verified</span>
+
+</div>
+
+</div>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-caps text-label-caps">
+
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-deep"></span> APPROVED
+
+                </span>
+
+</td>
+
+<td class="py-4 px-space-md">
+
+<select class="h-9 px-2 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer">
+
+<option>Pending</option>
+
+<option>Under Review</option>
+
+<option selected="">Approved</option>
+
+<option>Waitlisted</option>
+
+<option>Rejected</option>
+
+</select>
+
+</td>
+
+<td class="py-4 px-space-md text-right">
+
+<div class="flex items-center justify-end gap-2">
+
+<button class="h-9 px-3 rounded bg-surface-subtle hover:bg-surface-container font-label-md text-label-md text-on-surface transition-colors">
+
+                    Inspect
+
+                  </button>
+
+<button class="h-9 px-3 rounded bg-secondary text-on-secondary font-label-md text-label-md flex items-center gap-1 hover:opacity-90 transition-all">
+
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+
+<span>Token Active</span>
+
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<!-- Table Footer / Pagination -->
+
+<div class="p-space-md bg-surface-card flex items-center justify-between text-text-secondary font-body-sm text-body-sm">
+
+<span>Showing 3 of 18 pending applications</span>
+
+<div class="flex items-center gap-2">
+
+<button class="h-8 px-3 rounded bg-surface-subtle hover:bg-surface-container text-on-surface flex items-center gap-1 font-label-md text-label-md" disabled="">
+
+<span class="material-symbols-outlined text-[16px]">chevron_left</span> Prev
+
+          </button>
+
+<button class="h-8 px-3 rounded bg-surface-subtle hover:bg-surface-container text-on-surface flex items-center gap-1 font-label-md text-label-md">
+
+            Next <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
