@@ -46,15 +46,21 @@ const featureTabsData = {
   }
 };
 
-// Clean branded initials avatar helper (eliminates stock photo placeholders)
+// Clean branded initials avatar helper (memoized cache to eliminate allocations and CPU usage)
+const _avatarCache = new Map();
 function getInitialsAvatar(name) {
   const n = (name || 'Member').trim();
   const initials = n.split(' ').map(p => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || 'FF';
+  if (_avatarCache.has(initials)) {
+    return _avatarCache.get(initials);
+  }
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
     <rect width="100" height="100" rx="20" fill="#064E3B"/>
     <text x="50" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="36" font-weight="700" fill="#F3FBF7" text-anchor="middle" dominant-baseline="middle">${initials}</text>
   </svg>`;
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+  const uri = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+  _avatarCache.set(initials, uri);
+  return uri;
 }
 
 // Initialize App on DOM Loaded (Instant Hydration + SWR Background Revalidation)
@@ -289,9 +295,13 @@ function renderPublicContent(data) {
     const heroUrl = data.settings.hero_banner_url || '/assets/hero_banner.jpg';
     const heroEl = document.getElementById('home');
     if (heroEl) {
-      heroEl.style.backgroundImage = `linear-gradient(to right, rgba(243, 251, 247, 0.94) 0%, rgba(243, 251, 247, 0.78) 42%, rgba(243, 251, 247, 0.35) 75%, rgba(243, 251, 247, 0.08) 100%), url('${heroUrl}')`;
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 991;
+      const gradient = isMobile
+        ? 'linear-gradient(180deg, rgba(243, 251, 247, 0.96) 0%, rgba(243, 251, 247, 0.85) 55%, rgba(243, 251, 247, 0.35) 100%)'
+        : 'linear-gradient(to right, rgba(243, 251, 247, 0.94) 0%, rgba(243, 251, 247, 0.78) 42%, rgba(243, 251, 247, 0.35) 75%, rgba(243, 251, 247, 0.08) 100%)';
+      heroEl.style.backgroundImage = `${gradient}, url('${heroUrl}')`;
       heroEl.style.backgroundSize = 'cover';
-      heroEl.style.backgroundPosition = 'center right';
+      heroEl.style.backgroundPosition = isMobile ? 'center' : 'center right';
       heroEl.style.backgroundRepeat = 'no-repeat';
     }
     if (data.settings.terms_policy && document.getElementById('termsModalContent')) document.getElementById('termsModalContent').innerText = data.settings.terms_policy;

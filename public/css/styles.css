@@ -95,7 +95,9 @@ footer,
 .final-cta-band,
 .marquee-wrapper,
 .meeting-photos-section,
-.meeting-slider-wrapper {
+.meeting-slider-wrapper,
+.timeline-container,
+.tabs-container {
   max-width: 100% !important;
   box-sizing: border-box !important;
   overflow-x: hidden !important;
@@ -300,9 +302,11 @@ h1 em, h2 em, h3 em, em, i, cite, q, blockquote {
   background: transparent;
   border: 1px solid var(--mint-200);
   border-radius: 6px !important;
-  width: 40px;
-  height: 40px;
-  padding: 10px 8px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 11px 9px;
   cursor: pointer;
   flex-direction: column;
   justify-content: space-between;
@@ -644,6 +648,25 @@ body.mobile-nav-open {
   max-width: 580px;
   margin-bottom: 34px;
   line-height: 1.65;
+}
+
+.hero-pill-badge {
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--mint-200);
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.hero-pill-badge .pill-text {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--emerald-900);
 }
 
 .hero-actions {
@@ -1141,6 +1164,15 @@ body.mobile-nav-open {
   color: var(--grey-500);
   font-size: 1.5rem;
   cursor: pointer;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .form-group { margin-bottom: 1.15rem; }
@@ -1319,6 +1351,9 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
   /* Minimalist Glass Navbar on Tablet/Mobile */
   .navbar {
     height: 60px !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
   }
 
   .nav-container {
@@ -1359,8 +1394,8 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
     left: 0;
     right: 0;
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border-bottom: 2px solid var(--emerald-500);
     box-shadow: 0 18px 36px rgba(6, 78, 59, 0.16);
     padding: 1.25rem 1rem 1.75rem 1rem;
@@ -1374,6 +1409,29 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
     pointer-events: none;
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
     z-index: 999;
+  }
+
+  /* Responsive How It Works Timeline (Section D) */
+  .timeline-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem 1rem !important;
+  }
+
+  .timeline-line {
+    display: none !important;
+  }
+
+  /* Responsive Tabbed Community Features (Section E) */
+  .tabs-container {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  .tab-display-image {
+    aspect-ratio: 16 / 9 !important;
+    max-height: 360px !important;
+    margin-top: 0.5rem !important;
   }
 
   .nav-drawer.active {
@@ -1498,9 +1556,9 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
     right: 0;
     bottom: auto;
     z-index: 90;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border-right: none;
     border-bottom: 1px solid var(--border-hairline);
     padding: 8px 12px;
@@ -1616,6 +1674,24 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
     gap: 1rem !important;
   }
 
+  /* Responsive Timeline Grid on Mobile */
+  .timeline-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem 0.75rem !important;
+  }
+
+  /* Hero Supporting Message Pill on Mobile */
+  .hero-pill-badge {
+    border-radius: var(--radius-md) !important;
+    padding: 10px 14px !important;
+    margin-bottom: 1.5rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .hero-pill-badge .pill-text {
+    font-size: 0.85rem !important;
+  }
+
   /* Cards & Surface Padding */
   .card {
     padding: 1.35rem 1.15rem !important;
@@ -1658,12 +1734,14 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
   .modal-close {
     top: 10px !important;
     right: 10px !important;
-    width: 38px !important;
-    height: 38px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 1.4rem !important;
+    font-size: 1.5rem !important;
     background: var(--mint-50) !important;
     border-radius: 50% !important;
     border: 1px solid var(--mint-200) !important;
@@ -1677,6 +1755,15 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
     font-size: 16px !important;
     min-height: 44px !important;
     border-radius: 6px !important;
+  }
+
+  /* Directory & Filter Inputs Full-Width on Mobile */
+  #dirSearchInput,
+  #dirStageFilter,
+  #attendanceMonthSelect {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
   }
 
   /* Form Rows Collapse to 1-Column */
@@ -1878,6 +1965,21 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
     grid-template-columns: 1fr !important;
   }
 
+  /* Timeline 1-Column on Compact Mobile */
+  .timeline-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  .timeline-badge {
+    margin: 0 auto 10px auto !important;
+  }
+
+  .tab-btn {
+    padding: 12px 14px !important;
+    font-size: 0.88rem !important;
+  }
+
   /* Payment method selection in modal */
   #eventPaymentCheckoutView [style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
@@ -1909,9 +2011,11 @@ footer { background: var(--gradient-emerald-footer); border-top: 1px solid rgba(
   }
 
   .mobile-nav-toggle {
-    width: 36px !important;
-    height: 36px !important;
-    padding: 8px 6px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 11px 9px !important;
   }
 
   .capsule-collage {
