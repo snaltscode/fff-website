@@ -43,6 +43,18 @@ export default function RootLayout({
                 theme: {
                   extend: {
                     colors: {
+                      "canvas-cream": "#FAF8F5",
+                      "canvas-ivory": "#FBF9F6",
+                      "surface-subtle": "#F5F2EC",
+                      "card-border": "#E8E4DC",
+                      "border-hairline": "#EDE9E1",
+                      "primary-dark": "#064E3B",
+                      "primary-emerald": "#043E2E",
+                      "primary-light": "#0B664C",
+                      "text-main": "#1A1A1A",
+                      "text-muted": "#5A6260",
+                      "text-subtle": "#7E8784",
+                      "gold-accent": "#B89047",
                       "stitch-emerald": "#047857",
                       "stitch-emerald-hover": "#065F46",
                       "stitch-green": "#10B981",
@@ -130,6 +142,8 @@ export default function RootLayout({
                       margin: "1.5rem"
                     },
                     fontFamily: {
+                      serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                      sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
                       "headline-lg-mobile": ["Fraunces", "Playfair Display", "serif"],
                       "body-lg": ["Inter", "Plus Jakarta Sans", "sans-serif"],
                       "label-caps": ["Inter", "Plus Jakarta Sans", "sans-serif"],

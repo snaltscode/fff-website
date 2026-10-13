@@ -205,10 +205,12 @@ function switchFeatureTab(key, btnEl) {
 
 // Modal Controls
 function openModal(id) {
+  if (id === 'interestModal') id = 'showInterestModal';
   const modal = document.getElementById(id);
   if (modal) modal.classList.add('active');
 }
 function closeModal(id) {
+  if (id === 'interestModal') id = 'showInterestModal';
   const modal = document.getElementById(id);
   if (modal) modal.classList.remove('active');
 }
@@ -2639,3 +2641,85 @@ document.addEventListener('click', (e) => {
     exportMenu.classList.add('hidden');
   }
 });
+
+// Stitch Screen 13 Helpers
+const stitchFeatures = [
+  {
+    label: "MODULE 01 • CURATION",
+    title: "Curated Founder Network",
+    desc: "Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth."
+  },
+  {
+    label: "MODULE 02 • OPPORTUNITY",
+    title: "Needs & Wants Engine",
+    desc: "Structured opportunity board for community members to post specific commercial requirements or offer high-value solutions directly to trusted peers."
+  },
+  {
+    label: "MODULE 03 • PIPELINE",
+    title: "Leads & Referrals CRM",
+    desc: "Record, introduce, and track your business deals and peer referrals with authentic relationship accountability."
+  },
+  {
+    label: "MODULE 04 • EXPERIENCES",
+    title: "Founder Experiences",
+    desc: "Signature formats beyond routine meetings: The Founder's Table, First Light Club, Roundtables, and Sports Socials."
+  },
+  {
+    label: "MODULE 05 • STRATEGY",
+    title: "Business Collaborations",
+    desc: "Deep-dive strategic peer dialogues, joint ventures, and confidential problem-solving roundtables."
+  },
+  {
+    label: "MODULE 06 • MOMENTUM",
+    title: "Monthly Challenges",
+    desc: "Community leaderboard and accountability sprints to build enduring founder habits and peer leverage."
+  }
+];
+
+function setStitchTab(idx, btnEl) {
+  const buttons = document.querySelectorAll('#platform-tabs .tab-btn');
+  buttons.forEach((btn, i) => {
+    if (i === idx) {
+      btn.className = 'tab-btn px-4 py-1.5 rounded-full text-[12.5px] font-medium transition-all bg-primary-dark text-white active';
+    } else {
+      btn.className = 'tab-btn px-4 py-1.5 rounded-full text-[12.5px] font-medium transition-all bg-white text-text-muted border border-card-border hover:text-text-main';
+    }
+  });
+  const data = stitchFeatures[idx];
+  if (!data) return;
+  const label = document.getElementById('feature-label');
+  const title = document.getElementById('feature-title');
+  const desc = document.getElementById('feature-desc');
+  if (label) label.textContent = data.label;
+  if (title) title.textContent = data.title;
+  if (desc) desc.textContent = data.desc;
+}
+
+function scrollExperiences(dir) {
+  const track = document.getElementById('experiences-track');
+  if (!track) return;
+  const offset = 280;
+  if (dir === 'left') {
+    track.scrollBy({ left: -offset, behavior: 'smooth' });
+  } else {
+    track.scrollBy({ left: offset, behavior: 'smooth' });
+  }
+}
+
+function toggleFaqRef(btn) {
+  const parent = btn.parentElement;
+  if (!parent) return;
+  const content = parent.querySelector('.faq-content');
+  const icon = btn.querySelector('.material-symbols-outlined');
+  if (!content) return;
+  const isHidden = content.classList.contains('hidden');
+
+  document.querySelectorAll('.faq-node .faq-content').forEach(c => c.classList.add('hidden'));
+  document.querySelectorAll('.faq-node .material-symbols-outlined').forEach(i => i.textContent = 'add');
+
+  if (isHidden) {
+    content.classList.remove('hidden');
+    if (icon) icon.textContent = 'remove';
+  }
+}
+
