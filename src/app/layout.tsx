@@ -29,7 +29,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
         <script src="https://cdn.tailwindcss.com"></script>
@@ -142,36 +142,48 @@ export default function RootLayout({
                       margin: "1.5rem"
                     },
                     fontFamily: {
-                      serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                      serif: ['"Domine"', '"Playfair Display"', 'Georgia', 'serif'],
                       sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-                      "headline-lg-mobile": ["Fraunces", "Playfair Display", "serif"],
-                      "body-lg": ["Inter", "Plus Jakarta Sans", "sans-serif"],
-                      "label-caps": ["Inter", "Plus Jakarta Sans", "sans-serif"],
-                      "numeric-stat": ["Fraunces", "Playfair Display", "serif"],
-                      "headline-md": ["Fraunces", "Playfair Display", "serif"],
-                      "body-md": ["Inter", "Plus Jakarta Sans", "sans-serif"],
-                      "body-sm": ["Inter", "Plus Jakarta Sans", "sans-serif"],
-                      "display-hero": ["Fraunces", "Playfair Display", "serif"],
-                      "label-md": ["Inter", "Plus Jakarta Sans", "sans-serif"],
-                      "subhead-lg": ["Inter", "Plus Jakarta Sans", "sans-serif"],
-                      "headline-sm": ["Fraunces", "Playfair Display", "serif"],
-                      "headline-lg": ["Fraunces", "Playfair Display", "serif"],
-                      "display-hero-mobile": ["Fraunces", "Playfair Display", "serif"]
+                      "headline-hero": ["Domine", "Fraunces", "Playfair Display", "serif"],
+                      "headline-hero-mobile": ["Domine", "Fraunces", "Playfair Display", "serif"],
+                      "headline-lg": ["Domine", "Fraunces", "Playfair Display", "serif"],
+                      "headline-lg-mobile": ["Domine", "Fraunces", "Playfair Display", "serif"],
+                      "headline-md": ["Domine", "Fraunces", "Playfair Display", "serif"],
+                      "headline-sm": ["Domine", "Fraunces", "Playfair Display", "serif"],
+                      "title-lg": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "title-md": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "body-lg": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "body-md": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "body-sm": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "label-lg": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "label-md": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "label-status": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "label-caps": ["Plus Jakarta Sans", "Inter", "sans-serif"],
+                      "numeric-stat": ["Domine", "Fraunces", "serif"],
+                      "display-hero": ["Domine", "Fraunces", "serif"],
+                      "display-hero-mobile": ["Domine", "Fraunces", "serif"],
+                      "subhead-lg": ["Plus Jakarta Sans", "Inter", "sans-serif"]
                     },
                     fontSize: {
-                      "headline-lg-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
-                      "body-lg": ["17px", { lineHeight: "28px", letterSpacing: "0em", fontWeight: "400" }],
+                      "headline-hero": ["56px", { lineHeight: "64px", letterSpacing: "-0.03em", fontWeight: "700" }],
+                      "headline-hero-mobile": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                      "headline-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                      "headline-lg-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "600" }],
+                      "headline-md": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "600" }],
+                      "headline-sm": ["22px", { lineHeight: "28px", letterSpacing: "-0.01em", fontWeight: "500" }],
+                      "title-lg": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                      "title-md": ["16px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "600" }],
+                      "body-lg": ["16px", { lineHeight: "26px", letterSpacing: "0em", fontWeight: "400" }],
+                      "body-md": ["14px", { lineHeight: "22px", letterSpacing: "0em", fontWeight: "400" }],
+                      "body-sm": ["12px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "400" }],
+                      "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" }],
+                      "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.04em", fontWeight: "600" }],
+                      "label-status": ["10px", { lineHeight: "14px", letterSpacing: "0.08em", fontWeight: "700" }],
                       "label-caps": ["11px", { lineHeight: "16px", letterSpacing: "0.12em", fontWeight: "700" }],
                       "numeric-stat": ["48px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "700" }],
-                      "headline-md": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }],
-                      "body-md": ["15px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }],
-                      "body-sm": ["13px", { lineHeight: "20px", letterSpacing: "0.005em", fontWeight: "400" }],
                       "display-hero": ["64px", { lineHeight: "72px", letterSpacing: "-0.02em", fontWeight: "600" }],
-                      "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
-                      "subhead-lg": ["20px", { lineHeight: "30px", letterSpacing: "-0.01em", fontWeight: "400" }],
-                      "headline-sm": ["22px", { lineHeight: "30px", letterSpacing: "0em", fontWeight: "500" }],
-                      "headline-lg": ["44px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "600" }],
-                      "display-hero-mobile": ["40px", { lineHeight: "48px", letterSpacing: "-0.015em", fontWeight: "600" }]
+                      "display-hero-mobile": ["40px", { lineHeight: "48px", letterSpacing: "-0.015em", fontWeight: "600" }],
+                      "subhead-lg": ["20px", { lineHeight: "30px", letterSpacing: "-0.01em", fontWeight: "400" }]
                     }
                   }
                 }
