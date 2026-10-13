@@ -29,7 +29,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Syne:wght@600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
         <script src="https://cdn.tailwindcss.com"></script>
@@ -43,8 +43,18 @@ export default function RootLayout({
                 theme: {
                   extend: {
                     colors: {
+                      "stitch-emerald": "#047857",
+                      "stitch-emerald-hover": "#065F46",
+                      "stitch-green": "#10B981",
+                      "stitch-green-tint": "#ECFDF5",
+                      "stitch-gold": "#C9A227",
+                      "stitch-heading": "#0B1F17",
+                      "stitch-body": "#4B5B53",
+                      "stitch-border": "#E5EDE8",
+                      "stitch-surface": "#FFFFFF",
+                      "stitch-surface-subtle": "#F7FAF8",
                       "on-primary-container": "#80bea6",
-                      "background": "#fff8f5",
+                      "background": "#F7FAF8",
                       "surface-container": "#f4ece8",
                       "tertiary-fixed-dim": "#4edea3",
                       "on-secondary": "#ffffff",
@@ -120,19 +130,19 @@ export default function RootLayout({
                       margin: "1.5rem"
                     },
                     fontFamily: {
-                      "headline-lg-mobile": ["Playfair Display", "serif"],
-                      "body-lg": ["Plus Jakarta Sans", "sans-serif"],
-                      "label-caps": ["Plus Jakarta Sans", "sans-serif"],
-                      "numeric-stat": ["Playfair Display", "serif"],
-                      "headline-md": ["Playfair Display", "serif"],
-                      "body-md": ["Plus Jakarta Sans", "sans-serif"],
-                      "body-sm": ["Plus Jakarta Sans", "sans-serif"],
-                      "display-hero": ["Playfair Display", "serif"],
-                      "label-md": ["Plus Jakarta Sans", "sans-serif"],
-                      "subhead-lg": ["Plus Jakarta Sans", "sans-serif"],
-                      "headline-sm": ["Playfair Display", "serif"],
-                      "headline-lg": ["Playfair Display", "serif"],
-                      "display-hero-mobile": ["Playfair Display", "serif"]
+                      "headline-lg-mobile": ["Fraunces", "Playfair Display", "serif"],
+                      "body-lg": ["Inter", "Plus Jakarta Sans", "sans-serif"],
+                      "label-caps": ["Inter", "Plus Jakarta Sans", "sans-serif"],
+                      "numeric-stat": ["Fraunces", "Playfair Display", "serif"],
+                      "headline-md": ["Fraunces", "Playfair Display", "serif"],
+                      "body-md": ["Inter", "Plus Jakarta Sans", "sans-serif"],
+                      "body-sm": ["Inter", "Plus Jakarta Sans", "sans-serif"],
+                      "display-hero": ["Fraunces", "Playfair Display", "serif"],
+                      "label-md": ["Inter", "Plus Jakarta Sans", "sans-serif"],
+                      "subhead-lg": ["Inter", "Plus Jakarta Sans", "sans-serif"],
+                      "headline-sm": ["Fraunces", "Playfair Display", "serif"],
+                      "headline-lg": ["Fraunces", "Playfair Display", "serif"],
+                      "display-hero-mobile": ["Fraunces", "Playfair Display", "serif"]
                     },
                     fontSize: {
                       "headline-lg-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
