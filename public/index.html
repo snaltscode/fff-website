@@ -125,17 +125,17 @@
 
   <!-- TOP HEADER (Stitch Screen 13) -->
   <header class="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-card-border/60 transition-all" id="mainNavbar">
-    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 h-20 flex items-center justify-between gap-2">
       <!-- Logo -->
-      <a class="flex items-center gap-3 group" href="#">
-        <div class="tracking-tighter font-serif font-bold text-2xl text-primary-dark flex items-center">
+      <a class="flex items-center gap-2 sm:gap-3 group flex-shrink-0" href="#">
+        <div class="tracking-tighter font-serif font-bold text-xl sm:text-2xl text-primary-dark flex items-center whitespace-nowrap">
           <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="w-8 h-8 rounded-full object-cover mr-1" id="navLogo" width="32" height="32" decoding="async">
-          <span class="text-3xl font-bold tracking-tight">F4F</span>
+          <span class="text-2xl sm:text-3xl font-bold tracking-tight">F4F</span>
         </div>
         <div class="h-7 w-[1px] bg-card-border hidden sm:block"></div>
         <div class="flex flex-col">
-          <span class="font-serif text-[15px] font-semibold tracking-tight text-text-main leading-none">Founder</span>
-          <span class="font-serif text-[15px] font-semibold tracking-tight text-text-main leading-tight" id="navSubtitle">for Founder</span>
+          <span class="font-serif text-[13px] sm:text-[15px] font-semibold tracking-tight text-text-main leading-none whitespace-nowrap">Founder</span>
+          <span class="font-serif text-[13px] sm:text-[15px] font-semibold tracking-tight text-text-main leading-tight whitespace-nowrap" id="navSubtitle">for Founder</span>
         </div>
       </a>
       <!-- Desktop Nav -->
@@ -148,16 +148,22 @@
         <a class="hover:text-text-main transition-colors" href="#faq">FAQ</a>
       </nav>
       <!-- Right CTAs -->
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-3" id="publicNavBtns">
-          <button class="inline-flex items-center gap-2 bg-primary-dark hover:bg-primary-emerald text-white text-[13px] font-medium tracking-wide px-5 py-2.5 rounded-full transition-all shadow-sm" onclick="openShowInterestModal()">
+      <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <div class="hidden sm:flex items-center gap-3" id="publicNavBtns">
+          <button class="inline-flex items-center gap-2 bg-primary-dark hover:bg-primary-emerald text-white text-[13px] font-medium tracking-wide px-5 py-2.5 rounded-full transition-all shadow-sm whitespace-nowrap" onclick="openShowInterestModal()">
             <span>Show Interest</span>
             <span class="text-base leading-none">→</span>
           </button>
-          <button class="inline-flex items-center gap-1.5 border border-card-border hover:bg-surface-subtle text-text-main text-[13px] font-medium px-4 py-2 rounded-full transition-colors" onclick="openLoginModal()" title="Member Login">
+          <button class="inline-flex items-center gap-1.5 border border-card-border hover:bg-surface-subtle text-text-main text-[13px] font-medium px-4 py-2 rounded-full transition-colors whitespace-nowrap" onclick="openLoginModal()" title="Member Login">
             <span>Login</span>
           </button>
         </div>
+
+        <!-- Mobile Quick CTA -->
+        <button class="sm:hidden inline-flex items-center gap-1 bg-primary-dark hover:bg-primary-emerald text-white text-[12px] font-medium px-3 py-1.5 rounded-full whitespace-nowrap" onclick="openShowInterestModal()">
+          <span>Show Interest</span>
+          <span class="text-xs">→</span>
+        </button>
 
         <!-- Authenticated Portal Nav Controls -->
         <div id="authNavControls" style="display: none; align-items: center; gap: 0.85rem;">

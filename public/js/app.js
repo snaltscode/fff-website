@@ -295,7 +295,7 @@ function renderPublicContent(data) {
       if (document.getElementById('footerLogo')) document.getElementById('footerLogo').src = data.settings.logo_url;
     }
     const heroUrl = data.settings.hero_banner_url || '/assets/hero_banner.jpg';
-    const heroEl = document.getElementById('home');
+    const heroEl = document.getElementById('heroBannerImageOverlay');
     if (heroEl) {
       const isMobile = typeof window !== 'undefined' && window.innerWidth <= 991;
       const gradient = isMobile
