@@ -494,8 +494,8 @@ def apply_modals_update():
         print("Failed to locate showInterestModal boundaries:", p1, p2)
 
     # Replace loginModal
-    lp1 = html.find('<!-- MODAL 4: MEMBER LOGIN -->')
-    lp2 = html.find('<!-- MODAL 5: PAYMENT CONFIRMATION -->')
+    lp1 = html.find('<!-- MODAL 4: MEMBER LOGIN')
+    lp2 = html.find('<!-- MODAL 5: POST NEED / WANT')
     if lp1 != -1 and lp2 != -1:
         new_login_modal = generate_login_modal() + '\n\n  '
         html = html[:lp1] + new_login_modal + html[lp2:]
