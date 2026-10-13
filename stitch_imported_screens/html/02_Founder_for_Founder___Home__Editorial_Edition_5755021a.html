@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founder for Founder — Beyond Networking. Into Real Connections.</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<!-- Boutique Editorial Typography: Cormorant Garamond & Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "canvas-parchment": "#FBF9F5",
+            "canvas-warm": "#F7F4EE",
+            "surface-subtle": "#F2EDE4",
+            "border-craft": "#EDE6DA",
+            "border-hairline": "#E5DDD0",
+            "primary-forest": "#0B3B2C",
+            "primary-deep": "#064E3B",
+            "primary-emerald": "#043E2E",
+            "gold-heritage": "#B8860B",
+            "gold-accent": "#C5A059",
+            "gold-light": "#FAF3E3",
+            "text-charcoal": "#1A201C",
+            "text-muted": "#5C6661",
+            "text-subtle": "#87918B"
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html {
+        scroll-behavior: smooth;
+        background-color: #FBF9F5;
+        color: #1A201C;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+      body {
+        overscroll-behavior: none;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+    }
+    ::-webkit-scrollbar { display: none; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 40s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+    .paper-texture {
+      background-color: #FBF9F5;
+      background-image: radial-gradient(rgba(184, 134, 11, 0.04) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="bg-canvas-parchment text-text-charcoal antialiased relative min-h-screen selection:bg-[#E2D8C3] selection:text-primary-forest">
+<!-- TOP HEADER -->
+<header class="sticky top-0 z-40 bg-[#FBF9F5]/92 backdrop-blur-md border-b border-border-craft/80 transition-all">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<!-- Brand / Insignia -->
+<a class="flex items-center gap-3.5 group" href="#">
+<div class="w-10 h-10 rounded-full border border-gold-accent/40 bg-white shadow-xs p-1 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+<img alt="Founder for Founder Crest" class="w-full h-full object-contain rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/>
+</div>
+<div class="h-6 w-[1px] bg-border-craft hidden sm:block"></div>
+<div class="flex flex-col">
+<span class="font-serif text-[17px] font-semibold tracking-tight text-text-charcoal leading-none">Founder</span>
+<span class="font-serif italic text-[15px] font-normal text-text-muted leading-tight">for Founder</span>
+</div>
+</a>
+<!-- Desktop Nav: Handcrafted Pill Container -->
+<nav class="hidden md:flex items-center gap-1 bg-[#F2EDE4]/70 p-1.5 rounded-full border border-border-craft/90 shadow-2xs text-[13px] font-medium text-text-muted">
+<a class="px-4 py-1.5 rounded-full bg-white text-primary-forest font-semibold shadow-2xs transition-all" href="#">Home</a>
+<a class="px-4 py-1.5 rounded-full hover:text-text-charcoal hover:bg-white/60 transition-all" href="#about">About</a>
+<a class="px-4 py-1.5 rounded-full hover:text-text-charcoal hover:bg-white/60 transition-all" href="#experiences">Experiences</a>
+<a class="px-4 py-1.5 rounded-full hover:text-text-charcoal hover:bg-white/60 transition-all" href="#needs-wants">Needs &amp; Wants</a>
+<a class="px-4 py-1.5 rounded-full hover:text-text-charcoal hover:bg-white/60 transition-all" href="#community">Community</a>
+<a class="px-4 py-1.5 rounded-full hover:text-text-charcoal hover:bg-white/60 transition-all" href="#faq">FAQ</a>
+</nav>
+<!-- Right CTAs: Sculpted organic pills -->
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2.5 bg-primary-forest hover:bg-primary-deep active:translate-y-0 text-white text-[13px] font-medium tracking-wide px-5 py-2.5 rounded-full transition-all duration-300 ease-out shadow-xs hover:shadow-md hover:-translate-y-0.5 border border-primary-emerald" onclick="openModal('interestModal')">
+<span class="tracking-normal font-sans">Show Interest</span>
+<span class="text-xs transition-transform duration-300 group-hover:translate-x-0.5">⟶</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-border-craft hover:border-gold-accent/50 bg-white/80 hover:bg-white text-text-charcoal flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-sm" onclick="openModal('loginModal')" title="Member Login / Menu">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full">
+<!-- SECTION 1: HERO (High-Craft Editorial Asymmetry) -->
+<section class="relative w-full overflow-hidden pt-10 pb-20 lg:pt-16 lg:pb-28 border-b border-border-craft/70 paper-texture">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+<!-- Left Column: Prestigious Editorial Voice -->
+<div class="lg:col-span-6 flex flex-col justify-center">
+<!-- Eyebrow Pill Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-light border border-gold-accent/30 text-gold-heritage text-[11px] font-semibold uppercase tracking-widest w-fit mb-5 shadow-2xs">
+<span class="w-1.5 h-1.5 rounded-full bg-gold-accent"></span>
+<span>By Application Only • Pan-India</span>
+</div>
+<h1 class="font-serif text-5xl sm:text-6xl lg:text-[70px] text-text-charcoal leading-[1.05] tracking-[-0.025em] font-medium">
+          Beyond Networking.<br/>
+          Into <em class="italic font-normal text-primary-forest font-serif underline decoration-gold-accent/40 decoration-1 underline-offset-8">Real Connections</em>.
+        </h1>
+<p class="font-sans text-[15.5px] sm:text-[17px] text-text-muted mt-6 max-w-lg leading-relaxed font-normal">
+          A curated founder network across India. Crafted for founders who seek peer counsel, unscripted camaraderie, and genuine commercial reciprocity.
+        </p>
+<!-- Sculpted Call to Action Group -->
+<div class="flex flex-wrap items-center gap-4 mt-8">
+<button class="inline-flex items-center gap-2.5 bg-primary-forest hover:bg-primary-deep text-white text-[13.5px] font-medium px-7 py-3.5 rounded-full transition-all duration-300 ease-out shadow-sm hover:shadow-lg hover:-translate-y-0.5 border border-primary-emerald" onclick="openModal('interestModal')">
+<span class="tracking-wide">Show Interest</span>
+<span class="text-sm">⟶</span>
+</button>
+<a class="inline-flex items-center gap-2 text-[13.5px] font-medium text-text-charcoal hover:text-primary-forest px-6 py-3.5 rounded-full border border-border-craft hover:border-text-charcoal/40 bg-white/70 transition-all duration-300 hover:-translate-y-0.5" href="#experiences">
+<span>Explore Experiences</span>
+<span class="text-sm">↘</span>
+</a>
+</div>
+<!-- Curated Metrics: Architectural Editorial Stat Frame -->
+<div class="flex items-center gap-10 mt-14 pt-8 border-t border-border-craft/90 max-w-md">
+<div class="flex flex-col">
+<span class="font-serif text-4xl lg:text-[44px] font-medium text-text-charcoal tracking-tight leading-none">1528<span class="text-gold-accent font-light">+</span></span>
+<span class="text-[11.5px] uppercase tracking-widest text-text-subtle font-semibold mt-1.5">Vetted Members</span>
+</div>
+<div class="h-11 w-[1px] bg-border-craft"></div>
+<div class="flex flex-col">
+<span class="font-serif text-4xl lg:text-[44px] font-medium text-text-charcoal tracking-tight leading-none">27</span>
+<span class="text-[11.5px] uppercase tracking-widest text-text-subtle font-semibold mt-1.5">Curated Gatherings</span>
+</div>
+</div>
+</div>
+<!-- Right Column Visual: Soft Sculpted Frame with Gold Crest Stamp -->
+<div class="lg:col-span-6 relative">
+<div class="relative w-full aspect-[4/3] sm:aspect-[14/10] rounded-3xl overflow-hidden shadow-md border border-border-craft bg-surface-subtle p-2">
+<div class="relative w-full h-full rounded-[22px] overflow-hidden">
+<img alt="Founder workspace coffee terrace" class="w-full h-full object-cover grayscale-[8%] contrast-[1.03]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQOGkFg7WlUWSrH99zAr_NpVfxigqQdvK1JXSl3dRMsAah88IIJNAhSx8OtC4DKo9EJqPKrthaRiIpLyqt_xcOwaZP62w7cSPmLdKivLOoQd09W35SQpnkWSfEWVisoyktKg1Orkg8BptmZwIKPc3y1r-4ghvDAecJkMjxHFDzIQYE2O1zppL4xfqRP3baviEwS-40bNBYfBFV6PFSQ0z7D12zfeBHWQ_3r5oCcjVYX2-bGarNL6J7"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary-forest/70 via-transparent to-transparent"></div>
+<!-- Handcrafted Boutique Crest & Motto Overlay -->
+<div class="absolute bottom-6 left-6 right-6 flex items-center justify-between bg-primary-forest/90 backdrop-blur-md rounded-2xl p-4 border border-white/15 text-white shadow-xl">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-full border border-gold-accent/40 bg-primary-emerald flex items-center justify-center p-1">
+<img alt="Crest" class="w-full h-full object-contain rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/>
+</div>
+<div>
+<div class="font-serif text-[17px] font-medium tracking-tight text-[#EAE2D2] leading-none">Founder for Founder</div>
+<p class="font-sans text-[11.5px] tracking-wide text-white/80 mt-1">Create. Connect. Collaborate.</p>
+</div>
+</div>
+<span class="hidden sm:inline-block font-serif italic text-gold-accent text-xs">est. India</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: CONNECTED BUSINESSES (Editorial Ledger Ribbon) -->
+<section class="w-full bg-[#F5F1E8] py-4.5 overflow-hidden border-b border-border-craft">
+<div class="flex items-center">
+<div class="animate-marquee items-center gap-12 whitespace-nowrap text-[11.5px] uppercase tracking-[0.2em] text-text-subtle font-medium">
+<span class="inline-flex items-center gap-12">
+<span class="hover:text-primary-forest transition-colors">Apex Global Tech</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Precision Industries</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Elevate Digital</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Quantum Manufacturing</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Horizon Logistics</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Pinnacle Real Estate</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">snalts.co</span><span class="text-gold-accent opacity-60">❖</span>
+</span>
+<span class="inline-flex items-center gap-12">
+<span class="hover:text-primary-forest transition-colors">Apex Global Tech</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Precision Industries</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Elevate Digital</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Quantum Manufacturing</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Horizon Logistics</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">Pinnacle Real Estate</span><span class="text-gold-accent opacity-60">❖</span>
+<span class="hover:text-primary-forest transition-colors">snalts.co</span><span class="text-gold-accent opacity-60">❖</span>
+</span>
+</div>
+</div>
+</section>
+<!-- SECTION 3: WHAT WE OFFER / CORE PHILOSOPHY -->
+<section class="w-full py-20 lg:py-28 max-w-7xl mx-auto px-6 lg:px-12" id="about">
+<!-- Section Title with Boutique Hairline Accent -->
+<div class="flex items-baseline justify-between mb-14 border-b border-border-craft/90 pb-6">
+<div>
+<span class="text-[11px] font-bold tracking-[0.2em] text-gold-heritage uppercase block mb-1">Foundational Pillars</span>
+<h2 class="font-serif text-4xl sm:text-5xl text-text-charcoal font-medium tracking-tight">What We Offer</h2>
+</div>
+<span class="hidden sm:block font-serif italic text-text-subtle text-base">Curated with purposeful restraint</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+<!-- Card 1 -->
+<div class="bg-white rounded-3xl p-7 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 rounded-full bg-gold-light text-gold-heritage font-serif font-semibold text-sm flex items-center justify-center mb-6 border border-gold-accent/20">
+        01
+      </div>
+<h3 class="font-serif text-2xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors leading-snug">
+        Curated Founder<br/><em class="font-normal italic">Circle</em>
+</h3>
+<p class="font-sans text-[13.5px] text-text-muted mt-3.5 leading-relaxed">
+        Meaningful connections with like-minded builders in a confidential, high-trust environment.
+      </p>
+</div>
+<!-- Card 2 -->
+<div class="bg-white rounded-3xl p-7 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 rounded-full bg-gold-light text-gold-heritage font-serif font-semibold text-sm flex items-center justify-center mb-6 border border-gold-accent/20">
+        02
+      </div>
+<h3 class="font-serif text-2xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors leading-snug">
+        Shared<br/><em class="font-normal italic">Experiences</em>
+</h3>
+<p class="font-sans text-[13.5px] text-text-muted mt-3.5 leading-relaxed">
+        From sports and early-morning hikes to private dinners, explore real chemistry together.
+      </p>
+</div>
+<!-- Card 3 -->
+<div class="bg-white rounded-3xl p-7 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 rounded-full bg-gold-light text-gold-heritage font-serif font-semibold text-sm flex items-center justify-center mb-6 border border-gold-accent/20">
+        03
+      </div>
+<h3 class="font-serif text-2xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors leading-snug">
+        Needs &amp; Wants<br/><em class="font-normal italic">Engine</em>
+</h3>
+<p class="font-sans text-[13.5px] text-text-muted mt-3.5 leading-relaxed">
+        Find what you need. Offer what you have. Direct peer commercial requirements without the noise.
+      </p>
+</div>
+<!-- Card 4 -->
+<div class="bg-white rounded-3xl p-7 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="w-9 h-9 rounded-full bg-gold-light text-gold-heritage font-serif font-semibold text-sm flex items-center justify-center mb-6 border border-gold-accent/20">
+        04
+      </div>
+<h3 class="font-serif text-2xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors leading-snug">
+        Leads &amp;<br/><em class="font-normal italic">Introductions</em>
+</h3>
+<p class="font-sans text-[13.5px] text-text-muted mt-3.5 leading-relaxed">
+        Open doors to the right enterprise partners, advisors, and verified high-ticket accounts.
+      </p>
+</div>
+</div>
+</section>
+<!-- SECTION 4: PLATFORM FEATURES (Curved Tabs & Sculpted Showcase) -->
+<section class="w-full py-16 bg-canvas-warm border-y border-border-craft">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
+<div>
+<span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-heritage">Platform Architecture</span>
+<h3 class="font-serif text-3xl sm:text-4xl text-text-charcoal font-medium mt-1">Structured For Active Value</h3>
+</div>
+<!-- Sculpted Curved Nested Tabs Container -->
+<div class="flex flex-wrap gap-1.5 p-1.5 bg-[#EAE4D8]/80 rounded-full border border-border-craft max-w-fit shadow-2xs" id="platform-tabs">
+<button class="tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 bg-primary-forest text-white shadow-xs" onclick="setTab(0)">Curated Network</button>
+<button class="tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 text-text-muted hover:text-text-charcoal" onclick="setTab(1)">Needs &amp; Wants</button>
+<button class="tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 text-text-muted hover:text-text-charcoal" onclick="setTab(2)">Leads CRM</button>
+<button class="tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 text-text-muted hover:text-text-charcoal" onclick="setTab(3)">Experiences</button>
+<button class="tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 text-text-muted hover:text-text-charcoal" onclick="setTab(4)">Collaborations</button>
+<button class="tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 text-text-muted hover:text-text-charcoal" onclick="setTab(5)">Challenges</button>
+</div>
+</div>
+<!-- Active Tab Presentation Card: Sculpted Corner with Soft Shadows -->
+<div class="bg-white rounded-3xl p-8 lg:p-11 border border-border-craft shadow-xs flex flex-col md:flex-row items-center justify-between gap-8 transition-all" id="feature-box">
+<div class="max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-subtle text-gold-heritage text-[10.5px] font-semibold uppercase tracking-widest mb-3 border border-border-craft">
+<span class="w-1 h-1 rounded-full bg-gold-accent"></span>
+<span id="feature-label">MODULE 01 • CURATION</span>
+</div>
+<h4 class="font-serif text-3xl text-text-charcoal font-semibold mb-3 tracking-tight" id="feature-title">Curated Founder Network</h4>
+<p class="font-sans text-[14.5px] text-text-muted leading-relaxed" id="feature-desc">Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth.</p>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="inline-flex items-center gap-2 bg-primary-forest hover:bg-primary-deep text-white text-[13px] font-medium px-6 py-3 rounded-full transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 border border-primary-emerald" onclick="openModal('interestModal')">
+<span>Access Cohort</span>
+<span class="text-sm">⟶</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5 & 6: EXPERIENCES (Handcrafted Carousel with Soft Curves) -->
+<section class="w-full py-20 lg:py-28 max-w-7xl mx-auto px-6 lg:px-12" id="experiences">
+<div class="flex items-end justify-between gap-6 mb-12 border-b border-border-craft pb-6">
+<div>
+<span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-heritage block mb-1">Unscripted Gatherings</span>
+<h2 class="font-serif text-4xl sm:text-5xl text-text-charcoal font-medium tracking-tight">Experiences</h2>
+</div>
+<!-- Sculpted Carousel Arrow Buttons -->
+<div class="flex items-center gap-2.5">
+<button aria-label="Previous slide" class="w-11 h-11 rounded-full border border-border-craft bg-white hover:border-gold-accent text-text-charcoal flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-sm hover:-translate-x-0.5" onclick="scrollExperiences('left')">
+<span class="material-symbols-outlined text-[20px]">west</span>
+</button>
+<button aria-label="Next slide" class="w-11 h-11 rounded-full border border-border-craft bg-white hover:border-gold-accent text-text-charcoal flex items-center justify-center transition-all duration-300 shadow-2xs hover:shadow-sm hover:translate-x-0.5" onclick="scrollExperiences('right')">
+<span class="material-symbols-outlined text-[20px]">east</span>
+</button>
+</div>
+</div>
+<!-- Cards Carousel Track -->
+<div class="flex gap-6 overflow-x-auto pb-6 scroll-smooth snap-x" id="experiences-track">
+<!-- 1: Play Together -->
+<div class="snap-start flex-shrink-0 w-64 sm:w-72 bg-white rounded-3xl border border-border-craft p-3 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="h-48 w-full rounded-2xl overflow-hidden bg-surface-subtle relative">
+<img alt="Play Together - Pickleball / Padel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVZvQ8mvPxjjMTjLrF6-VqxIN0JEH2LYfuTgdcdGk8PvQJyiu2u5oUtJijFilpwAZABufmCOZ06UT57PQqBGEKg1-9OMd-FRWPy29OF454SI1Ln-aaI9CEglLaVMReFz2gQ03uy4ow09oEq5zXUjdalnL-7FSNgARVaL5qOVsGy11qfvzW63V6icp4B0-nVZYF19XZFsC63s9ZAMvAZiIyVtOHp0EXxr4_1ZbrkQpBaEiN3iParP9H"/>
+<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-[10.5px] font-semibold uppercase tracking-wider text-primary-forest px-2.5 py-1 rounded-full">Sports</span>
+</div>
+<div class="p-4 pt-4 flex flex-col justify-between">
+<h3 class="font-serif text-xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors">Play Together</h3>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-craft/70">
+<span class="text-[12px] text-text-subtle font-sans">Pickleball, padel &amp; golf</span>
+<span class="text-sm text-text-charcoal group-hover:translate-x-1 transition-transform">⟶</span>
+</div>
+</div>
+</div>
+<!-- 2: Explore Together -->
+<div class="snap-start flex-shrink-0 w-64 sm:w-72 bg-white rounded-3xl border border-border-craft p-3 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="h-48 w-full rounded-2xl overflow-hidden bg-surface-subtle relative">
+<img alt="Explore Together - Outdoor Trail &amp; Hiking" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw3xI8RlZpWZZ17uYgNPXasB04r1wJ0whnybywimVFdwREr2rr3DDSLYUulOUtaIVmEF80MqZbw10LmTsFrhl3rXyBNL72LAzwCDpNJJneZqJPTPRSkhlKzAiFKS0Tn1iRRN8nO65zy6XqDSx0PbtzudO-cEaeOigNSihGIOw_GdwmVBTeL7A0Cm4M1Z1dGv29lhLSDdtXG_2o5S3MccxG6bZxfslS2BnVSCHvd5UxkkZiTjyt0-6q"/>
+<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-[10.5px] font-semibold uppercase tracking-wider text-primary-forest px-2.5 py-1 rounded-full">Outdoors</span>
+</div>
+<div class="p-4 pt-4 flex flex-col justify-between">
+<h3 class="font-serif text-xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors">Explore Together</h3>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-craft/70">
+<span class="text-[12px] text-text-subtle font-sans">Trail walks &amp; retreats</span>
+<span class="text-sm text-text-charcoal group-hover:translate-x-1 transition-transform">⟶</span>
+</div>
+</div>
+</div>
+<!-- 3: Dine Together -->
+<div class="snap-start flex-shrink-0 w-64 sm:w-72 bg-white rounded-3xl border border-border-craft p-3 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="h-48 w-full rounded-2xl overflow-hidden bg-surface-subtle relative">
+<img alt="Dine Together - Curated Founder Dinner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBen8o-u4_a_KNZnmBPSlcSQkQnSlXVC-0qrB9AuScyPbRygpxb68mYWNoCy69eIlaNxi6FkrV7mJfwh3bUsuRLj84Od-p6BleYqSdJMRF79MsyY8pxbZwLS29Vp5e3DPlSRjeCYCtSUdxKbFOF4f26E9pgbmVgDz4jPROhIk2cqPzRgfkpEi-8iE7obRt1sv15_o7XqKE-PVrJM6xGmFN9_Tqsr5pAQOE7HF_VtMpZVUT8aD9EZn6"/>
+<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-[10.5px] font-semibold uppercase tracking-wider text-primary-forest px-2.5 py-1 rounded-full">Dining</span>
+</div>
+<div class="p-4 pt-4 flex flex-col justify-between">
+<h3 class="font-serif text-xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors">Dine Together</h3>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-craft/70">
+<span class="text-[12px] text-text-subtle font-sans">Curated intimate dinners</span>
+<span class="text-sm text-text-charcoal group-hover:translate-x-1 transition-transform">⟶</span>
+</div>
+</div>
+</div>
+<!-- 4: Build Together -->
+<div class="snap-start flex-shrink-0 w-64 sm:w-72 bg-white rounded-3xl border border-border-craft p-3 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="h-48 w-full rounded-2xl overflow-hidden bg-surface-subtle relative">
+<img alt="Build Together - Roundtable advisory" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN0pvVm_B1pcvX3C1p41zAEVv0F7UOI4ZTEugE8UJNnDeu5eNbAPsWH_IRBeMTTrBdA1Zpcf2ZypCbINRgud_0WaGY9LhRanEqZLYWkrdklcms6PyKaBzR6EiAgA4rYlrNQ-aPnPLdocN7UEYfEq2eAVjX5vKcMzASL9PbNdFccHCH-3vD01dWm7WYDmctJQmiJRSbwgyZ7oPtz252aZQLyRXIxBYIhzTXyU4bbmWRw5KNEMp02I-u"/>
+<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-[10.5px] font-semibold uppercase tracking-wider text-primary-forest px-2.5 py-1 rounded-full">Advisory</span>
+</div>
+<div class="p-4 pt-4 flex flex-col justify-between">
+<h3 class="font-serif text-xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors">Build Together</h3>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-craft/70">
+<span class="text-[12px] text-text-subtle font-sans">Peer roundtables</span>
+<span class="text-sm text-text-charcoal group-hover:translate-x-1 transition-transform">⟶</span>
+</div>
+</div>
+</div>
+<!-- 5: Celebrate Together -->
+<div class="snap-start flex-shrink-0 w-64 sm:w-72 bg-white rounded-3xl border border-border-craft p-3 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+<div class="h-48 w-full rounded-2xl overflow-hidden bg-surface-subtle relative">
+<img alt="Celebrate Together - Social Gathering" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMlhWLkz1P-mAPBK0gUIwbxPJcntsb_nuq1ISYkf94RDSh48oieYKwAMHeik8gD0Ev1u5UN-XgFp8CYopUvicZNBFwYnZ3sV9DL43PO02Ra8X0ENCaaSr2YHl121PlGI1_CAUaRP9E9uB33aoy9A-fhPPa1fn4ODQSR0o8gSOldIdnFRVHcVu-WJYsMtsdrx5u91M5OrNIuFwVbWfIO9F_ap7LdiFrLl6PmOLMCmy7I5ecoUoXXNBQ"/>
+<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-xs text-[10.5px] font-semibold uppercase tracking-wider text-primary-forest px-2.5 py-1 rounded-full">Socials</span>
+</div>
+<div class="p-4 pt-4 flex flex-col justify-between">
+<h3 class="font-serif text-xl font-semibold text-text-charcoal group-hover:text-primary-forest transition-colors">Celebrate Together</h3>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-craft/70">
+<span class="text-[12px] text-text-subtle font-sans">Milestone soirees</span>
+<span class="text-sm text-text-charcoal group-hover:translate-x-1 transition-transform">⟶</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sculpted indicator dots -->
+<div class="flex items-center justify-center gap-2 mt-8">
+<span class="w-6 h-1.5 rounded-full bg-primary-forest transition-all"></span>
+<span class="w-2 h-1.5 rounded-full bg-border-craft"></span>
+<span class="w-2 h-1.5 rounded-full bg-border-craft"></span>
+</div>
+</section>
+<!-- SECTION 7 & 11: HOW TO JOIN & FAQ SPLIT LAYOUT -->
+<section class="w-full py-20 lg:py-28 border-t border-border-craft bg-[#FAF7F0]">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+<!-- LEFT COLUMN: How To Join Vertical Timeline -->
+<div class="lg:col-span-5 flex flex-col">
+<span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-heritage block mb-1">Onboarding Process</span>
+<h2 class="font-serif text-4xl sm:text-5xl text-text-charcoal font-medium tracking-tight mb-10">
+          How To Join
+        </h2>
+<!-- Sculpted Chronological Timeline -->
+<div class="relative pl-8 space-y-8 before:absolute before:left-[11px] before:top-2 before:bottom-3 before:w-[1px] before:bg-border-craft">
+<!-- 01 -->
+<div class="relative flex items-start gap-4 group">
+<span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary-forest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-forest"></span>
+</span>
+<span class="font-serif text-[17px] font-semibold text-gold-heritage">01</span>
+<div>
+<h4 class="font-sans font-semibold text-[14.5px] text-text-charcoal group-hover:text-primary-forest transition-colors">Show Interest</h4>
+<p class="font-sans text-[13px] text-text-muted mt-0.5">Fill in the application form with your core business facts.</p>
+</div>
+</div>
+<!-- 02 -->
+<div class="relative flex items-start gap-4 group">
+<span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary-forest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-forest"></span>
+</span>
+<span class="font-serif text-[17px] font-semibold text-gold-heritage">02</span>
+<div>
+<h4 class="font-sans font-semibold text-[14.5px] text-text-charcoal group-hover:text-primary-forest transition-colors">Profile Screening</h4>
+<p class="font-sans text-[13px] text-text-muted mt-0.5">We review your background, company traction, and intent.</p>
+</div>
+</div>
+<!-- 03 -->
+<div class="relative flex items-start gap-4 group">
+<span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary-forest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-forest"></span>
+</span>
+<span class="font-serif text-[17px] font-semibold text-gold-heritage">03</span>
+<div>
+<h4 class="font-sans font-semibold text-[14.5px] text-text-charcoal group-hover:text-primary-forest transition-colors">Application Review</h4>
+<p class="font-sans text-[13px] text-text-muted mt-0.5">Our membership committee evaluates cohort fit.</p>
+</div>
+</div>
+<!-- 04 -->
+<div class="relative flex items-start gap-4 group">
+<span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary-forest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-forest"></span>
+</span>
+<span class="font-serif text-[17px] font-semibold text-gold-heritage">04</span>
+<div>
+<h4 class="font-sans font-semibold text-[14.5px] text-text-charcoal group-hover:text-primary-forest transition-colors">Receive Invitation</h4>
+<p class="font-sans text-[13px] text-text-muted mt-0.5">Get notified about your selection and chapter cohort.</p>
+</div>
+</div>
+<!-- 05 -->
+<div class="relative flex items-start gap-4 group">
+<span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary-forest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-forest"></span>
+</span>
+<span class="font-serif text-[17px] font-semibold text-gold-heritage">05</span>
+<div>
+<h4 class="font-sans font-semibold text-[14.5px] text-text-charcoal group-hover:text-primary-forest transition-colors">Activate Membership</h4>
+<p class="font-sans text-[13px] text-text-muted mt-0.5">Complete the onboarding process and portal profile.</p>
+</div>
+</div>
+<!-- 06 -->
+<div class="relative flex items-start gap-4 group">
+<span class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-white border-2 border-primary-forest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-forest"></span>
+</span>
+<span class="font-serif text-[17px] font-semibold text-gold-heritage">06</span>
+<div>
+<h4 class="font-sans font-semibold text-[14.5px] text-text-charcoal group-hover:text-primary-forest transition-colors">Connect &amp; Collaborate</h4>
+<p class="font-sans text-[13px] text-text-muted mt-0.5">Be part of meaningful conversations and business deals.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: FAQ with View All and Curved Accordion -->
+<div class="lg:col-span-7 flex flex-col" id="faq">
+<div class="flex items-baseline justify-between mb-10">
+<div>
+<span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-heritage block mb-1">Common Inquiries</span>
+<h2 class="font-serif text-4xl sm:text-5xl text-text-charcoal font-medium tracking-tight">FAQ</h2>
+</div>
+<a class="inline-flex items-center gap-1.5 text-[13px] font-medium text-text-charcoal hover:text-primary-forest transition-colors" href="#faq">
+<span>View all</span>
+<span>⟶</span>
+</a>
+</div>
+<!-- FAQ Accordion Cards with organic rounded-2xl geometry -->
+<div class="space-y-3.5">
+<!-- Item 1 -->
+<div class="faq-node bg-white rounded-2xl border border-border-craft shadow-2xs overflow-hidden transition-all duration-300">
+<button class="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4" onclick="toggleFaqRef(this)">
+<span class="font-sans font-semibold text-[15px] text-text-charcoal">What is Founder for Founder?</span>
+<span class="material-symbols-outlined text-[20px] text-gold-heritage transition-transform duration-300">add</span>
+</button>
+<div class="faq-content hidden px-6 pb-5 text-[14px] text-text-muted leading-relaxed border-t border-border-craft/60 pt-3.5">
+              Founder for Founder is a vetted pan-India business collective. Instead of superficial business card exchanges, we facilitate peer advisory roundtables, shared active experiences, and a structured Needs &amp; Wants marketplace.
+            </div>
+</div>
+<!-- Item 2 -->
+<div class="faq-node bg-white rounded-2xl border border-border-craft shadow-2xs overflow-hidden transition-all duration-300">
+<button class="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4" onclick="toggleFaqRef(this)">
+<span class="font-sans font-semibold text-[15px] text-text-charcoal">Who can apply?</span>
+<span class="material-symbols-outlined text-[20px] text-gold-heritage transition-transform duration-300">add</span>
+</button>
+<div class="faq-content hidden px-6 pb-5 text-[14px] text-text-muted leading-relaxed border-t border-border-craft/60 pt-3.5">
+              Founders, Co-founders, Managing Directors, enterprise business owners, and active CXO leaders with operating businesses across India can apply.
+            </div>
+</div>
+<!-- Item 3 -->
+<div class="faq-node bg-white rounded-2xl border border-border-craft shadow-2xs overflow-hidden transition-all duration-300">
+<button class="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4" onclick="toggleFaqRef(this)">
+<span class="font-sans font-semibold text-[15px] text-text-charcoal">What kind of businesses are included?</span>
+<span class="material-symbols-outlined text-[20px] text-gold-heritage transition-transform duration-300">add</span>
+</button>
+<div class="faq-content hidden px-6 pb-5 text-[14px] text-text-muted leading-relaxed border-t border-border-craft/60 pt-3.5">
+              Our community spans high-growth tech startups, industrial manufacturing, D2C brands, supply chain enterprises, real estate developers, and specialized professional firms.
+            </div>
+</div>
+<!-- Item 4 -->
+<div class="faq-node bg-white rounded-2xl border border-border-craft shadow-2xs overflow-hidden transition-all duration-300">
+<button class="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4" onclick="toggleFaqRef(this)">
+<span class="font-sans font-semibold text-[15px] text-text-charcoal">Is there a membership fee?</span>
+<span class="material-symbols-outlined text-[20px] text-gold-heritage transition-transform duration-300">add</span>
+</button>
+<div class="faq-content hidden px-6 pb-5 text-[14px] text-text-muted leading-relaxed border-t border-border-craft/60 pt-3.5">
+              Yes, approved candidates receive an invitation link detailing our annual membership tiers, which cover curated gatherings, private retreats, and platform directory access.
+            </div>
+</div>
+<!-- Item 5 -->
+<div class="faq-node bg-white rounded-2xl border border-border-craft shadow-2xs overflow-hidden transition-all duration-300">
+<button class="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4" onclick="toggleFaqRef(this)">
+<span class="font-sans font-semibold text-[15px] text-text-charcoal">How do I stay updated about events?</span>
+<span class="material-symbols-outlined text-[20px] text-gold-heritage transition-transform duration-300">add</span>
+</button>
+<div class="faq-content hidden px-6 pb-5 text-[14px] text-text-muted leading-relaxed border-t border-border-craft/60 pt-3.5">
+              Members receive calendar invites, WhatsApp updates for chapter meetups, and can RSVP directly through the Member Portal.
+            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 8: ACTIVE COMMUNITY NEEDS & WANTS (Opportunity Ledger) -->
+<section class="w-full py-20 bg-canvas-parchment border-t border-border-craft" id="needs-wants">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4 border-b border-border-craft pb-6">
+<div>
+<span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-heritage">Internal Exchange Ledger</span>
+<h2 class="font-serif text-4xl sm:text-5xl text-text-charcoal font-medium tracking-tight mt-1">Active Community Needs &amp; Offers</h2>
+</div>
+<button class="inline-flex items-center gap-2 text-[13px] font-medium text-primary-forest hover:text-primary-deep bg-white border border-border-craft hover:border-primary-forest px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-xs" onclick="openModal('interestModal')">
+<span class="font-bold">+</span>
+<span>Post a Need / Offer</span>
+<span class="text-xs">⟶</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Requirements Column -->
+<div class="bg-white rounded-3xl p-7 border border-border-craft shadow-xs">
+<div class="flex items-center gap-2.5 mb-6 pb-4 border-b border-border-craft/80">
+<span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span>
+<span class="text-[11.5px] font-bold tracking-[0.16em] uppercase text-text-charcoal font-sans">I NEED (REQUIREMENTS)</span>
+</div>
+<div class="space-y-4">
+<div class="p-5 bg-canvas-warm rounded-2xl border border-border-craft/70 hover:border-gold-accent/40 transition-colors">
+<span class="text-[10px] text-gold-heritage uppercase tracking-[0.18em] font-semibold block mb-1.5">MANUFACTURING</span>
+<p class="font-serif text-[17px] font-medium text-text-charcoal leading-snug">High-volume manufacturing partner for precision components</p>
+<span class="text-[12px] text-text-subtle mt-2 block font-sans">Pan-India scale • Verified RFQ posted by MD Member</span>
+</div>
+<div class="p-5 bg-canvas-warm rounded-2xl border border-border-craft/70 hover:border-gold-accent/40 transition-colors">
+<span class="text-[10px] text-gold-heritage uppercase tracking-[0.18em] font-semibold block mb-1.5">TECHNOLOGY</span>
+<p class="font-serif text-[17px] font-medium text-text-charcoal leading-snug">Enterprise SaaS growth marketing advisor &amp; partner</p>
+<span class="text-[12px] text-text-subtle mt-2 block font-sans">Series A B2B firm • Direct peer recommendation sought</span>
+</div>
+</div>
+</div>
+<!-- Offers Column -->
+<div class="bg-white rounded-3xl p-7 border border-border-craft shadow-xs">
+<div class="flex items-center gap-2.5 mb-6 pb-4 border-b border-border-craft/80">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-forest"></span>
+<span class="text-[11.5px] font-bold tracking-[0.16em] uppercase text-text-charcoal font-sans">I OFFER (CAPABILITIES)</span>
+</div>
+<div class="space-y-4">
+<div class="p-5 bg-canvas-warm rounded-2xl border border-border-craft/70 hover:border-gold-accent/40 transition-colors">
+<span class="text-[10px] text-gold-heritage uppercase tracking-[0.18em] font-semibold block mb-1.5">LOGISTICS &amp; SUPPLY CHAIN</span>
+<p class="font-serif text-[17px] font-medium text-text-charcoal leading-snug">Cross-border logistics &amp; supply chain optimization consultation</p>
+<span class="text-[12px] text-text-subtle mt-2 block font-sans">Offered by verified logistics founder • 20+ years expertise</span>
+</div>
+<div class="p-5 bg-canvas-warm rounded-2xl border border-border-craft/70 hover:border-gold-accent/40 transition-colors">
+<span class="text-[10px] text-gold-heritage uppercase tracking-[0.18em] font-semibold block mb-1.5">CORPORATE SOLUTIONS</span>
+<p class="font-serif text-[17px] font-medium text-text-charcoal leading-snug">Custom corporate gifting suites &amp; executive welcome packs</p>
+<span class="text-[12px] text-text-subtle mt-2 block font-sans">Direct manufacturer terms for community founders</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 9: COMMUNITY PERSPECTIVES / TESTIMONIALS (Editorial Quotes) -->
+<section class="w-full py-20 lg:py-28 bg-[#F6F2E9] border-t border-border-craft" id="community">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="max-w-2xl mb-14">
+<span class="text-[11px] font-bold uppercase tracking-[0.2em] text-gold-heritage">Member Stories</span>
+<h2 class="font-serif text-4xl sm:text-5xl text-text-charcoal font-medium tracking-tight mt-1">Founder Perspectives</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+<!-- Perspective 1 -->
+<div class="bg-white rounded-3xl p-8 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<span class="font-serif text-4xl text-gold-accent/50 leading-none">“</span>
+<p class="font-serif italic text-[17px] text-text-charcoal leading-relaxed mt-1">
+            Traditional networking events yield business cards; shared experiences build lasting relationships. Founder for Founder creates spaces where ambitious minds connect with purpose.
+          </p>
+</div>
+<div class="mt-8 pt-5 border-t border-border-craft/70">
+<h4 class="font-sans font-semibold text-[14px] text-text-charcoal">Ananya Verma</h4>
+<span class="text-[12px] text-text-subtle">Founder &amp; CEO, Elevate Digital</span>
+</div>
+</div>
+<!-- Perspective 2 -->
+<div class="bg-white rounded-3xl p-8 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<span class="font-serif text-4xl text-gold-accent/50 leading-none">“</span>
+<p class="font-serif italic text-[17px] text-text-charcoal leading-relaxed mt-1">
+            The Needs &amp; Wants engine alone unlocked two credible manufacturing suppliers within our first month. The signal-to-noise ratio here is unmatched in India.
+          </p>
+</div>
+<div class="mt-8 pt-5 border-t border-border-craft/70">
+<h4 class="font-sans font-semibold text-[14px] text-text-charcoal">Rajesh Patel</h4>
+<span class="text-[12px] text-text-subtle">Managing Director, Quantum Manufacturing</span>
+</div>
+</div>
+<!-- Perspective 3 -->
+<div class="bg-white rounded-3xl p-8 border border-border-craft shadow-2xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group">
+<div>
+<span class="font-serif text-4xl text-gold-accent/50 leading-none">“</span>
+<p class="font-serif italic text-[17px] text-text-charcoal leading-relaxed mt-1">
+            Playing padel at 7 AM followed by frank conversations on enterprise sales barriers with founders who run 50+ crore businesses is priceless leverage.
+          </p>
+</div>
+<div class="mt-8 pt-5 border-t border-border-craft/70">
+<h4 class="font-sans font-semibold text-[14px] text-text-charcoal">Vikramaditya Rao</h4>
+<span class="text-[12px] text-text-subtle">Co-Founder, Horizon Logistics</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 10: CLOSING BANNER CTA (Curved Architectural Parchment Frame) -->
+<section class="w-full py-16 lg:py-24 px-6 lg:px-12 bg-canvas-parchment">
+<div class="max-w-7xl mx-auto">
+<div class="relative bg-gradient-to-b from-[#EDE6D7] to-[#E7DFCEx] border border-[#DDD4C3] rounded-3xl p-12 lg:p-20 text-center overflow-hidden shadow-xs">
+<!-- Fine Hairline Inner Framing Border -->
+<div class="absolute inset-4 rounded-2xl border border-stone-300/40 pointer-events-none hidden sm:block"></div>
+<div class="max-w-2xl mx-auto relative z-10 flex flex-col items-center">
+<div class="w-12 h-12 rounded-full border border-gold-accent/40 bg-white/90 shadow-2xs p-1.5 mb-6 flex items-center justify-center">
+<img alt="Crest" class="w-full h-full object-contain rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/>
+</div>
+<h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium text-text-charcoal leading-[1.1] tracking-tight">
+          Your next meaningful business<br class="hidden sm:block"/> connection <em class="italic font-normal text-primary-forest">starts here</em>.
+        </h2>
+<p class="font-sans text-[15px] text-text-muted mt-4 max-w-md">
+          Join an exclusive circle of visionary founders collaborating on high-trust terms.
+        </p>
+<div class="mt-9">
+<button class="inline-flex items-center gap-2.5 bg-primary-forest hover:bg-primary-deep text-white text-[14px] font-medium px-8 py-4 rounded-full transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 border border-primary-emerald" onclick="openModal('interestModal')">
+<span class="tracking-wide">Show Interest</span>
+<span class="text-sm">⟶</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- SECTION 12: FOOTER (High-Craft Editorial Colophon) -->
+<footer class="w-full bg-[#F4EFE6] border-t border-border-craft py-16">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
+<!-- Left: Insignia Crest & Motto -->
+<div class="flex flex-col">
+<div class="flex items-center gap-3.5">
+<div class="w-9 h-9 rounded-full border border-gold-accent/40 bg-white p-1 flex items-center justify-center">
+<img alt="Crest" class="w-full h-full object-contain rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/>
+</div>
+<div class="h-6 w-[1px] bg-border-craft"></div>
+<div class="flex flex-col leading-none">
+<span class="font-serif text-[15px] font-semibold text-text-charcoal">Founder</span>
+<span class="font-serif italic text-[14px] text-text-muted">for Founder</span>
+</div>
+</div>
+<p class="text-[12px] text-text-subtle mt-2.5 font-sans tracking-wide">Create. Connect. Collaborate.</p>
+</div>
+<!-- Middle: Direct Email & Legal -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 text-[13px] text-text-muted">
+<a class="inline-flex items-center gap-2 text-text-charcoal hover:text-primary-forest transition-colors font-medium" href="mailto:connect.f4f@gmail.com">
+<span class="material-symbols-outlined text-[17px] text-gold-heritage">mail</span>
+<span>connect.f4f@gmail.com</span>
+</a>
+<div class="flex flex-wrap items-center gap-4 text-text-subtle text-[12.5px]">
+<a class="hover:text-text-charcoal transition-colors" href="#">Terms</a>
+<span>•</span>
+<a class="hover:text-text-charcoal transition-colors" href="#">Privacy</a>
+<span>•</span>
+<a class="hover:text-text-charcoal transition-colors" href="#">Refund Policy</a>
+<span>•</span>
+<a class="hover:text-text-charcoal transition-colors" href="#">Community Guidelines</a>
+</div>
+</div>
+<!-- Right: Social Channels & Attribution -->
+<div class="flex items-center gap-6 text-[13px] text-text-subtle">
+<div class="flex items-center gap-3 text-text-charcoal">
+<!-- Instagram -->
+<a aria-label="Instagram" class="w-8 h-8 rounded-full border border-border-craft hover:border-gold-accent bg-white flex items-center justify-center hover:text-primary-forest transition-colors" href="#">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+<!-- Facebook -->
+<a aria-label="Facebook" class="w-8 h-8 rounded-full border border-border-craft hover:border-gold-accent bg-white flex items-center justify-center hover:text-primary-forest transition-colors" href="#">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.667 5H18V0h-3.808C10.595 0 9 1.583 9 4.615V8z"></path></svg>
+</a>
+<!-- LinkedIn -->
+<a aria-label="LinkedIn" class="w-8 h-8 rounded-full border border-border-craft hover:border-gold-accent bg-white flex items-center justify-center hover:text-primary-forest transition-colors" href="#">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+</div>
+<span class="font-sans text-[12px]">Powered by snalts.co</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- MODAL 1: SHOW INTEREST (Sculpted Drawer with Organic Radii) -->
+<div class="fixed inset-0 z-50 flex justify-end bg-black/45 backdrop-blur-xs transition-opacity hidden" id="interestModal">
+<div class="relative w-full max-w-md bg-[#FAF8F5] h-full shadow-2xl flex flex-col p-6 sm:p-8 overflow-y-auto border-l border-border-craft">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-4 border-b border-border-craft">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full border border-gold-accent/40 bg-white p-0.5">
+<img alt="Crest" class="w-full h-full object-contain rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/>
+</div>
+<h3 class="font-serif text-2xl font-medium text-text-charcoal">Show Interest</h3>
+</div>
+<button class="w-8 h-8 rounded-full border border-border-craft hover:bg-white text-text-muted transition-colors flex items-center justify-center" onclick="closeModal('interestModal')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Sculpted Step Indicator Bar -->
+<div class="flex items-center justify-between my-7 px-2 relative">
+<div class="absolute top-3 left-4 right-4 h-[1px] bg-border-craft z-0"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-6 h-6 rounded-full bg-primary-forest text-white text-[11px] flex items-center justify-center font-bold">1</span>
+<span class="text-[11px] font-semibold text-text-charcoal mt-1.5 font-sans">Identity</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-6 h-6 rounded-full bg-white border border-border-craft text-text-subtle text-[11px] flex items-center justify-center font-sans">2</span>
+<span class="text-[11px] text-text-subtle mt-1.5 font-sans">Business</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-6 h-6 rounded-full bg-white border border-border-craft text-text-subtle text-[11px] flex items-center justify-center font-sans">3</span>
+<span class="text-[11px] text-text-subtle mt-1.5 font-sans">Synergy</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-6 h-6 rounded-full bg-white border border-border-craft text-text-subtle text-[11px] flex items-center justify-center font-sans">4</span>
+<span class="text-[11px] text-text-subtle mt-1.5 font-sans">Consent</span>
+</div>
+</div>
+<!-- Body Form -->
+<div class="flex-1 flex flex-col">
+<h4 class="font-serif font-semibold text-xl text-text-charcoal mb-1">Tell us about yourself</h4>
+<p class="text-[13px] text-text-muted mb-6">Let's start with your fundamental profile information.</p>
+<form class="space-y-4" onsubmit="event.preventDefault(); alert('Application received. Our committee will review your profile.'); closeModal('interestModal');">
+<div>
+<label class="block text-[12px] font-semibold text-text-charcoal mb-1.5 uppercase tracking-wider">Full Name <span class="text-rose-600">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl border border-border-craft bg-white text-[14px] focus:outline-none focus:ring-1 focus:ring-primary-forest focus:border-primary-forest shadow-2xs" placeholder="e.g. Vikramaditya Singhania" required="" type="text"/>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-text-charcoal mb-1.5 uppercase tracking-wider">Email Address <span class="text-rose-600">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl border border-border-craft bg-white text-[14px] focus:outline-none focus:ring-1 focus:ring-primary-forest focus:border-primary-forest shadow-2xs" placeholder="founder@company.com" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-text-charcoal mb-1.5 uppercase tracking-wider">Phone Number <span class="text-rose-600">*</span></label>
+<div class="flex gap-2.5">
+<div class="w-20 px-3.5 py-3 rounded-xl border border-border-craft text-[13.5px] bg-[#F2ECE1] text-text-charcoal flex items-center justify-between font-medium">
+<span>+91</span>
+<span class="text-[9px] opacity-70">▼</span>
+</div>
+<input class="flex-1 px-4 py-3 rounded-xl border border-border-craft bg-white text-[14px] focus:outline-none focus:ring-1 focus:ring-primary-forest focus:border-primary-forest shadow-2xs" placeholder="98200 00000" required="" type="tel"/>
+</div>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-text-charcoal mb-1.5 uppercase tracking-wider">City / Primary Chapter <span class="text-rose-600">*</span></label>
+<input class="w-full px-4 py-3 rounded-xl border border-border-craft bg-white text-[14px] focus:outline-none focus:ring-1 focus:ring-primary-forest focus:border-primary-forest shadow-2xs" placeholder="e.g. Mumbai, Bengaluru, Delhi NCR" required="" type="text"/>
+</div>
+<div class="pt-4">
+<button class="w-full py-3.5 rounded-full bg-primary-forest hover:bg-primary-deep text-white text-[14px] font-medium flex items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md" type="submit">
+<span>Continue Application</span>
+<span>⟶</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- MODAL 2: MEMBER LOGIN (Curved Drawer) -->
+<div class="fixed inset-0 z-50 flex justify-end bg-black/45 backdrop-blur-xs transition-opacity hidden" id="loginModal">
+<div class="relative w-full max-w-md bg-[#FAF8F5] h-full shadow-2xl flex flex-col p-6 sm:p-8 overflow-y-auto border-l border-border-craft">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-4 border-b border-border-craft">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full border border-gold-accent/40 bg-white p-0.5">
+<img alt="Crest" class="w-full h-full object-contain rounded-full" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/>
+</div>
+<h3 class="font-serif text-2xl font-medium text-text-charcoal">Member Portal</h3>
+</div>
+<button class="w-8 h-8 rounded-full border border-border-craft hover:bg-white text-text-muted transition-colors flex items-center justify-center" onclick="closeModal('loginModal')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col justify-center py-6">
+<h4 class="font-serif text-3xl font-medium text-text-charcoal mb-1">Welcome back.</h4>
+<p class="text-[13.5px] text-text-muted mb-7 font-sans">Sign in to access your confidential chapter directory.</p>
+<form class="space-y-4" onsubmit="event.preventDefault(); alert('Authenticating Member Portal credentials...'); closeModal('loginModal');">
+<div>
+<label class="block text-[12px] font-semibold text-text-charcoal mb-1.5 uppercase tracking-wider">Registered Email</label>
+<input class="w-full px-4 py-3 rounded-xl border border-border-craft bg-white text-[14px] focus:outline-none focus:ring-1 focus:ring-primary-forest shadow-2xs" placeholder="member@domain.com" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[12px] font-semibold text-text-charcoal mb-1.5 uppercase tracking-wider">Access Passphrase</label>
+<div class="relative">
+<input class="w-full px-4 py-3 pr-11 rounded-xl border border-border-craft bg-white text-[14px] focus:outline-none focus:ring-1 focus:ring-primary-forest shadow-2xs" placeholder="••••••••••••" required="" type="password"/>
+<button class="absolute right-3.5 top-3.5 text-text-subtle hover:text-text-charcoal" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between text-[12.5px] pt-1">
+<label class="flex items-center gap-2 cursor-pointer text-text-muted">
+<input class="rounded border-border-craft text-primary-forest focus:ring-primary-forest" type="checkbox"/>
+<span>Remember session</span>
+</label>
+<a class="text-text-charcoal font-medium hover:text-primary-forest transition-colors" href="#">Forgot pass?</a>
+</div>
+<button class="w-full py-3.5 rounded-full bg-primary-forest hover:bg-primary-deep text-white text-[14px] font-medium flex items-center justify-center gap-2 mt-4 transition-all duration-300 shadow-sm hover:shadow-md" type="submit">
+<span>Enter Portal</span>
+<span>⟶</span>
+</button>
+</form>
+<div class="relative my-7 text-center">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-border-craft"></div></div>
+<span class="relative bg-[#FAF8F5] px-3 text-[11px] uppercase tracking-widest text-text-subtle font-medium">or continue with</span>
+</div>
+<button class="w-full py-3 border border-border-craft bg-white rounded-xl text-[13.5px] font-medium text-text-charcoal flex items-center justify-center gap-2.5 hover:bg-[#F5F0E6] transition-colors shadow-2xs" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.86c2.26-2.09 3.56-5.17 3.56-9.12z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3.02c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.12C3.26 21.3 7.37 24 12 24z" fill="#34A853"></path>
+<path d="M5.27 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.98-3.12z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.26 2.7 1.29 6.61l3.98 3.12c.95-2.85 3.6-4.98 6.73-4.98z" fill="#EA4335"></path>
+</svg>
+<span>Google Workspace SSO</span>
+</button>
+</div>
+</div>
+</div>
+<!-- JAVASCRIPT CONTROLS -->
+<script>
+  // Tab switching data with bespoke module labels
+  const features = [
+    {
+      label: "MODULE 01 • CURATION",
+      title: "Curated Founder Network",
+      desc: "Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth."
+    },
+    {
+      label: "MODULE 02 • OPPORTUNITY",
+      title: "Needs & Wants Engine",
+      desc: "Structured opportunity board for community members to post specific commercial requirements or offer high-value solutions directly to trusted peers."
+    },
+    {
+      label: "MODULE 03 • PIPELINE",
+      title: "Leads & Referrals CRM",
+      desc: "Record, introduce, and track your business deals and peer referrals with authentic relationship accountability."
+    },
+    {
+      label: "MODULE 04 • EXPERIENCES",
+      title: "Founder Experiences",
+      desc: "Signature formats beyond routine meetings: The Founder's Table, First Light Club, Roundtables, and Sports Socials."
+    },
+    {
+      label: "MODULE 05 • STRATEGY",
+      title: "Business Collaborations",
+      desc: "Deep-dive strategic peer dialogues, joint ventures, and confidential problem-solving roundtables."
+    },
+    {
+      label: "MODULE 06 • MOMENTUM",
+      title: "Monthly Challenges",
+      desc: "Community leaderboard and accountability sprints to build enduring founder habits and peer leverage."
+    }
+  ];
+
+  function setTab(idx) {
+    const buttons = document.querySelectorAll('#platform-tabs .tab-btn');
+    buttons.forEach((btn, i) => {
+      if (i === idx) {
+        btn.className = 'tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 bg-primary-forest text-white shadow-xs';
+      } else {
+        btn.className = 'tab-btn px-4 py-2 rounded-full text-[12.5px] font-medium transition-all duration-300 text-text-muted hover:text-text-charcoal';
+      }
+    });
+    document.getElementById('feature-label').textContent = features[idx].label;
+    document.getElementById('feature-title').textContent = features[idx].title;
+    document.getElementById('feature-desc').textContent = features[idx].desc;
+  }
+
+  // Modal controls
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Backdrop dismissal
+  document.querySelectorAll('#interestModal, #loginModal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal(modal.id);
+    });
+  });
+
+  // Carousel track smooth navigation
+  function scrollExperiences(dir) {
+    const track = document.getElementById('experiences-track');
+    const offset = 310;
+    if (dir === 'left') {
+      track.scrollBy({ left: -offset, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: offset, behavior: 'smooth' });
+    }
+  }
+
+  // FAQ Accordion toggle
+  function toggleFaqRef(btn) {
+    const parent = btn.parentElement;
+    const content = parent.querySelector('.faq-content');
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const isHidden = content.classList.contains('hidden');
+
+    // Close others
+    document.querySelectorAll('.faq-node .faq-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.faq-node .material-symbols-outlined').forEach(i => {
+      i.textContent = 'add';
+      i.style.transform = 'rotate(0deg)';
+    });
+
+    if (isHidden) {
+      content.classList.remove('hidden');
+      icon.textContent = 'close';
+      icon.style.transform = 'rotate(90deg)';
+    }
+  }
+</script>
+</body></html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#95d3ba", "tertiary-container": "#004f34", "primary-fixed": "#b0f0d6", "secondary-container": "#fed488", "on-tertiary-container": "#31c98f", "inverse-primary": "#95d3ba", "canvas-ivory": "#FBFBFA", "on-primary-fixed": "#002117", "surface-card": "#FFFFFF", "on-surface-variant": "#404944", "surface": "#fff8f5", "on-error": "#ffffff", "primary": "#003527", "surface-variant": "#e9e1dd", "surface-container-high": "#eee7e3", "emerald-deep": "#043E2E", "outline": "#707974", "on-tertiary-fixed-variant": "#005236", "border-strong": "#D5D2CB", "surface-container-low": "#faf2ee", "on-secondary": "#ffffff", "on-tertiary": "#ffffff", "tertiary": "#003623", "on-primary": "#ffffff", "secondary-fixed": "#ffdea5", "surface-container-highest": "#e9e1dd", "tertiary-fixed-dim": "#4edea3", "on-error-container": "#93000a", "surface-container-lowest": "#ffffff", "primary-container": "#064e3b", "on-surface": "#1e1b19", "inverse-on-surface": "#f7efeb", "surface-tint": "#2b6954", "text-tertiary": "#6B7280", "surface-subtle": "#F4F3F0", "error": "#ba1a1a", "on-tertiary-fixed": "#002113", "secondary": "#775a19", "on-secondary-container": "#785a1a", "inverse-surface": "#33302d", "surface-container": "#f4ece8", "error-container": "#ffdad6", "secondary-fixed-dim": "#e9c176", "on-secondary-fixed": "#261900", "surface-bright": "#fff8f5", "on-primary-container": "#80bea6", "gold-light": "#F5EFEB", "surface-dim": "#e0d8d5", "border-hairline": "#EAE8E4", "on-background": "#1e1b19", "outline-variant": "#bfc9c3", "background": "#fff8f5", "tertiary-fixed": "#6ffbbe", "text-secondary": "#4B5563", "text-primary": "#111827", "on-primary-fixed-variant": "#0b513d", "on-secondary-fixed-variant": "#5d4201" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter": "1.5rem", "margin": "1.5rem", "space-md": "1rem", "space-xs": "0.25rem", "margin-lg": "6rem", "margin-md": "3rem", "space-xl": "3rem", "gutter-lg": "2.5rem", "space-lg": "1.75rem", "space-sm": "0.5rem" }, "fontFamily": { "label-md": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Playfair Display" ], "subhead-lg": [ "Plus Jakarta Sans" ], "display-hero": [ "Playfair Display" ], "headline-md": [ "Playfair Display" ], "body-lg": [ "Plus Jakarta Sans" ], "label-caps": [ "Plus Jakarta Sans" ], "body-md": [ "Plus Jakarta Sans" ], "numeric-stat": [ "Playfair Display" ], "display-hero-mobile": [ "Playfair Display" ], "headline-sm": [ "Playfair Display" ], "body-sm": [ "Plus Jakarta Sans" ], "headline-lg": [ "Playfair Display" ] }, "fontSize": { "label-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "headline-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "subhead-lg": [ "20px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "display-hero": [ "64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-lg": [ "17px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-caps": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "700" } ], "body-md": [ "15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "numeric-stat": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-hero-mobile": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "headline-sm": [ "22px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "500" } ], "body-sm": [ "13px", { "lineHeight": "20px", "letterSpacing": "0.005em", "fontWeight": "400" } ], "headline-lg": [ "44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-canvas-ivory text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 left-0 right-0 w-full z-50 bg-canvas-ivory/95 backdrop-blur-md shadow-[0_1px_8px_rgba(28,25,23,0.04)]"><div class="h-28 max-w-7xl mx-auto px-6 lg:px-12 flex flex-col justify-between py-3"><div class="flex items-center justify-between gap-6"><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-secondary shadow-[0_1px_4px_rgba(119,90,25,0.15)]"><span class="material-symbols-outlined text-subhead-lg">shield</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-primary leading-none">FOUNDER FOR FOUNDER</span><span class="font-label-caps text-label-caps uppercase tracking-widest text-text-tertiary mt-1">Create, Connect, Collaborate.</span></div></div><nav class="hidden xl:flex items-center gap-7" data-active-classes="text-primary font-bold underline underline-offset-8 decoration-primary decoration-2"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-150" data-path="home" href="#">Home</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-150" data-path="about" href="#">About</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-150" data-path="experiences" href="#">Experiences</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-150" data-path="needs-and-wants" href="#">Needs &amp; Wants</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-150" data-path="community-guidelines" href="#">Community Guidelines</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-150" data-path="legal-docs" href="#">Legal Docs</a></nav><div class="flex items-center gap-5"><a class="hidden sm:inline-flex items-center justify-center bg-primary text-on-primary hover:bg-emerald-deep hover:text-on-primary font-label-md text-label-md px-5 py-2 rounded-lg transition-all shadow-[0_2px_8px_rgba(6,78,59,0.15)]" data-path="show-interest" href="#">Show Interest</a><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-border-strong" src="https://lh3.googleusercontent.com/aida/AEtjO1Ut9Jx7JLdDWMsz2TI49CVHMmnpk3xnRVvDWOfsnYL5kdmO4Vc2eIa3NlTWAVk75RguqtPUrfhMxjZKE_rP4RgC9Ll0yfMJqtsDPGSJJoIZK6BYnkalGuBvc2ZRSFnlacMwS5nHs98ZkInhieKqmga9k6zBBDZfW7VRy4bCOllziFkUPPmjMr1rt1rnDFtaF4AZ7U13HWKj_80ghJmZCawLlSQ5hHllTmIV2BIAH__fLKb2Jc_jKgqmBw"/></div></div></div><div class="w-full pt-1 flex items-center justify-between"><nav class="flex items-center gap-2 overflow-x-auto py-1" data-active-classes="text-primary font-bold bg-surface-card shadow-[0_1px_4px_rgba(28,25,23,0.05)] rounded-lg"><a class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-subtle px-3 py-1.5 rounded transition-all whitespace-nowrap" data-path="terms-and-conditions" href="#">Terms &amp; Conditions</a><a class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-subtle px-3 py-1.5 rounded transition-all whitespace-nowrap" data-path="privacy-policy" href="#">Privacy Policy</a><a aria-current="page" class="uppercase tracking-wider px-3 py-1.5 transition-all whitespace-nowrap text-primary font-bold bg-surface-card shadow-[0_1px_4px_rgba(28,25,23,0.05)] rounded-lg" data-path="refund-and-cancellation-policy" href="#">Refund &amp; Cancellation</a><a class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant hover:text-on-surface hover:bg-surface-subtle px-3 py-1.5 rounded transition-all whitespace-nowrap" data-path="community-guidelines" href="#">Community Guidelines</a></nav><span class="hidden lg:inline-flex items-center gap-1.5 font-label-caps text-label-caps uppercase tracking-widest text-text-tertiary"><span class="material-symbols-outlined text-body-sm text-secondary">verified_user</span>Regulatory Portal</span></div></div></header><main class="w-full pt-28 bg-canvas-ivory min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Atmospheric Bar / Subdued Editorial Masthead -->
+<section class="relative w-full pt-8 pb-12 overflow-hidden">
+<div class="absolute -top-32 right-12 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="absolute top-24 -left-20 w-80 h-80 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+<div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+<!-- Metadata Tagging Hierarchy -->
+<div class="flex flex-wrap items-center gap-3 mb-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-card shadow-sm font-label-caps text-label-caps uppercase tracking-wider text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          Financial Disclosures
+        </span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-text-tertiary">
+          Document Ref: F4F-FIN-2026-V3
+        </span>
+<span class="hidden sm:inline text-text-tertiary">•</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-secondary font-semibold">
+          Revised October 2026
+        </span>
+</div>
+<!-- Main Editorial Headline Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-8">
+<div class="lg:col-span-8 flex flex-col gap-4">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">
+            Refund and Cancellation Policy
+          </h1>
+<p class="font-subhead-lg text-subhead-lg text-text-secondary max-w-2xl leading-relaxed">
+            Transparent guidelines on membership billing, subscription cycles, cancellation procedures, and curated event ticketing.
+          </p>
+</div>
+<div class="lg:col-span-4 flex flex-col items-start lg:items-end justify-end gap-2">
+<div class="p-4 rounded-xl bg-surface-card shadow-sm flex items-center gap-3 w-full sm:w-auto">
+<div class="w-10 h-10 rounded-lg bg-surface-subtle flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-headline-sm">account_balance_wallet</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-text-tertiary">Statutory Compliance</span>
+<span class="font-label-md text-label-md text-text-primary">RBI &amp; GST Framework Verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Summary / At a Glance Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+<!-- Card 1 -->
+<div class="p-6 rounded-xl bg-surface-card shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold tracking-widest">01 / DUES</span>
+<span class="material-symbols-outlined text-text-tertiary group-hover:text-primary transition-colors">credit_card</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary mb-1">
+              ₹1,500<span class="font-body-sm text-body-sm text-text-tertiary font-normal"> /mo + 18% GST</span>
+</div>
+<div class="font-label-caps text-label-caps uppercase text-secondary font-medium tracking-wide mb-2">
+              Total ₹1,770 Monthly
+            </div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+              Cancel auto-renewal anytime in portal settings prior to the subsequent billing anniversary.
+            </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-6 rounded-xl bg-surface-card shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold tracking-widest">02 / ADMISSIONS</span>
+<span class="material-symbols-outlined text-text-tertiary group-hover:text-primary transition-colors">verified_user</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary mb-1">
+              100% Full Refund
+            </div>
+<div class="font-label-caps text-label-caps uppercase text-secondary font-medium tracking-wide mb-2">
+              Rejected Applications
+            </div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+              Direct, unpenalized automated refund if an initial intake evaluation fee is pre-authorized.
+            </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-6 rounded-xl bg-surface-card shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold tracking-widest">03 / GATHERINGS</span>
+<span class="material-symbols-outlined text-text-tertiary group-hover:text-primary transition-colors">event_available</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary mb-1">
+              48h Window
+            </div>
+<div class="font-label-caps text-label-caps uppercase text-secondary font-medium tracking-wide mb-2">
+              Curated Dinners &amp; Offsites
+            </div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+              Notice prior to 48 hours unlocks venue catering credits or peer-seat re-allocation passes.
+            </p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="p-6 rounded-xl bg-surface-card shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between group">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold tracking-widest">04 / DISBURSEMENT</span>
+<span class="material-symbols-outlined text-text-tertiary group-hover:text-primary transition-colors">history</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary mb-1">
+              5–7 Banking Days
+            </div>
+<div class="font-label-caps text-label-caps uppercase text-secondary font-medium tracking-wide mb-2">
+              Payment Gateway SLA
+            </div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+              Credited directly back to the source bank account, corporate card, or UPI VPA.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Main Layout: Sticky Navigator + Detailed Document Sections -->
+<section class="max-w-7xl mx-auto px-6 lg:px-12 w-full py-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Sticky Left Index / Table of Contents -->
+<aside class="hidden lg:block lg:col-span-4 sticky top-36">
+<div class="bg-surface-card rounded-xl p-6 shadow-sm flex flex-col gap-5">
+<div class="flex items-center justify-between pb-3">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-text-tertiary">Table of Contents</span>
+<span class="font-label-caps text-label-caps uppercase text-secondary">8 Clauses</span>
+</div>
+<nav class="flex flex-col gap-1.5" id="toc-nav">
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-1">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">01</span>
+<span class="font-body-sm text-body-sm leading-snug">Membership Subscription &amp; Auto-Renewal</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-2">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">02</span>
+<span class="font-body-sm text-body-sm leading-snug">Voluntary Cancellation &amp; Notice Period</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-3">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">03</span>
+<span class="font-body-sm text-body-sm leading-snug">Non-Refundable Items &amp; Operational Rationale</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-4">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">04</span>
+<span class="font-body-sm text-body-sm leading-snug">Exceptional Scenarios &amp; Rejection Protocol</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-5">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">05</span>
+<span class="font-body-sm text-body-sm leading-snug">Gathering &amp; Event Ticket Cancellations</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-6">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">06</span>
+<span class="font-body-sm text-body-sm leading-snug">Chargebacks, Disputes &amp; Failed Mandates</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-7">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">07</span>
+<span class="font-body-sm text-body-sm leading-snug">Refund Processing Timeline &amp; Gateway SLA</span>
+</a>
+<a class="toc-link group flex items-start gap-3 p-2 rounded-lg text-text-secondary hover:text-primary hover:bg-surface-subtle transition-all" href="#clause-8">
+<span class="font-label-caps text-label-caps text-text-tertiary group-hover:text-primary pt-0.5">08</span>
+<span class="font-body-sm text-body-sm leading-snug">Formal Escalation &amp; Inquiries Channel</span>
+</a>
+</nav>
+<!-- Governance badge on sidebar -->
+<div class="mt-4 p-4 rounded-xl bg-surface-subtle flex flex-col gap-2">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-body-sm">gavel</span>
+              Legal Entity Assurance
+            </div>
+<p class="font-body-sm text-body-sm text-text-tertiary">
+              Administered through snalts.co governance infrastructure under jurisdiction of Bengaluru, Karnataka.
+            </p>
+</div>
+</div>
+</aside>
+<!-- Main Content / Deep Policy Text -->
+<main class="lg:col-span-8 flex flex-col gap-12">
+<!-- Clause 1 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-1">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 1.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Subscription Governance</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Membership Subscription Billing &amp; Auto-Renewal
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              Membership in the Founder for Founder collective is operated as a continuous, recurring tier to ensure sustained access to private syndicate deal flow, verified peer roundtables, and advisory networks. Standard active founder dues are pegged at <strong class="text-text-primary">INR 1,500 per month</strong>, exclusive of statutory 18% Goods &amp; Services Tax (<strong class="text-text-primary">totaling INR 1,770 per cycle</strong>).
+            </p>
+<p>
+              By authorizing an e-mandate via recurring debit, credit card, or UPI autopay, you consent to automated debit on your monthly renewal date. In accordance with Reserve Bank of India (RBI) standing instructions, pre-debit notifications are dispatched via SMS and registered email at least 24 hours prior to transaction processing.
+            </p>
+</div>
+<!-- Highlight block -->
+<div class="p-4 rounded-lg bg-surface-subtle flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary text-subhead-lg mt-0.5">info</span>
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-primary">Pre-Debit Notifications</span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                You retain complete unilateral control to revoke or cancel your recurring mandate via your native net banking portal or directly inside the Founder for Founder member cockpit prior to debit execution.
+              </p>
+</div>
+</div>
+</article>
+<!-- Visual Cancellation Guide Section (Featured Highlight) -->
+<section class="p-8 rounded-xl bg-primary text-on-primary shadow-md flex flex-col gap-6">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed">tune</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary-fixed">Self-Service Transparency</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-primary">
+              How to Cancel Auto-Renewal in 3 Clicks
+            </h3>
+<p class="font-body-md text-body-md text-primary-fixed-dim">
+              No mandatory exit surveys, phone calls, or dark patterns. Founders can terminate upcoming cycles instantly from their workspace.
+            </p>
+</div>
+<!-- 3-Step Visual Diagram -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+<div class="p-5 rounded-lg bg-emerald-deep flex flex-col justify-between gap-4">
+<div class="flex items-center justify-between">
+<span class="w-7 h-7 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-caps text-label-caps">1</span>
+<span class="material-symbols-outlined text-primary-fixed-dim">dashboard</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-primary mb-1">Access Member Portal</span>
+<span class="font-body-sm text-body-sm text-primary-fixed-dim">Authenticate via magic link and open your founder profile dashboard.</span>
+</div>
+</div>
+<div class="p-5 rounded-lg bg-emerald-deep flex flex-col justify-between gap-4">
+<div class="flex items-center justify-between">
+<span class="w-7 h-7 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-caps text-label-caps">2</span>
+<span class="material-symbols-outlined text-primary-fixed-dim">credit_card</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-primary mb-1">Account &amp; Billing</span>
+<span class="font-body-sm text-body-sm text-primary-fixed-dim">Navigate to the active subscriptions card under statutory governance tabs.</span>
+</div>
+</div>
+<div class="p-5 rounded-lg bg-emerald-deep flex flex-col justify-between gap-4">
+<div class="flex items-center justify-between">
+<span class="w-7 h-7 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-caps text-label-caps">3</span>
+<span class="material-symbols-outlined text-primary-fixed-dim">cancel</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-primary mb-1">Cancel Auto-Renewal</span>
+<span class="font-body-sm text-body-sm text-primary-fixed-dim">Confirm toggle. Standing e-mandate deactivates instantly; access stays active through term.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Clause 2 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-2">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 2.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Voluntary Termination</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Voluntary Cancellation &amp; Notice Period
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              Members retain the unqualified privilege to terminate their recurring membership at any point. To guarantee that your bank does not trigger an unrevoked clearing mandate, cancellations should ideally be processed at least <strong class="text-text-primary">24 hours prior to your scheduled renewal date</strong>.
+            </p>
+<p>
+              Upon successful cancellation of auto-renewal:
+            </p>
+<ul class="space-y-3 pl-2">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-body-md mt-1">check_circle</span>
+<span class="font-body-md text-body-md text-text-secondary">
+<strong class="text-text-primary">Uninterrupted Access:</strong> Your ecosystem privileges, directory listings, internal Slack/Discord channels, and advisory schedules remain fully operational through the remainder of the currently paid billing period.
+                </span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-body-md mt-1">check_circle</span>
+<span class="font-body-md text-body-md text-text-secondary">
+<strong class="text-text-primary">No Pro-Rata Cash Refunds:</strong> Unutilized calendar days within an ongoing monthly cycle are strictly non-refundable once the cycle has commenced.
+                </span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-body-md mt-1">check_circle</span>
+<span class="font-body-md text-body-md text-text-secondary">
+<strong class="text-text-primary">Re-Admissions Clause:</strong> Re-enrollment after deliberate cancellation is subject to standard queue reviews and prevailing membership dues at the time of re-application.
+                </span>
+</li>
+</ul>
+</div>
+</article>
+<!-- Clause 3 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-3">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 3.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Exclusions &amp; Allocations</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Non-Refundable Items &amp; Operational Rationale
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              Because Founder for Founder operates on intimate headcount quotas, reserved dining venues, and dedicated administrative vetting, certain operational expenses are disbursed upon commitment. The following fee structures are categorized as strictly non-refundable:
+            </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+<div class="p-5 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<span class="font-label-md text-label-md text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-subhead-lg">verified</span>
+                Historical Subscription Cycles
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Dues for past billing months during which membership rights, proprietary content access, and roster indexes were delivered in full.
+              </p>
+</div>
+<div class="p-5 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<span class="font-label-md text-label-md text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-subhead-lg">flight_takeoff</span>
+                Expedited Retreat Commits
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Annual flagship founders' retreat commitments involving bespoke lodging, aviation charters, or contracted keynote retainers.
+              </p>
+</div>
+<div class="p-5 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<span class="font-label-md text-label-md text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-subhead-lg">receipt_long</span>
+                Disbursed Statutory Taxes
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                The Goods and Services Tax (18% GST) component once a formal B2B or B2C tax invoice has been filed and processed to central tax ledgers.
+              </p>
+</div>
+<div class="p-5 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<span class="font-label-md text-label-md text-text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-subhead-lg">block</span>
+                Code of Conduct Removals
+              </span>
+<p class="font-body-sm text-body-sm text-text-secondary">
+                Any member dismissed or suspended due to intellectual property theft, unsolicited cold pitching, or harassment under our Community Guidelines.
+              </p>
+</div>
+</div>
+</article>
+<!-- Clause 4 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-4">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 4.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Protection Clauses</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Exceptional Refund Scenarios &amp; Application Rejection
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              We firmly uphold high moral and executive integrity in every financial transaction. While standard subscriptions operate under finite non-refundability, absolute exceptions are honored in the following circumstances:
+            </p>
+</div>
+<div class="space-y-4">
+<div class="p-6 rounded-lg bg-surface-container flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary font-bold">Admissions Review Fee Rejection Protocol</span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-caps text-label-caps uppercase">100% Guaranteed</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary">
+                If an prospective applicant tenders an evaluation or intake pre-authorization fee during admissions and our Admissions Committee determines that the applicant does not meet the collective’s current stage, revenue, or cohort diversity criteria, the fee is <strong class="text-text-primary">refunded in full automatically within 24 hours</strong> of the written rejection dispatch.
+              </p>
+</div>
+<div class="p-6 rounded-lg bg-surface-container flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary font-bold">Technical Duplicate Billing</span>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-caps text-label-caps uppercase">Automated Reversal</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary">
+                In cases of telecommunication failure, network timeouts, or payment gateway double charges resulting in two duplicate deductions within a single 30-day billing cycle, the redundant charge will be refunded instantaneously upon ledger reconciliation.
+              </p>
+</div>
+</div>
+</article>
+<!-- Clause 5 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-5">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 5.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Curated Experiential Gatherings</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Curated Gathering &amp; Event Ticket Cancellations
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              Ad-hoc micro-dinners, investor roundtables, private vineyard gatherings, and masterclasses carry separate pass commitments. Due to private venue contracts and high-touch hospitality requirements, the following tiered notice structure regulates cancellations:
+            </p>
+</div>
+<!-- Comparative Schedule Table -->
+<div class="overflow-x-auto">
+<div class="min-w-full rounded-lg bg-surface-subtle p-2">
+<div class="grid grid-cols-12 gap-4 p-3 font-label-caps text-label-caps uppercase text-text-tertiary">
+<div class="col-span-5">Cancellation Window</div>
+<div class="col-span-4">Refund / Credit Equivalent</div>
+<div class="col-span-3 text-right">Seat Substitution</div>
+</div>
+<div class="space-y-1">
+<div class="grid grid-cols-12 gap-4 p-3 bg-surface-card rounded font-body-sm text-body-sm items-center">
+<div class="col-span-5 font-semibold text-text-primary">&gt; 48 Hours Before Event</div>
+<div class="col-span-4 text-primary font-medium">100% Platform Credit Voucher</div>
+<div class="col-span-3 text-right text-text-secondary">Permitted via concierge</div>
+</div>
+<div class="grid grid-cols-12 gap-4 p-3 bg-surface-card rounded font-body-sm text-body-sm items-center">
+<div class="col-span-5 font-semibold text-text-primary">24 to 48 Hours Prior</div>
+<div class="col-span-4 text-secondary font-medium">50% Platform Credit Voucher</div>
+<div class="col-span-3 text-right text-text-secondary">Waitlist reallocation</div>
+</div>
+<div class="grid grid-cols-12 gap-4 p-3 bg-surface-card rounded font-body-sm text-body-sm items-center">
+<div class="col-span-5 font-semibold text-text-primary">&lt; 24 Hours / No Show</div>
+<div class="col-span-4 text-error font-medium">0% (Strict Catering Forfeit)</div>
+<div class="col-span-3 text-right text-text-tertiary">Not Allowed</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Visual Flow Graphic: Dispute & Flow Chart -->
+<div class="p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-text-tertiary">Ecosystem Safeguards</span>
+<span class="font-label-caps text-label-caps uppercase text-primary font-bold">Standard Operating Procedure</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">
+            Billing Dispute &amp; Escalation Lifecycle
+          </h3>
+<div class="relative py-4">
+<!-- Inline SVG Flow Indicator -->
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-4 relative z-10">
+<div class="p-4 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-primary font-bold">STAGE 1</span>
+<span class="material-symbols-outlined text-body-sm text-primary">mail</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Formal Notice</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">Submit written inquiry with transaction ID to billing desk.</span>
+</div>
+<div class="p-4 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-primary font-bold">STAGE 2</span>
+<span class="material-symbols-outlined text-body-sm text-primary">fact_check</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Ledger Audit</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">Desk cross-verifies mandate logs within 24 working hours.</span>
+</div>
+<div class="p-4 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-primary font-bold">STAGE 3</span>
+<span class="material-symbols-outlined text-body-sm text-primary">currency_exchange</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Gateway Reversal</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">Razorpay / Stripe automated API payment dispatch triggered.</span>
+</div>
+<div class="p-4 rounded-lg bg-surface-subtle flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-primary font-bold">STAGE 4</span>
+<span class="material-symbols-outlined text-body-sm text-primary">verified</span>
+</div>
+<span class="font-label-md text-label-md text-text-primary">Bank Credit</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">5–7 business days for settlement to original payment source.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Clause 6 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-6">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 6.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Disputes &amp; Integrity</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Chargebacks, Disputes &amp; Failed Payments
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              In our executive ecosystem, honest dialogue precedes bureaucratic conflict. We request members to consult our operations team prior to filing an adversarial card chargeback through their credit provider. Unsubstantiated chargebacks will prompt immediate suspension of all ecosystem permissions pending formal reconciliation.
+            </p>
+<p>
+              When a recurring monthly auto-debit fails owing to expired instruments or limit caps, a grace timeline of <strong class="text-text-primary">72 hours</strong> is observed. Our portal will re-attempt mandate collection twice before gracefully shifting the member profile into an inactive archival state.
+            </p>
+</div>
+</article>
+<!-- Clause 7 -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-5" id="clause-7">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 7.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Disbursement Operations</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Refund Processing Timeline (5–7 Business Days)
+          </h2>
+<div class="font-body-lg text-body-lg text-text-secondary space-y-4 leading-relaxed">
+<p>
+              Once an exceptional refund scenario or admissions rejection refund is stamped as approved by the compliance team, the reimbursement is authorized instantaneously in our payment backend. 
+            </p>
+<p>
+              Depending on the originating banking partner and nodal clearing infrastructure (National Payments Corporation of India / RBI RTGS windows), funds reflect on statement balances within <strong class="text-text-primary">5 to 7 operational banking days</strong>. Refunds can only be routed back to the explicit funding instrument used in the original payment order; cash or alternate recipient dispersals are strictly banned by anti-money laundering (AML) statutes.
+            </p>
+</div>
+</article>
+<!-- Clause 8: Escalation Box & Official Contact -->
+<article class="scroll-mt-36 p-8 rounded-xl bg-surface-card shadow-sm flex flex-col gap-6" id="clause-8">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-bold">Clause 8.0</span>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Direct Escalations</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">
+            Contact for Billing Inquiries &amp; Disclosures
+          </h2>
+<p class="font-body-lg text-body-lg text-text-secondary leading-relaxed">
+            All refund petitions, formal auto-debit revocation inquiries, and invoice adjustments must be routed through our dedicated financial operations desk to guarantee rapid ticket prioritization.
+          </p>
+<!-- Escalation Card Component -->
+<div class="p-6 rounded-xl bg-surface-subtle flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-headline-sm">mark_email_read</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-primary font-bold">Dedicated Billing Desk</span>
+<span class="font-label-caps text-label-caps bg-surface-card px-2 py-0.5 rounded text-text-tertiary uppercase">Fast-Track</span>
+</div>
+<a class="font-headline-sm text-headline-sm text-primary hover:underline" href="mailto:connect.f4f@gmail.com?subject=[BILLING-REFUND]">
+                  connect.f4f@gmail.com
+                </a>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+                  Required Email Subject Header: <code class="bg-surface-card px-2 py-0.5 rounded text-primary font-semibold">[BILLING-REFUND]</code>
+</p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row md:flex-col items-start md:items-end gap-2 flex-shrink-0">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase tracking-wider">Infrastructure Host</span>
+<span class="font-label-md text-label-md text-text-primary">Powered by snalts.co</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">SLA Target: 24 Business Hours</span>
+</div>
+</div>
+</article>
+</main>
+</div>
+</section>
+<!-- Interactive ScrollSpy Logic for Active TOC Tracking -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.toc-link');
+      const sections = document.querySelectorAll('article[id^="clause-"]');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            links.forEach(link => {
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('bg-surface-subtle', 'text-primary', 'font-bold');
+                link.classList.remove('text-text-secondary');
+              } else {
+                link.classList.remove('bg-surface-subtle', 'text-primary', 'font-bold');
+                link.classList.add('text-text-secondary');
+              }
+            });
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(sec => observer.observe(sec));
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-card shadow-[0_-1px_6px_rgba(28,25,23,0.03)] py-12 mt-space-xl"><div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col gap-8"><div class="flex flex-col md:flex-row md:items-center justify-between gap-6"><div class="flex flex-col"><div class="flex items-center gap-3"><span class="font-headline-sm text-headline-sm text-primary">FOUNDER FOR FOUNDER</span><span class="font-label-caps text-label-caps text-secondary bg-surface-subtle px-2.5 py-0.5 rounded-full uppercase tracking-wider">Executive Circle</span></div><p class="font-body-sm text-body-sm text-text-tertiary mt-2 max-w-lg">An invitation-only governance, legal transparency, and collaborative advisory ecosystem engineered for venture-grade founders.</p></div><div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 font-body-sm text-body-sm text-text-secondary"><div><span class="font-label-caps text-label-caps uppercase text-text-tertiary block">Inquiries &amp; Disclosures</span><a class="text-primary hover:underline font-label-md text-label-md" href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a></div><div class="h-8 w-px bg-border-hairline hidden sm:block"></div><div><span class="font-label-caps text-label-caps uppercase text-text-tertiary block">Entity Infrastructure</span><span class="font-label-md text-label-md text-on-surface">Powered by snalts.co</span></div></div></div><div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"><div class="font-body-sm text-body-sm text-text-tertiary">© 2025 Founder for Founder. All legal rights and governance reservations apply.</div><div class="flex items-center gap-6 font-label-caps text-label-caps tracking-widest uppercase"><a class="text-text-tertiary hover:text-primary transition-colors" data-path="privacy-policy" href="#">Privacy</a><a class="text-text-tertiary hover:text-primary transition-colors" data-path="terms-and-conditions" href="#">Terms</a><a class="text-text-tertiary hover:text-primary transition-colors" data-path="community-guidelines" href="#">Governance</a><a class="text-text-tertiary hover:text-primary transition-colors" data-path="refund-and-cancellation-policy" href="#">Refunds</a></div></div></div></footer></body></html>

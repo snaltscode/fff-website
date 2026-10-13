@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founder for Founder — Beyond Networking. Into Real Connections.</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "canvas-cream": "#FAF8F5",
+            "canvas-ivory": "#FBF9F6",
+            "surface-subtle": "#F5F2EC",
+            "card-border": "#E8E4DC",
+            "border-hairline": "#EDE9E1",
+            "primary-dark": "#064E3B",
+            "primary-emerald": "#043E2E",
+            "primary-light": "#0B664C",
+            "text-main": "#1A1A1A",
+            "text-muted": "#5A6260",
+            "text-subtle": "#7E8784",
+            "gold-accent": "#B89047"
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html {
+        scroll-behavior: smooth;
+        background-color: #FAF8F5;
+        color: #1A1A1A;
+      }
+      body {
+        overscroll-behavior: none;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+    }
+    ::-webkit-scrollbar { display: none; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 35s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+  </style>
+<meta content="web_standard" name="shell-type"/></head>
+<body class="bg-[#FAF8F5] text-text-main antialiased relative min-h-screen">
+<!-- TOP HEADER -->
+<header class="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-card-border/60 transition-all">
+<div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<!-- Logo -->
+<a class="flex items-center gap-3 group" href="#">
+<div class="tracking-tighter font-serif font-bold text-2xl text-primary-dark flex items-center">
+<span class="text-3xl font-bold tracking-tight">F4F</span>
+</div>
+<div class="h-7 w-[1px] bg-card-border hidden sm:block"></div>
+<div class="flex flex-col">
+<span class="font-serif text-[15px] font-semibold tracking-tight text-text-main leading-none">Founder</span>
+<span class="font-serif text-[15px] font-semibold tracking-tight text-text-main leading-tight">for Founder</span>
+</div>
+</a>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-7 text-[13.5px] font-medium text-text-muted">
+<a class="text-primary-dark font-semibold transition-colors" href="#">Home</a>
+<a class="hover:text-text-main transition-colors" href="#about">About</a>
+<a class="hover:text-text-main transition-colors" href="#experiences">Experiences</a>
+<a class="hover:text-text-main transition-colors" href="#needs-wants">Needs &amp; Wants</a>
+<a class="hover:text-text-main transition-colors" href="#community">Community</a>
+<a class="hover:text-text-main transition-colors" href="#faq">FAQ</a>
+</nav>
+<!-- Right CTAs -->
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 bg-primary-dark hover:bg-primary-emerald text-white text-[13px] font-medium tracking-wide px-5 py-2.5 rounded-full transition-all shadow-sm" onclick="openModal('interestModal')">
+<span>Show Interest</span>
+<span class="text-base leading-none">→</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-subtle text-text-main transition-colors" onclick="openModal('loginModal')" title="Member Login / Menu">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full"><div class="flex flex-col w-full">
+<!-- AMBIENT GEOMETRIC UNDERLAY -->
+<div class="relative w-full overflow-hidden bg-background py-space-xl lg:py-margin-lg">
+<div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-30">
+<svg class="h-[680px] w-[680px] text-primary" fill="none" viewbox="0 0 600 600">
+<circle cx="300" cy="300" opacity="0.3" r="280" stroke="currentColor" stroke-dasharray="3 6" stroke-width="0.75"></circle>
+<circle cx="300" cy="300" opacity="0.25" r="200" stroke="currentColor" stroke-width="0.75"></circle>
+<circle cx="300" cy="300" opacity="0.35" r="120" stroke="currentColor" stroke-width="0.5"></circle>
+<line opacity="0.2" stroke="currentColor" stroke-width="0.5" x1="300" x2="300" y1="20" y2="580"></line>
+<line opacity="0.2" stroke="currentColor" stroke-width="0.5" x1="20" x2="580" y1="300" y2="300"></line>
+<line opacity="0.15" stroke="currentColor" stroke-dasharray="2 4" stroke-width="0.5" x1="102" x2="498" y1="102" y2="498"></line>
+<line opacity="0.15" stroke="currentColor" stroke-dasharray="2 4" stroke-width="0.5" x1="102" x2="498" y1="498" y2="102"></line>
+<!-- Architectural Astrolabe Marks -->
+<circle cx="300" cy="100" fill="#775a19" r="2.5"></circle>
+<circle cx="300" cy="500" fill="#775a19" r="2.5"></circle>
+<circle cx="100" cy="300" fill="#775a19" r="2.5"></circle>
+<circle cx="500" cy="300" fill="#775a19" r="2.5"></circle>
+</svg>
+</div>
+<!-- MAIN EDITORIAL CONTAINER -->
+<div class="relative mx-auto max-w-[1240px] px-margin lg:px-margin-lg">
+<div class="flex flex-col items-center text-center">
+<!-- STATUS PILL CHIP -->
+<div class="inline-flex items-center gap-space-sm rounded-full bg-surface-container px-space-md py-space-xs shadow-sm">
+<span class="h-1.5 w-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">
+            Waypoint Not Found • Code 404
+          </span>
+</div>
+<!-- 404 NUMERIC STATEMENT WITH SATELLITE COMPASS -->
+<div class="relative mt-space-md flex items-center justify-center">
+<!-- Monogram Astrolabe Needle (Left subtle accent) -->
+<div class="hidden md:flex flex-col items-center gap-2 -mr-8 z-10">
+<span class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">LAT 28.6139°</span>
+<div class="h-12 w-[1px] bg-secondary opacity-40"></div>
+</div>
+<h1 class="font-display-hero text-display-hero text-primary tracking-tight select-none">
+            4<span class="text-secondary italic font-light">0</span>4
+          </h1>
+<div class="hidden md:flex flex-col items-center gap-2 -ml-8 z-10">
+<div class="h-12 w-[1px] bg-secondary opacity-40"></div>
+<span class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">LON 77.2090°</span>
+</div>
+</div>
+<!-- EDITORIAL HEADLINE & SYNDICATE COPY -->
+<h2 class="mt-space-sm max-w-3xl font-headline-lg text-headline-lg text-on-surface">
+          This Private Corridor Does Not Exist
+        </h2>
+<p class="mt-space-md max-w-2xl font-body-lg text-body-lg text-text-secondary">
+          The page, resource, or member dossier you requested has been archived, relocated, or is reserved for another syndicate enclave. Let us guide you back to active circles.
+        </p>
+<!-- EXECUTIVE SEARCH BAR -->
+<div class="mt-space-xl w-full max-w-xl">
+<form class="relative flex items-center shadow-sm rounded-xl bg-surface-container-lowest p-1.5 transition-all focus-within:shadow-md" onsubmit="event.preventDefault();">
+<div class="flex items-center pl-space-md text-text-tertiary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent px-space-sm py-2.5 font-body-md text-body-md text-on-surface placeholder:text-text-tertiary focus:outline-none border-none ring-0 focus:ring-0" placeholder="Search directory, experiences, or discussions..." type="text"/>
+<div class="hidden sm:flex items-center pr-space-md text-text-tertiary">
+<kbd class="rounded bg-surface-container px-2 py-1 font-body-sm text-[11px] text-on-surface-variant font-medium">↵</kbd>
+</div>
+</form>
+</div>
+<!-- ACTION BUTTONS / CALLS TO ORDER -->
+<div class="mt-space-lg flex flex-wrap items-center justify-center gap-space-md">
+<!-- Primary: Return Home -->
+<a class="inline-flex items-center gap-space-sm rounded-lg bg-primary-container px-6 py-3 font-label-md text-label-md text-on-primary transition-all duration-200 hover:bg-emerald-deep shadow-sm hover:shadow" href="#">
+<span>Return to Homepage</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<!-- Secondary: Open Member Portal -->
+<button class="inline-flex items-center gap-space-sm rounded-lg bg-surface-container-low px-6 py-3 font-label-md text-label-md text-primary transition-all duration-200 hover:bg-surface-container shadow-sm" onclick="openModal('loginModal')" type="button">
+<span class="material-symbols-outlined text-[16px]">shield_person</span>
+<span>Open Member Portal</span>
+</button>
+<!-- Tertiary: Experiences -->
+<a class="inline-flex items-center gap-space-xs rounded-lg px-4 py-3 font-label-md text-label-md text-text-secondary transition-colors duration-200 hover:text-primary" href="#experiences">
+<span>Explore Experiences</span>
+<span class="material-symbols-outlined text-[14px]">north_east</span>
+</a>
+</div>
+</div>
+<!-- ASYMMETRIC BENTO ROUTING TILES -->
+<div class="mt-space-xl pt-space-xl">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-xs pb-space-md">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">Active Channels</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">Recommended Sanctuaries</h3>
+</div>
+<span class="font-body-sm text-body-sm text-text-tertiary">Select an alternate corridor to continue</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md mt-space-sm">
+<!-- Card 1: Curated Gatherings -->
+<a class="group relative flex flex-col justify-between rounded-xl bg-surface-container-lowest p-space-lg shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" href="#experiences">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[20px]">room_service</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">FORMAT 01</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-space-md group-hover:text-primary transition-colors">
+                Curated Gatherings
+              </h4>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Private dinners, closed-room roundtables, and intimate founder retreats with verified peers.
+              </p>
+</div>
+<div class="mt-space-lg flex items-center gap-1 font-label-md text-body-sm text-primary group-hover:translate-x-0.5 transition-transform">
+<span>View schedule</span>
+<span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+</div>
+</a>
+<!-- Card 2: Needs & Wants Engine -->
+<a class="group relative flex flex-col justify-between rounded-xl bg-surface-container-lowest p-space-lg shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" href="#needs-wants">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[20px]">swap_horizontal_circle</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">FORMAT 02</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-space-md group-hover:text-primary transition-colors">
+                Needs &amp; Wants Engine
+              </h4>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Browse commercial peer requirements, sovereign introductions, and high-trust collaborations.
+              </p>
+</div>
+<div class="mt-space-lg flex items-center gap-1 font-label-md text-body-sm text-primary group-hover:translate-x-0.5 transition-transform">
+<span>Explore board</span>
+<span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+</div>
+</a>
+<!-- Card 3: Admissions & Membership -->
+<button class="group text-left relative flex flex-col justify-between rounded-xl bg-surface-container-lowest p-space-lg shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" onclick="openModal('interestModal')" type="button">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">FORMAT 03</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-space-md group-hover:text-primary transition-colors">
+                Admissions &amp; Criteria
+              </h4>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Review peer qualifications, cohort vetting timelines, or register an application of interest.
+              </p>
+</div>
+<div class="mt-space-lg flex items-center gap-1 font-label-md text-body-sm text-primary group-hover:translate-x-0.5 transition-transform">
+<span>Apply for entry</span>
+<span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+</div>
+</button>
+<!-- Card 4: Concierge Support -->
+<a class="group relative flex flex-col justify-between rounded-xl bg-surface-container-lowest p-space-lg shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md" href="mailto:connect.f4f@gmail.com">
+<div>
+<div class="flex items-center justify-between">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[20px]">headset_mic</span>
+</div>
+<span class="font-label-caps text-[10px] text-secondary tracking-widest uppercase">FORMAT 04</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-space-md group-hover:text-primary transition-colors">
+                Concierge Desk
+              </h4>
+<p class="font-body-sm text-body-sm text-text-secondary mt-space-xs">
+                Direct officer assistance for broken invitation links, credential recovery, or custom inquiries.
+              </p>
+</div>
+<div class="mt-space-lg flex items-center gap-1 font-label-md text-body-sm text-primary group-hover:translate-x-0.5 transition-transform">
+<span>Signal concierge</span>
+<span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+</div>
+</a>
+</div>
+</div>
+<!-- EXECUTIVE INVITATION INVENTORY STRIP -->
+<div class="mt-space-xl rounded-xl bg-surface-container-low p-space-lg shadow-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-[22px]">auto_stories</span>
+</div>
+<div class="text-left">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-widest">Protocol Notice</span>
+<p class="font-body-md text-body-md text-on-surface mt-0.5">
+              Lost invitation tokens or expired private links may be reactivated through the guild desk.
+            </p>
+</div>
+</div>
+<div class="shrink-0 flex items-center gap-space-md">
+<a class="font-label-md text-label-md text-primary hover:underline" href="mailto:connect.f4f@gmail.com">
+            connect.f4f@gmail.com
+          </a>
+<span class="text-text-tertiary">•</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">Ref: ERR_ROUTE_404</span>
+</div>
+</div>
+</div>
+</div>
+</div></main>
+<!-- SECTION 12: FOOTER (Replicating Reference Exactly) -->
+<footer class="w-full bg-[#FAF8F5] border-t border-card-border/70 py-12">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+<!-- Left: Logo & Motto -->
+<div class="flex flex-col">
+<div class="flex items-center gap-3">
+<span class="font-serif font-bold text-2xl text-primary-dark tracking-tight">F4F</span>
+<div class="h-6 w-[1px] bg-card-border"></div>
+<div class="flex flex-col leading-none">
+<span class="font-serif text-[14px] font-medium text-text-main">Founder</span>
+<span class="font-serif text-[14px] font-medium text-text-main">for Founder</span>
+</div>
+</div>
+<p class="text-[12px] text-text-subtle mt-2 font-sans">Create. Connect. Collaborate.</p>
+</div>
+<!-- Middle: Contact Email & Legal Links -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 text-[13px] text-text-muted">
+<a class="inline-flex items-center gap-2 text-text-main hover:text-primary-dark transition-colors" href="mailto:connect.f4f@gmail.com">
+<svg class="w-4 h-4 text-text-subtle" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+</svg>
+<span>connect.f4f@gmail.com</span>
+</a>
+<div class="flex flex-wrap items-center gap-4 text-text-subtle">
+<a class="hover:text-text-main transition-colors" href="#">Terms</a>
+<span>•</span>
+<a class="hover:text-text-main transition-colors" href="#">Privacy</a>
+<span>•</span>
+<a class="hover:text-text-main transition-colors" href="#">Refund Policy</a>
+<span>•</span>
+<a class="hover:text-text-main transition-colors" href="#">Community Guidelines</a>
+</div>
+</div>
+<!-- Right: Socials & Powered by -->
+<div class="flex items-center gap-6 text-[13px] text-text-subtle">
+<div class="flex items-center gap-3 text-text-main">
+<!-- Instagram -->
+<a aria-label="Instagram" class="hover:text-primary-dark transition-colors" href="#">
+<svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+<!-- Facebook -->
+<a aria-label="Facebook" class="hover:text-primary-dark transition-colors" href="#">
+<svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.667 5H18V0h-3.808C10.595 0 9 1.583 9 4.615V8z"></path></svg>
+</a>
+<!-- LinkedIn -->
+<a aria-label="LinkedIn" class="hover:text-primary-dark transition-colors" href="#">
+<svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+</a>
+</div>
+<span>Powered by snalts.co</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- MODAL 1: SHOW INTEREST (Drawer / Overlay matching reference image right upper panel) -->
+<div class="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-sm transition-opacity hidden" id="interestModal">
+<div class="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col p-6 sm:p-8 overflow-y-auto">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-4 border-b border-card-border/60">
+<h3 class="font-serif text-xl font-medium text-text-main">Show Interest</h3>
+<button class="p-1.5 rounded-full hover:bg-surface-subtle text-text-muted transition-colors" onclick="closeModal('interestModal')">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</button>
+</div>
+<!-- Step Indicator Bar -->
+<div class="flex items-center justify-between my-6 px-1 relative">
+<div class="absolute top-2.5 left-4 right-4 h-[1px] bg-card-border z-0"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-5 h-5 rounded-full bg-primary-dark text-white text-[10px] flex items-center justify-center font-bold">●</span>
+<span class="text-[10.5px] font-medium text-text-main mt-1.5">Identity</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-5 h-5 rounded-full bg-white border border-card-border text-text-subtle text-[10px] flex items-center justify-center">○</span>
+<span class="text-[10.5px] text-text-subtle mt-1.5">Business</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-5 h-5 rounded-full bg-white border border-card-border text-text-subtle text-[10px] flex items-center justify-center">◇</span>
+<span class="text-[10.5px] text-text-subtle mt-1.5">Contribution</span>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="w-5 h-5 rounded-full bg-white border border-card-border text-text-subtle text-[10px] flex items-center justify-center">○</span>
+<span class="text-[10.5px] text-text-subtle mt-1.5">Consent</span>
+</div>
+</div>
+<!-- Body / Form -->
+<div class="flex-1 flex flex-col">
+<h4 class="font-sans font-bold text-[15px] text-text-main mb-1">Tell us about yourself</h4>
+<p class="text-[12.5px] text-text-subtle mb-6">Let's start with your basic details.</p>
+<form class="space-y-4" onsubmit="event.preventDefault(); alert('Application received. Our committee will review your profile.'); closeModal('interestModal');">
+<div>
+<label class="block text-[12px] font-medium text-text-main mb-1">Full Name <span class="text-red-500">*</span></label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-card-border text-[13.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark focus:border-primary-dark" placeholder="Enter your full name" required="" type="text"/>
+</div>
+<div>
+<label class="block text-[12px] font-medium text-text-main mb-1">Email Address <span class="text-red-500">*</span></label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-card-border text-[13.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark focus:border-primary-dark" placeholder="you@domain.com" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[12px] font-medium text-text-main mb-1">Phone Number <span class="text-red-500">*</span></label>
+<div class="flex gap-2">
+<div class="w-20 px-3 py-2.5 rounded-lg border border-card-border text-[13px] bg-[#FAF8F5] text-text-main flex items-center justify-between">
+<span>+91</span>
+<span class="text-[10px]">▼</span>
+</div>
+<input class="flex-1 px-3.5 py-2.5 rounded-lg border border-card-border text-[13.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark focus:border-primary-dark" placeholder="Enter phone number" required="" type="tel"/>
+</div>
+</div>
+<div>
+<label class="block text-[12px] font-medium text-text-main mb-1">City / Location <span class="text-red-500">*</span></label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-card-border text-[13.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark focus:border-primary-dark" placeholder="Enter your city" required="" type="text"/>
+</div>
+<div class="pt-4">
+<button class="w-full py-3 rounded-full bg-primary-dark hover:bg-primary-emerald text-white text-[13.5px] font-medium flex items-center justify-center gap-2 transition-all" type="submit">
+<span>Next</span>
+<span>→</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- MODAL 2: MEMBER LOGIN (Matching Reference lower right panel) -->
+<div class="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-sm transition-opacity hidden" id="loginModal">
+<div class="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col p-6 sm:p-8 overflow-y-auto">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-4 border-b border-card-border/60">
+<h3 class="font-serif text-xl font-medium text-text-main">Member Login</h3>
+<button class="p-1.5 rounded-full hover:bg-surface-subtle text-text-muted transition-colors" onclick="closeModal('loginModal')">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg>
+</button>
+</div>
+<div class="flex-1 flex flex-col justify-center py-4">
+<h4 class="font-sans font-bold text-[18px] text-text-main mb-1">Welcome back!</h4>
+<p class="text-[13px] text-text-subtle mb-6">Sign in to access your member area.</p>
+<form class="space-y-4" onsubmit="event.preventDefault(); alert('Redirecting to Member Portal...'); closeModal('loginModal');">
+<div>
+<label class="block text-[12px] font-medium text-text-main mb-1">Email Address</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg border border-card-border text-[13.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark" placeholder="you@domain.com" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[12px] font-medium text-text-main mb-1">Password</label>
+<div class="relative">
+<input class="w-full px-3.5 py-2.5 pr-10 rounded-lg border border-card-border text-[13.5px] focus:outline-none focus:ring-1 focus:ring-primary-dark" placeholder="Enter your password" required="" type="password"/>
+<button class="absolute right-3 top-2.5 text-text-subtle hover:text-text-main" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between text-[12px] pt-1">
+<label class="flex items-center gap-2 cursor-pointer text-text-muted">
+<input class="rounded border-card-border text-primary-dark focus:ring-primary-dark" type="checkbox"/>
+<span>Remember me</span>
+</label>
+<a class="text-text-main font-medium underline hover:text-primary-dark" href="#">Forgot password?</a>
+</div>
+<button class="w-full py-3 rounded-full bg-primary-dark hover:bg-primary-emerald text-white text-[13.5px] font-medium flex items-center justify-center gap-2 mt-4 transition-all" type="submit">
+<span>Login</span>
+<span>→</span>
+</button>
+</form>
+<div class="relative my-6 text-center">
+<div class="absolute inset-0 flex items-center"><div class="w-full border-t border-card-border"></div></div>
+<span class="relative bg-white px-3 text-[11.5px] text-text-subtle">or</span>
+</div>
+<button class="w-full py-2.5 border border-card-border rounded-lg text-[13px] font-medium text-text-main flex items-center justify-center gap-2 hover:bg-[#FAF8F5] transition-colors" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.02h3.86c2.26-2.09 3.56-5.17 3.56-9.12z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3.02c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.12C3.26 21.3 7.37 24 12 24z" fill="#34A853"></path>
+<path d="M5.27 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.98-3.12z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.26 2.7 1.29 6.61l3.98 3.12c.95-2.85 3.6-4.98 6.73-4.98z" fill="#EA4335"></path>
+</svg>
+<span>Continue with Google</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SCRIPT FOR MODALS, TABS, CAROUSEL & ACCORDIONS -->
+<script>
+    // Tab switching data
+    const features = [
+      {
+        label: "MODULE 01 • CURATION",
+        title: "Curated Founder Network",
+        desc: "Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth."
+      },
+      {
+        label: "MODULE 02 • OPPORTUNITY",
+        title: "Needs & Wants Engine",
+        desc: "Structured opportunity board for community members to post specific commercial requirements or offer high-value solutions directly to trusted peers."
+      },
+      {
+        label: "MODULE 03 • PIPELINE",
+        title: "Leads & Referrals CRM",
+        desc: "Record, introduce, and track your business deals and peer referrals with authentic relationship accountability."
+      },
+      {
+        label: "MODULE 04 • EXPERIENCES",
+        title: "Founder Experiences",
+        desc: "Signature formats beyond routine meetings: The Founder's Table, First Light Club, Roundtables, and Sports Socials."
+      },
+      {
+        label: "MODULE 05 • STRATEGY",
+        title: "Business Collaborations",
+        desc: "Deep-dive strategic peer dialogues, joint ventures, and confidential problem-solving roundtables."
+      },
+      {
+        label: "MODULE 06 • MOMENTUM",
+        title: "Monthly Challenges",
+        desc: "Community leaderboard and accountability sprints to build enduring founder habits and peer leverage."
+      }
+    ];
+
+    function setTab(idx) {
+      const buttons = document.querySelectorAll('#platform-tabs .tab-btn');
+      buttons.forEach((btn, i) => {
+        if (i === idx) {
+          btn.className = 'tab-btn px-4 py-1.5 rounded-full text-[12.5px] font-medium transition-all bg-primary-dark text-white';
+        } else {
+          btn.className = 'tab-btn px-4 py-1.5 rounded-full text-[12.5px] font-medium transition-all bg-white text-text-muted border border-card-border hover:text-text-main';
+        }
+      });
+      document.getElementById('feature-label').textContent = features[idx].label;
+      document.getElementById('feature-title').textContent = features[idx].title;
+      document.getElementById('feature-desc').textContent = features[idx].desc;
+    }
+
+    // Modal controls
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close on backdrop click
+    document.querySelectorAll('#interestModal, #loginModal').forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal(modal.id);
+      });
+    });
+
+    // Experience Carousel scroll
+    function scrollExperiences(dir) {
+      const track = document.getElementById('experiences-track');
+      const offset = 280;
+      if (dir === 'left') {
+        track.scrollBy({ left: -offset, behavior: 'smooth' });
+      } else {
+        track.scrollBy({ left: offset, behavior: 'smooth' });
+      }
+    }
+
+    // FAQ Accordion
+    function toggleFaqRef(btn) {
+      const parent = btn.parentElement;
+      const content = parent.querySelector('.faq-content');
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const isHidden = content.classList.contains('hidden');
+
+      // Close others
+      document.querySelectorAll('.faq-node .faq-content').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.faq-node .material-symbols-outlined').forEach(i => i.textContent = 'add');
+
+      if (isHidden) {
+        content.classList.remove('hidden');
+        icon.textContent = 'remove';
+      }
+    }
+  </script>
+</body></html>

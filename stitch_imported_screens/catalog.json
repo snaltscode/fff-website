@@ -1,0 +1,178 @@
+[
+  {
+    "index": 1,
+    "title": "Founder for Founder Syndicate Portal",
+    "screenId": "642b695e7f7c4b22a9f248a907e2c92a",
+    "resourceName": "projects/9952682829066972868/screens/642b695e7f7c4b22a9f248a907e2c92a",
+    "htmlPath": "stitch_imported_screens\\html\\01_Founder_for_Founder_Syndicate_Portal_642b695e.html",
+    "screenshotPath": null,
+    "width": "1280",
+    "height": "1024",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 2,
+    "title": "Founder for Founder \u2014 Home (Editorial Edition)",
+    "screenId": "5755021af7584fea87712ce06f6d08b2",
+    "resourceName": "projects/9952682829066972868/screens/5755021af7584fea87712ce06f6d08b2",
+    "htmlPath": "stitch_imported_screens\\html\\02_Founder_for_Founder___Home__Editorial_Edition_5755021a.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\02_Founder_for_Founder___Home__Editorial_Edition_5755021a.png",
+    "width": "2560",
+    "height": "11294",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 3,
+    "title": "Founder for Founder \u2014 Payment Gateway & Checkout",
+    "screenId": "5c0b6d39de644a5da5dd88b14adb4b9e",
+    "resourceName": "projects/9952682829066972868/screens/5c0b6d39de644a5da5dd88b14adb4b9e",
+    "htmlPath": "stitch_imported_screens\\html\\03_Founder_for_Founder___Payment_Gateway___Checkout_5c0b6d39.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\03_Founder_for_Founder___Payment_Gateway___Checkout_5c0b6d39.png",
+    "width": "2560",
+    "height": "3324",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 4,
+    "title": "Founder for Founder Membership Landing Page.png",
+    "screenId": "7794126813573193195",
+    "resourceName": "projects/9952682829066972868/screens/7794126813573193195",
+    "htmlPath": null,
+    "screenshotPath": "stitch_imported_screens\\screenshots\\04_Founder_for_Founder_Membership_Landing_Page_png_77941268.png",
+    "width": "1024",
+    "height": "1536",
+    "deviceType": null
+  },
+  {
+    "index": 5,
+    "title": "Founder for Founder \u2014 Member Portal",
+    "screenId": "767c768b8fbd4e5c80e406273e2e5ef6",
+    "resourceName": "projects/9952682829066972868/screens/767c768b8fbd4e5c80e406273e2e5ef6",
+    "htmlPath": "stitch_imported_screens\\html\\05_Founder_for_Founder___Member_Portal_767c768b.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\05_Founder_for_Founder___Member_Portal_767c768b.png",
+    "width": "2560",
+    "height": "2422",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 6,
+    "title": "Image from https://founderforfounder.in/assets/uploads/eef444c782af_WhatsApp_Image_2026-10-08_at_11.37.17_PM.jpeg",
+    "screenId": "ce3408e1eee64245817d711c807039dd",
+    "resourceName": "projects/9952682829066972868/screens/ce3408e1eee64245817d711c807039dd",
+    "htmlPath": null,
+    "screenshotPath": "stitch_imported_screens\\screenshots\\06_Image_from_https___founderforfounder_in_assets_uploads_eef444c782af_WhatsApp_Image_2026-10-08_at_11_37_17_PM_jpeg_ce3408e1.png",
+    "width": "1254",
+    "height": "1254",
+    "deviceType": null
+  },
+  {
+    "index": 7,
+    "title": "Founder for Founder \u2014 Community Guidelines",
+    "screenId": "86d7ad6c579e493bb2706c390d286009",
+    "resourceName": "projects/9952682829066972868/screens/86d7ad6c579e493bb2706c390d286009",
+    "htmlPath": "stitch_imported_screens\\html\\07_Founder_for_Founder___Community_Guidelines_86d7ad6c.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\07_Founder_for_Founder___Community_Guidelines_86d7ad6c.png",
+    "width": "2560",
+    "height": "16352",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 8,
+    "title": "Founder for Founder \u2014 404 Page Not Found",
+    "screenId": "fad017022c0740b2aea1c16ffdb05520",
+    "resourceName": "projects/9952682829066972868/screens/fad017022c0740b2aea1c16ffdb05520",
+    "htmlPath": "stitch_imported_screens\\html\\08_Founder_for_Founder___404_Page_Not_Found_fad01702.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\08_Founder_for_Founder___404_Page_Not_Found_fad01702.png",
+    "width": "2560",
+    "height": "2048",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 9,
+    "title": "Founder for Founder \u2014 Payment Confirmation & Tax Receipt",
+    "screenId": "eabecd3b858f4d489df77658541fbd45",
+    "resourceName": "projects/9952682829066972868/screens/eabecd3b858f4d489df77658541fbd45",
+    "htmlPath": "stitch_imported_screens\\html\\09_Founder_for_Founder___Payment_Confirmation___Tax_Receipt_eabecd3b.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\09_Founder_for_Founder___Payment_Confirmation___Tax_Receipt_eabecd3b.png",
+    "width": "2560",
+    "height": "5368",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 10,
+    "title": "Founder for Founder \u2014 Checkout with Payment Confirmation Modal",
+    "screenId": "22ffcf11bf584a2883600aee9e935543",
+    "resourceName": "projects/9952682829066972868/screens/22ffcf11bf584a2883600aee9e935543",
+    "htmlPath": "stitch_imported_screens\\html\\10_Founder_for_Founder___Checkout_with_Payment_Confirmation_Modal_22ffcf11.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\10_Founder_for_Founder___Checkout_with_Payment_Confirmation_Modal_22ffcf11.png",
+    "width": "2560",
+    "height": "3324",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 11,
+    "title": "Founder for Founder \u2014 Privacy Policy",
+    "screenId": "b3a61544f66847a0a798821b4fbb4564",
+    "resourceName": "projects/9952682829066972868/screens/b3a61544f66847a0a798821b4fbb4564",
+    "htmlPath": "stitch_imported_screens\\html\\11_Founder_for_Founder___Privacy_Policy_b3a61544.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\11_Founder_for_Founder___Privacy_Policy_b3a61544.png",
+    "width": "2560",
+    "height": "17744",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 12,
+    "title": "Founder for Founder \u2014 Terms & Conditions",
+    "screenId": "a1534e37125b488fb074179ac9e9813f",
+    "resourceName": "projects/9952682829066972868/screens/a1534e37125b488fb074179ac9e9813f",
+    "htmlPath": "stitch_imported_screens\\html\\12_Founder_for_Founder___Terms___Conditions_a1534e37.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\12_Founder_for_Founder___Terms___Conditions_a1534e37.png",
+    "width": "2560",
+    "height": "11822",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 13,
+    "title": "Founder for Founder \u2014 Home",
+    "screenId": "c78b4bfee9bd47d2a21cadf033b3ddac",
+    "resourceName": "projects/9952682829066972868/screens/c78b4bfee9bd47d2a21cadf033b3ddac",
+    "htmlPath": "stitch_imported_screens\\html\\13_Founder_for_Founder___Home_c78b4bfe.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\13_Founder_for_Founder___Home_c78b4bfe.png",
+    "width": "2560",
+    "height": "8708",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 14,
+    "title": "Founder for Founder \u2014 Refund & Cancellation Policy",
+    "screenId": "4c29cd0966564390be3d4bce18ec0f0a",
+    "resourceName": "projects/9952682829066972868/screens/4c29cd0966564390be3d4bce18ec0f0a",
+    "htmlPath": "stitch_imported_screens\\html\\14_Founder_for_Founder___Refund___Cancellation_Policy_4c29cd09.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\14_Founder_for_Founder___Refund___Cancellation_Policy_4c29cd09.png",
+    "width": "2560",
+    "height": "12166",
+    "deviceType": "DESKTOP"
+  },
+  {
+    "index": 15,
+    "title": "Extracted text from https://founderforfounder.in/",
+    "screenId": "a25e365269be4f8bb4b572e580b0cca6",
+    "resourceName": "projects/9952682829066972868/screens/a25e365269be4f8bb4b572e580b0cca6",
+    "htmlPath": "stitch_imported_screens\\html\\15_Extracted_text_from_https___founderforfounder_in_a25e3652.html",
+    "screenshotPath": null,
+    "width": "0",
+    "height": "0",
+    "deviceType": null
+  },
+  {
+    "index": 16,
+    "title": "Founder for Founder \u2014 Admin Dashboard & CMS",
+    "screenId": "8567966afa9b4ac1aba9ec074a15c8e4",
+    "resourceName": "projects/9952682829066972868/screens/8567966afa9b4ac1aba9ec074a15c8e4",
+    "htmlPath": "stitch_imported_screens\\html\\16_Founder_for_Founder___Admin_Dashboard___CMS_8567966a.html",
+    "screenshotPath": "stitch_imported_screens\\screenshots\\16_Founder_for_Founder___Admin_Dashboard___CMS_8567966a.png",
+    "width": "2560",
+    "height": "11734",
+    "deviceType": "DESKTOP"
+  }
+]

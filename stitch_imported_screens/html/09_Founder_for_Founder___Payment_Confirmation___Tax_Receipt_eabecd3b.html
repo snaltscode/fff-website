@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary-container": "#80bea6", "background": "#fff8f5", "surface-container": "#f4ece8", "tertiary-fixed-dim": "#4edea3", "on-secondary": "#ffffff", "secondary-container": "#fed488", "error-container": "#ffdad6", "primary-fixed": "#b0f0d6", "on-error-container": "#93000a", "on-secondary-container": "#785a1a", "on-background": "#1e1b19", "on-primary-fixed": "#002117", "gold-light": "#F5EFEB", "surface-container-high": "#eee7e3", "inverse-on-surface": "#f7efeb", "surface-tint": "#2b6954", "inverse-surface": "#33302d", "secondary": "#775a19", "on-surface": "#1e1b19", "inverse-primary": "#95d3ba", "tertiary-container": "#004f34", "surface": "#fff8f5", "error": "#ba1a1a", "on-surface-variant": "#404944", "surface-bright": "#fff8f5", "outline-variant": "#bfc9c3", "primary-container": "#064e3b", "tertiary": "#003623", "surface-dim": "#e0d8d5", "text-tertiary": "#6B7280", "canvas-ivory": "#FBFBFA", "surface-variant": "#e9e1dd", "secondary-fixed": "#ffdea5", "primary": "#003527", "primary-fixed-dim": "#95d3ba", "on-primary": "#ffffff", "text-primary": "#111827", "surface-card": "#FFFFFF", "surface-container-low": "#faf2ee", "outline": "#707974", "border-strong": "#D5D2CB", "surface-subtle": "#F4F3F0", "on-secondary-fixed-variant": "#5d4201", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#0b513d", "border-hairline": "#EAE8E4", "emerald-deep": "#043E2E", "surface-container-highest": "#e9e1dd", "on-error": "#ffffff", "on-tertiary": "#ffffff", "on-tertiary-fixed": "#002113", "text-secondary": "#4B5563", "on-tertiary-container": "#31c98f", "on-secondary-fixed": "#261900", "tertiary-fixed": "#6ffbbe", "on-tertiary-fixed-variant": "#005236", "secondary-fixed-dim": "#e9c176" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter": "1.5rem", "margin-md": "3rem", "space-xs": "0.25rem", "space-lg": "1.75rem", "space-xl": "3rem", "space-md": "1rem", "gutter-lg": "2.5rem", "space-sm": "0.5rem", "margin-lg": "6rem", "margin": "1.5rem" }, "fontFamily": { "headline-lg-mobile": [ "Playfair Display" ], "body-lg": [ "Plus Jakarta Sans" ], "label-caps": [ "Plus Jakarta Sans" ], "numeric-stat": [ "Playfair Display" ], "headline-md": [ "Playfair Display" ], "body-md": [ "Plus Jakarta Sans" ], "body-sm": [ "Plus Jakarta Sans" ], "display-hero": [ "Playfair Display" ], "label-md": [ "Plus Jakarta Sans" ], "subhead-lg": [ "Plus Jakarta Sans" ], "headline-sm": [ "Playfair Display" ], "headline-lg": [ "Playfair Display" ], "display-hero-mobile": [ "Playfair Display" ] }, "fontSize": { "headline-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-lg": [ "17px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-caps": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "700" } ], "numeric-stat": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "headline-md": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-md": [ "15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "body-sm": [ "13px", { "lineHeight": "20px", "letterSpacing": "0.005em", "fontWeight": "400" } ], "display-hero": [ "64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "subhead-lg": [ "20px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "headline-sm": [ "22px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "500" } ], "headline-lg": [ "44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "display-hero-mobile": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md"><div class="bg-surface-container-high/60"><div class="max-w-7xl mx-auto px-gutter flex items-center justify-center h-8"><div class="flex items-center gap-space-xs text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">verified</span><span class="font-label-caps text-label-caps uppercase tracking-wider">CURATED FOUNDER NETWORK • BY APPLICATION ONLY</span></div></div></div><div class="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-space-md"><a class="flex items-center gap-space-sm group" data-path="about" href="#"><img alt="Founder for Founder Emblem" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VJrUXFoyBk8PAlkwYzZJHi2wwT8NQ923PaTISzdAognyxCGTE5p1hm_srRZdnB_UgaxsV7d5JT794SEo1cseeLPEMkNGexspOtUNXcl74hiLGn6MJEB0c1FkFfXo8ethnC3SUUv4wU3TV7vjWjmNsEn5LhhbwOznyw8tJS0Dks325iYibC6CAiCqL8pgh4nArmVFZG0Rw7_mOb6d4m_GDf3AIvL0I1-NFllgBavVGtw0T3R4gzdg_xPAA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-primary font-semibold leading-none">FOUNDER FOR FOUNDER</span><span class="font-label-caps text-label-caps tracking-widest text-secondary mt-space-xs leading-none">CREATE. CONNECT. COLLABORATE.</span></div></a><nav class="hidden lg:flex items-center gap-space-sm" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="about" href="#">About</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="experiences" href="#">Experiences</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="philosophy" href="#">Philosophy</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="member-portal" href="#">Member Portal</a></nav><div class="flex items-center gap-space-md"><a class="inline-flex items-center gap-space-xs bg-primary-container hover:bg-emerald-deep text-on-primary font-label-md text-label-md px-space-md py-space-sm rounded-lg shadow-[0_2px_8px_rgba(6,78,59,0.2)] transition-all" data-path="show-interest" href="#"><span>SHOW INTEREST</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></a><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-border-strong" src="https://lh3.googleusercontent.com/aida/AEtjO1VJrUXFoyBk8PAlkwYzZJHi2wwT8NQ923PaTISzdAognyxCGTE5p1hm_srRZdnB_UgaxsV7d5JT794SEo1cseeLPEMkNGexspOtUNXcl74hiLGn6MJEB0c1FkFfXo8ethnC3SUUv4wU3TV7vjWjmNsEn5LhhbwOznyw8tJS0Dks325iYibC6CAiCqL8pgh4nArmVFZG0Rw7_mOb6d4m_GDf3AIvL0I1-NFllgBavVGtw0T3R4gzdg_xPAA"/></div></div></header><main class="w-full pt-28 bg-surface min-h-[calc(100vh-28rem)]"><div class="flex flex-col w-full">
+<!-- Subtle Ledger Strip / Eyebrow Header -->
+<section class="w-full bg-surface-container-low border-b border-border-hairline py-space-sm">
+<div class="max-w-7xl mx-auto px-gutter flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xs text-on-surface-variant">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary font-label-caps text-label-caps uppercase tracking-widest shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-pulse"></span>
+          SETTLED &amp; VERIFIED
+        </span>
+<span class="text-text-tertiary text-body-sm">•</span>
+<span class="font-label-caps text-label-caps tracking-widest text-text-secondary uppercase">
+          RBI NODAL CLEARING RAIL #NPCI-UPI-2026-9812
+        </span>
+</div>
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps text-text-tertiary">
+<span>Syndicate Admissions</span>
+<span>/</span>
+<span class="text-primary font-semibold">Confirmation</span>
+<span>/</span>
+<span class="text-secondary font-mono tracking-normal">INV-F4F-2026-0842</span>
+</div>
+</div>
+</section>
+<!-- Hero Confirmation Area -->
+<section class="w-full py-space-xl bg-surface">
+<div class="max-w-7xl mx-auto px-gutter">
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-lg md:p-space-xl shadow-sm border border-border-hairline">
+<!-- Ambient Foil Glow Accent Behind Seal -->
+<div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-gradient-to-br from-secondary/10 via-primary-fixed/5 to-transparent pointer-events-none blur-3xl"></div>
+<div class="absolute -left-20 -bottom-20 w-80 h-80 rounded-full bg-primary/5 pointer-events-none blur-2xl"></div>
+<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-space-lg">
+<div class="flex items-start md:items-center gap-space-md">
+<!-- Executive Laurel Seal -->
+<div class="relative shrink-0 flex items-center justify-center w-20 h-20 rounded-full bg-surface-container-high border border-border-strong shadow-inner">
+<svg class="w-14 h-14 text-secondary" fill="none" stroke="currentColor" viewbox="0 0 100 100">
+<circle cx="50" cy="50" r="44" stroke-dasharray="3 3" stroke-width="1.5"></circle>
+<circle cx="50" cy="50" r="38" stroke-width="1"></circle>
+<circle cx="50" cy="50" r="32" stroke-width="1.5"></circle>
+<!-- Laurel wreath motifs -->
+<path d="M50 14 C36 14 26 28 26 44 C26 62 38 78 50 84 C62 78 74 62 74 44 C74 28 64 14 50 14 Z" opacity="0.4" stroke-linecap="round" stroke-width="1"></path>
+<path d="M38 52 L46 60 L64 40" stroke="#003527" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5"></path>
+</svg>
+<div class="absolute -bottom-1 -right-1 bg-primary text-on-primary rounded-full p-1 shadow-md">
+<span class="material-symbols-outlined text-[14px] block">verified</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase font-bold">SOVEREIGN GUILD ADMISSION</span>
+<span class="w-1 h-1 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">OCTOBER 2026 COHORT</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Executive Membership Activated</h1>
+<p class="font-body-md text-body-md text-text-secondary max-w-2xl mt-1">
+                Welcome to Founder for Founder, <span class="text-text-primary font-semibold">Rahul</span>. Your monthly retainer of <span class="font-semibold text-primary">₹1,770.00</span> has settled through NPCI UPI clearing. Your cryptographic credentials, sovereign channel invites, and Syndicate Member Token are active.
+              </p>
+</div>
+</div>
+<!-- Quick Receipt Snapshot Stamp -->
+<div class="shrink-0 flex flex-col items-start md:items-end justify-center bg-surface-container-low px-space-md py-space-sm rounded-lg border border-border-hairline min-w-[210px]">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase tracking-wider">Settled Total (INR)</span>
+<div class="font-numeric-stat text-numeric-stat text-primary leading-tight mt-0.5">₹1,770.00</div>
+<div class="flex items-center gap-1.5 mt-1 text-tertiary-container font-label-caps text-label-caps uppercase">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+<span class="font-semibold text-tertiary">18% ITC INVOICE EMITTED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Dual-Column Section -->
+<section class="w-full pb-space-xl bg-surface">
+<div class="max-w-7xl mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+<!-- LEFT COLUMN: Executive Tax Invoice Dossier (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-border-hairline overflow-hidden relative">
+<!-- Top Brass / Gold Accent Accent Rule -->
+<div class="h-1.5 w-full bg-gradient-to-r from-primary via-secondary to-primary-container"></div>
+<div class="p-space-lg md:p-space-xl flex flex-col gap-space-lg">
+<!-- Invoice Meta Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md border-b border-border-hairline gap-space-sm">
+<div>
+<span class="font-label-caps text-label-caps tracking-widest text-secondary uppercase font-bold">REPUBLIC OF INDIA • FORM GST INV-1</span>
+<h2 class="font-headline-md text-headline-md text-primary mt-0.5">Tax Invoice &amp; Payment Dossier</h2>
+<span class="font-body-sm text-body-sm text-text-tertiary">Computer-generated original under Rule 48 of CGST Rules 2017</span>
+</div>
+<div class="flex items-center gap-space-xs self-start sm:self-auto">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-strong text-text-primary hover:bg-surface-subtle font-label-md text-label-md transition-colors" onclick="window.print()" title="Print Tax Invoice">
+<span class="material-symbols-outlined text-[16px]">print</span>
+<span>Print</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high font-label-md text-label-md transition-colors font-semibold" id="downloadPdfBtn" title="Export PDF">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>PDF Invoice</span>
+</button>
+</div>
+</div>
+<!-- Metadata 4-Cell Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-md bg-surface-container-low p-space-md rounded-lg">
+<div>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase block">Invoice Serial</span>
+<span class="font-body-md text-body-md font-semibold text-text-primary tracking-tight">INV-F4F-2026-0842</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase block">Issuance Date</span>
+<span class="font-body-md text-body-md font-semibold text-text-primary">24 Oct 2026, 14:32 IST</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase block">Filing Quarter</span>
+<span class="font-body-md text-body-md font-semibold text-text-primary">Q3 • FY 2026-27</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase block">Place of Supply</span>
+<span class="font-body-md text-body-md font-semibold text-text-primary">29 - Karnataka</span>
+</div>
+</div>
+<!-- Parties: Billed & Issuing Entities -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg pt-space-xs">
+<!-- Billed To (Buyer) -->
+<div class="flex flex-col gap-1.5 bg-surface-container-lowest p-space-md rounded-lg border border-border-hairline">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps tracking-widest text-secondary font-bold uppercase">Billed Entity (Recipient)</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-subtle text-text-secondary text-[10px] font-label-caps uppercase font-bold">18% ITC Eligible</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary mt-1">Starlight Robotics Pvt Ltd</div>
+<div class="font-body-md text-body-md text-text-secondary">
+<strong class="text-text-primary font-medium">Attn: Rahul Chopra</strong> (Co-Founder &amp; CEO)<br/>
+                  1084, 12th Main Road, HAL 2nd Stage,<br/>
+                  Indiranagar, Bengaluru, KA 560038
+                </div>
+<div class="mt-2 pt-2 border-t border-border-hairline flex flex-col gap-0.5 text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-text-tertiary">Registered GSTIN:</span>
+<span class="font-mono text-text-primary font-semibold">29AABCU9603R1ZM</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-text-tertiary">Entity PAN:</span>
+<span class="font-mono text-text-primary font-medium">AABCU9603R</span>
+</div>
+</div>
+</div>
+<!-- Issuing Entity (Supplier) -->
+<div class="flex flex-col gap-1.5 bg-surface-container-lowest p-space-md rounded-lg border border-border-hairline">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps tracking-widest text-secondary font-bold uppercase">Issuing Supplier</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed/30 text-primary text-[10px] font-label-caps uppercase font-bold">Verified Guild</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-text-primary mt-1">Founder for Founder</div>
+<div class="font-body-md text-body-md text-text-secondary">
+                  Operated by Snalts Media &amp; Ventures Private Limited<br/>
+                  The Executive Arcade, 4th Floor, Lavelle Road,<br/>
+                  Bengaluru, Karnataka 560001
+                </div>
+<div class="mt-2 pt-2 border-t border-border-hairline flex flex-col gap-0.5 text-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-text-tertiary">Supplier GSTIN:</span>
+<span class="font-mono text-text-primary font-semibold">29AAHCS7281M1ZX</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-text-tertiary">Nodal Escrow:</span>
+<span class="text-text-primary font-medium">ICICI Bank Escrow #0002931</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Settlement Rail Metadata -->
+<div class="bg-surface-subtle p-space-md rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm border border-border-hairline">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-card flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Payment Instrument</span>
+<span class="font-body-md text-body-md font-semibold text-text-primary">UPI Rail (CRED via Axis Bank)</span>
+<span class="font-body-sm text-body-sm text-text-secondary">VPA: <span class="font-mono">rahul.chopra@okaxis</span></span>
+</div>
+</div>
+<div class="flex flex-col sm:items-end">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Transaction UTR / Ref</span>
+<span class="font-body-md text-body-md font-mono font-semibold text-primary">UPI/20261024/783920194821</span>
+<span class="font-body-sm text-body-sm text-tertiary font-medium">Status: Settled (Immediate T+0)</span>
+</div>
+</div>
+<!-- Line Items Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-border-strong text-text-secondary font-label-caps text-label-caps uppercase">
+<th class="py-space-sm px-space-xs">Item Description / SAC</th>
+<th class="py-space-sm px-space-xs text-center">Period</th>
+<th class="py-space-sm px-space-xs text-right">SAC Code</th>
+<th class="py-space-sm px-space-xs text-right">Taxable Value</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-hairline font-body-md text-body-md">
+<tr>
+<td class="py-space-md px-space-xs">
+<div class="font-semibold text-text-primary">Curated Founder Guild Retainer</div>
+<div class="font-body-sm text-body-sm text-text-secondary">Monthly Tier-1 syndicate access, founder tables, private deal room &amp; vetted network access.</div>
+</td>
+<td class="py-space-md px-space-xs text-center whitespace-nowrap text-text-secondary font-body-sm">
+                      24 Oct 2026 –<br/>24 Nov 2026
+                    </td>
+<td class="py-space-md px-space-xs text-right font-mono text-body-sm text-text-secondary">999599</td>
+<td class="py-space-md px-space-xs text-right font-semibold text-text-primary">₹1,500.00</td>
+</tr>
+<tr class="text-text-secondary">
+<td class="py-space-sm px-space-xs">
+<div class="text-text-primary font-medium">Executive Onboarding &amp; Vetting Fee</div>
+<div class="font-body-sm text-body-sm text-text-tertiary">Peer verification, reference validation &amp; concierge profiling</div>
+</td>
+<td class="py-space-sm px-space-xs text-center font-body-sm">Lifetime</td>
+<td class="py-space-sm px-space-xs text-right font-mono text-body-sm">998311</td>
+<td class="py-space-sm px-space-xs text-right">
+<span class="line-through text-text-tertiary mr-1.5">₹5,000.00</span>
+<span class="inline-block px-2 py-0.5 rounded text-[11px] font-label-caps bg-primary-fixed/50 text-emerald-deep font-bold">WAIVED</span>
+</td>
+</tr>
+<tr>
+<td class="py-space-sm px-space-xs" colspan="3">
+<div class="font-medium text-text-primary">Integrated Goods &amp; Services Tax (IGST @ 18.00%)</div>
+<div class="font-body-sm text-body-sm text-text-tertiary">Inter-state supply / Central GSTN Ledger</div>
+</td>
+<td class="py-space-sm px-space-xs text-right font-semibold text-text-primary">₹270.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Invoice Calculation Totals -->
+<div class="border-t border-border-strong pt-space-md flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-md text-text-secondary">
+<span>Subtotal (Net Taxable Value):</span>
+<span class="font-medium text-text-primary font-mono">₹1,500.00</span>
+</div>
+<div class="flex items-center justify-between text-body-md text-text-secondary">
+<span>Total Statutory Tax (18% IGST):</span>
+<span class="font-medium text-text-primary font-mono">₹270.00</span>
+</div>
+<div class="flex items-center justify-between text-body-md text-text-secondary">
+<span>Syndicate Selection Waiver:</span>
+<span class="font-medium text-emerald-deep font-mono">- ₹5,000.00</span>
+</div>
+<div class="flex items-center justify-between pt-space-sm border-t border-border-hairline">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">Total Amount Settled</span>
+<span class="font-body-sm text-body-sm text-text-tertiary">INR One Thousand Seven Hundred Seventy Only</span>
+</div>
+<div class="font-numeric-stat text-numeric-stat text-primary font-bold">
+                  ₹1,770.00
+                </div>
+</div>
+</div>
+<!-- Compliance Footnote & Digital Seal -->
+<div class="p-space-md bg-surface-container-low rounded-lg border border-border-hairline flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-secondary mt-0.5">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-text-primary font-bold uppercase">Cryptographically Signed Tax Invoice</span>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5 leading-relaxed">
+                    Issued under Section 10A of the Information Technology Act, 2000. Invoice data transmitted via automated GST E-Way &amp; E-Invoicing API to GSTN portal. Your company is entitled to full Input Tax Credit (ITC).
+                  </p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-start md:items-end text-right">
+<div class="font-mono text-[10px] text-text-tertiary tracking-tighter">
+                  HASH: 9A81-CB42-00E1-8812<br/>
+                  SIGNATURE: VALID (ICICI ESCROW PKI)
+                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Instant Member Onboarding & Credentials Unlock (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- CARD 1: Sovereign Cryptographic Syndicate Pass -->
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-emerald-deep via-primary-container to-tertiary text-on-primary p-space-lg shadow-xl border border-secondary/40">
+<!-- Hologram Guilloche Watermark Pattern -->
+<div class="absolute -right-12 -bottom-12 w-64 h-64 opacity-10 pointer-events-none">
+<svg fill="none" stroke="currentColor" viewbox="0 0 200 200">
+<circle cx="100" cy="100" r="90" stroke-width="1"></circle>
+<circle cx="100" cy="100" r="80" stroke-dasharray="2 4" stroke-width="1"></circle>
+<circle cx="100" cy="100" r="60" stroke-width="2"></circle>
+<circle cx="100" cy="100" r="40" stroke-width="1"></circle>
+<polygon points="100,20 180,160 20,160" stroke-width="1"></polygon>
+<polygon points="100,180 20,40 180,40" stroke-width="1"></polygon>
+</svg>
+</div>
+<div class="relative z-10 flex flex-col gap-space-md">
+<!-- Badge Header -->
+<div class="flex items-center justify-between pb-space-sm border-b border-on-primary-container/30">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-fixed text-[20px]">military_tech</span>
+<span class="font-label-caps text-label-caps tracking-widest text-secondary-fixed uppercase font-bold">SOVEREIGN SYNDICATE PASS</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-label-caps uppercase font-bold">
+                ACTIVE VETTED
+              </span>
+</div>
+<!-- Member Title & Credential -->
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-caps text-label-caps text-on-primary-container tracking-wider uppercase block">Passholder Identity</span>
+<div class="font-headline-md text-headline-md text-on-primary font-semibold mt-0.5">Rahul Chopra</div>
+<div class="font-body-sm text-body-sm text-on-primary-container">Co-Founder &amp; CEO, Starlight Robotics</div>
+</div>
+<div class="text-right">
+<span class="font-label-caps text-label-caps text-on-primary-container tracking-wider uppercase block">Token Number</span>
+<span class="font-mono text-body-md font-bold text-secondary-fixed">TOKEN #FFF-BLR-0284</span>
+</div>
+</div>
+<!-- Pass QR & Access Verification Area -->
+<div class="p-space-md rounded-lg bg-surface-card/10 backdrop-blur-sm border border-on-primary-container/20 flex items-center justify-between gap-space-md">
+<!-- Geometric Crisp Mock QR Code SVG -->
+<div class="w-16 h-16 bg-white p-1.5 rounded flex items-center justify-center shrink-0 shadow">
+<svg class="w-full h-full text-primary" fill="currentColor" viewbox="0 0 24 24">
+<path d="M2,2H10V10H2V2M4,4V8H8V4H4M2,14H10V22H2V14M4,16V20H8V16H4M14,2H22V10H14V2M16,4V8H20V4H16M14,14H16V16H14V14M16,16H18V18H16V16M18,14H20V16H18V14M20,16H22V18H20V16M14,18H16V20H14V18M16,20H18V22H16V20M18,18H20V20H18V18M20,20H22V22H20V20M12,2H13V22H12V2M2,12H22V13H2V12Z"></path>
+</svg>
+</div>
+<div class="flex flex-col text-on-primary-container font-body-sm text-body-sm">
+<span class="text-on-primary font-semibold">Decentralized Event Pass</span>
+<span>Fast-track admission to Executive Founder Dinners, Closed Roundtables, &amp; Retreats.</span>
+<span class="font-mono text-[11px] text-secondary-fixed mt-1">NFC &amp; Apple/Google Wallet sync ready</span>
+</div>
+</div>
+<!-- Membership Billing Lifecycle -->
+<div class="flex items-center justify-between text-body-sm text-on-primary-container pt-space-xs">
+<div>
+<span class="block text-[11px] font-label-caps uppercase text-secondary-fixed/80">Renewal Date</span>
+<span class="text-on-primary font-medium">24 November 2026</span>
+</div>
+<div class="text-right">
+<span class="block text-[11px] font-label-caps uppercase text-secondary-fixed/80">Retainer Model</span>
+<span class="text-on-primary font-medium">₹1,770 / month (Auto-renewal)</span>
+</div>
+</div>
+<!-- Primary Action to Portal -->
+<a class="mt-space-sm w-full py-3 px-space-md rounded-lg bg-secondary-fixed hover:bg-secondary-fixed-dim text-on-secondary-fixed text-center font-label-md text-label-md font-bold transition-all shadow-md flex items-center justify-center gap-space-xs" data-path="member-portal" href="#">
+<span>ENTER MEMBER PORTAL NOW</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- CARD 2: Immediate Next Steps & Concierge Desk -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm border border-border-hairline flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-border-hairline">
+<h3 class="font-headline-sm text-headline-sm text-primary">Onboarding Checklist</h3>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">3 Protocols Pending</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Step 1 -->
+<div class="flex items-start gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shrink-0 text-[13px] font-bold mt-0.5">
+                1
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md font-semibold text-text-primary">Private Signal &amp; Telegram Chambers</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-caps bg-surface-container-high text-secondary font-bold">AUTOMATED</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                  End-to-end encrypted dispatch sent to your verified mobile (+91 98XXX XXXXX). Accept invite link within 48 hours.
+                </p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-start gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shrink-0 text-[13px] font-bold mt-0.5">
+                2
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md font-semibold text-text-primary">Upcoming Founder Table — Bengaluru</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-caps bg-primary-fixed/40 text-emerald-deep font-bold">CONFIRMED SEAT</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                  Private Room, Indiranagar • Thursday, 29 October, 19:30 IST. 8 Hardware &amp; Deep Tech Founders confirmed.
+                </p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-start gap-space-sm">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary flex items-center justify-center shrink-0 text-[13px] font-bold mt-0.5">
+                3
+              </div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-body-md text-body-md font-semibold text-text-primary">Commercial Engine "Needs &amp; Wants"</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-label-caps bg-surface-container-high text-text-secondary font-bold">ACTION REQUIRED</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                  Publish your first strategic partnership requirement or vendor request directly to verified syndicate partners.
+                </p>
+</div>
+</div>
+</div>
+<!-- Concierge Support Desk Box -->
+<div class="mt-space-xs p-space-md rounded-lg bg-surface-container-low border border-border-hairline flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-secondary font-bold uppercase tracking-wider">Syndicate Concierge Desk</span>
+<span class="font-label-caps text-label-caps text-text-tertiary">Direct Escort</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary">
+              Need assistance with entity invoicing changes or concierge introductions? Reach our Admission Officer at <a class="text-primary font-semibold underline" href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a>.
+            </p>
+<div class="flex items-center gap-1.5 text-text-tertiary text-[11px] font-label-caps uppercase mt-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">security</span>
+<span>Protected by our 48-Hour Unconditional Retainer Guarantee</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Comprehensive Action Bar Strip -->
+<section class="w-full bg-surface-container-lowest border-t border-border-hairline py-space-lg">
+<div class="max-w-7xl mx-auto px-gutter flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex flex-col sm:flex-row items-center gap-space-md w-full md:w-auto">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-3 rounded-lg bg-primary-container hover:bg-emerald-deep text-on-primary font-label-md text-label-md font-bold shadow-md transition-all" data-path="member-portal" href="#">
+<span>ENTER MEMBER PORTAL NOW</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<button class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-md py-3 rounded-lg border border-border-strong text-text-primary hover:bg-surface-subtle font-label-md text-label-md transition-colors" id="downloadPdfAction">
+<span class="material-symbols-outlined text-[18px]">description</span>
+<span>Download Tax Invoice (PDF)</span>
+</button>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-md py-3 rounded-lg border border-border-strong text-text-primary hover:bg-surface-subtle font-label-md text-label-md transition-colors" href="https://calendar.google.com" target="_blank">
+<span class="material-symbols-outlined text-[18px]">event</span>
+<span>Add Founder Table to Calendar</span>
+</a>
+</div>
+<div class="flex items-center gap-space-md">
+<a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors inline-flex items-center gap-1" data-path="experiences" href="#">
+<span>Explore Upcoming Experiences</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Security & Regulatory Compliance Footer Strip -->
+<section class="w-full bg-surface-container py-space-md border-t border-border-hairline">
+<div class="max-w-7xl mx-auto px-gutter flex flex-wrap items-center justify-between gap-space-md text-text-tertiary">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-1.5 text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary">lock</span>
+<span>256-Bit TLS Bank Grade Encryption</span>
+</div>
+<span class="hidden sm:inline">•</span>
+<div class="flex items-center gap-1.5 text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified</span>
+<span>RBI Payment Aggregator Compliant</span>
+</div>
+<span class="hidden sm:inline">•</span>
+<div class="flex items-center gap-1.5 text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">shield</span>
+<span>PCI-DSS V4.0 Level 1 Verified</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm text-body-sm font-label-caps uppercase text-text-tertiary">
+<span>GSTN Registered: 29AAHCS7281M1ZX</span>
+<span>•</span>
+<span>Bengaluru Jurisdiction</span>
+</div>
+</div>
+</section>
+<!-- Interactive Client-side Script for Download & Print Micro-interactions -->
+<script>
+    (function() {
+      const downloadBtns = [document.getElementById('downloadPdfBtn'), document.getElementById('downloadPdfAction')];
+      downloadBtns.forEach(btn => {
+        if (!btn) return;
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const origText = btn.innerHTML;
+          btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">sync</span> Generating Verified PDF...';
+          btn.disabled = true;
+          
+          setTimeout(() => {
+            btn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span> Download Complete';
+            setTimeout(() => {
+              btn.innerHTML = origText;
+              btn.disabled = false;
+            }, 3000);
+          }, 1200);
+        });
+      });
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest"><div class="max-w-7xl mx-auto px-gutter pt-space-xl pb-space-lg"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter-lg pb-space-xl"><div class="lg:col-span-2 flex flex-col gap-space-md pr-space-lg"><div class="flex items-center gap-space-sm"><img alt="Founder for Founder Emblem" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VJrUXFoyBk8PAlkwYzZJHi2wwT8NQ923PaTISzdAognyxCGTE5p1hm_srRZdnB_UgaxsV7d5JT794SEo1cseeLPEMkNGexspOtUNXcl74hiLGn6MJEB0c1FkFfXo8ethnC3SUUv4wU3TV7vjWjmNsEn5LhhbwOznyw8tJS0Dks325iYibC6CAiCqL8pgh4nArmVFZG0Rw7_mOb6d4m_GDf3AIvL0I1-NFllgBavVGtw0T3R4gzdg_xPAA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-primary font-semibold">FOUNDER FOR FOUNDER</span><span class="font-label-caps text-label-caps tracking-widest text-secondary">Create. Connect. Collaborate.</span></div></div><p class="font-body-md text-body-md text-text-secondary leading-relaxed">A curated business network connecting founders, entrepreneurs, business owners, and professionals across India. Powered by snalts.co</p><div class="flex items-center gap-space-xs text-secondary"><span class="material-symbols-outlined text-[18px]">shield</span><span class="font-label-caps text-label-caps tracking-wider">VERIFIED EXECUTIVE COHORT</span></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-caps text-label-caps tracking-widest text-primary uppercase font-bold mb-space-xs">Navigation</h3><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="about" href="#">About Us</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="experiences" href="#">Experiences</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="faqs" href="#">FAQs</a></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-caps text-label-caps tracking-widest text-primary uppercase font-bold mb-space-xs">Contact &amp; Entity</h3><div class="flex flex-col gap-space-xs"><span class="font-label-caps text-label-caps text-text-tertiary uppercase">Direct Inquiries</span><a class="font-body-md text-body-md text-primary font-medium hover:underline" href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a></div><div class="flex flex-col gap-space-xs mt-space-xs"><span class="font-label-caps text-label-caps text-text-tertiary uppercase">Studio Platform</span><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" href="https://snalts.co" target="_blank">snalts.co</a></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-caps text-label-caps tracking-widest text-primary uppercase font-bold mb-space-xs">Legal Disclosures</h3><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="terms-and-conditions" href="#">Terms &amp; Conditions</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="privacy-policy" href="#">Privacy Policy</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="refund-and-cancellation-policy" href="#">Refund &amp; Cancellation Policy</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="community-guidelines" href="#">Community Guidelines</a><div class="mt-space-sm pt-space-sm"><span class="font-label-caps text-label-caps text-text-tertiary uppercase block mb-space-xs">Official Channels</span><div class="flex items-center gap-space-md"><a class="font-body-sm text-body-sm text-text-secondary hover:text-primary transition-colors" data-path="instagram" href="#">Instagram</a><a class="font-body-sm text-body-sm text-text-secondary hover:text-primary transition-colors" data-path="facebook" href="#">Facebook</a><a class="font-body-sm text-body-sm text-text-secondary hover:text-primary transition-colors" data-path="linkedin" href="#">LinkedIn</a></div></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md text-center sm:text-left"><p class="font-body-sm text-body-sm text-text-tertiary">© 2026 Founder for Founder. All rights reserved. Powered by snalts.co</p><div class="flex items-center gap-space-sm text-text-tertiary font-body-sm text-body-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Private Membership Guild • India Chapter</span></div></div></div></footer></body></html>

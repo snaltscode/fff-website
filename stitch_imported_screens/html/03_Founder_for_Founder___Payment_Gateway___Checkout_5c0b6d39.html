@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary-container": "#80bea6", "background": "#fff8f5", "surface-container": "#f4ece8", "tertiary-fixed-dim": "#4edea3", "on-secondary": "#ffffff", "secondary-container": "#fed488", "error-container": "#ffdad6", "primary-fixed": "#b0f0d6", "on-error-container": "#93000a", "on-secondary-container": "#785a1a", "on-background": "#1e1b19", "on-primary-fixed": "#002117", "gold-light": "#F5EFEB", "surface-container-high": "#eee7e3", "inverse-on-surface": "#f7efeb", "surface-tint": "#2b6954", "inverse-surface": "#33302d", "secondary": "#775a19", "on-surface": "#1e1b19", "inverse-primary": "#95d3ba", "tertiary-container": "#004f34", "surface": "#fff8f5", "error": "#ba1a1a", "on-surface-variant": "#404944", "surface-bright": "#fff8f5", "outline-variant": "#bfc9c3", "primary-container": "#064e3b", "tertiary": "#003623", "surface-dim": "#e0d8d5", "text-tertiary": "#6B7280", "canvas-ivory": "#FBFBFA", "surface-variant": "#e9e1dd", "secondary-fixed": "#ffdea5", "primary": "#003527", "primary-fixed-dim": "#95d3ba", "on-primary": "#ffffff", "text-primary": "#111827", "surface-card": "#FFFFFF", "surface-container-low": "#faf2ee", "outline": "#707974", "border-strong": "#D5D2CB", "surface-subtle": "#F4F3F0", "on-secondary-fixed-variant": "#5d4201", "surface-container-lowest": "#ffffff", "on-primary-fixed-variant": "#0b513d", "border-hairline": "#EAE8E4", "emerald-deep": "#043E2E", "surface-container-highest": "#e9e1dd", "on-error": "#ffffff", "on-tertiary": "#ffffff", "on-tertiary-fixed": "#002113", "text-secondary": "#4B5563", "on-tertiary-container": "#31c98f", "on-secondary-fixed": "#261900", "tertiary-fixed": "#6ffbbe", "on-tertiary-fixed-variant": "#005236", "secondary-fixed-dim": "#e9c176" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter": "1.5rem", "margin-md": "3rem", "space-xs": "0.25rem", "space-lg": "1.75rem", "space-xl": "3rem", "space-md": "1rem", "gutter-lg": "2.5rem", "space-sm": "0.5rem", "margin-lg": "6rem", "margin": "1.5rem" }, "fontFamily": { "headline-lg-mobile": [ "Playfair Display" ], "body-lg": [ "Plus Jakarta Sans" ], "label-caps": [ "Plus Jakarta Sans" ], "numeric-stat": [ "Playfair Display" ], "headline-md": [ "Playfair Display" ], "body-md": [ "Plus Jakarta Sans" ], "body-sm": [ "Plus Jakarta Sans" ], "display-hero": [ "Playfair Display" ], "label-md": [ "Plus Jakarta Sans" ], "subhead-lg": [ "Plus Jakarta Sans" ], "headline-sm": [ "Playfair Display" ], "headline-lg": [ "Playfair Display" ], "display-hero-mobile": [ "Playfair Display" ] }, "fontSize": { "headline-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-lg": [ "17px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-caps": [ "11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "700" } ], "numeric-stat": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "headline-md": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-md": [ "15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "body-sm": [ "13px", { "lineHeight": "20px", "letterSpacing": "0.005em", "fontWeight": "400" } ], "display-hero": [ "64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" } ], "subhead-lg": [ "20px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "headline-sm": [ "22px", { "lineHeight": "30px", "letterSpacing": "0em", "fontWeight": "500" } ], "headline-lg": [ "44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "display-hero-mobile": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md"><div class="bg-surface-container-high/60"><div class="max-w-7xl mx-auto px-gutter flex items-center justify-center h-8"><div class="flex items-center gap-space-xs text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">verified</span><span class="font-label-caps text-label-caps uppercase tracking-wider">CURATED FOUNDER NETWORK • BY APPLICATION ONLY</span></div></div></div><div class="h-20 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-space-md"><a class="flex items-center gap-space-sm group" data-path="about" href="#"><img alt="Founder for Founder Emblem" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VJrUXFoyBk8PAlkwYzZJHi2wwT8NQ923PaTISzdAognyxCGTE5p1hm_srRZdnB_UgaxsV7d5JT794SEo1cseeLPEMkNGexspOtUNXcl74hiLGn6MJEB0c1FkFfXo8ethnC3SUUv4wU3TV7vjWjmNsEn5LhhbwOznyw8tJS0Dks325iYibC6CAiCqL8pgh4nArmVFZG0Rw7_mOb6d4m_GDf3AIvL0I1-NFllgBavVGtw0T3R4gzdg_xPAA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-primary font-semibold leading-none">FOUNDER FOR FOUNDER</span><span class="font-label-caps text-label-caps tracking-widest text-secondary mt-space-xs leading-none">CREATE. CONNECT. COLLABORATE.</span></div></a><nav class="hidden lg:flex items-center gap-space-sm" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="about" href="#">About</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="experiences" href="#">Experiences</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="philosophy" href="#">Philosophy</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="px-space-md py-space-sm text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="member-portal" href="#">Member Portal</a></nav><div class="flex items-center gap-space-md"><a class="inline-flex items-center gap-space-xs bg-primary-container hover:bg-emerald-deep text-on-primary font-label-md text-label-md px-space-md py-space-sm rounded-lg shadow-[0_2px_8px_rgba(6,78,59,0.2)] transition-all" data-path="show-interest" href="#"><span>SHOW INTEREST</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></a><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-border-strong" src="https://lh3.googleusercontent.com/aida/AEtjO1VJrUXFoyBk8PAlkwYzZJHi2wwT8NQ923PaTISzdAognyxCGTE5p1hm_srRZdnB_UgaxsV7d5JT794SEo1cseeLPEMkNGexspOtUNXcl74hiLGn6MJEB0c1FkFfXo8ethnC3SUUv4wU3TV7vjWjmNsEn5LhhbwOznyw8tJS0Dks325iYibC6CAiCqL8pgh4nArmVFZG0Rw7_mOb6d4m_GDf3AIvL0I1-NFllgBavVGtw0T3R4gzdg_xPAA"/></div></div></header><main class="w-full pt-28 bg-surface min-h-[calc(100vh-28rem)]"><div class="flex flex-col w-full">
+<!-- Top Sovereign Syndicate Status & Security Bar -->
+<section class="w-full bg-surface-container-low py-space-sm px-gutter">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">SYNDICATE ADMISSIONS</span>
+<span class="text-outline-variant font-light">/</span>
+<span class="font-label-caps text-label-caps text-secondary font-semibold uppercase">SECURE EXECUTIVE CHECKOUT</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-md text-on-surface-variant">
+<div class="flex items-center gap-1.5 bg-surface-card px-space-sm py-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="font-label-caps text-label-caps text-primary font-bold">256-BIT TLS BANK GRADE</span>
+</div>
+<div class="hidden sm:flex items-center gap-1.5 bg-surface-card px-space-sm py-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-[15px] text-secondary">verified_user</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant font-medium">RBI AGGREGATOR COMPLIANT</span>
+</div>
+<div class="flex items-center gap-1.5 bg-secondary-container/40 text-on-secondary-container px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-[15px]">timer</span>
+<span class="font-label-caps text-label-caps tracking-wider font-semibold">TOKEN #INV-DEL-8920 • <span class="font-bold" id="reservation-timer">14:58</span></span>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Checkout Dossier Section -->
+<section class="w-full px-gutter py-space-xl">
+<div class="max-w-7xl mx-auto">
+<!-- Headline & Context -->
+<div class="mb-space-lg flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<span class="font-label-caps text-label-caps tracking-widest text-secondary block mb-space-xs uppercase">CONFIDENTIAL SETTLEMENT LEDGER</span>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Executive Membership Activation</h1>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-body-sm text-text-tertiary">Billing Entity Reference</p>
+<p class="font-label-md text-label-md text-on-surface font-semibold">F4F-CORP-IND-2026-X9</p>
+</div>
+</div>
+<!-- Split Layout: 5 Columns Dossier / 7 Columns Payment Gateway -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-start">
+<!-- LEFT COLUMN: TRANSACTION DOSSIER (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Item Card -->
+<div class="bg-surface-card p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-bl-full pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-deep text-on-primary font-label-caps text-label-caps tracking-wider uppercase">
+                COHORT TIER 1
+              </span>
+<span class="font-label-caps text-label-caps text-secondary font-semibold uppercase">
+                MONTHLY RETAINER
+              </span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary leading-tight">Curated Founder Membership</h2>
+<p class="font-body-md text-body-md text-text-secondary mt-1">
+                Annual Executive Syndicate Pass with uncapped access across 12 tier-1 city circles, private commercial deal flow, closed-door CEO roundtables &amp; verified founders directory.
+              </p>
+</div>
+<!-- Admitted Founder Identity Dossier -->
+<div class="bg-surface-subtle p-space-md rounded-lg flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Admitted Founder</span>
+<span class="font-label-md text-label-md text-primary font-bold">Rahul Chopra</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Enterprise Name</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate max-w-[200px]">Starlight Robotics Pvt Ltd</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Registered GSTIN</span>
+<span class="font-body-sm text-body-sm text-primary font-mono tracking-tight font-semibold">29AABCU9603R1ZM</span>
+</div>
+</div>
+<!-- Price Breakdown Calculation Table -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<div class="flex justify-between items-center text-text-secondary font-body-md text-body-md">
+<span>Base Membership Retainer</span>
+<span class="font-semibold text-text-primary">₹1,500.00</span>
+</div>
+<div class="flex justify-between items-center text-text-secondary font-body-md text-body-md">
+<span class="flex items-center gap-1">
+                  Integrated GST (18% IGST)
+                  <span class="material-symbols-outlined text-[14px] text-text-tertiary" title="Eligible for B2B Input Tax Credit">info</span>
+</span>
+<span class="font-semibold text-text-primary">₹270.00</span>
+</div>
+<div class="flex justify-between items-center text-secondary font-body-md text-body-md">
+<span class="flex items-center gap-1">
+                  Syndicate Onboarding Fee
+                  <span class="text-[11px] bg-secondary-fixed/50 px-1.5 py-0.5 rounded text-on-secondary-fixed font-bold tracking-wider">WAIVED</span>
+</span>
+<span class="line-through text-text-tertiary">₹5,000.00</span>
+</div>
+<div class="h-px bg-surface-container-high my-2"></div>
+<div class="flex justify-between items-baseline pt-1">
+<div>
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase block">Total Payable Now</span>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Billed monthly recurring</span>
+</div>
+<div class="text-right">
+<span class="font-numeric-stat text-numeric-stat text-primary font-bold tracking-tight">₹1,770.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Enterprise Guarantee & Tax Compliance Box -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-sm text-on-surface">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">receipt_long</span>
+<div>
+<h3 class="font-label-md text-label-md text-primary font-semibold">Automated B2B GST Invoicing</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                  Tax invoice showing 18% ITC credit will be instantly auto-dispatched to <span class="font-medium text-text-primary">connect@starlightrobotics.com</span> upon settlement.
+                </p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">key</span>
+<div>
+<h3 class="font-label-md text-label-md text-primary font-semibold">Immediate Token Issuance</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mt-0.5">
+                  Portal authorization cryptographic credentials unlock your private profile within 120 seconds of gateway confirmation.
+                </p>
+</div>
+</div>
+<div class="pt-space-xs flex items-center justify-between text-text-tertiary font-body-sm text-body-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">support_agent</span>
+                Syndicate Desk:
+              </span>
+<a class="text-primary font-medium hover:underline" href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a>
+</div>
+</div>
+<!-- Security Visual Indicator -->
+<div class="bg-surface-card p-space-md rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+<span class="material-symbols-outlined text-[22px]">shield_lock</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-primary font-bold">48-Hour Unconditional Guarantee</p>
+<p class="font-body-sm text-body-sm text-text-secondary">Full refund if executive cohort does not meet standards</p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: EXECUTIVE PAYMENT GATEWAY RAILS (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="bg-surface-card p-space-lg rounded-xl shadow-md">
+<div class="flex items-center justify-between mb-space-md pb-space-sm">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Payment Infrastructure</h2>
+<p class="font-body-sm text-body-sm text-text-secondary">Select your institutional or personal settlement rail</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-subtle px-2.5 py-1 rounded">
+<span class="w-2 h-2 rounded-full bg-emerald-deep animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-primary font-bold">NODAL GATEWAY ONLINE</span>
+</div>
+</div>
+<!-- Custom Method Segmented Selector -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-space-lg" id="payment-tabs">
+<button class="method-tab active flex flex-col items-center justify-center p-3 rounded-lg bg-primary-container text-on-primary transition-all text-center" id="tab-upi" onclick="switchMethod('upi')" type="button">
+<span class="material-symbols-outlined text-[22px] mb-1">qr_code_2</span>
+<span class="font-label-caps text-label-caps tracking-wider uppercase font-bold">UPI / QR</span>
+<span class="font-body-sm text-[11px] opacity-80">Instant Rail</span>
+</button>
+<button class="method-tab flex flex-col items-center justify-center p-3 rounded-lg bg-surface-subtle text-on-surface hover:bg-surface-container transition-all text-center" id="tab-cards" onclick="switchMethod('cards')" type="button">
+<span class="material-symbols-outlined text-[22px] mb-1">credit_card</span>
+<span class="font-label-caps text-label-caps tracking-wider uppercase font-bold">CARDS</span>
+<span class="font-body-sm text-[11px] text-text-tertiary">Corp / Credit</span>
+</button>
+<button class="method-tab flex flex-col items-center justify-center p-3 rounded-lg bg-surface-subtle text-on-surface hover:bg-surface-container transition-all text-center" id="tab-netbanking" onclick="switchMethod('netbanking')" type="button">
+<span class="material-symbols-outlined text-[22px] mb-1">account_balance</span>
+<span class="font-label-caps text-label-caps tracking-wider uppercase font-bold">NETBANKING</span>
+<span class="font-body-sm text-[11px] text-text-tertiary">Top 50+ Banks</span>
+</button>
+<button class="method-tab flex flex-col items-center justify-center p-3 rounded-lg bg-surface-subtle text-on-surface hover:bg-surface-container transition-all text-center" id="tab-oneclick" onclick="switchMethod('oneclick')" type="button">
+<span class="material-symbols-outlined text-[22px] mb-1">bolt</span>
+<span class="font-label-caps text-label-caps tracking-wider uppercase font-bold">1-CLICK PAY</span>
+<span class="font-body-sm text-[11px] text-text-tertiary">Enterprise</span>
+</button>
+</div>
+<!-- PAYMENT CONTENT CONTAINER -->
+<div class="min-h-[380px] flex flex-col justify-between">
+<!-- 1. UPI SECTION (Default Active) -->
+<div class="payment-method-panel flex flex-col gap-space-md" id="method-content-upi">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center bg-surface-subtle p-space-md rounded-xl">
+<!-- Styled Dynamic QR Code Container -->
+<div class="md:col-span-5 flex flex-col items-center justify-center p-space-sm bg-surface-card rounded-lg shadow-sm">
+<div class="relative p-2 bg-surface-card rounded">
+<!-- High-Fidelity SVG Dynamic QR Emulation -->
+<svg class="w-40 h-40 text-primary" fill="none" viewbox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+<!-- Outer Boundary Frame -->
+<rect fill="#FFFFFF" height="152" rx="6" width="152" x="4" y="4"></rect>
+<!-- Top-Left Target -->
+<rect fill="currentColor" height="38" rx="4" width="38" x="14" y="14"></rect>
+<rect fill="#FFFFFF" height="22" rx="2" width="22" x="22" y="22"></rect>
+<rect fill="currentColor" height="12" rx="1" width="12" x="27" y="27"></rect>
+<!-- Top-Right Target -->
+<rect fill="currentColor" height="38" rx="4" width="38" x="108" y="14"></rect>
+<rect fill="#FFFFFF" height="22" rx="2" width="22" x="116" y="22"></rect>
+<rect fill="currentColor" height="12" rx="1" width="12" x="121" y="27"></rect>
+<!-- Bottom-Left Target -->
+<rect fill="currentColor" height="38" rx="4" width="38" x="14" y="108"></rect>
+<rect fill="#FFFFFF" height="22" rx="2" width="22" x="22" y="116"></rect>
+<rect fill="currentColor" height="12" rx="1" width="12" x="27" y="121"></rect>
+<!-- Center Core F4F Emblem Monogram -->
+<rect fill="#043E2E" height="36" rx="4" width="36" x="62" y="62"></rect>
+<text fill="#F5EFEB" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" text-anchor="middle" x="80" y="84">F4F</text>
+<!-- Grid Matrix Density Dots (Pure SVG Data Emulation) -->
+<rect fill="currentColor" height="6" width="6" x="58" y="16"></rect>
+<rect fill="currentColor" height="6" width="6" x="70" y="16"></rect>
+<rect fill="currentColor" height="6" width="6" x="88" y="16"></rect>
+<rect fill="currentColor" height="6" width="6" x="64" y="26"></rect>
+<rect fill="currentColor" height="6" width="6" x="80" y="26"></rect>
+<rect fill="currentColor" height="6" width="6" x="58" y="36"></rect>
+<rect fill="currentColor" height="6" width="6" x="74" y="36"></rect>
+<rect fill="currentColor" height="6" width="6" x="88" y="36"></rect>
+<rect fill="currentColor" height="6" width="6" x="58" y="46"></rect>
+<rect fill="currentColor" height="6" width="6" x="16" y="58"></rect>
+<rect fill="currentColor" height="6" width="6" x="26" y="58"></rect>
+<rect fill="currentColor" height="6" width="6" x="36" y="58"></rect>
+<rect fill="currentColor" height="6" width="6" x="16" y="70"></rect>
+<rect fill="currentColor" height="6" width="6" x="36" y="70"></rect>
+<rect fill="currentColor" height="6" width="6" x="26" y="80"></rect>
+<rect fill="currentColor" height="6" width="6" x="46" y="80"></rect>
+<rect fill="currentColor" height="6" width="6" x="108" y="58"></rect>
+<rect fill="currentColor" height="6" width="6" x="126" y="58"></rect>
+<rect fill="currentColor" height="6" width="6" x="138" y="58"></rect>
+<rect fill="currentColor" height="6" width="6" x="114" y="72"></rect>
+<rect fill="currentColor" height="6" width="6" x="132" y="72"></rect>
+<rect fill="currentColor" height="6" width="6" x="108" y="86"></rect>
+<rect fill="currentColor" height="6" width="6" x="126" y="86"></rect>
+<rect fill="currentColor" height="6" width="6" x="58" y="108"></rect>
+<rect fill="currentColor" height="6" width="6" x="72" y="108"></rect>
+<rect fill="currentColor" height="6" width="6" x="86" y="108"></rect>
+<rect fill="currentColor" height="6" width="6" x="64" y="120"></rect>
+<rect fill="currentColor" height="6" width="6" x="80" y="120"></rect>
+<rect fill="currentColor" height="6" width="6" x="58" y="132"></rect>
+<rect fill="currentColor" height="6" width="6" x="76" y="132"></rect>
+<rect fill="currentColor" height="6" width="6" x="90" y="132"></rect>
+<rect fill="currentColor" height="6" width="6" x="108" y="108"></rect>
+<rect fill="currentColor" height="6" width="6" x="124" y="108"></rect>
+<rect fill="currentColor" height="6" width="6" x="138" y="108"></rect>
+<rect fill="currentColor" height="6" width="6" x="114" y="122"></rect>
+<rect fill="currentColor" height="6" width="6" x="130" y="122"></rect>
+<rect fill="currentColor" height="6" width="6" x="108" y="138"></rect>
+<rect fill="currentColor" height="6" width="6" x="124" y="138"></rect>
+<rect fill="currentColor" height="6" width="6" x="138" y="138"></rect>
+</svg>
+</div>
+<span class="font-label-caps text-[10px] text-text-tertiary mt-2 uppercase tracking-widest font-semibold">REFRESHES IN <span id="qr-refresh">03:45</span></span>
+</div>
+<!-- QR Instruction & Supported PSP Badges -->
+<div class="md:col-span-7 flex flex-col gap-space-sm pl-md-0 md:pl-space-sm">
+<div>
+<span class="font-label-caps text-label-caps text-secondary font-bold uppercase tracking-wider">UNIVERSAL NPCI RAILS</span>
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold mt-0.5">Scan to Pay via Any UPI App</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">Open Google Pay, PhonePe, Paytm, CRED, or your bank app to scan and confirm in seconds.</p>
+</div>
+<!-- Verified UPI App Chips -->
+<div class="flex flex-wrap gap-2 pt-1">
+<div class="flex items-center gap-1.5 px-2.5 py-1.5 bg-surface-card rounded shadow-sm text-on-surface">
+<svg class="w-4 h-4 text-emerald-deep" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"></path></svg>
+<span class="font-label-md text-label-md font-bold">GPay</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1.5 bg-surface-card rounded shadow-sm text-on-surface">
+<svg class="w-4 h-4 text-emerald-deep" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"></path></svg>
+<span class="font-label-md text-label-md font-bold">PhonePe</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1.5 bg-surface-card rounded shadow-sm text-on-surface">
+<svg class="w-4 h-4 text-emerald-deep" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"></path></svg>
+<span class="font-label-md text-label-md font-bold">Paytm</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1.5 bg-surface-card rounded shadow-sm text-on-surface">
+<svg class="w-4 h-4 text-emerald-deep" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"></path></svg>
+<span class="font-label-md text-label-md font-bold">CRED</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-text-tertiary font-body-sm text-body-sm pt-1">
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+<span>Verified Virtual Payment Address: <span class="font-mono text-primary font-semibold">f4f.syndicate@icici</span></span>
+</div>
+</div>
+</div>
+<!-- UPI VPA / ID Direct Entry Alternate -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps text-text-secondary uppercase" for="upi-id-input">Or Enter Syndicate Founder VPA / UPI ID</label>
+<div class="flex flex-col sm:flex-row gap-2">
+<div class="relative flex-1">
+<input class="w-full bg-surface-subtle text-on-surface px-space-md py-space-sm rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-card shadow-inner" id="upi-id-input" placeholder="e.g. rahul.chopra@oksbi" type="text" value="rahul.chopra@okaxis"/>
+<span class="absolute right-3 top-2.5 material-symbols-outlined text-[18px] text-text-tertiary">fingerprint</span>
+</div>
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-md text-label-md px-space-md py-space-sm rounded-lg font-bold transition-all shrink-0" type="button">
+                      Verify &amp; Request
+                    </button>
+</div>
+</div>
+</div>
+<!-- 2. CARDS SECTION (Hidden by default) -->
+<div class="payment-method-panel hidden flex-col gap-space-md" id="method-content-cards">
+<div class="flex items-center justify-between bg-surface-subtle p-space-sm rounded-lg">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps text-label-caps text-text-tertiary uppercase">Accepted Networks</span>
+<span class="font-label-md text-label-md text-primary font-bold">Visa • Mastercard • RuPay • Amex Corporate</span>
+</div>
+<span class="material-symbols-outlined text-[20px] text-secondary">encrypted</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div>
+<label class="font-label-caps text-label-caps text-text-secondary uppercase block mb-1" for="card-holder">Corporate Cardholder Name</label>
+<input class="w-full bg-surface-subtle text-on-surface px-space-md py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-card" id="card-holder" type="text" value="RAHUL CHOPRA"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-text-secondary uppercase block mb-1" for="card-number">Card Number (Tokenized Rail)</label>
+<div class="relative">
+<input class="w-full bg-surface-subtle text-on-surface px-space-md py-2.5 rounded-lg font-mono text-body-md focus:outline-none focus:bg-surface-card" id="card-number" type="text" value="4315 •••• •••• 8920"/>
+<span class="absolute right-3 top-2.5 font-label-caps text-label-caps text-secondary font-bold">VISA CORP</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="font-label-caps text-label-caps text-text-secondary uppercase block mb-1" for="card-expiry">Expiry Date</label>
+<input class="w-full bg-surface-subtle text-on-surface px-space-md py-2.5 rounded-lg font-mono text-body-md focus:outline-none focus:bg-surface-card" id="card-expiry" type="text" value="11 / 28"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-text-secondary uppercase block mb-1" for="card-cvv">CVV / CVC</label>
+<input class="w-full bg-surface-subtle text-on-surface px-space-md py-2.5 rounded-lg font-mono text-body-md focus:outline-none focus:bg-surface-card" id="card-cvv" maxlength="4" type="password" value="•••"/>
+</div>
+</div>
+<div class="flex items-center gap-space-sm pt-1">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-0 accent-primary" id="tokenization" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-text-secondary cursor-pointer" for="tokenization">
+                      Securely tokenize card under Reserve Bank of India (RBI) circular guidelines
+                    </label>
+</div>
+</div>
+</div>
+<!-- 3. NETBANKING SECTION (Hidden by default) -->
+<div class="payment-method-panel hidden flex-col gap-space-md" id="method-content-netbanking">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase font-bold tracking-wider">DIRECT REVENUE GATEWAYS</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-1">Select Tier-1 Institutional Banking Partner</h3>
+<p class="font-body-sm text-body-sm text-text-secondary">Direct authorization for Corporate and Retail NetBanking accounts.</p>
+</div>
+<!-- 6 Major Indian Banks Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-space-sm">
+<button class="bank-pill flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle hover:bg-surface-container transition-all text-left" type="button">
+<span class="font-label-md text-label-md font-bold text-primary">HDFC Bank</span>
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">radio_button_checked</span>
+</button>
+<button class="bank-pill flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle hover:bg-surface-container transition-all text-left" type="button">
+<span class="font-label-md text-label-md font-bold text-on-surface">ICICI Bank</span>
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">radio_button_unchecked</span>
+</button>
+<button class="bank-pill flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle hover:bg-surface-container transition-all text-left" type="button">
+<span class="font-label-md text-label-md font-bold text-on-surface">State Bank (SBI)</span>
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">radio_button_unchecked</span>
+</button>
+<button class="bank-pill flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle hover:bg-surface-container transition-all text-left" type="button">
+<span class="font-label-md text-label-md font-bold text-on-surface">Axis Bank</span>
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">radio_button_unchecked</span>
+</button>
+<button class="bank-pill flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle hover:bg-surface-container transition-all text-left" type="button">
+<span class="font-label-md text-label-md font-bold text-on-surface">Kotak Mahindra</span>
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">radio_button_unchecked</span>
+</button>
+<button class="bank-pill flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle hover:bg-surface-container transition-all text-left" type="button">
+<span class="font-label-md text-label-md font-bold text-on-surface">IndusInd Bank</span>
+<span class="material-symbols-outlined text-[16px] text-text-tertiary">radio_button_unchecked</span>
+</button>
+</div>
+<div class="pt-1">
+<label class="font-label-caps text-label-caps text-text-secondary uppercase block mb-1" for="all-banks-select">Or Search All 50+ Other Scheduled Indian Banks</label>
+<select class="w-full bg-surface-subtle text-on-surface px-space-md py-2.5 rounded-lg font-body-md text-body-md focus:outline-none" id="all-banks-select">
+<option>Select your bank institution...</option>
+<option>Bank of Baroda</option>
+<option>Punjab National Bank</option>
+<option>Standard Chartered India</option>
+<option>Yes Bank Corporate</option>
+<option>Federal Bank</option>
+<option>IDFC FIRST Bank</option>
+</select>
+</div>
+</div>
+<!-- 4. 1-CLICK ENTERPRISE PAY SECTION (Hidden by default) -->
+<div class="payment-method-panel hidden flex-col gap-space-md" id="method-content-oneclick">
+<div class="bg-surface-subtle p-space-md rounded-xl flex items-start gap-space-md">
+<span class="material-symbols-outlined text-[32px] text-primary shrink-0">speed</span>
+<div>
+<span class="font-label-caps text-label-caps text-secondary font-bold uppercase tracking-wider">RAZORPAY ENTERPRISE COHORT RAIL</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mt-1">Instant Single-Click Checkout</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">
+                      Leverage pre-authenticated corporate credentials through Razorpay Magic Checkout or Enterprise SSO nodal accounts.
+                    </p>
+</div>
+</div>
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-text-secondary">Enterprise Phone</span>
+<span class="font-label-md text-label-md text-primary font-mono">+91 98450 •••••</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-text-secondary">Saved Enterprise Cards</span>
+<span class="font-body-sm text-body-sm text-secondary font-semibold">2 Corporate Cards Linked</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-text-secondary">Two-Factor Authentication</span>
+<span class="font-body-sm text-body-sm text-text-primary">OTP will be dispatched automatically</span>
+</div>
+</div>
+</div>
+<!-- UNIFIED SUBMIT & AUTHORIZE BUTTON -->
+<div class="pt-space-lg flex flex-col gap-space-xs">
+<button class="w-full bg-primary-container hover:bg-emerald-deep text-on-primary font-headline-sm text-headline-sm py-space-md px-space-lg rounded-xl shadow-[0_4px_16px_rgba(6,78,59,0.3)] transition-all flex items-center justify-center gap-space-sm group" id="pay-button" type="button">
+<span>AUTHORIZE &amp; PAY ₹1,770.00</span>
+<span class="material-symbols-outlined text-[24px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<div class="text-center">
+<p class="font-body-sm text-body-sm text-text-tertiary">
+                    By confirming settlement, you authorize monthly recurring syndicate billing. Cancel anytime without lock-in from Member Settings.
+                  </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Trust Badges Strip -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-space-xs">
+<div class="bg-surface-card p-3 rounded-lg shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">security</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary font-bold">PCI-DSS V4.0</p>
+<p class="font-body-sm text-[10px] text-text-tertiary">Level 1 Compliant</p>
+</div>
+</div>
+<div class="bg-surface-card p-3 rounded-lg shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">verified</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary font-bold">NPCI UPI</p>
+<p class="font-body-sm text-[10px] text-text-tertiary">Verified Nodal Rail</p>
+</div>
+</div>
+<div class="bg-surface-card p-3 rounded-lg shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">account_balance_wallet</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary font-bold">RAZORPAY</p>
+<p class="font-body-sm text-[10px] text-text-tertiary">Enterprise Partner</p>
+</div>
+</div>
+<div class="bg-surface-card p-3 rounded-lg shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">assignment_turned_in</span>
+<div>
+<p class="font-label-caps text-label-caps text-primary font-bold">GST CREDITS</p>
+<p class="font-body-sm text-[10px] text-text-tertiary">Instant ITC Filing</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Confidentiality Protocol Notice Banner -->
+<section class="w-full bg-surface-container-high/40 py-space-md px-gutter mt-space-lg">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-sm text-text-secondary">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">gavel</span>
+<span class="font-body-sm text-body-sm">
+          Strict Non-Disclosure Covenant: Admission tokens are non-transferable and strictly bound to Starlight Robotics Pvt Ltd.
+        </span>
+</div>
+<div class="flex items-center gap-space-md font-label-caps text-label-caps text-primary font-semibold uppercase">
+<span>SYNDICATE BYLAWS VERIFIED</span>
+<span class="text-outline-variant">•</span>
+<span>NEW DELHI CHAPTER</span>
+</div>
+</div>
+</section>
+<script>
+    // Tab Switching Logic
+    function switchMethod(methodId) {
+      const tabs = ['upi', 'cards', 'netbanking', 'oneclick'];
+      
+      tabs.forEach(tab => {
+        const btn = document.getElementById('tab-' + tab);
+        const panel = document.getElementById('method-content-' + tab);
+        
+        if (tab === methodId) {
+          btn.classList.add('bg-primary-container', 'text-on-primary');
+          btn.classList.remove('bg-surface-subtle', 'text-on-surface');
+          panel.classList.remove('hidden');
+          panel.classList.add('flex');
+        } else {
+          btn.classList.remove('bg-primary-container', 'text-on-primary');
+          btn.classList.add('bg-surface-subtle', 'text-on-surface');
+          panel.classList.add('hidden');
+          panel.classList.remove('flex');
+        }
+      });
+    }
+
+    // Reservation Countdown Timer Simulation
+    (function initTimer() {
+      let duration = 14 * 60 + 58;
+      const display = document.getElementById('reservation-timer');
+      const qrDisplay = document.getElementById('qr-refresh');
+      let qrDuration = 3 * 60 + 45;
+
+      setInterval(function () {
+        if (duration > 0) {
+          duration--;
+          const minutes = Math.floor(duration / 60);
+          const seconds = duration % 60;
+          if (display) {
+            display.textContent = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+          }
+        }
+        
+        if (qrDuration > 0) {
+          qrDuration--;
+          const qrMin = Math.floor(qrDuration / 60);
+          const qrSec = qrDuration % 60;
+          if (qrDisplay) {
+            qrDisplay.textContent = (qrMin < 10 ? '0' : '') + qrMin + ':' + (qrSec < 10 ? '0' : '') + qrSec;
+          }
+        } else {
+          qrDuration = 3 * 60 + 45;
+        }
+      }, 1000);
+    })();
+
+    // Interactive Feedback on Authorize Button
+    const payBtn = document.getElementById('pay-button');
+    if (payBtn) {
+      payBtn.addEventListener('click', function() {
+        const originalContent = this.innerHTML;
+        this.innerHTML = '<span class="material-symbols-outlined text-[24px] animate-spin">progress_activity</span><span>COMMUNICATING WITH NPCI NODAL RAIL...</span>';
+        this.classList.add('opacity-90');
+        setTimeout(() => {
+          this.innerHTML = '<span class="material-symbols-outlined text-[24px]">verified</span><span>AUTHORIZATION DISPATCHED (CHECK UPI APP)</span>';
+          this.classList.remove('bg-primary-container');
+          this.classList.add('bg-emerald-deep');
+        }, 1600);
+      });
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest"><div class="max-w-7xl mx-auto px-gutter pt-space-xl pb-space-lg"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-gutter-lg pb-space-xl"><div class="lg:col-span-2 flex flex-col gap-space-md pr-space-lg"><div class="flex items-center gap-space-sm"><img alt="Founder for Founder Emblem" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VJrUXFoyBk8PAlkwYzZJHi2wwT8NQ923PaTISzdAognyxCGTE5p1hm_srRZdnB_UgaxsV7d5JT794SEo1cseeLPEMkNGexspOtUNXcl74hiLGn6MJEB0c1FkFfXo8ethnC3SUUv4wU3TV7vjWjmNsEn5LhhbwOznyw8tJS0Dks325iYibC6CAiCqL8pgh4nArmVFZG0Rw7_mOb6d4m_GDf3AIvL0I1-NFllgBavVGtw0T3R4gzdg_xPAA"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-primary font-semibold">FOUNDER FOR FOUNDER</span><span class="font-label-caps text-label-caps tracking-widest text-secondary">Create. Connect. Collaborate.</span></div></div><p class="font-body-md text-body-md text-text-secondary leading-relaxed">A curated business network connecting founders, entrepreneurs, business owners, and professionals across India. Powered by snalts.co</p><div class="flex items-center gap-space-xs text-secondary"><span class="material-symbols-outlined text-[18px]">shield</span><span class="font-label-caps text-label-caps tracking-wider">VERIFIED EXECUTIVE COHORT</span></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-caps text-label-caps tracking-widest text-primary uppercase font-bold mb-space-xs">Navigation</h3><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="about" href="#">About Us</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="experiences" href="#">Experiences</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="faqs" href="#">FAQs</a></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-caps text-label-caps tracking-widest text-primary uppercase font-bold mb-space-xs">Contact &amp; Entity</h3><div class="flex flex-col gap-space-xs"><span class="font-label-caps text-label-caps text-text-tertiary uppercase">Direct Inquiries</span><a class="font-body-md text-body-md text-primary font-medium hover:underline" href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a></div><div class="flex flex-col gap-space-xs mt-space-xs"><span class="font-label-caps text-label-caps text-text-tertiary uppercase">Studio Platform</span><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" href="https://snalts.co" target="_blank">snalts.co</a></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-caps text-label-caps tracking-widest text-primary uppercase font-bold mb-space-xs">Legal Disclosures</h3><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="terms-and-conditions" href="#">Terms &amp; Conditions</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="privacy-policy" href="#">Privacy Policy</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="refund-and-cancellation-policy" href="#">Refund &amp; Cancellation Policy</a><a class="font-body-md text-body-md text-text-secondary hover:text-primary transition-colors" data-path="community-guidelines" href="#">Community Guidelines</a><div class="mt-space-sm pt-space-sm"><span class="font-label-caps text-label-caps text-text-tertiary uppercase block mb-space-xs">Official Channels</span><div class="flex items-center gap-space-md"><a class="font-body-sm text-body-sm text-text-secondary hover:text-primary transition-colors" data-path="instagram" href="#">Instagram</a><a class="font-body-sm text-body-sm text-text-secondary hover:text-primary transition-colors" data-path="facebook" href="#">Facebook</a><a class="font-body-sm text-body-sm text-text-secondary hover:text-primary transition-colors" data-path="linkedin" href="#">LinkedIn</a></div></div></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md text-center sm:text-left"><p class="font-body-sm text-body-sm text-text-tertiary">© 2026 Founder for Founder. All rights reserved. Powered by snalts.co</p><div class="flex items-center gap-space-sm text-text-tertiary font-body-sm text-body-sm"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Private Membership Guild • India Chapter</span></div></div></div></footer></body></html>

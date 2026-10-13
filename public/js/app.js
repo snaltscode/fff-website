@@ -805,7 +805,17 @@ function renderAuthenticatedUI(data) {
 
   const name = data.profile ? data.profile.full_name : data.user.email;
   if (document.getElementById('navUserName')) document.getElementById('navUserName').innerText = `Welcome, ${name}`;
-  if (document.getElementById('dashboardWelcome')) document.getElementById('dashboardWelcome').innerText = `Welcome, ${name}`;
+  if (document.getElementById('dashboardWelcome')) document.getElementById('dashboardWelcome').innerText = `Welcome back, ${name}`;
+  if (document.getElementById('portalUserName')) document.getElementById('portalUserName').innerText = name;
+  if (document.getElementById('accName')) document.getElementById('accName').innerText = name;
+  if (data.profile && data.profile.business_name) {
+    const roleText = `${data.profile.designation || 'Founder'} • ${data.profile.business_name}`;
+    if (document.getElementById('portalUserRole')) document.getElementById('portalUserRole').innerText = roleText;
+    if (document.getElementById('accRole')) document.getElementById('accRole').innerText = roleText;
+  }
+  const initials = (name || 'Member').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'ME';
+  if (document.getElementById('portalUserAvatar')) document.getElementById('portalUserAvatar').innerText = initials;
+  if (document.getElementById('accAvatar')) document.getElementById('accAvatar').innerText = initials;
 
   const isAdmin = data.user && (data.user.role === 'ADMIN' || data.user.role === 'SUPER_ADMIN');
   if (document.getElementById('adminTabLink')) document.getElementById('adminTabLink').style.display = isAdmin ? 'flex' : 'none';
@@ -868,19 +878,46 @@ function switchPortalTab(tabName, el) {
   document.getElementById('publicPage').style.display = 'none';
   document.getElementById('portalPage').classList.add('active');
 
+  // Support both canonical tab names and Stitch slug aliases
+  const aliasMap = {
+    'discover-founders': 'directory',
+    'needs-and-wants': 'needs',
+    'leads-and-crm': 'crm',
+    'one-on-one-meetings': 'meetings',
+    'founders-chat': 'chat',
+    'events-and-experiences': 'events',
+    'account-and-billing': 'account'
+  };
+  const canonicalTab = aliasMap[tabName] || tabName;
+
   document.querySelectorAll('.portal-tab').forEach(t => t.style.display = 'none');
   document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
 
-  const tab = document.getElementById(`tab-${tabName}`);
+  // Update top interactive view switcher tab buttons if present
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm', 'font-semibold');
+    btn.classList.add('text-on-surface-variant');
+  });
+  const ribbonBtn = document.querySelector(`.tab-btn[data-tab-target="${canonicalTab}"]`) ||
+                    document.querySelector(`.tab-btn[data-tab-target="${tabName}"]`);
+  if (ribbonBtn) {
+    ribbonBtn.classList.remove('text-on-surface-variant');
+    ribbonBtn.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm', 'font-semibold');
+  }
+
+  const tab = document.getElementById(`tab-${canonicalTab}`);
   if (tab) {
     tab.style.display = 'block';
   } else {
-    console.error("Portal tab not found:", tabName);
+    console.error("Portal tab not found:", canonicalTab);
   }
 
   let activeEl = el;
   if (!activeEl) {
-    activeEl = Array.from(document.querySelectorAll('.sidebar-item')).find(item => item.getAttribute('onclick')?.includes(`'${tabName}'`));
+    activeEl = Array.from(document.querySelectorAll('.sidebar-item')).find(item => 
+      item.getAttribute('onclick')?.includes(`'${canonicalTab}'`) ||
+      item.getAttribute('onclick')?.includes(`'${tabName}'`)
+    );
   }
   if (activeEl) {
     activeEl.classList.add('active');
@@ -891,16 +928,16 @@ function switchPortalTab(tabName, el) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  if (tabName === 'admin') loadAdminTab();
-  else if (tabName === 'dashboard') loadDashboardTab();
-  else if (tabName === 'directory') loadDirectoryTab();
-  else if (tabName === 'needs') loadNeedsTab();
-  else if (tabName === 'crm') loadCRMTab();
-  else if (tabName === 'attendance') loadAttendanceTab();
-  else if (tabName === 'meetings') loadMeetingsTab();
-  else if (tabName === 'chat') loadChatMessages();
-  else if (tabName === 'events') loadEventsTab();
-  else if (tabName === 'challenge') loadChallengeTab();
+  if (canonicalTab === 'admin') loadAdminTab();
+  else if (canonicalTab === 'dashboard') loadDashboardTab();
+  else if (canonicalTab === 'directory') loadDirectoryTab();
+  else if (canonicalTab === 'needs') loadNeedsTab();
+  else if (canonicalTab === 'crm') loadCRMTab();
+  else if (canonicalTab === 'attendance') loadAttendanceTab();
+  else if (canonicalTab === 'meetings') loadMeetingsTab();
+  else if (canonicalTab === 'chat') loadChatMessages();
+  else if (canonicalTab === 'events') loadEventsTab();
+  else if (canonicalTab === 'challenge') loadChallengeTab();
 }
 
 // Dashboard Tab Loader with SWR Instant Rendering & Consolidated Single-Roundtrip API
