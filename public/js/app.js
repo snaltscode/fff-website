@@ -854,6 +854,9 @@ async function handleLoginSubmit(event) {
 
 // Auth Session Check
 async function checkAuthSession() {
+  if (!state.token) {
+    return;
+  }
   try {
     const res = await fetch('/api/auth/me', {
       headers: { 'Authorization': `Bearer ${state.token}` }
