@@ -214,19 +214,97 @@ function closeModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.classList.remove('active');
 }
-function openShowInterestModal() { openModal('showInterestModal'); }
+function openShowInterestModal() {
+  if (typeof jumpToAppStep === 'function') jumpToAppStep(1);
+  openModal('showInterestModal');
+}
 function openLoginModal() { openModal('loginModal'); }
 function openPostNeedModal() { openModal('postNeedModal'); }
 
 // Segmented Choice Input for Application Modal
 function setApplicantType(type) {
   state.applicantType = type;
-  document.getElementById('app_applicant_type').value = type;
+  const hidden = document.getElementById('app_applicant_type');
+  if (hidden) hidden.value = type;
   document.querySelectorAll('.segmented-option').forEach(opt => opt.classList.remove('active'));
 
-  if (type === 'Founder') document.getElementById('segFounder').classList.add('active');
-  else if (type === 'Business Owner') document.getElementById('segBizOwner').classList.add('active');
-  else if (type === 'Professional') document.getElementById('segProfessional').classList.add('active');
+  if (type === 'Founder') {
+    const el = document.getElementById('segFounder');
+    if (el) el.classList.add('active');
+  } else if (type === 'Business Owner') {
+    const el = document.getElementById('segBizOwner');
+    if (el) el.classList.add('active');
+  } else if (type === 'Professional') {
+    const el = document.getElementById('segProfessional');
+    if (el) el.classList.add('active');
+  }
+}
+
+// Step navigation for Admissions Questionnaire
+function jumpToAppStep(step) {
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById(`appStep${i}`);
+    const pill = document.getElementById(`stepPill${i}`);
+    if (el) el.style.display = (i === step) ? 'block' : 'none';
+    if (pill) {
+      const numSpan = pill.querySelector('span');
+      if (i === step) {
+        pill.classList.add('active');
+        pill.style.color = '#064E3B';
+        if (numSpan) {
+          numSpan.style.background = '#064E3B';
+          numSpan.style.color = '#FAF8F5';
+        }
+      } else {
+        pill.classList.remove('active');
+        pill.style.color = '#6B7280';
+        if (numSpan) {
+          numSpan.style.background = '#E5E7EB';
+          numSpan.style.color = '#4B5563';
+        }
+      }
+    }
+  }
+}
+
+function nextAppStep(current) {
+  if (current === 1) {
+    const name = document.getElementById('app_full_name');
+    const desig = document.getElementById('app_designation');
+    const email = document.getElementById('app_email');
+    const phone = document.getElementById('app_phone');
+    if (!name?.value.trim() || !desig?.value.trim() || !email?.value.trim() || !phone?.value.trim()) {
+      alert('Please complete your name, executive role, official work email, and WhatsApp number before proceeding.');
+      return;
+    }
+  } else if (current === 2) {
+    const biz = document.getElementById('app_business_name');
+    if (!biz?.value.trim()) {
+      alert('Please enter your registered entity or brand name.');
+      return;
+    }
+  } else if (current === 3) {
+    const web = document.getElementById('app_website');
+    const li = document.getElementById('app_linkedin');
+    if (!web?.value.trim() || !li?.value.trim()) {
+      alert('Please provide your company website URL and LinkedIn profile URL.');
+      return;
+    }
+  } else if (current === 4) {
+    const offer = document.getElementById('app_what_offer');
+    const need = document.getElementById('app_what_need');
+    if (!offer?.value.trim() || !need?.value.trim()) {
+      alert('Please answer the value contribution and operational bottleneck questions.');
+      return;
+    }
+  }
+  jumpToAppStep(current + 1);
+}
+
+function prevAppStep(current) {
+  if (current > 1) {
+    jumpToAppStep(current - 1);
+  }
 }
 
 // Persistent Stale-While-Revalidate (SWR) LocalStorage Cache
