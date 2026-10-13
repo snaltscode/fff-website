@@ -1,5 +1,6 @@
 async function testLiveHtml() {
-  const res = await fetch('http://localhost:3009/');
+  const port = process.env.PORT || 3000;
+  const res = await fetch(`http://localhost:${port}/`);
   const html = await res.text();
   console.log('HTTP Status:', res.status);
   console.log('HTML Length:', html.length);

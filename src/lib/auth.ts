@@ -8,7 +8,7 @@ interface SessionData {
   lastVerified: number;
 }
 
-const SESSIONS = new Map<string, SessionData>();
+const SESSIONS: Map<string, SessionData> = (globalThis as any).__F4F_SESSIONS__ || ((globalThis as any).__F4F_SESSIONS__ = new Map<string, SessionData>());
 
 export function hashPassword(password: string, salt?: string): string {
   const actualSalt = salt || crypto.randomBytes(16).toString('hex');

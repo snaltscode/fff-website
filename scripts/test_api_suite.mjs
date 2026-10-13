@@ -1,4 +1,5 @@
-const BASE = 'http://localhost:3009';
+const port = process.env.PORT || 3000;
+const BASE = `http://localhost:${port}`;
 
 async function runTests() {
   console.log('=== RUNNING END-TO-END VERIFICATION SUITE ===\n');

@@ -23,7 +23,7 @@ cmd_desktop = [
     *extra_flags,
     "--window-size=1280,2000",
     f"--screenshot={desktop_png}",
-    "http://localhost:3009/"
+    "http://localhost:3000/"
 ]
 
 print("Capturing desktop screenshot...")
@@ -37,7 +37,7 @@ cmd_mobile = [
     *extra_flags,
     "--window-size=390,1600",
     f"--screenshot={mobile_png}",
-    "http://localhost:3009/"
+    "http://localhost:3000/"
 ]
 
 print("Capturing mobile screenshot...")

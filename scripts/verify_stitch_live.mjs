@@ -1,5 +1,6 @@
 async function verifyLive() {
-  const res = await fetch('http://localhost:3009/');
+  const port = process.env.PORT || 3000;
+  const res = await fetch(`http://localhost:${port}/`);
   const html = await res.text();
   const checks = [
     ['F4F Logo / Monogram', html.includes('>F4F<')],
