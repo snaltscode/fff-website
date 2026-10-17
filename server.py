@@ -1053,6 +1053,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Valid email is required from Google account.'}, 400)
 
+            admin_emails = ['admin@founderforfounder.in'] + [e.strip().lower() for e in os.environ.get('ADMIN_EMAILS', '').split(',') if e.strip()]
+            is_admin_email = email in admin_emails
+
             # Check if user already exists
             user = conn.execute("SELECT * FROM users WHERE email = ? OR google_id = ?", (email, google_id)).fetchone()
 
@@ -1061,22 +1064,24 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.execute("""
                     UPDATE users SET 
                         google_id = COALESCE(google_id, ?),
+                        role = CASE WHEN ? THEN 'ADMIN' ELSE role END,
                         auth_provider = CASE WHEN auth_provider = 'LOCAL' AND google_id IS NULL THEN 'GOOGLE' ELSE auth_provider END,
                         email_verified = 1,
                         email_verified_at = COALESCE(email_verified_at, CURRENT_TIMESTAMP),
                         avatar_url = COALESCE(avatar_url, ?),
                         updated_at = CURRENT_TIMESTAMP
                     WHERE id = ?
-                """, (google_id, picture, user_id))
+                """, (google_id, 1 if is_admin_email else 0, picture, user_id))
             else:
                 user_id = str(uuid.uuid4())
+                user_role = 'ADMIN' if is_admin_email else 'MEMBER'
                 random_pwd_hash = database.hash_password(secrets.token_urlsafe(32))
                 conn.execute("""
                     INSERT INTO users (
                         id, email, password_hash, role, status, 
                         email_verified, email_verified_at, google_id, auth_provider, avatar_url
-                    ) VALUES (?, ?, ?, 'MEMBER', 'VERIFIED', 1, CURRENT_TIMESTAMP, ?, 'GOOGLE', ?)
-                """, (user_id, email, random_pwd_hash, google_id, picture))
+                    ) VALUES (?, ?, ?, ?, 'VERIFIED', 1, CURRENT_TIMESTAMP, ?, 'GOOGLE', ?)
+                """, (user_id, email, random_pwd_hash, user_role, google_id, picture))
 
                 # Create default profile
                 conn.execute("""

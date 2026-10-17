@@ -68,6 +68,12 @@ function checkURLHash() {
       openActivationModalWithToken(token);
     }
   }
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('admin') === '1' || urlParams.get('login') === 'admin') {
+    setTimeout(openAdminLoginModal, 300);
+  } else if (urlParams.get('login') === '1' || urlParams.get('login') === 'member') {
+    setTimeout(openLoginModal, 300);
+  }
 }
 
 // Throttled Scroll Event Listeners for 60/120fps Smooth Scrolling
@@ -616,6 +622,13 @@ async function handleGoogleCredentialResponse(response) {
     closeModal('loginModal');
     closeModal('googleDemoModal');
     renderAuthenticatedUI(data);
+
+    if (data.user && (data.user.role === 'ADMIN' || data.user.role === 'SUPER_ADMIN')) {
+      setTimeout(() => {
+        const navAdminBtn = document.getElementById('navAdminBtn');
+        switchPortalTab('admin', navAdminBtn);
+      }, 120);
+    }
   } catch (err) {
     alert("Google authentication request failed. Please check your network connection.");
   }
@@ -650,6 +663,13 @@ async function handleDemoGoogleLogin(event) {
     closeModal('loginModal');
     closeModal('googleDemoModal');
     renderAuthenticatedUI(data);
+
+    if (data.user && (data.user.role === 'ADMIN' || data.user.role === 'SUPER_ADMIN')) {
+      setTimeout(() => {
+        const navAdminBtn = document.getElementById('navAdminBtn');
+        switchPortalTab('admin', navAdminBtn);
+      }, 120);
+    }
   } catch (err) {
     alert("Failed to complete Google sign-in.");
   }
@@ -681,7 +701,95 @@ async function saveGoogleClientIdFromModal() {
   }
 }
 
-// Login
+// Admin Login Modal Switching & Quick-Fill Helpers
+function openAdminLoginModal() {
+  if (typeof closeMobileMenu === 'function') closeMobileMenu();
+  openLoginModal();
+  switchLoginModalTab('admin');
+}
+
+function switchLoginModalTab(tab) {
+  const btnMember = document.getElementById('tabBtnMember');
+  const btnAdmin = document.getElementById('tabBtnAdmin');
+  const sectionMember = document.getElementById('memberLoginSection');
+  const sectionAdmin = document.getElementById('adminLoginSection');
+  const title = document.getElementById('loginModalTitle');
+  const subtitle = document.getElementById('loginModalSubtitle');
+
+  if (tab === 'admin') {
+    if (btnMember) {
+      btnMember.style.background = 'transparent';
+      btnMember.style.color = '#5A6260';
+    }
+    if (btnAdmin) {
+      btnAdmin.style.background = '#003527';
+      btnAdmin.style.color = '#FFFFFF';
+    }
+    if (sectionMember) sectionMember.style.display = 'none';
+    if (sectionAdmin) sectionAdmin.style.display = 'block';
+    if (title) title.innerText = 'Administrator Console';
+    if (subtitle) subtitle.innerText = 'Secure access for Founder for Founder leadership and operators.';
+  } else {
+    if (btnMember) {
+      btnMember.style.background = '#003527';
+      btnMember.style.color = '#FFFFFF';
+    }
+    if (btnAdmin) {
+      btnAdmin.style.background = 'transparent';
+      btnAdmin.style.color = '#5A6260';
+    }
+    if (sectionMember) sectionMember.style.display = 'block';
+    if (sectionAdmin) sectionAdmin.style.display = 'none';
+    if (title) title.innerText = 'Executive Member Access';
+    if (subtitle) subtitle.innerText = 'Sign in with your verified Google account or credentials.';
+  }
+}
+
+function quickFillAdminCredentials() {
+  const emailInput = document.getElementById('admin_login_email');
+  const pwdInput = document.getElementById('admin_login_password');
+  if (emailInput) emailInput.value = 'admin@founderforfounder.in';
+  if (pwdInput) pwdInput.value = 'Admin@123';
+}
+
+async function handleAdminLoginSubmit(event) {
+  event.preventDefault();
+  const emailInput = document.getElementById('admin_login_email');
+  const pwdInput = document.getElementById('admin_login_password');
+  const email = (emailInput ? emailInput.value : 'admin@founderforfounder.in').trim();
+  const password = pwdInput ? pwdInput.value : 'Admin@123';
+
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('f4f_token', data.token);
+
+    closeModal('loginModal');
+    renderAuthenticatedUI(data);
+
+    // Auto-navigate to Admin Console Tab
+    setTimeout(() => {
+      const navAdminBtn = document.getElementById('navAdminBtn');
+      switchPortalTab('admin', navAdminBtn);
+    }, 120);
+  } catch (err) {
+    alert("Admin login failed. Please verify credentials.");
+  }
+}
+
+// Member Login
 async function handleLoginSubmit(event) {
   event.preventDefault();
   const email = document.getElementById('login_email').value.trim();
@@ -703,6 +811,13 @@ async function handleLoginSubmit(event) {
 
     closeModal('loginModal');
     renderAuthenticatedUI(data);
+
+    if (data.user && (data.user.role === 'ADMIN' || data.user.role === 'SUPER_ADMIN')) {
+      setTimeout(() => {
+        const navAdminBtn = document.getElementById('navAdminBtn');
+        switchPortalTab('admin', navAdminBtn);
+      }, 120);
+    }
   } catch (err) {
     alert("Login failed.");
   }

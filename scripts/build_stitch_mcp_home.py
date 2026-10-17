@@ -44,10 +44,222 @@ def build_home():
     portal_html = backup_index[portal_start:portal_end]
     other_modals = backup_index[p_modal2:modals_end]
 
+    # Executive Member & Admin Login Modal + Google Auth Modal
+    executive_login_and_admin_modals_html = '''<!-- MODAL 4: MEMBER & ADMIN LOGIN (STITCH REVISED EXECUTIVE GUILD) -->
+  <div class="modal-overlay" id="loginModal" style="display:none; align-items: center; justify-content: center; padding: 1.5rem 1rem;">
+    <div class="modal-content" style="max-width: 480px; width: 100%; margin: auto; background: #FAF8F5; border: 1px solid #E8E4DC; border-radius: 12px; box-shadow: 0 20px 40px -10px rgba(6, 78, 59, 0.2); overflow: hidden; padding: 0;">
+      
+      <!-- Modal Header -->
+      <div style="background: linear-gradient(135deg, #003527 0%, #064E3B 100%); color: #FAF8F5; padding: 1.5rem 2rem; position: relative; text-align: center;">
+        <button class="modal-close" onclick="closeModal('loginModal')" style="position: absolute; top: 1rem; right: 1rem; color: #FAF8F5; background: rgba(255,255,255,0.12); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; cursor: pointer; transition: all 0.2s;">&times;</button>
+        
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem auto;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        </div>
+        
+        <h2 id="loginModalTitle" style="font-family: 'Domine', serif; font-size: 1.6rem; font-weight: 700; color: #FAF8F5; margin: 0 0 0.35rem 0;">
+          Executive Portal Access
+        </h2>
+        <p id="loginModalSubtitle" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; color: #D1FAE5; margin: 0;">
+          Sign in to the Founder for Founder network.
+        </p>
+      </div>
+
+      <!-- Modal Body -->
+      <div style="padding: 1.5rem 2rem;">
+        
+        <!-- Tab Selector: Member vs Admin -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; background: #eaedff; padding: 4px; border-radius: 8px; margin-bottom: 1.25rem;">
+          <button type="button" id="tabBtnMember" onclick="switchLoginModalTab('member')" style="padding: 9px 12px; border: none; border-radius: 6px; font-weight: 700; font-size: 0.84rem; cursor: pointer; transition: all 0.2s; background: #003527; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span class="material-symbols-outlined text-sm">person</span>
+            Member Login
+          </button>
+          <button type="button" id="tabBtnAdmin" onclick="switchLoginModalTab('admin')" style="padding: 9px 12px; border: none; border-radius: 6px; font-weight: 700; font-size: 0.84rem; cursor: pointer; transition: all 0.2s; background: transparent; color: #5A6260; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span class="material-symbols-outlined text-sm">admin_panel_settings</span>
+            Admin Access
+          </button>
+        </div>
+
+        <!-- SECTION 1: MEMBER LOGIN -->
+        <div id="memberLoginSection">
+          <!-- GOOGLE AUTHENTICATION SECTION -->
+          <div style="margin-bottom: 1.25rem;">
+            <div id="googleSignInBtn" style="display: flex; justify-content: center; margin-bottom: 0.5rem; min-height: 44px;"></div>
+            <button type="button" class="btn-google-auth" id="customGoogleAuthBtn" onclick="initiateGoogleLogin()" style="width: 100%; height: 44px; border-radius: 6px; border: 1px solid #D1D5DB; background: #FFFFFF; font-weight: 600; font-size: 0.88rem; color: #1A1A1A; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+              <svg class="google-logo-svg" width="18" height="18" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          </div>
+
+          <!-- SEPARATOR -->
+          <div class="auth-divider" style="display: flex; align-items: center; text-align: center; margin: 1.25rem 0;">
+            <span style="flex: 1; border-bottom: 1px solid #EDE9E1;"></span>
+            <span style="padding: 0 10px; font-size: 0.72rem; font-weight: 700; color: #7E8784; text-transform: uppercase;">or sign in with email</span>
+            <span style="flex: 1; border-bottom: 1px solid #EDE9E1;"></span>
+          </div>
+
+          <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700; color: #1A1A1A;">Email Address</label>
+              <input type="email" id="login_email" class="form-input" required placeholder="name@yourcompany.com" style="border-radius: 6px; height: 44px;">
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <label class="form-label" style="font-size: 0.82rem; font-weight: 700; color: #1A1A1A; margin: 0;">Password</label>
+                <button type="button" onclick="handleSendLoginOtp()" style="background: none; border: none; padding: 0; font-size: 0.78rem; color: #064E3B; font-weight: 700; cursor: pointer; text-decoration: underline;">Sign in with Email OTP</button>
+              </div>
+              <input type="password" id="login_password" class="form-input" placeholder="••••••••" style="border-radius: 6px; height: 44px;">
+            </div>
+
+            <!-- EMAIL OTP VERIFICATION SECTION -->
+            <div id="loginOtpSection" style="display: none; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 12px; border-radius: 6px; margin-bottom: 1.25rem;">
+              <label class="form-label" style="font-size: 0.8rem; font-weight: 700; color: #064E3B; margin-bottom: 4px;">Enter Verification OTP</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" id="login_otp" class="form-input" placeholder="6-digit code" maxlength="6" style="letter-spacing: 3px; font-weight: 700; text-align: center; border-radius: 6px; height: 40px;">
+                <button type="button" class="btn btn-emerald" style="padding: 0 1.25rem; font-size: 0.82rem; white-space: nowrap; border-radius: 6px; height: 40px; font-weight: 700;" onclick="handleVerifyLoginOtp()">Verify &amp; Enter</button>
+              </div>
+              <div style="font-size: 0.72rem; color: #065F46; margin-top: 6px;">A one-time login code will be sent to your registered email.</div>
+            </div>
+
+            <button type="submit" class="btn btn-emerald" style="width: 100%; justify-content: center; height: 44px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;">
+              LOGIN TO MEMBER PORTAL &rarr;
+            </button>
+          </form>
+
+          <div style="margin-top: 1.25rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: #5A6260;">
+            <a href="javascript:void(0)" onclick="switchLoginModalTab('admin')" style="color: #003527; font-weight: 700; text-decoration: underline;">Are you an administrator?</a>
+            <a href="javascript:void(0)" onclick="closeModal('loginModal'); openShowInterestModal();" style="color: #064E3B; font-weight: 700; text-decoration: underline;">Apply to Join</a>
+          </div>
+        </div>
+
+        <!-- SECTION 2: ADMIN LOGIN -->
+        <div id="adminLoginSection" style="display: none;">
+          <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 12px 14px; margin-bottom: 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px;">
+              <span style="display: flex; align-items: center; gap: 6px; color: #166534; font-weight: 700; font-size: 0.82rem;">
+                <span class="material-symbols-outlined text-base">verified_user</span>
+                Administrator Privilege Verification
+              </span>
+              <span style="font-size: 0.7rem; font-weight: 700; background: #DCFCE7; color: #15803D; padding: 2px 6px; border-radius: 4px;">Role: ADMIN</span>
+            </div>
+            <p style="font-size: 0.76rem; color: #14532D; margin: 0; line-height: 1.4;">
+              Access member dossiers, approve admissions, publish executive gatherings, and review platform logs.
+            </p>
+            <button type="button" onclick="quickFillAdminCredentials()" style="margin-top: 8px; width: 100%; height: 32px; background: #166534; color: #ffffff; border: none; border-radius: 6px; font-size: 0.76rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+              <span class="material-symbols-outlined text-sm">flash_on</span>
+              1-Click Fill Admin Credentials (admin@founderforfounder.in)
+            </button>
+          </div>
+
+          <form id="adminLoginForm" onsubmit="handleAdminLoginSubmit(event)">
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700; color: #1A1A1A;">Administrator Email</label>
+              <input type="email" id="admin_login_email" class="form-input" required value="admin@founderforfounder.in" placeholder="admin@founderforfounder.in" style="border-radius: 6px; height: 44px;">
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label class="form-label" style="font-size: 0.82rem; font-weight: 700; color: #1A1A1A;">Administrator Password</label>
+              <input type="password" id="admin_login_password" class="form-input" required value="Admin@123" placeholder="••••••••" style="border-radius: 6px; height: 44px;">
+            </div>
+
+            <button type="submit" class="btn btn-emerald" style="width: 100%; justify-content: center; height: 44px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;">
+              AUTHENTICATE AS ADMINISTRATOR &rarr;
+            </button>
+          </form>
+
+          <div style="margin-top: 1.25rem; text-align: center; font-size: 0.78rem;">
+            <a href="javascript:void(0)" onclick="switchLoginModalTab('member')" style="color: #064E3B; font-weight: 700; text-decoration: underline;">&larr; Switch back to Member Login</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GOOGLE SIGN-IN / CLIENT ID CONFIGURATION -->
+  <div class="modal-overlay" id="googleDemoModal" style="display:none; align-items: center; justify-content: center; padding: 1.5rem 1rem;">
+    <div class="modal-content" style="max-width: 480px; width: 100%; margin: auto; background: #FAF8F5; border: 1px solid #E8E4DC; border-radius: 12px; box-shadow: 0 20px 40px -10px rgba(6, 78, 59, 0.2); overflow: hidden; padding: 0;">
+      <!-- Header -->
+      <div style="background: linear-gradient(135deg, #003527 0%, #064E3B 100%); color: #FAF8F5; padding: 1.5rem 1.75rem; position: relative;">
+        <button class="modal-close" onclick="closeModal('googleDemoModal')" style="position: absolute; top: 1rem; right: 1rem; color: #FAF8F5; background: rgba(255,255,255,0.12); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.15rem; cursor: pointer;">&times;</button>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: #ffffff; display: flex; align-items: center; justify-content: center; shrink-0;">
+            <svg width="22" height="22" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 style="font-family: 'Domine', serif; font-size: 1.25rem; font-weight: 700; color: #FAF8F5; margin: 0;">Sign in with Google</h3>
+            <p style="font-size: 0.8rem; color: #D1FAE5; margin: 2px 0 0 0;">Google OAuth Verification &amp; Instant Access</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div style="padding: 1.5rem 1.75rem;">
+        <!-- Instant Google Account Sign-In -->
+        <form onsubmit="handleDemoGoogleLogin(event)" style="margin-bottom: 1.5rem;">
+          <div style="font-size: 0.82rem; font-weight: 700; color: #064E3B; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">
+            Instant Google Sign-In
+          </div>
+          <div style="margin-bottom: 0.75rem;">
+            <label style="display: block; font-size: 0.78rem; font-weight: 600; color: #1A1A1A; margin-bottom: 4px;">Full Name</label>
+            <input type="text" id="demo_google_name" placeholder="e.g. Anand Krishnamurthy" required style="width: 100%; height: 40px; padding: 0 12px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 0.88rem;">
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.78rem; font-weight: 600; color: #1A1A1A; margin-bottom: 4px;">Google Account Email</label>
+            <input type="email" id="demo_google_email" placeholder="name@gmail.com or corporate domain" required style="width: 100%; height: 40px; padding: 0 12px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 0.88rem;">
+          </div>
+          <button type="submit" class="btn btn-emerald" style="width: 100%; height: 42px; font-weight: 700; font-size: 0.88rem; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <span class="material-symbols-outlined text-base">verified</span>
+            Sign in with this Google Account
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div style="display: flex; align-items: center; text-align: center; margin: 1.25rem 0;">
+          <span style="flex: 1; border-bottom: 1px solid #EDE9E1;"></span>
+          <span style="padding: 0 10px; font-size: 0.72rem; font-weight: 700; color: #7E8784; text-transform: uppercase;">OAuth 2.0 Client Configuration</span>
+          <span style="flex: 1; border-bottom: 1px solid #EDE9E1;"></span>
+        </div>
+
+        <!-- Google Client ID Config for Production -->
+        <div style="background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 8px; padding: 12px 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="font-size: 0.78rem; font-weight: 700; color: #374151;">Google OAuth Client ID</label>
+            <span id="googleClientIdBadge" class="badge badge-active" style="font-size: 0.68rem; padding: 2px 6px;">Not Configured</span>
+          </div>
+          <input type="text" id="modal_google_client_id" placeholder="xxxx.apps.googleusercontent.com" style="width: 100%; height: 36px; padding: 0 10px; border: 1px solid #D1D5DB; border-radius: 6px; font-size: 0.8rem; margin-bottom: 8px; font-family: monospace;">
+          <button type="button" onclick="saveGoogleClientIdFromModal()" style="width: 100%; height: 36px; background: #064E3B; color: #ffffff; border: none; border-radius: 6px; font-weight: 600; font-size: 0.8rem; cursor: pointer;">
+            Save Google Client ID
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>'''
+
+    m_login_start = other_modals.find('id="loginModal"')
+    if m_login_start != -1:
+        p_login_start = other_modals.rfind('<!--', 0, m_login_start)
+        m_post_need = other_modals.find('id="postNeedModal"')
+        p_post_need = other_modals.rfind('<!--', 0, m_post_need)
+        if p_login_start != -1 and p_post_need != -1:
+            other_modals = other_modals[:p_login_start] + executive_login_and_admin_modals_html + '\n\n  ' + other_modals[p_post_need:]
+
     # 5. Enhance <head> with styles.css link, responsive meta, Material Symbols & robust animations
     head_insertion = '''
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style id="f4f-core-styles">
     /* Google Material Symbols Font Protection */
     .material-symbols-outlined,
@@ -376,6 +588,9 @@ def build_home():
         <!-- Public Actions -->
         <div id="publicNav" class="flex items-center gap-2 sm:gap-4">
           <a class="font-title-md text-xs sm:text-sm text-on-surface-variant hover:text-primary transition-colors font-semibold px-2 py-1.5" href="javascript:void(0)" onclick="openLoginModal()">Login</a>
+          <a class="font-title-md text-xs sm:text-sm text-primary font-bold hover:opacity-85 transition-colors px-2 py-1.5 flex items-center gap-1 cursor-pointer" href="javascript:void(0)" onclick="openAdminLoginModal()">
+            <span class="material-symbols-outlined text-base">admin_panel_settings</span>Admin
+          </a>
           <a class="inline-flex items-center gap-1 sm:gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 bg-primary-container text-on-primary font-title-md text-xs sm:text-sm rounded-[6px] shadow-[0_4px_16px_rgba(6,78,59,0.18)] hover:bg-primary transition-all font-semibold" href="javascript:void(0)" onclick="openShowInterestModal()">
             <span>Show Interest</span>
             <span class="material-symbols-outlined text-base leading-none">arrow_forward</span>
@@ -408,6 +623,9 @@ def build_home():
         </button>
         <button onclick="toggleMobileMenu(); openLoginModal();" class="w-full py-2.5 rounded-[6px] bg-surface-container text-primary font-semibold text-center text-sm">
           Member Login
+        </button>
+        <button onclick="toggleMobileMenu(); openAdminLoginModal();" class="w-full py-2.5 rounded-[6px] bg-primary-fixed/40 text-primary font-bold text-center text-sm flex items-center justify-center gap-1.5">
+          <span class="material-symbols-outlined text-base">admin_panel_settings</span>Admin Console Login
         </button>
       </div>
     </div>
@@ -737,6 +955,12 @@ def build_home():
           <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#pillars">5 Pillars of Engagement</a>
           <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#gatherings">Curated Gatherings</a>
           <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#testimonials-faqs">Clarity &amp; FAQ</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5" href="javascript:void(0)" onclick="openLoginModal()">
+            <span class="material-symbols-outlined text-sm text-secondary-fixed">person</span>Member Login
+          </a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5" href="javascript:void(0)" onclick="openAdminLoginModal()">
+            <span class="material-symbols-outlined text-sm text-secondary-fixed">admin_panel_settings</span>Admin Console
+          </a>
           <a class="font-body-md text-body-md text-secondary-fixed font-semibold hover:text-white transition-colors" href="javascript:void(0)" onclick="openShowInterestModal()">Apply for Membership &rarr;</a>
         </div>
 
@@ -904,6 +1128,22 @@ function openLoginModal() {
     m.classList.add('active');
     m.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    if (typeof switchLoginModalTab === 'function') {
+      switchLoginModalTab('member');
+    }
+  }
+}
+
+function openAdminLoginModal() {
+  closeMobileMenu();
+  const m = document.getElementById('loginModal');
+  if (m) {
+    m.classList.add('active');
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    if (typeof switchLoginModalTab === 'function') {
+      switchLoginModalTab('admin');
+    }
   }
 }
 
