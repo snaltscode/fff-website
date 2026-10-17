@@ -140,6 +140,60 @@ footer .text-white\/85 {
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
+/* Fixed Static Textured Background Layer (Stationary while text and tabs scroll) */
+#static-textured-bg {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -10 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  background-color: #faf8ff;
+  will-change: transform;
+}
+
+body {
+  background-color: transparent !important;
+  position: relative !important;
+}
+
+/* Foreground content, text, cards, and tabs scroll smoothly over the static background */
+main, section, #portalPage, #publicPage {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glass & frosted translucent section styles */
+.backdrop-blur-sm,
+.backdrop-blur-md,
+.backdrop-blur-xl {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Executive Section Transparency for Visible Static Texture */
+#publicPage section.bg-surface-container-lowest,
+body > section.bg-surface-container-lowest {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+#publicPage section.bg-surface-container-low,
+body > section.bg-surface-container-low {
+  background-color: rgba(242, 243, 255, 0.85) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+main.bg-surface-container-lowest,
+main.bg-surface-container-low,
+.legal-content-container {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;

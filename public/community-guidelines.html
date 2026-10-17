@@ -8,6 +8,9 @@
 
 
 
+
+
+
 <style id="f4f-font-system">
   /* Google Material Symbols Font Protection */
   .material-symbols-outlined,
@@ -62,6 +65,31 @@
     color: #6ffbbe !important;
   }
 
+  /* Fixed Static Textured Background Layer (Stationary while text and tabs scroll) */
+  #static-textured-bg {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: -10 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+    background-color: #faf8ff;
+    will-change: transform;
+  }
+  body {
+    background-color: transparent !important;
+    position: relative !important;
+  }
+  main, section, .legal-container {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.88) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
   /* Unblocked Natural Scrolling */
   html {
     overflow-x: hidden !important;
@@ -87,7 +115,21 @@
   }
 </style>
 
-</head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col justify-between antialiased selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,53,39,0.03)] pt-safe"><div class="h-16 px-gutter-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Navigate back" class="w-11 h-11 flex items-center justify-center rounded-xl text-primary transition-colors hover:bg-surface-container-low active:bg-surface-container-high" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[20px]">arrow_back</span></button><div class="flex flex-col"><span class="font-label-status text-label-status text-secondary uppercase tracking-[0.08em]">F4F Institutional</span><h1 class="font-title-md text-title-md text-on-surface truncate">Community Guidelines</h1></div></div><div class="flex items-center gap-space-sm"><span class="font-label-status text-label-status px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant uppercase">Legal</span><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/10" src="https://lh3.googleusercontent.com/aida/AEtjO1XoGYDAxoMk0LCjzdNFfwOV4tq-2YMWeHpUo3FsuvrNM-aZYP_eM4yYdiCC98XV3f_Rw-vJrYphvXABrXA6R4wNOy0lXJ1pbZ8HhcwgtnOIdlVqYTDl3ApgepaO-INjJ6x0rP8JUxtsPXqCr45MTaI3HzrPhkmTDcDUUo32VmxjcB7qJfRquljamzoWQmiBbA5AnFZ8QE7TzK4JEvMVIBGYCDh7JNdy96fWxWrk2pRfFPel93Gzg0J8NN0mZiMW4OLoYD391BaRui4"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 bg-surface"><div class="flex flex-col w-full">
+</head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col justify-between antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Fixed Static Textured Background (Executive Alliance Theme) -->
+<div id="static-textured-bg" class="fixed inset-0 pointer-events-none z-[-10] overflow-hidden" aria-hidden="true">
+  <!-- Layer 1: Ambient Executive Mesh Gradients (Emerald, Mint blooms) -->
+  <div class="absolute -top-[12%] -left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-emerald-500/12 via-[#006c49]/10 to-transparent blur-[110px] transform-gpu"></div>
+  <div class="absolute top-[28%] -right-[12%] w-[55vw] h-[55vw] max-w-[750px] max-h-[750px] rounded-full bg-gradient-to-bl from-[#6ffbbe]/15 via-emerald-700/8 to-transparent blur-[130px] transform-gpu"></div>
+  <div class="absolute top-[65%] -left-[10%] w-[45vw] h-[45vw] max-w-[650px] max-h-[650px] rounded-full bg-gradient-to-tr from-[#003527]/10 via-[#064e3b]/8 to-transparent blur-[120px] transform-gpu"></div>
+  <div class="absolute -bottom-[15%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-full bg-gradient-to-tl from-emerald-600/10 via-[#6ffbbe]/8 to-transparent blur-[140px] transform-gpu"></div>
+
+  <!-- Layer 2: Theme-Relevant Geometric Network Matrix & Architectural Lattice (SVG) -->
+  <div class="absolute inset-0 bg-repeat opacity-[0.035] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%0A%20%20%3Cpath%20d%3D%22M48%200L0%200%200%2048%22%20fill%3D%22none%22%20stroke%3D%22%23003527%22%20stroke-width%3D%220.6%22%20stroke-dasharray%3D%222%202%22%20stroke-opacity%3D%220.8%22/%3E%0A%20%20%3Cpath%20d%3D%22M24%2017L31%2024L24%2031L17%2024Z%22%20fill%3D%22none%22%20stroke%3D%22%23064e3b%22%20stroke-width%3D%220.75%22/%3E%0A%20%20%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%221.75%22%20fill%3D%22%23006c49%22/%3E%0A%20%20%3Ccircle%20cx%3D%220%22%20cy%3D%220%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%20%20%3Ccircle%20cx%3D%2248%22%20cy%3D%220%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%20%20%3Ccircle%20cx%3D%220%22%20cy%3D%2248%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%20%20%3Ccircle%20cx%3D%2248%22%20cy%3D%2248%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%3C/svg%3E'); background-size: 48px 48px;"></div>
+  
+  <!-- Layer 3: Tactile Micro-Dot Mesh Texture -->
+  <div class="absolute inset-0 opacity-[0.025] mix-blend-overlay" style="background-image: radial-gradient(#003527 0.75px, transparent 0.75px); background-size: 24px 24px;"></div>
+</div><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,53,39,0.03)] pt-safe"><div class="h-16 px-gutter-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Navigate back" class="w-11 h-11 flex items-center justify-center rounded-xl text-primary transition-colors hover:bg-surface-container-low active:bg-surface-container-high" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[20px]">arrow_back</span></button><div class="flex flex-col"><span class="font-label-status text-label-status text-secondary uppercase tracking-[0.08em]">F4F Institutional</span><h1 class="font-title-md text-title-md text-on-surface truncate">Community Guidelines</h1></div></div><div class="flex items-center gap-space-sm"><span class="font-label-status text-label-status px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant uppercase">Legal</span><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/10" src="https://lh3.googleusercontent.com/aida/AEtjO1XoGYDAxoMk0LCjzdNFfwOV4tq-2YMWeHpUo3FsuvrNM-aZYP_eM4yYdiCC98XV3f_Rw-vJrYphvXABrXA6R4wNOy0lXJ1pbZ8HhcwgtnOIdlVqYTDl3ApgepaO-INjJ6x0rP8JUxtsPXqCr45MTaI3HzrPhkmTDcDUUo32VmxjcB7qJfRquljamzoWQmiBbA5AnFZ8QE7TzK4JEvMVIBGYCDh7JNdy96fWxWrk2pRfFPel93Gzg0J8NN0mZiMW4OLoYD391BaRui4"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 bg-surface"><div class="flex flex-col w-full">
 <!-- Interactive Top Search & Hero Context -->
 <div class="px-margin-mobile pt-space-md pb-space-lg flex flex-col gap-space-md">
 <!-- Editorial Crest Card -->
@@ -484,4 +526,4 @@
       }
     })();
   </script>
-</div></main><footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md px-gutter-sm py-space-md pb-safe flex flex-col items-center justify-center gap-space-xs mt-auto bg-[#002117] text-white border-t border-[#064e3b]/60"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Founder for Founder (f4f) Institutional Network</span></div><p class="font-body-sm text-body-sm text-outline">Architected &amp; powered by <a class="font-label-md text-label-md text-primary hover:text-secondary transition-colors underline decoration-outline-variant underline-offset-2" href="https://snalts.co" rel="noopener" target="_blank">snalts.co</a></p></footer></body></html>
+</div></main><footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md px-gutter-sm py-space-md pb-safe flex flex-col items-center justify-center gap-space-xs mt-auto bg-[#002117] text-white border-t border-[#064e3b]/60 bg-[#002117] text-white border-t border-[#064e3b]/60"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Founder for Founder (f4f) Institutional Network</span></div><p class="font-body-sm text-body-sm text-outline">Architected &amp; powered by <a class="font-label-md text-label-md text-primary hover:text-secondary transition-colors underline decoration-outline-variant underline-offset-2" href="https://snalts.co" rel="noopener" target="_blank">snalts.co</a></p></footer></body></html>

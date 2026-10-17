@@ -88,6 +88,41 @@ def build_home():
       position: relative !important;
       min-height: 100vh !important;
       overscroll-behavior-y: auto !important;
+      background-color: transparent !important;
+    }
+
+    /* Fixed Static Textured Background Layer (Stationary while text and tabs scroll) */
+    #static-textured-bg {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: -10 !important;
+      pointer-events: none !important;
+      overflow: hidden !important;
+      background-color: #faf8ff;
+      will-change: transform;
+    }
+
+    /* Foreground content, text, cards, and tabs scroll smoothly over the static background */
+    main, section, #portalPage, #publicPage {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Executive Section Transparency for Visible Static Texture */
+    #publicPage section.bg-surface-container-lowest,
+    body > section.bg-surface-container-lowest {
+      background-color: rgba(255, 255, 255, 0.82) !important;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    #publicPage section.bg-surface-container-low,
+    body > section.bg-surface-container-low {
+      background-color: rgba(242, 243, 255, 0.85) !important;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
     }
     /* Executive Guild Styled Scrollbar */
     ::-webkit-scrollbar {
@@ -282,6 +317,27 @@ def build_home():
   </style>
 '''
     mcp_home = mcp_home.replace('</head>', head_insertion + '\n</head>')
+
+    # 5b. Insert Fixed Static Textured Background immediately after <body ...>
+    static_bg_html = '''
+<!-- Fixed Static Textured Background (Executive Alliance Theme) -->
+<div id="static-textured-bg" class="fixed inset-0 pointer-events-none z-[-10] overflow-hidden" aria-hidden="true">
+  <!-- Layer 1: Ambient Executive Mesh Gradients (Emerald, Mint blooms) -->
+  <div class="absolute -top-[12%] -left-[10%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-emerald-500/12 via-[#006c49]/10 to-transparent blur-[110px] transform-gpu"></div>
+  <div class="absolute top-[28%] -right-[12%] w-[55vw] h-[55vw] max-w-[750px] max-h-[750px] rounded-full bg-gradient-to-bl from-[#6ffbbe]/15 via-emerald-700/8 to-transparent blur-[130px] transform-gpu"></div>
+  <div class="absolute top-[65%] -left-[10%] w-[45vw] h-[45vw] max-w-[650px] max-h-[650px] rounded-full bg-gradient-to-tr from-[#003527]/10 via-[#064e3b]/8 to-transparent blur-[120px] transform-gpu"></div>
+  <div class="absolute -bottom-[15%] right-[10%] w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] rounded-full bg-gradient-to-tl from-emerald-600/10 via-[#6ffbbe]/8 to-transparent blur-[140px] transform-gpu"></div>
+
+  <!-- Layer 2: Theme-Relevant Geometric Network Matrix & Architectural Lattice (SVG) -->
+  <div class="absolute inset-0 bg-repeat opacity-[0.035] mix-blend-multiply" style="background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%0A%20%20%3Cpath%20d%3D%22M48%200L0%200%200%2048%22%20fill%3D%22none%22%20stroke%3D%22%23003527%22%20stroke-width%3D%220.6%22%20stroke-dasharray%3D%222%202%22%20stroke-opacity%3D%220.8%22/%3E%0A%20%20%3Cpath%20d%3D%22M24%2017L31%2024L24%2031L17%2024Z%22%20fill%3D%22none%22%20stroke%3D%22%23064e3b%22%20stroke-width%3D%220.75%22/%3E%0A%20%20%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%221.75%22%20fill%3D%22%23006c49%22/%3E%0A%20%20%3Ccircle%20cx%3D%220%22%20cy%3D%220%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%20%20%3Ccircle%20cx%3D%2248%22%20cy%3D%220%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%20%20%3Ccircle%20cx%3D%220%22%20cy%3D%2248%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%20%20%3Ccircle%20cx%3D%2248%22%20cy%3D%2248%22%20r%3D%221.5%22%20fill%3D%22%23064e3b%22/%3E%0A%3C/svg%3E'); background-size: 48px 48px;"></div>
+  
+  <!-- Layer 3: Tactile Micro-Dot Mesh Texture -->
+  <div class="absolute inset-0 opacity-[0.025] mix-blend-overlay" style="background-image: radial-gradient(#003527 0.75px, transparent 0.75px); background-size: 24px 24px;"></div>
+</div>
+'''
+    body_tag_match = re.search(r'<body[^>]*>', mcp_home)
+    if body_tag_match:
+        mcp_home = mcp_home[:body_tag_match.end()] + '\n' + static_bg_html + mcp_home[body_tag_match.end():]
 
     # 6. Responsive Header Replacement
     old_header_match = re.search(r'<header[^>]*>.*?</header>', mcp_home, re.DOTALL)
@@ -719,6 +775,28 @@ def build_home():
 </footer>
 '''
         mcp_home = mcp_home[:old_footer_match.start()] + executive_white_footer + mcp_home[old_footer_match.end():]
+
+    # 10b. Section background transparency with backdrop blur to let static texture show through
+    mcp_home = mcp_home.replace(
+        'class="relative w-full overflow-hidden bg-surface-container-lowest"',
+        'class="relative w-full overflow-hidden bg-surface-container-lowest/80 backdrop-blur-[2px]"'
+    )
+    mcp_home = mcp_home.replace(
+        'class="w-full bg-surface-container-low py-8 overflow-hidden shadow-inner"',
+        'class="w-full bg-surface-container-low/80 py-8 overflow-hidden shadow-inner backdrop-blur-[2px]"'
+    )
+    mcp_home = mcp_home.replace(
+        'class="w-full bg-surface-container-lowest py-20 lg:py-28"',
+        'class="w-full bg-surface-container-lowest/80 py-20 lg:py-28 backdrop-blur-[2px]"'
+    )
+    mcp_home = mcp_home.replace(
+        'class="w-full bg-surface-container-low py-20 lg:py-28"',
+        'class="w-full bg-surface-container-low/80 py-20 lg:py-28 backdrop-blur-[2px]"'
+    )
+    mcp_home = mcp_home.replace(
+        'class="w-full bg-surface-container-low py-16 sm:py-20 lg:py-28"',
+        'class="w-full bg-surface-container-low/80 py-16 sm:py-20 lg:py-28 backdrop-blur-[2px]"'
+    )
 
     # 11. Wrap public content in <div id="publicPage"> with pb-20 for mobile bottom bar
     main_pos = mcp_home.find('<main')
