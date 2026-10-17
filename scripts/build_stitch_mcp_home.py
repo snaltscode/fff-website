@@ -8,9 +8,16 @@ def build_home():
     with open('stitch_mcp_export/html/b12ad31e7d8b4172af2f869e9eed8c5c_Founder for Founder _ Home _Desktop_.html', 'r', encoding='utf-8') as f:
         mcp_home = f.read()
 
-    # 2. Remove any restrictive scroll styles from raw Stitch export
+    # 2. Remove any restrictive scroll styles from raw Stitch export & clean up characters
     mcp_home = mcp_home.replace('body{overscroll-behavior:none;}', '')
     mcp_home = mcp_home.replace('::-webkit-scrollbar{display:none;}', '')
+    mcp_home = mcp_home.replace('\ufffd', '•')
+    mcp_home = mcp_home.replace('01  Sports', '01 • Sports')
+    mcp_home = mcp_home.replace('02  Outdoor', '02 • Outdoor')
+    mcp_home = mcp_home.replace('03  Food', '03 • Food')
+    mcp_home = mcp_home.replace('04  High-Trust', '04 • High-Trust')
+    mcp_home = mcp_home.replace('05  Continuous', '05 • Continuous')
+    mcp_home = mcp_home.replace('FOUNDER INTERACTIONS  MOMENTS', 'FOUNDER INTERACTIONS • MOMENTS')
 
     # 3. Get prepared Admissions Questionnaire HTML
     q_content = get_prepared_questionnaire()
@@ -37,11 +44,34 @@ def build_home():
     portal_html = backup_index[portal_start:portal_end]
     other_modals = backup_index[p_modal2:modals_end]
 
-    # 5. Enhance <head> with styles.css link, responsive meta, and unblocked scroll styles
+    # 5. Enhance <head> with styles.css link, responsive meta, Material Symbols & robust animations
     head_insertion = '''
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/styles.css">
-  <style>
+  <style id="f4f-core-styles">
+    /* Google Material Symbols Font Protection */
+    .material-symbols-outlined,
+    .material-symbols {
+      font-family: 'Material Symbols Outlined' !important;
+      font-weight: normal !important;
+      font-style: normal !important;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga' !important;
+      font-feature-settings: 'liga' !important;
+      -webkit-font-smoothing: antialiased !important;
+      -moz-osx-font-smoothing: grayscale !important;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
+      vertical-align: middle;
+      user-select: none;
+    }
+
     /* Unblocked, Natural Window Scrolling */
     html {
       scroll-behavior: smooth !important;
@@ -74,6 +104,7 @@ def build_home():
     ::-webkit-scrollbar-thumb:hover {
       background: #003527;
     }
+
     /* Executive Guild Overrides & Modal Safety Guard */
     .portal-container { display: none !important; }
     .portal-container.active { display: flex !important; }
@@ -92,11 +123,120 @@ def build_home():
       opacity: 1 !important;
       z-index: 2000 !important;
     }
+    .modal-overlay {
+      transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.25s ease;
+    }
+    @keyframes modalScaleUp {
+      0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    .modal-overlay.active > div {
+      animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Infinite Marquee Stream Animation */
+    @keyframes continuousMarquee {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+    .animate-marquee-infinite {
+      display: flex !important;
+      width: max-content !important;
+      animation: continuousMarquee 32s linear infinite !important;
+      will-change: transform;
+    }
+    .animate-marquee-infinite:hover {
+      animation-play-state: paused !important;
+    }
+
+    /* Interactive FAQ Accordion Animation */
+    details summary {
+      cursor: pointer;
+      user-select: none;
+    }
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+    details summary .material-symbols-outlined {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    details[open] summary .material-symbols-outlined {
+      transform: rotate(180deg) !important;
+    }
+    details[open] p {
+      animation: accordionFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes accordionFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    details[open] {
+      border-color: rgba(6, 78, 59, 0.25) !important;
+      box-shadow: 0 4px 16px -2px rgba(6, 78, 59, 0.08) !important;
+    }
+
+    /* Executive Guild Card Hover Lift */
+    .hover-lift {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease !important;
+    }
+    .hover-lift:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 12px 28px -6px rgba(6, 78, 59, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    /* Subtle Pulsing & Smooth Rotation */
+    @keyframes subtlePulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.15);
+        opacity: 0.85;
+      }
+    }
+    .animate-pulse {
+      animation: subtlePulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+    }
+    @keyframes spinSmooth {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin {
+      animation: spinSmooth 1s linear infinite !important;
+    }
+
+    /* Fade-in for form step transitions */
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeInSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
     /* Ensure Stitch typography */
     h1, h2, h3, .font-headline-hero, .font-headline-lg, .font-headline-md, .font-headline-sm {
       font-family: 'Domine', serif !important;
     }
-    body, p, span, button, input, select, textarea, label {
+    body, p, button, input, select, textarea, label, td, th,
+    span:not(.material-symbols-outlined):not(.material-symbols) {
       font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
     /* Mobile font scale for inputs (prevents iOS auto-zoom) */
@@ -108,7 +248,6 @@ def build_home():
     mcp_home = mcp_home.replace('</head>', head_insertion + '\n</head>')
 
     # 6. Responsive Header Replacement
-    # Replace existing desktop-only header with responsive header + mobile menu drawer
     old_header_match = re.search(r'<header[^>]*>.*?</header>', mcp_home, re.DOTALL)
     if old_header_match:
         responsive_header = '''
@@ -185,26 +324,107 @@ def build_home():
         mcp_home = mcp_home[:old_header_match.start()] + responsive_header + mcp_home[old_header_match.end():]
 
     # 7. Responsive Hero Section Enhancement
-    # Make headline responsive: 3xl on phone, 4xl on tablet, 56px on desktop
     mcp_home = re.sub(
         r'<h1\s+class="[^"]*font-headline-hero[^"]*"',
         '<h1 class="font-headline-hero text-3xl sm:text-4xl md:text-5xl lg:text-[56px] text-primary tracking-tight font-bold leading-[1.15] sm:leading-tight text-center"',
         mcp_home
     )
-    # Make subtitle responsive
     mcp_home = re.sub(
         r'<p\s+class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed text-center">',
         '<p class="font-body-lg text-sm sm:text-base md:text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed text-center px-4">',
         mcp_home
     )
-    # Make CTAs full-width responsive on mobile
     mcp_home = re.sub(
         r'<div class="flex flex-wrap items-center justify-center gap-space-md pt-space-sm">',
         '<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-space-sm w-full max-w-sm sm:max-w-none mx-auto px-4">',
         mcp_home
     )
 
-    # 8. Anchor IDs
+    # 8. Infinite Continuous Marquee Ticker Stream
+    infinite_marquee_html = '''<!-- Ticker Stream -->
+<div class="relative w-full overflow-hidden py-3">
+  <!-- Gradient Edge Masking for Smooth Infinite Blend -->
+  <div class="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-28 z-10 bg-gradient-to-r from-surface-container-lowest to-transparent"></div>
+  <div class="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-28 z-10 bg-gradient-to-l from-surface-container-lowest to-transparent"></div>
+
+  <!-- Smooth Infinite Scrolling Ticker -->
+  <div class="flex gap-10 sm:gap-12 whitespace-nowrap animate-marquee-infinite shrink-0 items-center px-4">
+    <!-- Brand Group 1 -->
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Apex Global Tech
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Precision Industries
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Elevate Digital
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Quantum Manufacturing
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Horizon Logistics
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Pinnacle Real Estate
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-primary font-bold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-tertiary-container">stars</span> snalts.co
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Nexus Dynamics
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> CloudScale Solutions
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Vertex Media
+    </span>
+
+    <!-- Brand Group 2 (Exact Duplicate for Seamless Continuous Loop) -->
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Apex Global Tech
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Precision Industries
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Elevate Digital
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Quantum Manufacturing
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Horizon Logistics
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Pinnacle Real Estate
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-primary font-bold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-tertiary-container">stars</span> snalts.co
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Nexus Dynamics
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> CloudScale Solutions
+    </span>
+    <span class="font-title-md text-sm sm:text-base text-on-surface-variant font-semibold hover:text-primary transition-colors flex items-center gap-2 cursor-default">
+      <span class="material-symbols-outlined text-sm text-secondary">diamond</span> Vertex Media
+    </span>
+  </div>
+</div>
+</section>
+<!-- CORE PHILOSOPHY -->'''
+
+    mcp_home = re.sub(
+        r'<!-- Ticker Stream -->.*?<!-- CORE PHILOSOPHY -->',
+        infinite_marquee_html,
+        mcp_home,
+        flags=re.DOTALL
+    )
+
+    # 9. Anchor IDs
     mcp_home = mcp_home.replace('<!-- CORE PHILOSOPHY -->\n<section', '<!-- CORE PHILOSOPHY -->\n<section id="philosophy"')
     mcp_home = mcp_home.replace('<!-- THE 5 PILLARS OF PEER ENGAGEMENT -->\n<section', '<!-- THE 5 PILLARS OF PEER ENGAGEMENT -->\n<section id="pillars"')
     mcp_home = mcp_home.replace('<!-- MOMENTS OF LEVERAGE / CURATED GATHERINGS -->\n<section', '<!-- MOMENTS OF LEVERAGE / CURATED GATHERINGS -->\n<section id="gatherings"')
@@ -217,7 +437,15 @@ def build_home():
     mcp_home = re.sub(r'data-path="experiences"\s+href="#"', 'href="#pillars"', mcp_home)
     mcp_home = re.sub(r'href="#"\s+data-path="experiences"', 'href="#pillars"', mcp_home)
 
-    # 9. Dynamic CMS Section (Testimonials, FAQs, Event Gallery, Counters)
+    # Add hover-lift to cards
+    mcp_home = mcp_home.replace('class="flex flex-col p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-300 shadow-sm hover:shadow-md group"',
+                                'class="flex flex-col p-space-lg rounded-xl bg-surface-container-low hover:bg-surface-container-lowest transition-all duration-300 shadow-sm hover:shadow-md hover-lift group"')
+    mcp_home = mcp_home.replace('class="flex flex-col bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm hover:shadow-lg transition-all duration-300"',
+                                'class="flex flex-col bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm hover:shadow-lg hover-lift transition-all duration-300"')
+    mcp_home = mcp_home.replace('class="flex flex-col bg-surface-container-low rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group"',
+                                'class="flex flex-col bg-surface-container-low rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover-lift transition-shadow group"')
+
+    # 10. Dynamic CMS Section (Testimonials, FAQs, Event Gallery, Counters)
     dynamic_cms_section = '''
 <!-- DYNAMIC CMS SECTION: TESTIMONIALS & FAQS -->
 <section class="w-full bg-surface-container-low py-16 sm:py-20 lg:py-28" id="testimonials-faqs">
@@ -225,19 +453,19 @@ def build_home():
     
     <!-- Dynamic Counters -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full" id="countersGrid">
-      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift text-center">
         <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statMembers">120+</span>
         <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Vetted Founders</span>
       </div>
-      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift text-center">
         <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statCities">14</span>
         <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Metros & Hubs</span>
       </div>
-      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift text-center">
         <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statGMV">₹450Cr+</span>
         <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Cumulative GMV</span>
       </div>
-      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift text-center">
         <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statAttendance">94%</span>
         <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Gathering Presence</span>
       </div>
@@ -258,7 +486,7 @@ def build_home():
 
     <!-- Testimonials Container -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="testimonialsContainer">
-      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60">
+      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift border border-surface-container/60">
         <p class="font-body-md text-sm text-on-surface leading-relaxed flex-1 italic mb-4">
           “Founder for Founder is completely different from noisy networking clubs. The intimate dinners and closed-door salons gave us direct access to high-integrity enterprise partners.”
         </p>
@@ -270,7 +498,7 @@ def build_home():
           </div>
         </div>
       </div>
-      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60">
+      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift border border-surface-container/60">
         <p class="font-body-md text-sm text-on-surface leading-relaxed flex-1 italic mb-4">
           “The sports meetups and weekend retreats create a level of camaraderie you just can't manufacture in conference ballrooms. Unmatched peer trust.”
         </p>
@@ -282,7 +510,7 @@ def build_home():
           </div>
         </div>
       </div>
-      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60">
+      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover-lift border border-surface-container/60">
         <p class="font-body-md text-sm text-on-surface leading-relaxed flex-1 italic mb-4">
           “Through the Needs & Wants engine, we closed two key vendor partnerships within our first three weeks. High signal, zero spam.”
         </p>
@@ -309,16 +537,16 @@ def build_home():
       </p>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4" id="photoGalleryContainer">
-      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm">
+      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm hover-lift">
         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Executive Dinner" class="w-full h-full object-cover">
       </div>
-      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm">
+      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm hover-lift">
         <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=600&q=80" alt="Founder Roundtable" class="w-full h-full object-cover">
       </div>
-      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm">
+      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm hover-lift">
         <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80" alt="Sports Meetup" class="w-full h-full object-cover">
       </div>
-      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm">
+      <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm hover-lift">
         <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80" alt="Annual Retreat" class="w-full h-full object-cover">
       </div>
     </div>
@@ -337,37 +565,37 @@ def build_home():
     </div>
 
     <div class="max-w-3xl mx-auto w-full flex flex-col gap-3 px-2 sm:px-0" id="faqsContainer">
-      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer transition-all">
         <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>Who is eligible to join Founder for Founder?</span>
-          <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
+          <span class="material-symbols-outlined text-secondary transition-transform">expand_more</span>
         </summary>
         <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Membership is strictly curated for active equity founders, co-founders, managing directors, and executive operators running registered businesses across India.
         </p>
       </details>
-      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer transition-all">
         <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>How does the admissions review work?</span>
-          <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
+          <span class="material-symbols-outlined text-secondary transition-transform">expand_more</span>
         </summary>
         <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Every application is reviewed on a rolling 72-hour window by our peer review committee to verify leadership track records, operational scale, and community alignment.
         </p>
       </details>
-      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer transition-all">
         <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>What formats are included in membership?</span>
-          <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
+          <span class="material-symbols-outlined text-secondary transition-transform">expand_more</span>
         </summary>
         <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Members gain access to sports &amp; movement gatherings (pickleball, golf, badminton), intimate founder dinners, confidential advisory roundtables, retreats, and the digital portal.
         </p>
       </details>
-      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer transition-all">
         <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>Is member information kept confidential?</span>
-          <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
+          <span class="material-symbols-outlined text-secondary transition-transform">expand_more</span>
         </summary>
         <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Yes. All gatherings operate under strict Chatham House Rule and community non-solicitation guidelines. Private phone numbers and personal emails are never published publicly.
@@ -380,7 +608,7 @@ def build_home():
 '''
     mcp_home = mcp_home.replace('<!-- FINAL CALL TO ACTION BANNER -->', dynamic_cms_section + '\n<!-- FINAL CALL TO ACTION BANNER -->')
 
-    # 10. Wrap public content in <div id="publicPage"> with pb-28 for mobile bottom bar
+    # 11. Wrap public content in <div id="publicPage"> with pb-20 for mobile bottom bar
     main_pos = mcp_home.find('<main')
     footer_end_pos = mcp_home.find('</footer>') + len('</footer>')
 
@@ -413,7 +641,7 @@ def build_home():
 </nav>
 '''
 
-    # 11. Build Admissions Questionnaire Modal (Screen 975ae924) with responsive layout
+    # 12. Build Admissions Questionnaire Modal (Screen 975ae924) with responsive layout
     admissions_modal_html = f'''
 <!-- STITCH ADMISSIONS QUESTIONNAIRE MODAL (Screen 975ae924) -->
 <div class="modal-overlay" id="showInterestModal" style="display:none;">
@@ -422,7 +650,7 @@ def build_home():
     <!-- Top Sticky Modal Header with Close Button -->
     <div class="sticky top-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md px-4 sm:px-6 py-3 border-b border-surface-container flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
         <span class="font-label-status text-xs uppercase font-bold text-primary tracking-wider" id="modalTrackerText">ADMISSIONS DOSSIER</span>
       </div>
       <button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface transition-colors cursor-pointer" onclick="closeModal('showInterestModal')" type="button" aria-label="Close modal">
@@ -438,7 +666,7 @@ def build_home():
 </div>
 '''
 
-    # 12. Dynamic Modal Control & Admissions Navigation Scripts
+    # 13. Dynamic Modal Control & Admissions Navigation Scripts
     scripts_html = '''
 <!-- Dynamic Modal Control & Responsive Mobile Scripts -->
 <script>
@@ -530,8 +758,10 @@ function updateStepUI() {
       if (i === currentStep) {
         stepElem.classList.remove('hidden');
         stepElem.classList.add('flex');
+        stepElem.classList.add('animate-fade-in');
       } else {
         stepElem.classList.remove('flex');
+        stepElem.classList.remove('animate-fade-in');
         stepElem.classList.add('hidden');
       }
     }
@@ -540,7 +770,7 @@ function updateStepUI() {
     if (bubble) {
       if (i < currentStep) {
         bubble.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary text-on-primary font-label-md text-xs sm:text-sm flex items-center justify-center transition-all shrink-0";
-        bubble.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
+        bubble.innerHTML = '<span class="material-symbols-outlined text-sm leading-none">check</span>';
       } else if (i === currentStep) {
         bubble.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary-container text-on-primary font-label-md text-xs sm:text-sm flex items-center justify-center transition-all ring-2 ring-primary/20 shrink-0";
         bubble.innerText = i;
@@ -615,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<script src="/js/app.js?v=8.1" defer></script>
+<script src="/js/app.js?v=8.2" defer></script>
 '''
 
     # Assemble final page:

@@ -8,12 +8,64 @@
   </style>
     <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
   
-<style>
+
+
+
+<style id="f4f-font-system">
+  /* Google Material Symbols Font Protection */
+  .material-symbols-outlined,
+  .material-symbols {
+    font-family: 'Material Symbols Outlined' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga' !important;
+    font-feature-settings: 'liga' !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24 !important;
+    vertical-align: middle;
+    user-select: none;
+  }
+
+  /* Stitch Executive Typography */
   h1, h2, h3, .font-headline-hero, .font-headline-lg, .font-headline-md, .font-headline-sm {
     font-family: 'Domine', serif !important;
   }
-  body, p, span, button, input, select, textarea, label, td, th {
+  body, p, button, input, select, textarea, label, td, th,
+  span:not(.material-symbols-outlined):not(.material-symbols) {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
+  }
+
+  /* Unblocked Natural Scrolling */
+  html {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    scroll-behavior: smooth !important;
+    height: auto !important;
+  }
+  body {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    min-height: 100vh !important;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f2f3ff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #064e3b;
+    border-radius: 4px;
   }
 </style>
 
