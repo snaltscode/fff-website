@@ -62,14 +62,11 @@
   font-style: normal !important;
 }
 
-html, body {
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  position: relative !important;
-}
-
 html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto !important;
   scroll-behavior: smooth;
   font-family: var(--font-body);
   background-color: var(--bg-main);
@@ -78,6 +75,12 @@ html {
 }
 
 body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: visible !important;
+  position: relative;
+  min-height: 100vh;
   line-height: 1.6;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -1103,21 +1106,25 @@ body.mobile-nav-open {
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(11, 15, 13, 0.55);
+  background: rgba(11, 15, 13, 0.65);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 2000;
-  display: flex;
+  display: none !important;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
   opacity: 0;
   pointer-events: none;
+  visibility: hidden;
   transition: opacity 0.25s ease;
 }
 
 .modal-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
 }
 
 .modal-content {

@@ -8,180 +8,307 @@ def build_home():
     with open('stitch_mcp_export/html/b12ad31e7d8b4172af2f869e9eed8c5c_Founder for Founder _ Home _Desktop_.html', 'r', encoding='utf-8') as f:
         mcp_home = f.read()
 
-    # 2. Get prepared Admissions Questionnaire HTML
+    # 2. Remove any restrictive scroll styles from raw Stitch export
+    mcp_home = mcp_home.replace('body{overscroll-behavior:none;}', '')
+    mcp_home = mcp_home.replace('::-webkit-scrollbar{display:none;}', '')
+
+    # 3. Get prepared Admissions Questionnaire HTML
     q_content = get_prepared_questionnaire()
 
-    # 3. Read Authenticated Member Portal and other Modals from backup-stitch-redesign
+    # 4. Read Authenticated Member Portal and other Modals from backup-stitch-redesign
     backup_index = subprocess.check_output(['git', 'show', 'backup-stitch-redesign:public/index.html']).decode('utf-8')
 
     portal_start = backup_index.find('<!-- AUTHENTICATED MEMBER PORTAL & DASHBOARD -->')
     if portal_start == -1:
         portal_start = backup_index.find('<div id="portalPage"')
 
-    login_start = backup_index.find('<div class="modal-overlay" id="loginModal"')
-    modals_end = backup_index.find('<!-- SCRIPTS -->')
+    portal_end = backup_index.find('<!-- MODAL 1: SHOW INTEREST APPLICATION')
+    if portal_end == -1:
+        portal_end = backup_index.find('<div class="modal-overlay" id="showInterestModal"')
+
+    # Remaining modals starting with appDetailModal
+    modal2_start = backup_index.find('id="appDetailModal"')
+    p_modal2 = backup_index.rfind('<!--', 0, modal2_start) if modal2_start != -1 else modal2_start
+
+    modals_end = backup_index.find('<script src="/js/app.js')
     if modals_end == -1:
-        modals_end = backup_index.find('<script src="/js/app.js')
+        modals_end = backup_index.find('<!-- SCRIPTS -->')
 
-    portal_html = backup_index[portal_start:login_start]
-    other_modals = backup_index[login_start:modals_end]
+    portal_html = backup_index[portal_start:portal_end]
+    other_modals = backup_index[p_modal2:modals_end]
 
-    # 4. Enhance <head> with styles.css link and viewport fixes
+    # 5. Enhance <head> with styles.css link, responsive meta, and unblocked scroll styles
     head_insertion = '''
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/styles.css">
   <style>
-    /* Executive Guild Overrides & Reset */
-    .portal-container { display: none; }
+    /* Unblocked, Natural Window Scrolling */
+    html {
+      scroll-behavior: smooth !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch !important;
+      height: auto !important;
+    }
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      position: relative !important;
+      min-height: 100vh !important;
+      overscroll-behavior-y: auto !important;
+    }
+    /* Executive Guild Styled Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f2f3ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #064e3b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #003527;
+    }
+    /* Executive Guild Overrides & Modal Safety Guard */
+    .portal-container { display: none !important; }
     .portal-container.active { display: flex !important; }
-    .modal-overlay { display: none; }
-    .modal-overlay.active { display: flex !important; }
-    /* Ensure Stitch fonts load cleanly */
+    
+    .modal-overlay:not(.active) {
+      display: none !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      z-index: -100 !important;
+    }
+    .modal-overlay.active {
+      display: flex !important;
+      pointer-events: auto !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      z-index: 2000 !important;
+    }
+    /* Ensure Stitch typography */
     h1, h2, h3, .font-headline-hero, .font-headline-lg, .font-headline-md, .font-headline-sm {
       font-family: 'Domine', serif !important;
     }
     body, p, span, button, input, select, textarea, label {
       font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
+    /* Mobile font scale for inputs (prevents iOS auto-zoom) */
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   </style>
 '''
     mcp_home = mcp_home.replace('</head>', head_insertion + '\n</head>')
 
-    # 5. Enhance Navigation:
-    # Wire Request Admissions CTA and Member Login
-    # Wire section anchors: The Alliance -> #philosophy, Pillars -> #pillars, Gatherings -> #gatherings, FAQ -> #testimonials-faqs
-    mcp_home = re.sub(r'data-path="show-interest"\s+href="#"', 'href="javascript:void(0)" onclick="openShowInterestModal()"', mcp_home)
-    mcp_home = re.sub(r'href="#"\s+data-path="show-interest"', 'href="javascript:void(0)" onclick="openShowInterestModal()"', mcp_home)
-    mcp_home = re.sub(r'data-path="login"\s+href="#"', 'href="javascript:void(0)" onclick="openLoginModal()"', mcp_home)
-    mcp_home = re.sub(r'href="#"\s+data-path="login"', 'href="javascript:void(0)" onclick="openLoginModal()"', mcp_home)
+    # 6. Responsive Header Replacement
+    # Replace existing desktop-only header with responsive header + mobile menu drawer
+    old_header_match = re.search(r'<header[^>]*>.*?</header>', mcp_home, re.DOTALL)
+    if old_header_match:
+        responsive_header = '''
+  <header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-surface-container/60 shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+    <div class="h-16 sm:h-20 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo & Identity -->
+      <a href="/" class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+        <img alt="Founder for Founder Logo" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover shadow-[0_2px_8px_rgba(6,78,59,0.14)]" src="/assets/logo.svg">
+        <div class="flex flex-col">
+          <span class="font-title-md text-sm sm:text-base text-primary font-bold tracking-tight">Founder for Founder</span>
+          <span class="font-label-status text-[9px] sm:text-[10px] uppercase text-on-surface-variant tracking-wider">by snalts.co</span>
+        </div>
+      </a>
 
-    mcp_home = re.sub(r'data-path="about"\s+href="#"', 'href="#philosophy"', mcp_home)
-    mcp_home = re.sub(r'href="#"\s+data-path="about"', 'href="#philosophy"', mcp_home)
-    mcp_home = re.sub(r'data-path="experiences"\s+href="#"', 'href="#pillars"', mcp_home)
-    mcp_home = re.sub(r'href="#"\s+data-path="experiences"', 'href="#pillars"', mcp_home)
-    mcp_home = re.sub(r'data-path="directory"\s+href="#"', 'href="#gatherings"', mcp_home)
-    mcp_home = re.sub(r'href="#"\s+data-path="directory"', 'href="#gatherings"', mcp_home)
-    mcp_home = re.sub(r'data-path="confidentiality"\s+href="#"', 'href="#testimonials-faqs"', mcp_home)
-    mcp_home = re.sub(r'href="#"\s+data-path="confidentiality"', 'href="#testimonials-faqs"', mcp_home)
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+        <a class="font-body-md text-sm text-on-surface-variant hover:text-primary transition-colors font-medium" href="#philosophy">The Alliance</a>
+        <a class="font-body-md text-sm text-on-surface-variant hover:text-primary transition-colors font-medium" href="#pillars">5 Pillars</a>
+        <a class="font-body-md text-sm text-on-surface-variant hover:text-primary transition-colors font-medium" href="#gatherings">Gatherings</a>
+        <a class="font-body-md text-sm text-on-surface-variant hover:text-primary transition-colors font-medium" href="#testimonials-faqs">Clarity &amp; FAQ</a>
+      </nav>
 
-    # Add section IDs
+      <!-- Desktop & Mobile Action Area -->
+      <div class="flex items-center gap-2 sm:gap-4">
+        <!-- Auth Controls (Hidden when logged out) -->
+        <div id="authNavControls" class="hidden items-center gap-2 sm:gap-3">
+          <span class="font-label-md text-xs sm:text-sm text-primary font-semibold hidden lg:inline" id="navUserName">Welcome</span>
+          <button class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-[6px] bg-secondary-container text-on-secondary-container font-label-md text-xs sm:text-sm font-semibold hover:opacity-90 transition-all cursor-pointer" onclick="switchPortalTab('dashboard', this)">Portal</button>
+          <button class="px-3 sm:px-4 py-1.5 sm:py-2 rounded-[6px] bg-surface-container-highest text-primary font-label-md text-xs sm:text-sm font-semibold hover:bg-surface-container transition-all cursor-pointer hidden" id="navAdminBtn" onclick="switchPortalTab('admin', this)">Admin</button>
+          <button class="px-2.5 sm:px-3 py-1.5 rounded-[6px] text-error font-label-md text-xs sm:text-sm font-medium hover:bg-error-container/30 transition-all cursor-pointer" onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Public Actions -->
+        <div id="publicNav" class="flex items-center gap-2 sm:gap-4">
+          <a class="font-title-md text-xs sm:text-sm text-on-surface-variant hover:text-primary transition-colors font-semibold px-2 py-1.5" href="javascript:void(0)" onclick="openLoginModal()">Login</a>
+          <a class="inline-flex items-center gap-1 sm:gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 bg-primary-container text-on-primary font-title-md text-xs sm:text-sm rounded-[6px] shadow-[0_4px_16px_rgba(6,78,59,0.18)] hover:bg-primary transition-all font-semibold" href="javascript:void(0)" onclick="openShowInterestModal()">
+            <span>Show Interest</span>
+            <span class="material-symbols-outlined text-base leading-none">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger Menu Button -->
+        <button id="mobileNavToggle" onclick="toggleMobileMenu()" class="md:hidden p-2 text-primary rounded-[6px] hover:bg-surface-container transition-colors cursor-pointer" aria-label="Toggle navigation menu" type="button">
+          <span class="material-symbols-outlined text-2xl" id="mobileNavIcon">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Responsive Slide-Down Mobile Drawer -->
+    <div id="mobileNavDrawer" class="hidden md:hidden bg-surface-container-lowest border-b border-surface-container px-4 py-6 shadow-xl flex-col gap-4">
+      <a href="#philosophy" onclick="toggleMobileMenu()" class="font-title-md text-base text-on-surface hover:text-primary py-2 border-b border-surface-container/50">The Alliance</a>
+      <a href="#pillars" onclick="toggleMobileMenu()" class="font-title-md text-base text-on-surface hover:text-primary py-2 border-b border-surface-container/50">5 Pillars of Peer Engagement</a>
+      <a href="#gatherings" onclick="toggleMobileMenu()" class="font-title-md text-base text-on-surface hover:text-primary py-2 border-b border-surface-container/50">Curated Gatherings</a>
+      <a href="#testimonials-faqs" onclick="toggleMobileMenu()" class="font-title-md text-base text-on-surface hover:text-primary py-2 border-b border-surface-container/50">Clarity &amp; FAQ</a>
+      <div class="flex items-center gap-4 py-2 text-xs text-on-surface-variant border-b border-surface-container/50">
+        <a href="/terms" class="hover:text-primary">Terms</a>
+        <span>•</span>
+        <a href="/privacy-policy" class="hover:text-primary">Privacy</a>
+        <span>•</span>
+        <a href="/community-guidelines" class="hover:text-primary">Guidelines</a>
+      </div>
+      <div class="pt-2 flex flex-col gap-2">
+        <button onclick="toggleMobileMenu(); openShowInterestModal();" class="w-full py-3 rounded-[6px] bg-primary-container text-on-primary font-bold text-center text-sm shadow">
+          Request Admissions →
+        </button>
+        <button onclick="toggleMobileMenu(); openLoginModal();" class="w-full py-2.5 rounded-[6px] bg-surface-container text-primary font-semibold text-center text-sm">
+          Member Login
+        </button>
+      </div>
+    </div>
+  </header>
+'''
+        mcp_home = mcp_home[:old_header_match.start()] + responsive_header + mcp_home[old_header_match.end():]
+
+    # 7. Responsive Hero Section Enhancement
+    # Make headline responsive: 3xl on phone, 4xl on tablet, 56px on desktop
+    mcp_home = re.sub(
+        r'<h1\s+class="[^"]*font-headline-hero[^"]*"',
+        '<h1 class="font-headline-hero text-3xl sm:text-4xl md:text-5xl lg:text-[56px] text-primary tracking-tight font-bold leading-[1.15] sm:leading-tight text-center"',
+        mcp_home
+    )
+    # Make subtitle responsive
+    mcp_home = re.sub(
+        r'<p\s+class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed text-center">',
+        '<p class="font-body-lg text-sm sm:text-base md:text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed text-center px-4">',
+        mcp_home
+    )
+    # Make CTAs full-width responsive on mobile
+    mcp_home = re.sub(
+        r'<div class="flex flex-wrap items-center justify-center gap-space-md pt-space-sm">',
+        '<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 pt-space-sm w-full max-w-sm sm:max-w-none mx-auto px-4">',
+        mcp_home
+    )
+
+    # 8. Anchor IDs
     mcp_home = mcp_home.replace('<!-- CORE PHILOSOPHY -->\n<section', '<!-- CORE PHILOSOPHY -->\n<section id="philosophy"')
     mcp_home = mcp_home.replace('<!-- THE 5 PILLARS OF PEER ENGAGEMENT -->\n<section', '<!-- THE 5 PILLARS OF PEER ENGAGEMENT -->\n<section id="pillars"')
     mcp_home = mcp_home.replace('<!-- MOMENTS OF LEVERAGE / CURATED GATHERINGS -->\n<section', '<!-- MOMENTS OF LEVERAGE / CURATED GATHERINGS -->\n<section id="gatherings"')
 
-    # Inject authNavControls into header
-    auth_nav_html = '''
-      <!-- Authenticated User Controls -->
-      <div id="authNavControls" class="hidden items-center gap-3">
-        <span class="font-label-md text-label-md text-primary font-semibold hidden md:inline" id="navUserName">Welcome</span>
-        <button class="px-4 py-2 rounded-[6px] bg-secondary-container text-on-secondary-container font-label-md text-label-md font-semibold hover:opacity-90 transition-all cursor-pointer" onclick="switchPortalTab('dashboard', this)">Portal</button>
-        <button class="px-4 py-2 rounded-[6px] bg-surface-container-highest text-primary font-label-md text-label-md font-semibold hover:bg-surface-container transition-all cursor-pointer hidden" id="navAdminBtn" onclick="switchPortalTab('admin', this)">Admin</button>
-        <button class="px-3 py-2 rounded-[6px] text-error font-label-md text-label-md font-medium hover:bg-error-container/30 transition-all cursor-pointer" onclick="logout()">Logout</button>
-      </div>
-'''
-    # Find navigation actions container in header
-    # Replace action block in header or append authNavControls
-    mcp_home = mcp_home.replace('</header>', auth_nav_html + '\n    </div>\n  </header>')
-    # Fix potential double closing div
-    mcp_home = mcp_home.replace('    </div>\n  </header>', '  </header>')
+    # Wire up CTA buttons in sections
+    mcp_home = re.sub(r'data-path="show-interest"\s+href="#"', 'href="javascript:void(0)" onclick="openShowInterestModal()"', mcp_home)
+    mcp_home = re.sub(r'href="#"\s+data-path="show-interest"', 'href="javascript:void(0)" onclick="openShowInterestModal()"', mcp_home)
+    mcp_home = re.sub(r'data-path="login"\s+href="#"', 'href="javascript:void(0)" onclick="openLoginModal()"', mcp_home)
+    mcp_home = re.sub(r'href="#"\s+data-path="login"', 'href="javascript:void(0)" onclick="openLoginModal()"', mcp_home)
+    mcp_home = re.sub(r'data-path="experiences"\s+href="#"', 'href="#pillars"', mcp_home)
+    mcp_home = re.sub(r'href="#"\s+data-path="experiences"', 'href="#pillars"', mcp_home)
 
-    # Wrap public landing content with <div id="publicPage">
-    # Starts right after <header ... </header>
-    header_end_idx = mcp_home.find('</header>') + len('</header>')
-    main_start = mcp_home.find('<main', header_end_idx)
-
-    # 6. Insert Dynamic CMS Section (Counters, Testimonials, FAQs, Event Gallery)
+    # 9. Dynamic CMS Section (Testimonials, FAQs, Event Gallery, Counters)
     dynamic_cms_section = '''
 <!-- DYNAMIC CMS SECTION: TESTIMONIALS & FAQS -->
-<section class="w-full bg-surface-container-low py-20 lg:py-28" id="testimonials-faqs">
-  <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop flex flex-col gap-space-xl">
+<section class="w-full bg-surface-container-low py-16 sm:py-20 lg:py-28" id="testimonials-faqs">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 flex flex-col gap-12 sm:gap-16">
     
     <!-- Dynamic Counters -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full" id="countersGrid">
-      <div class="flex flex-col items-center p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
-        <span class="font-headline-lg text-headline-lg text-primary font-bold" id="statMembers">120+</span>
-        <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mt-1">Vetted Founders</span>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full" id="countersGrid">
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+        <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statMembers">120+</span>
+        <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Vetted Founders</span>
       </div>
-      <div class="flex flex-col items-center p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
-        <span class="font-headline-lg text-headline-lg text-primary font-bold" id="statCities">14</span>
-        <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mt-1">Metros & Hubs</span>
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+        <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statCities">14</span>
+        <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Metros & Hubs</span>
       </div>
-      <div class="flex flex-col items-center p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
-        <span class="font-headline-lg text-headline-lg text-primary font-bold" id="statGMV">₹450Cr+</span>
-        <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mt-1">Cumulative GMV</span>
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+        <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statGMV">₹450Cr+</span>
+        <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Cumulative GMV</span>
       </div>
-      <div class="flex flex-col items-center p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
-        <span class="font-headline-lg text-headline-lg text-primary font-bold" id="statAttendance">94%</span>
-        <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mt-1">Gathering Presence</span>
+      <div class="flex flex-col items-center p-4 sm:p-6 rounded-2xl bg-surface-container-lowest shadow-sm text-center">
+        <span class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold" id="statAttendance">94%</span>
+        <span class="font-label-md text-[10px] sm:text-xs text-on-surface-variant uppercase tracking-wider mt-1">Gathering Presence</span>
       </div>
     </div>
 
     <!-- Testimonials Header -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-space-xs mt-8">
-      <span class="font-label-status text-label-status uppercase text-secondary font-bold tracking-widest">
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-2 px-4">
+      <span class="font-label-status text-xs uppercase text-secondary font-bold tracking-widest">
         PEER PERSPECTIVES
       </span>
-      <h2 class="font-headline-lg text-headline-lg text-primary font-bold">
+      <h2 class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold">
         What Founders Say
       </h2>
-      <p class="font-body-lg text-body-lg text-on-surface-variant">
+      <p class="font-body-lg text-sm sm:text-base text-on-surface-variant">
         Authentic reflections from leaders scaling ventures inside the Founder for Founder network.
       </p>
     </div>
 
-    <!-- Testimonials Container (Hydrated from CMS) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter" id="testimonialsContainer">
-      <div class="flex flex-col p-space-lg rounded-2xl bg-surface-container-lowest shadow-sm flex-1">
-        <p class="font-body-md text-body-md text-on-surface leading-relaxed flex-1 italic mb-4">
+    <!-- Testimonials Container -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" id="testimonialsContainer">
+      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60">
+        <p class="font-body-md text-sm text-on-surface leading-relaxed flex-1 italic mb-4">
           “Founder for Founder is completely different from noisy networking clubs. The intimate dinners and closed-door salons gave us direct access to high-integrity enterprise partners.”
         </p>
         <div class="flex items-center gap-3 pt-3 border-t border-surface-container">
-          <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-on-primary-fixed">AK</div>
+          <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center font-bold text-on-primary-fixed shrink-0">AK</div>
           <div class="flex flex-col">
-            <span class="font-title-md text-title-md text-primary font-bold">Anand Krishnamurthy</span>
-            <span class="font-label-md text-label-md text-on-surface-variant">Founder, QuantLogix</span>
+            <span class="font-title-md text-sm text-primary font-bold">Anand Krishnamurthy</span>
+            <span class="font-label-md text-xs text-on-surface-variant">Founder, QuantLogix</span>
           </div>
         </div>
       </div>
-      <div class="flex flex-col p-space-lg rounded-2xl bg-surface-container-lowest shadow-sm flex-1">
-        <p class="font-body-md text-body-md text-on-surface leading-relaxed flex-1 italic mb-4">
+      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60">
+        <p class="font-body-md text-sm text-on-surface leading-relaxed flex-1 italic mb-4">
           “The sports meetups and weekend retreats create a level of camaraderie you just can't manufacture in conference ballrooms. Unmatched peer trust.”
         </p>
         <div class="flex items-center gap-3 pt-3 border-t border-surface-container">
-          <div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed">PS</div>
+          <div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed shrink-0">PS</div>
           <div class="flex flex-col">
-            <span class="font-title-md text-title-md text-primary font-bold">Pooja Sharma</span>
-            <span class="font-label-md text-label-md text-on-surface-variant">Co-Founder, BioVeda Labs</span>
+            <span class="font-title-md text-sm text-primary font-bold">Pooja Sharma</span>
+            <span class="font-label-md text-xs text-on-surface-variant">Co-Founder, BioVeda Labs</span>
           </div>
         </div>
       </div>
-      <div class="flex flex-col p-space-lg rounded-2xl bg-surface-container-lowest shadow-sm flex-1">
-        <p class="font-body-md text-body-md text-on-surface leading-relaxed flex-1 italic mb-4">
+      <div class="flex flex-col p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60">
+        <p class="font-body-md text-sm text-on-surface leading-relaxed flex-1 italic mb-4">
           “Through the Needs & Wants engine, we closed two key vendor partnerships within our first three weeks. High signal, zero spam.”
         </p>
         <div class="flex items-center gap-3 pt-3 border-t border-surface-container">
-          <div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center font-bold text-on-primary-fixed">RV</div>
+          <div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex items-center justify-center font-bold text-on-primary-fixed shrink-0">RV</div>
           <div class="flex flex-col">
-            <span class="font-title-md text-title-md text-primary font-bold">Rohan Verma</span>
-            <span class="font-label-md text-label-md text-on-surface-variant">CEO, UrbanScale Logistics</span>
+            <span class="font-title-md text-sm text-primary font-bold">Rohan Verma</span>
+            <span class="font-label-md text-xs text-on-surface-variant">CEO, UrbanScale Logistics</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Event Gallery Container (Hydrated from CMS) -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-space-xs mt-12">
-      <span class="font-label-status text-label-status uppercase text-secondary font-bold tracking-widest">
+    <!-- Event Gallery Container -->
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-2 px-4 mt-6 sm:mt-10">
+      <span class="font-label-status text-xs uppercase text-secondary font-bold tracking-widest">
         COMMUNITY ARCHIVE
       </span>
-      <h2 class="font-headline-lg text-headline-lg text-primary font-bold">
+      <h2 class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold">
         Glimpses from Recent Gatherings
       </h2>
-      <p class="font-body-lg text-body-lg text-on-surface-variant">
+      <p class="font-body-lg text-sm sm:text-base text-on-surface-variant">
         Moments of candid exchange, executive roundtables, and sports sessions.
       </p>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="photoGalleryContainer">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4" id="photoGalleryContainer">
       <div class="aspect-video rounded-xl bg-surface-container overflow-hidden shadow-sm">
         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80" alt="Executive Dinner" class="w-full h-full object-cover">
       </div>
@@ -197,52 +324,52 @@ def build_home():
     </div>
 
     <!-- FAQs Section -->
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-space-xs mt-12">
-      <span class="font-label-status text-label-status uppercase text-secondary font-bold tracking-widest">
-        CLARITY & TRANSPARENCY
+    <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-2 px-4 mt-6 sm:mt-10">
+      <span class="font-label-status text-xs uppercase text-secondary font-bold tracking-widest">
+        CLARITY &amp; TRANSPARENCY
       </span>
-      <h2 class="font-headline-lg text-headline-lg text-primary font-bold">
+      <h2 class="font-headline-lg text-2xl sm:text-3xl md:text-4xl text-primary font-bold">
         Frequently Asked Questions
       </h2>
-      <p class="font-body-lg text-body-lg text-on-surface-variant">
+      <p class="font-body-lg text-sm sm:text-base text-on-surface-variant">
         Everything you need to know about our community structure, admissions, and participation.
       </p>
     </div>
 
-    <div class="max-w-3xl mx-auto w-full flex flex-col gap-3" id="faqsContainer">
-      <details class="group bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container">
-        <summary class="font-title-md text-title-md text-primary font-bold cursor-pointer list-none flex justify-between items-center">
+    <div class="max-w-3xl mx-auto w-full flex flex-col gap-3 px-2 sm:px-0" id="faqsContainer">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+        <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>Who is eligible to join Founder for Founder?</span>
           <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
         </summary>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed">
+        <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Membership is strictly curated for active equity founders, co-founders, managing directors, and executive operators running registered businesses across India.
         </p>
       </details>
-      <details class="group bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container">
-        <summary class="font-title-md text-title-md text-primary font-bold cursor-pointer list-none flex justify-between items-center">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+        <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>How does the admissions review work?</span>
           <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
         </summary>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed">
+        <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Every application is reviewed on a rolling 72-hour window by our peer review committee to verify leadership track records, operational scale, and community alignment.
         </p>
       </details>
-      <details class="group bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container">
-        <summary class="font-title-md text-title-md text-primary font-bold cursor-pointer list-none flex justify-between items-center">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+        <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>What formats are included in membership?</span>
           <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
         </summary>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed">
-          Members gain access to sports & movement gatherings (pickleball, golf, badminton), intimate founder dinners, confidential advisory roundtables, retreats, and the digital portal.
+        <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
+          Members gain access to sports &amp; movement gatherings (pickleball, golf, badminton), intimate founder dinners, confidential advisory roundtables, retreats, and the digital portal.
         </p>
       </details>
-      <details class="group bg-surface-container-lowest p-5 rounded-xl shadow-sm border border-surface-container">
-        <summary class="font-title-md text-title-md text-primary font-bold cursor-pointer list-none flex justify-between items-center">
+      <details class="group bg-surface-container-lowest p-4 sm:p-5 rounded-xl shadow-sm border border-surface-container cursor-pointer">
+        <summary class="font-title-md text-sm sm:text-base text-primary font-bold list-none flex justify-between items-center">
           <span>Is member information kept confidential?</span>
           <span class="material-symbols-outlined text-secondary transition-transform group-open:rotate-180">expand_more</span>
         </summary>
-        <p class="font-body-md text-body-md text-on-surface-variant mt-3 leading-relaxed">
+        <p class="font-body-md text-sm text-on-surface-variant mt-3 leading-relaxed">
           Yes. All gatherings operate under strict Chatham House Rule and community non-solicitation guidelines. Private phone numbers and personal emails are never published publicly.
         </p>
       </details>
@@ -253,59 +380,136 @@ def build_home():
 '''
     mcp_home = mcp_home.replace('<!-- FINAL CALL TO ACTION BANNER -->', dynamic_cms_section + '\n<!-- FINAL CALL TO ACTION BANNER -->')
 
-    # Wrap main + footer in <div id="publicPage">
-    # Locate where <main begins and where </footer> ends
+    # 10. Wrap public content in <div id="publicPage"> with pb-28 for mobile bottom bar
     main_pos = mcp_home.find('<main')
     footer_end_pos = mcp_home.find('</footer>') + len('</footer>')
 
     public_content = mcp_home[main_pos:footer_end_pos]
-    wrapped_public = f'<div id="publicPage">\n{public_content}\n</div>'
+    wrapped_public = f'''
+<div id="publicPage" class="w-full pb-20 md:pb-0">
+{public_content}
+</div>
 
-    # 7. Build Admissions Questionnaire Modal
+<!-- Mobile Bottom Navigation Bar (Stitch Mobile Screen 21aec84f) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-40 bg-surface-container-lowest/95 backdrop-blur-xl border-t border-surface-container shadow-[0_-2px_12px_rgba(0,53,39,0.06)]" id="mobileBottomNav">
+  <div class="h-16 px-4 grid grid-cols-4 items-center text-center">
+    <a href="#" class="flex flex-col items-center justify-center py-1 text-primary">
+      <span class="material-symbols-outlined text-xl">cottage</span>
+      <span class="text-[10px] font-bold mt-0.5">Home</span>
+    </a>
+    <a href="#pillars" class="flex flex-col items-center justify-center py-1 text-on-surface-variant hover:text-primary">
+      <span class="material-symbols-outlined text-xl">auto_awesome</span>
+      <span class="text-[10px] font-medium mt-0.5">Pillars</span>
+    </a>
+    <a href="#gatherings" class="flex flex-col items-center justify-center py-1 text-on-surface-variant hover:text-primary">
+      <span class="material-symbols-outlined text-xl">event</span>
+      <span class="text-[10px] font-medium mt-0.5">Gatherings</span>
+    </a>
+    <a href="javascript:void(0)" onclick="openShowInterestModal()" class="flex flex-col items-center justify-center py-1 text-secondary font-bold">
+      <span class="material-symbols-outlined text-xl">handshake</span>
+      <span class="text-[10px] font-bold mt-0.5">Apply</span>
+    </a>
+  </div>
+</nav>
+'''
+
+    # 11. Build Admissions Questionnaire Modal (Screen 975ae924) with responsive layout
     admissions_modal_html = f'''
 <!-- STITCH ADMISSIONS QUESTIONNAIRE MODAL (Screen 975ae924) -->
-<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-md overflow-y-auto" id="showInterestModal" style="display:none;">
-  <div class="relative w-full max-w-5xl my-8 bg-surface rounded-2xl shadow-2xl overflow-hidden border border-surface-container">
+<div class="modal-overlay" id="showInterestModal" style="display:none;">
+  <div class="relative w-full max-w-4xl mx-2 sm:mx-auto my-auto bg-surface rounded-2xl shadow-2xl overflow-hidden border border-surface-container flex flex-col max-h-[92vh]">
     
-    <!-- Close Button -->
-    <button class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-surface-container-lowest/80 backdrop-blur-md flex items-center justify-center text-on-surface hover:bg-surface-container transition-colors shadow-sm cursor-pointer" onclick="closeModal('showInterestModal')" type="button">
-      <span class="material-symbols-outlined text-2xl">close</span>
-    </button>
+    <!-- Top Sticky Modal Header with Close Button -->
+    <div class="sticky top-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md px-4 sm:px-6 py-3 border-b border-surface-container flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+        <span class="font-label-status text-xs uppercase font-bold text-primary tracking-wider" id="modalTrackerText">ADMISSIONS DOSSIER</span>
+      </div>
+      <button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface transition-colors cursor-pointer" onclick="closeModal('showInterestModal')" type="button" aria-label="Close modal">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+    </div>
 
     <!-- Modal Scrollable Content -->
-    <div class="max-h-[85vh] overflow-y-auto p-4 sm:p-8">
+    <div class="flex-1 overflow-y-auto p-4 sm:p-8 overscroll-contain">
       {q_content}
     </div>
   </div>
 </div>
 '''
 
-    # 8. Dynamic Modal Control & Admissions Navigation Scripts
+    # 12. Dynamic Modal Control & Admissions Navigation Scripts
     scripts_html = '''
-<!-- Dynamic Modal Control Helpers -->
+<!-- Dynamic Modal Control & Responsive Mobile Scripts -->
 <script>
+function toggleMobileMenu() {
+  const drawer = document.getElementById('mobileNavDrawer');
+  const icon = document.getElementById('mobileNavIcon');
+  if (!drawer) return;
+  const isHidden = drawer.classList.contains('hidden');
+  if (isHidden) {
+    drawer.classList.remove('hidden');
+    drawer.classList.add('flex');
+    if (icon) icon.textContent = 'close';
+  } else {
+    drawer.classList.add('hidden');
+    drawer.classList.remove('flex');
+    if (icon) icon.textContent = 'menu';
+  }
+}
+
+function closeMobileMenu() {
+  const drawer = document.getElementById('mobileNavDrawer');
+  const icon = document.getElementById('mobileNavIcon');
+  if (drawer) {
+    drawer.classList.add('hidden');
+    drawer.classList.remove('flex');
+  }
+  if (icon) icon.textContent = 'menu';
+}
+
 function openShowInterestModal() {
+  closeMobileMenu();
   const m = document.getElementById('showInterestModal');
   if (m) {
+    m.classList.add('active');
     m.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     navigateToStep(1);
   }
 }
+
 function openLoginModal() {
+  closeMobileMenu();
   const m = document.getElementById('loginModal');
   if (m) {
+    m.classList.add('active');
     m.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 }
+
 function closeModal(id) {
   const m = document.getElementById(id);
   if (m) {
+    m.classList.remove('active');
     m.style.display = 'none';
-    document.body.style.overflow = 'auto';
+  }
+  // Restore body scrolling if no modals are open
+  const anyOpen = document.querySelector('.modal-overlay.active, .modal-overlay[style*="display: flex"]');
+  if (!anyOpen) {
+    document.body.style.overflow = '';
   }
 }
+
+// ESC key to close modal
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.active, #showInterestModal').forEach(m => {
+      if (m.id) closeModal(m.id);
+    });
+  }
+});
 
 // Multi-Step Admissions Wizard Engine
 let currentStep = 1;
@@ -335,13 +539,13 @@ function updateStepUI() {
     const bubble = document.getElementById('step-bubble-' + i);
     if (bubble) {
       if (i < currentStep) {
-        bubble.className = "w-8 h-8 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center transition-all";
+        bubble.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary text-on-primary font-label-md text-xs sm:text-sm flex items-center justify-center transition-all shrink-0";
         bubble.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
       } else if (i === currentStep) {
-        bubble.className = "w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center transition-all ring-2 ring-primary/20";
+        bubble.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary-container text-on-primary font-label-md text-xs sm:text-sm flex items-center justify-center transition-all ring-2 ring-primary/20 shrink-0";
         bubble.innerText = i;
       } else {
-        bubble.className = "w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all";
+        bubble.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-surface-container text-on-surface font-label-md text-xs sm:text-sm flex items-center justify-center transition-all shrink-0";
         bubble.innerText = i;
       }
     }
@@ -349,7 +553,7 @@ function updateStepUI() {
     if (i < totalSteps) {
       const line = document.getElementById('line-' + i);
       if (line) {
-        line.className = (i < currentStep) ? "h-0.5 flex-1 min-w-4 bg-primary transition-colors" : "h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors";
+        line.className = (i < currentStep) ? "h-0.5 flex-1 min-w-3 sm:min-w-4 bg-primary transition-colors" : "h-0.5 flex-1 min-w-3 sm:min-w-4 bg-surface-container-high transition-colors";
       }
     }
   }
@@ -406,13 +610,12 @@ function navigateToStep(step) {
   }
 }
 
-// Ensure first step is visible on page load
 document.addEventListener('DOMContentLoaded', () => {
   navigateToStep(1);
 });
 </script>
 
-<script src="/js/app.js?v=8.0" defer></script>
+<script src="/js/app.js?v=8.1" defer></script>
 '''
 
     # Assemble final page:
@@ -441,63 +644,7 @@ document.addEventListener('DOMContentLoaded', () => {
     with open('public/index.html', 'w', encoding='utf-8') as f:
         f.write(final_html)
 
-    print(f'Successfully built public/index.html ({len(final_html)} bytes)')
-
-    # Also build standalone public/apply.html
-    apply_html = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Admissions Questionnaire — Founder for Founder</title>
-  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script id="tailwind-config">
-  tailwind.config = {{"darkMode":"class","theme":{{"extend":{{"colors":{{"on-primary-fixed":"#002117","on-secondary-container":"#00714d","error":"#ba1a1a","on-background":"#131b2e","surface-container-low":"#f2f3ff","on-primary-fixed-variant":"#0b513d","secondary-fixed":"#6ffbbe","on-surface":"#131b2e","surface":"#faf8ff","tertiary":"#4a2400","on-secondary-fixed":"#002113","on-tertiary-fixed":"#2f1500","tertiary-fixed-dim":"#ffb77d","surface-tint":"#2b6954","surface-container-highest":"#dae2fd","error-container":"#ffdad6","surface-container":"#eaedff","background":"#faf8ff","secondary":"#006c49","secondary-container":"#6cf8bb","on-primary":"#ffffff","outline":"#707974","inverse-primary":"#95d3ba","on-error":"#ffffff","primary-fixed-dim":"#95d3ba","surface-container-lowest":"#ffffff","outline-variant":"#bfc9c3","inverse-on-surface":"#eef0ff","secondary-fixed-dim":"#4edea3","primary":"#003527","on-tertiary":"#ffffff","primary-fixed":"#b0f0d6","tertiary-container":"#6a3700","on-tertiary-container":"#ff9939","on-error-container":"#93000a","tertiary-fixed":"#ffdcc3","surface-variant":"#dae2fd","on-secondary-fixed-variant":"#005236","on-secondary":"#ffffff","surface-bright":"#faf8ff","primary-container":"#064e3b","on-surface-variant":"#404944","surface-container-high":"#e2e7ff","on-primary-container":"#80bea6","inverse-surface":"#283044","surface-dim":"#d2d9f4","on-tertiary-fixed-variant":"#6e3900"}}}}}}}};
-  </script>
-  <style>
-    h1, h2, h3, .font-headline-hero, .font-headline-lg, .font-headline-md, .font-headline-sm {{
-      font-family: 'Domine', serif !important;
-    }}
-    body, p, span, button, input, select, textarea, label {{
-      font-family: 'Plus Jakarta Sans', sans-serif !important;
-    }}
-  </style>
-</head>
-<body class="bg-surface text-on-surface min-h-screen">
-  <!-- Top Navigation -->
-  <header class="w-full bg-surface-container-lowest border-b border-surface-container sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <img src="/assets/logo.svg" alt="f4f Logo" class="h-8 w-8">
-        <span class="font-headline-md text-primary font-bold tracking-tight text-lg">FOUNDER FOR FOUNDER</span>
-      </a>
-      <a href="/" class="text-sm font-semibold text-secondary hover:text-primary transition-colors flex items-center gap-1">
-        ← Back to Homepage
-      </a>
-    </div>
-  </header>
-
-  <main class="max-w-5xl mx-auto px-4 py-8 sm:py-12">
-    {q_content}
-  </main>
-
-  <footer class="w-full border-t border-surface-container py-8 text-center text-sm text-on-surface-variant">
-    <p>© 2026 Founder for Founder Private Alliance. Strictly confidential and proprietary.</p>
-  </footer>
-
-  {scripts_html}
-</body>
-</html>
-'''
-    with open('public/apply.html', 'w', encoding='utf-8') as f:
-        f.write(apply_html)
-
-    print(f'Successfully built public/apply.html ({len(apply_html)} bytes)')
+    print(f'Successfully built responsive public/index.html ({len(final_html)} bytes)')
 
 if __name__ == '__main__':
     build_home()
