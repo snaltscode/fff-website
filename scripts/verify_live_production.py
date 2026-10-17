@@ -1,47 +1,60 @@
 import urllib.request
-import urllib.parse
-import json
-import time
+import ssl
 
-def verify_live():
-    base = 'https://founderforfounder.in'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache'
+ctx = ssl.create_default_context()
+
+url = 'https://founderforfounder.in'
+req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+
+try:
+    with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
+        html = resp.read().decode('utf-8')
+
+    checks = {
+        'GSI Script': 'https://accounts.google.com/gsi/client' in html,
+        'Google Sign-In Container': 'id="googleSignInBtn"' in html,
+        'Google Custom Button': 'id="customGoogleAuthBtn"' in html,
+        'Admin Login Section': 'id="adminLoginSection"' in html,
+        'Admin Tab Button': 'id="tabBtnAdmin"' in html,
+        'Member Tab Button': 'id="tabBtnMember"' in html,
+        'Admin Quick Fill Button': 'quickFillAdminCredentials()' in html,
+        'Admin Nav Header Link': 'openAdminLoginModal()' in html,
+        'Admin Footer Link': 'adminConsoleFooterLink' in html or 'openAdminLoginModal();' in html,
+        'Google Demo Fallback Modal': 'id="googleDemoModal"' in html,
+        'Static Textured Background': 'id="static-textured-bg"' in html,
+        'White Footer Text': 'color: #ffffff' in html
     }
 
-    print(f'Querying live production at {base}...')
+    print('=== LIVE PRODUCTION VERIFICATION (https://founderforfounder.in) ===')
+    all_passed = True
+    for name, passed in checks.items():
+        print(f'  {name:<32}: {"PASS" if passed else "FAIL"}')
+        if not passed:
+            all_passed = False
 
-    tests = [
-        ('Homepage', f'{base}/', 200, ['Domine', 'Plus Jakarta Sans', '#003527', 'Beyond Networking']),
-        ('Terms & Conditions', f'{base}/terms', 200, ['Terms', 'Domine']),
-        ('Privacy Policy', f'{base}/privacy-policy', 200, ['Privacy', 'Domine']),
-        ('Refund Policy', f'{base}/refund-policy', 200, ['Refund', 'Domine']),
-        ('Community Guidelines', f'{base}/community-guidelines', 200, ['Guidelines', 'Domine']),
-        ('Apply Standalone', f'{base}/apply', 200, ['Admissions Questionnaire', 'Domine']),
-        ('API Health', f'{base}/api', 200, ['"status": "ok"']),
-        ('API Public Content', f'{base}/api/public/content', 200, ['testimonials', 'faqs'])
-    ]
+    print(f'\nALL LIVE PRODUCTION CHECKS PASSED: {all_passed}')
 
-    passed = 0
-    for name, url, exp_status, checks in tests:
-        req = urllib.request.Request(url, headers=headers)
-        try:
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                code = resp.status
-                body = resp.read().decode('utf-8', errors='ignore')
-                missing = [c for c in checks if c not in body]
-                if code == exp_status and not missing:
-                    print(f'[PASS]: {name} ({code})')
-                    passed += 1
-                else:
-                    print(f'[FAIL]: {name} (code: {code}, missing: {missing})')
-        except Exception as e:
-            print(f'[ERROR]: {name} -> {e}')
+    # Also test app.js live bundle
+    js_url = 'https://founderforfounder.in/js/app.js'
+    req_js = urllib.request.Request(js_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+    with urllib.request.urlopen(req_js, context=ctx, timeout=20) as resp_js:
+        js = resp_js.read().decode('utf-8')
 
-    print(f'\nLive Verification Score: {passed}/{len(tests)}')
-    return passed == len(tests)
+    js_checks = {
+        'openAdminLoginModal in app.js': 'openAdminLoginModal' in js,
+        'switchLoginModalTab in app.js': 'switchLoginModalTab' in js,
+        'quickFillAdminCredentials in app.js': 'quickFillAdminCredentials' in js,
+        'handleAdminLoginSubmit in app.js': 'handleAdminLoginSubmit' in js,
+        'auto redirect to admin tab in app.js': 'switchPortalTab(\'admin\'' in js or 'switchPortalTab("admin"' in js,
+    }
 
-if __name__ == '__main__':
-    verify_live()
+    print('\n=== LIVE APP.JS ASSET VERIFICATION (https://founderforfounder.in/js/app.js) ===')
+    for name, passed in js_checks.items():
+        print(f'  {name:<36}: {"PASS" if passed else "FAIL"}')
+        if not passed:
+            all_passed = False
+
+    print(f'\nALL APP.JS CHECKS PASSED: {all_passed}')
+
+except Exception as e:
+    print('Verification failed with error:', e)
