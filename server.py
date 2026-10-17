@@ -209,16 +209,19 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def get_effective_path(self):
+        fwd_uri = self.headers.get('x-forwarded-uri') or self.headers.get('x-original-uri') or self.headers.get('x-rewrite-url')
+        if fwd_uri and 'index.py' not in fwd_uri:
+            return fwd_uri
         parsed = urllib.parse.urlparse(self.path)
         qs = urllib.parse.parse_qs(parsed.query)
         if '__slug' in qs:
-            slug = qs['__slug'][0]
+            slug = qs['__slug'][0].lstrip('/')
             other_qs = {k: v for k, v in qs.items() if k != '__slug'}
             new_q = ('?' + urllib.parse.urlencode(other_qs, doseq=True)) if other_qs else ''
             return f"/api/{slug}{new_q}"
-        for hdr in ('x-forwarded-uri', 'x-matched-path', 'x-rewrite-url', 'x-original-uri', 'x-vercel-matched-path'):
+        for hdr in ('x-matched-path', 'x-vercel-matched-path'):
             val = self.headers.get(hdr)
-            if val and not val.endswith('index.py'):
+            if val and 'index.py' not in val:
                 return val
         return self.path
 
@@ -227,6 +230,14 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         parsed_url = urllib.parse.urlparse(effective_path)
         path = parsed_url.path
         query_params = urllib.parse.parse_qs(parsed_url.query)
+
+        if path in ('/api', '/api/'):
+            return self.send_json({
+                'status': 'ok',
+                'name': 'Founder for Founder Community Platform API',
+                'version': '4.0.0',
+                'environment': 'production' if (os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME')) else 'development'
+            }, 200)
 
         if path.startswith('/api/'):
             try:
@@ -313,7 +324,8 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint Not Found")
 
     def do_DELETE(self):
-        parsed_url = urllib.parse.urlparse(self.path)
+        effective_path = self.get_effective_path()
+        parsed_url = urllib.parse.urlparse(effective_path)
         path = parsed_url.path
         if path.startswith('/api/'):
             try:
@@ -322,6 +334,14 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 print("API DELETE Exception:", e)
                 return self.send_json({'error': str(e)}, 500)
         self.send_error(404, "Endpoint Not Found")
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+        self.send_header('Access-Control-Max-Age', '86400')
+        self.end_headers()
 
     def send_json(self, data, status_code=200, cache_control=None):
         self._custom_cache_control = cache_control
