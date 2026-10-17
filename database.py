@@ -8,14 +8,7 @@ import json
 import uuid
 from datetime import datetime, timedelta
 
-import queue
-
-_RESOLVED_DB_PATH = None
-
 def get_db_path():
-    global _RESOLVED_DB_PATH
-    if _RESOLVED_DB_PATH:
-        return _RESOLVED_DB_PATH
     # If running in Vercel or AWS Lambda serverless environment
     if os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
         tmp_db = '/tmp/f4f_community.db'
@@ -25,87 +18,27 @@ def get_db_path():
                 shutil.copy2(seed_db, tmp_db)
             except Exception as e:
                 print("Could not copy seed DB to /tmp:", e)
-        _RESOLVED_DB_PATH = tmp_db
         return tmp_db
-    _RESOLVED_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'f4f_community.db')
-    return _RESOLVED_DB_PATH
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'f4f_community.db')
 
 DB_PATH = get_db_path()
 SCHEMA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'schema.sql')
 
-class PooledConnection:
-    """Thread-safe connection wrapper that returns raw connection to pool on close."""
-    def __init__(self, raw_conn, pool):
-        self._raw = raw_conn
-        self._pool = pool
-        self._closed = False
-
-    def close(self):
-        if not self._closed:
-            self._closed = True
-            try:
-                self._raw.rollback()
-            except Exception:
-                pass
-            try:
-                self._pool.put_nowait(self._raw)
-            except Exception:
-                try:
-                    self._raw.close()
-                except Exception:
-                    pass
-
-    def __getattr__(self, name):
-        return getattr(self._raw, name)
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.close()
-
-class SQLiteConnectionPool:
-    """High-performance SQLite connection pool with pre-warmed PRAGMAs."""
-    def __init__(self, max_size=16):
-        self._pool = queue.Queue(maxsize=max_size)
-        self.max_size = max_size
-
-    def get_connection(self):
-        db_path = get_db_path()
-        if not os.path.exists(db_path):
-            init_db()
-        while not self._pool.empty():
-            try:
-                raw = self._pool.get_nowait()
-                # Verify connection liveness
-                try:
-                    raw.execute("SELECT 1;")
-                    return PooledConnection(raw, self._pool)
-                except (sqlite3.ProgrammingError, sqlite3.OperationalError):
-                    continue
-            except queue.Empty:
-                break
-
-        # Create new connection and apply all performance PRAGMAs once
-        raw = sqlite3.connect(db_path, timeout=30.0, check_same_thread=False)
-        raw.row_factory = sqlite3.Row
-        raw.execute("PRAGMA foreign_keys = ON;")
-        raw.execute("PRAGMA busy_timeout = 30000;")
-        raw.execute("PRAGMA synchronous = NORMAL;")
-        raw.execute("PRAGMA cache_size = -64000;")
-        raw.execute("PRAGMA temp_store = MEMORY;")
-        raw.execute("PRAGMA mmap_size = 268435456;")
-        if not os.environ.get('VERCEL') and not os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
-            try:
-                raw.execute("PRAGMA journal_mode = WAL;")
-            except Exception:
-                pass
-        return PooledConnection(raw, self._pool)
-
-_GLOBAL_POOL = SQLiteConnectionPool(max_size=16)
-
 def get_db_connection():
-    return _GLOBAL_POOL.get_connection()
+    db_path = get_db_path()
+    # Auto-initialize if db file doesn't exist
+    if not os.path.exists(db_path):
+        init_db()
+    conn = sqlite3.connect(db_path, timeout=30.0)
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA foreign_keys = ON;")
+    conn.execute("PRAGMA busy_timeout = 30000;")
+    if not os.environ.get('VERCEL') and not os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+        try:
+            conn.execute("PRAGMA journal_mode = WAL;")
+        except Exception:
+            pass
+    return conn
 
 def hash_password(password, salt=None):
     if not salt:
@@ -201,97 +134,13 @@ def ensure_table_columns(conn):
             except Exception as ex:
                 print(f"Migration note ({table}.{col}): {ex}")
 
-def is_db_initialized(conn):
-    try:
-        r = conn.execute("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name IN ('users', 'member_profiles', 'site_settings', 'events')").fetchone()
-        return bool(r and r[0] >= 4)
-    except Exception:
-        return False
-
-def ensure_performance_indexes(conn):
-    indexes = [
-        # Users & Memberships
-        ("idx_users_email", "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);"),
-        ("idx_users_google_id", "CREATE INDEX IF NOT EXISTS idx_users_google_id ON users(google_id);"),
-        ("idx_users_role", "CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);"),
-        ("idx_memberships_user_status", "CREATE INDEX IF NOT EXISTS idx_memberships_user_status ON memberships(user_id, status);"),
-        ("idx_memberships_status", "CREATE INDEX IF NOT EXISTS idx_memberships_status ON memberships(status);"),
-
-        # Member Profiles
-        ("idx_member_profiles_user", "CREATE INDEX IF NOT EXISTS idx_member_profiles_user ON member_profiles(user_id);"),
-        ("idx_member_profiles_created", "CREATE INDEX IF NOT EXISTS idx_member_profiles_created ON member_profiles(created_at DESC);"),
-        ("idx_member_profiles_category", "CREATE INDEX IF NOT EXISTS idx_member_profiles_category ON member_profiles(business_category);"),
-        ("idx_member_profiles_stage", "CREATE INDEX IF NOT EXISTS idx_member_profiles_stage ON member_profiles(business_stage);"),
-        ("idx_member_profiles_city", "CREATE INDEX IF NOT EXISTS idx_member_profiles_city ON member_profiles(city);"),
-
-        # Events, RSVPs & Attendance
-        ("idx_events_status_date", "CREATE INDEX IF NOT EXISTS idx_events_status_date ON events(status, event_date);"),
-        ("idx_events_date", "CREATE INDEX IF NOT EXISTS idx_events_date ON events(event_date);"),
-        ("idx_events_category", "CREATE INDEX IF NOT EXISTS idx_events_category ON events(category);"),
-        ("idx_event_gallery_active", "CREATE INDEX IF NOT EXISTS idx_event_gallery_active ON event_gallery(is_active, display_order, created_at);"),
-        ("idx_event_rsvps_lookup", "CREATE INDEX IF NOT EXISTS idx_event_rsvps_lookup ON event_rsvps(event_id, user_id);"),
-        ("idx_event_rsvps_status", "CREATE INDEX IF NOT EXISTS idx_event_rsvps_status ON event_rsvps(event_id, status);"),
-        ("idx_event_rsvps_user", "CREATE INDEX IF NOT EXISTS idx_event_rsvps_user ON event_rsvps(user_id);"),
-        ("idx_event_attendance_lookup", "CREATE INDEX IF NOT EXISTS idx_event_attendance_lookup ON event_attendance(event_id, user_id);"),
-        ("idx_event_attendance_user", "CREATE INDEX IF NOT EXISTS idx_event_attendance_user ON event_attendance(user_id);"),
-
-        # Needs & Responses
-        ("idx_needs_status", "CREATE INDEX IF NOT EXISTS idx_needs_status ON needs_offers(status, created_at);"),
-        ("idx_needs_creator", "CREATE INDEX IF NOT EXISTS idx_needs_creator ON needs_offers(creator_id);"),
-        ("idx_needs_type_cat", "CREATE INDEX IF NOT EXISTS idx_needs_type_cat ON needs_offers(type, category, urgency);"),
-        ("idx_need_responses_need", "CREATE INDEX IF NOT EXISTS idx_need_responses_need ON need_responses(need_id, created_at DESC);"),
-        ("idx_need_responses_responder", "CREATE INDEX IF NOT EXISTS idx_need_responses_responder ON need_responses(responder_id);"),
-
-        # Leads, Referrals & Deals
-        ("idx_leads_user", "CREATE INDEX IF NOT EXISTS idx_leads_user ON leads(user_id, created_at DESC);"),
-        ("idx_leads_user_status", "CREATE INDEX IF NOT EXISTS idx_leads_user_status ON leads(user_id, status);"),
-        ("idx_referrals_referrer", "CREATE INDEX IF NOT EXISTS idx_referrals_referrer ON referrals(referrer_id);"),
-        ("idx_referrals_referred", "CREATE INDEX IF NOT EXISTS idx_referrals_referred ON referrals(referred_member_id);"),
-        ("idx_deals_verified", "CREATE INDEX IF NOT EXISTS idx_deals_verified ON business_deals(verified_by_admin);"),
-        ("idx_deals_user_verified", "CREATE INDEX IF NOT EXISTS idx_deals_user_verified ON business_deals(user_id, verified_by_admin);"),
-
-        # 1-to-1 Meetings (Correct host_id and partner_id)
-        ("idx_one_on_one_meetings_host", "CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_host ON one_on_one_meetings(host_id, meeting_date);"),
-        ("idx_one_on_one_meetings_partner", "CREATE INDEX IF NOT EXISTS idx_one_on_one_meetings_partner ON one_on_one_meetings(partner_id, meeting_date);"),
-
-        # Applications, Notifications, Audit, Settings & Chat
-        ("idx_applications_status", "CREATE INDEX IF NOT EXISTS idx_applications_status ON applications(status, created_at);"),
-        ("idx_applications_email", "CREATE INDEX IF NOT EXISTS idx_applications_email ON applications(email);"),
-        ("idx_notifications_user_date", "CREATE INDEX IF NOT EXISTS idx_notifications_user_date ON notifications(user_id, created_at DESC);"),
-        ("idx_audit_logs_date", "CREATE INDEX IF NOT EXISTS idx_audit_logs_date ON audit_logs(created_at DESC);"),
-        ("idx_otp_email_verified", "CREATE INDEX IF NOT EXISTS idx_otp_email_verified ON otp_records(email, verified_at);"),
-        ("idx_chat_channel", "CREATE INDEX IF NOT EXISTS idx_chat_channel ON community_chat_messages(channel, created_at);"),
-        ("idx_site_settings_key", "CREATE INDEX IF NOT EXISTS idx_site_settings_key ON site_settings(key_name);"),
-        ("idx_testimonials_active", "CREATE INDEX IF NOT EXISTS idx_testimonials_active ON testimonials(is_active, display_order);"),
-        ("idx_faqs_active", "CREATE INDEX IF NOT EXISTS idx_faqs_active ON faqs(is_active, display_order);")
-    ]
-    for _, ddl in indexes:
-        try:
-            conn.execute(ddl)
-        except Exception:
-            pass
-    conn.commit()
-
-def init_db(force=False):
-    db_path = get_db_path()
-    if not force and os.path.exists(db_path):
-        try:
-            conn = sqlite3.connect(db_path, timeout=5.0)
-            if is_db_initialized(conn):
-                ensure_performance_indexes(conn)
-                conn.close()
-                return
-            conn.close()
-        except Exception:
-            pass
-
+def init_db():
     conn = get_db_connection()
     with open(SCHEMA_PATH, 'r', encoding='utf-8') as f:
         schema_sql = f.read()
     conn.executescript(schema_sql)
     conn.commit()
     ensure_table_columns(conn)
-    ensure_performance_indexes(conn)
     conn.close()
     seed_default_data()
 
@@ -374,11 +223,38 @@ def seed_default_data():
                 VALUES (?, ?, ?, ?, ?, ?, 1)
             """, (str(uuid.uuid4()), url, ytid, title, cap, order))
 
-    # 3.5 Testimonials (Populated through Admin CMS with verified members)
-    pass
+    # 3.5 Testimonials
+    cursor.execute("SELECT COUNT(*) FROM testimonials")
+    if cursor.fetchone()[0] == 0:
+        testimonials = [
+            ("Vikram K.", "Founder & CEO", "Apex Global Tech", "Founder for Founder is the network where every introduction leads to real business. Authentic relationships and high-signal collaborations.", 1),
+            ("Ananya M.", "Managing Director", "Precision Industries", "The Needs & Wants engine helped us source key enterprise partners. The curated network environment is unmatched.", 2),
+            ("Rohan S.", "Co-Founder", "Elevate Digital", "Monthly founder meetings are insightful and actionable. It has accelerated our peer referral network across cities.", 3)
+        ]
+        for name, title, biz, quote, order in testimonials:
+            cursor.execute("""
+                INSERT INTO testimonials (id, author_name, author_title, business_name, quote, display_order, is_active)
+                VALUES (?, ?, ?, ?, ?, ?, 1)
+            """, (str(uuid.uuid4()), name, title, biz, quote, order))
 
-    # 3.6 Event Gallery (Populated through Admin CMS with verified gathering photos)
-    pass
+    # 3.6 Event Gallery (Meeting Photos 16:9)
+    cursor.execute("SELECT COUNT(*) FROM event_gallery")
+    if cursor.fetchone()[0] < 6:
+        cursor.execute("DELETE FROM event_gallery")
+        meeting_photos = [
+            ("Private Executive Roundtable", "Scale-up founders debating international expansion playbooks and capital efficiency.", "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80", 1, "Closed-Door Salon"),
+            ("Curated Founders Dinner — Bengaluru", "12 Tech founders sharing unfiltered growth bottlenecks over private fine dining.", "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1280&q=80", 2, "Founder Dinner"),
+            ("1-to-1 Founder Synergy Session", "Strategic partnership dialogue, cross-selling intros, and shared technical advisory.", "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1280&q=80", 3, "1:1 Meeting"),
+            ("Peer Advisory Council Meeting", "Quarterly advisory session evaluating unit economics and talent retention strategies.", "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1280&q=80", 4, "Mastermind"),
+            ("Founder Field Trip & Strategy Walk", "Morning walk and strategy reflection before high-impact quarterly sprints.", "https://images.unsplash.com/photo-1511578314322-64af69704e6a?auto=format&fit=crop&w=1280&q=80", 5, "Experiential"),
+            ("Annual Founder Retreat — Coorg", "Immersive 3-day retreat focused on mental resilience, scale milestones, and peer bonds.", "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1280&q=80", 6, "Founder Retreat")
+        ]
+        for title, cap, url, order, tag in meeting_photos:
+            cursor.execute("""
+                INSERT INTO event_gallery (id, title, caption, image_url, display_order, is_active, tag)
+                VALUES (?, ?, ?, ?, ?, 1, ?)
+            """, (str(uuid.uuid4()), title, cap, url, order, tag))
+        conn.commit()
 
     # 3.7 FAQs
     cursor.execute("SELECT COUNT(*) FROM faqs")
@@ -535,8 +411,22 @@ def seed_default_data():
         )
     """)
 
-    # 8. 1-to-1 Meetings (Populated through member dashboard)
-    pass
+    cursor.execute("SELECT COUNT(*) FROM one_on_one_meetings")
+    if cursor.fetchone()[0] == 0:
+        cursor.execute("SELECT id FROM users WHERE role = 'ADMIN' LIMIT 1")
+        admin_row = cursor.fetchone()
+        if admin_row:
+            admin_uid = admin_row['id']
+            sample_meetings = [
+                (str(uuid.uuid4()), admin_uid, "Vikram K.", "Apex Global Tech", "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80", "2026-10-06 11:00:00", "Coffee / Lunch", "Third Wave Coffee, Indiranagar", "Enterprise GTM & Cloud Co-selling", "Agreed to exchange 3 enterprise introductions in BFSI. Shared playbook on sales incentives.", "Referral Exchanged", 5, "COMPLETED"),
+                (str(uuid.uuid4()), admin_uid, "Ananya M.", "Precision Industries", "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80", "2026-10-14 15:30:00", "Virtual Video", "Google Meet Room", "Supply Chain Software Architecture", "Reviewed enterprise requirements and supplier integration points. Scheduled follow-up pilot demo.", "Deal In Progress", 5, "COMPLETED"),
+                (str(uuid.uuid4()), admin_uid, "Rohan S.", "Elevate Digital", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80", "2026-10-21 16:00:00", "In-Person", "WeWork Galaxy, Residency Road", "Fractional CMO & Talent Acquisition", "Introduced vetted growth marketing lead. Brainstormed co-hosting a closed-door fintech salon.", "Follow-up Scheduled", 5, "COMPLETED")
+            ]
+            for mid, hid, pname, pcomp, pavatar, mdate, mtype, mloc, magenda, mnotes, mout, mrate, mstat in sample_meetings:
+                cursor.execute("""
+                    INSERT INTO one_on_one_meetings (id, host_id, partner_name, partner_company, partner_avatar, meeting_date, meeting_type, location_venue, agenda_topic, discussion_notes, collaboration_outcome, rating, status)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (mid, hid, pname, pcomp, pavatar, mdate, mtype, mloc, magenda, mnotes, mout, mrate, mstat))
 
     # 9. Founders Collective Chat Table & Seed
     cursor.execute("""
@@ -563,7 +453,7 @@ def seed_default_data():
             uid2 = member_rows[1]['user_id'] if len(member_rows) > 1 else admin_uid
 
             sample_chats = [
-                (str(uuid.uuid4()), admin_uid, 'collective', 'Welcome founders to the Founder for Founder Collective Chat! This is a curated, confidential space for active members across India to discuss bottlenecks, exchange deal flow, and collaborate. Drop a message to introduce yourself or ask a question.', '2026-10-10 10:00:00'),
+                (str(uuid.uuid4()), admin_uid, 'collective', 'Welcome founders to the Founder for Founder Collective Chat! This is an exclusive, confidential space for active members across India to discuss bottlenecks, exchange deal flow, and collaborate. Drop a message to introduce yourself or ask a question.', '2026-10-10 10:00:00'),
                 (str(uuid.uuid4()), uid1, 'collective', 'Excited to be part of the network! We recently scaled our B2B SaaS platform across India. Happy to exchange playbooks on enterprise GTM, SOC2 compliance, and sales compensation.', '2026-10-10 11:15:00'),
                 (str(uuid.uuid4()), uid2, 'collective', 'Hey everyone! If any founder here is navigating pan-India supply chain logistics or cold-chain warehousing, happy to share our vetted vendor list and unit economics model.', '2026-10-10 14:30:00'),
                 (str(uuid.uuid4()), admin_uid, 'collective', 'Reminder: Our upcoming Curated Founders Dinner in Bengaluru has only 3 seats remaining. Check the Experiences tab to reserve your seat!', '2026-10-10 16:45:00')

@@ -14,7 +14,6 @@ import secrets
 import base64
 import re
 import gzip
-import time
 import database
 
 def load_dotenv():
@@ -113,20 +112,12 @@ def get_auth_user(request_handler):
         token = auth_header.split(' ')[1]
         user = SESSIONS.get(token)
         if user:
-            now = time.time()
-            if now - user.get('_last_verified', 0) < 30.0:
-                return user
             # Refresh user status from DB
             conn = database.get_db_connection()
             db_user = conn.execute("SELECT id, email, role, status, email_verified FROM users WHERE id = ?", (user['id'],)).fetchone()
             conn.close()
             if db_user:
-                updated_user = dict(db_user)
-                updated_user['_last_verified'] = now
-                SESSIONS[token] = updated_user
-                return updated_user
-            else:
-                SESSIONS.pop(token, None)
+                return dict(db_user)
     return None
 
 def sanitize_csv_cell(val):
@@ -139,89 +130,26 @@ def sanitize_csv_cell(val):
 
 STATIC_GZIP_CACHE = {}
 
-# Server-side in-memory micro-cache for instant public data delivery
-_PUBLIC_CONTENT_CACHE = {
-    'data': None,
-    'json_bytes': None,
-    'gzip_bytes': None,
-    'timestamp': 0,
-    'ttl': 60.0
-}
-
-_SETTINGS_CACHE = {
-    'data': None,
-    'timestamp': 0,
-    'ttl': 300.0
-}
-
-def invalidate_public_content_cache():
-    _PUBLIC_CONTENT_CACHE['data'] = None
-    _PUBLIC_CONTENT_CACHE['json_bytes'] = None
-    _PUBLIC_CONTENT_CACHE['gzip_bytes'] = None
-    _PUBLIC_CONTENT_CACHE['timestamp'] = 0
-
-def invalidate_site_settings_cache():
-    _SETTINGS_CACHE['data'] = None
-    _SETTINGS_CACHE['timestamp'] = 0
-
-def get_site_settings(conn=None):
-    now = time.time()
-    if _SETTINGS_CACHE['data'] is not None and (now - _SETTINGS_CACHE['timestamp'] < _SETTINGS_CACHE['ttl']):
-        return _SETTINGS_CACHE['data']
-    close_after = False
-    if conn is None:
-        conn = database.get_db_connection()
-        close_after = True
-    try:
-        rows = conn.execute("SELECT key_name, key_value FROM site_settings").fetchall()
-        settings = {r['key_name']: r['key_value'] for r in rows}
-        if not settings.get('hero_banner_url'):
-            settings['hero_banner_url'] = '/assets/hero_banner.jpg'
-        google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '').strip() or settings.get('google_client_id', '')
-        settings['google_client_id'] = google_client_id
-        _SETTINGS_CACHE['data'] = settings
-        _SETTINGS_CACHE['timestamp'] = now
-        return settings
-    finally:
-        if close_after:
-            conn.close()
-
 class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=PUBLIC_DIR, **kwargs)
 
     def end_headers(self):
-        custom_cache = getattr(self, '_custom_cache_control', None)
-        if custom_cache:
-            self.send_header('Cache-Control', custom_cache)
+        effective_path = getattr(self, 'path', '')
+        if effective_path.startswith('/api/'):
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            self.send_header('Pragma', 'no-cache')
+            self.send_header('Expires', '0')
+        elif any(effective_path.startswith(p) for p in ('/assets/', '/css/', '/js/')) or any(effective_path.split('?')[0].endswith(ext) for ext in ('.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico', '.woff2', '.woff')):
+            self.send_header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
         else:
-            effective_path = getattr(self, 'path', '')
-            if effective_path.startswith('/api/public/') or effective_path in ('/api/meeting-photos', '/api/auth/config'):
-                self.send_header('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300')
-            elif effective_path.startswith('/api/'):
-                self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
-                self.send_header('Pragma', 'no-cache')
-                self.send_header('Expires', '0')
-            elif any(effective_path.startswith(p) for p in ('/assets/', '/css/', '/js/')) or any(effective_path.split('?')[0].endswith(ext) for ext in ('.css', '.js', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico', '.woff2', '.woff')):
-                self.send_header('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
-            else:
-                self.send_header('Cache-Control', 'public, max-age=0, must-revalidate')
+            self.send_header('Cache-Control', 'public, max-age=0, must-revalidate')
         super().end_headers()
 
     def get_effective_path(self):
-        fwd_uri = self.headers.get('x-forwarded-uri') or self.headers.get('x-original-uri') or self.headers.get('x-rewrite-url')
-        if fwd_uri and 'index.py' not in fwd_uri:
-            return fwd_uri
-        parsed = urllib.parse.urlparse(self.path)
-        qs = urllib.parse.parse_qs(parsed.query)
-        if '__slug' in qs:
-            slug = qs['__slug'][0].lstrip('/')
-            other_qs = {k: v for k, v in qs.items() if k != '__slug'}
-            new_q = ('?' + urllib.parse.urlencode(other_qs, doseq=True)) if other_qs else ''
-            return f"/api/{slug}{new_q}"
-        for hdr in ('x-matched-path', 'x-vercel-matched-path'):
+        for hdr in ('x-forwarded-uri', 'x-matched-path', 'x-rewrite-url', 'x-original-uri'):
             val = self.headers.get(hdr)
-            if val and 'index.py' not in val:
+            if val:
                 return val
         return self.path
 
@@ -230,14 +158,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         parsed_url = urllib.parse.urlparse(effective_path)
         path = parsed_url.path
         query_params = urllib.parse.parse_qs(parsed_url.query)
-
-        if path in ('/api', '/api/'):
-            return self.send_json({
-                'status': 'ok',
-                'name': 'Founder for Founder Community Platform API',
-                'version': '4.0.0',
-                'environment': 'production' if (os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME')) else 'development'
-            }, 200)
 
         if path.startswith('/api/'):
             try:
@@ -324,8 +244,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint Not Found")
 
     def do_DELETE(self):
-        effective_path = self.get_effective_path()
-        parsed_url = urllib.parse.urlparse(effective_path)
+        parsed_url = urllib.parse.urlparse(self.path)
         path = parsed_url.path
         if path.startswith('/api/'):
             try:
@@ -335,16 +254,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({'error': str(e)}, 500)
         self.send_error(404, "Endpoint Not Found")
 
-    def do_OPTIONS(self):
-        self.send_response(204)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
-        self.send_header('Access-Control-Max-Age', '86400')
-        self.end_headers()
-
-    def send_json(self, data, status_code=200, cache_control=None):
-        self._custom_cache_control = cache_control
+    def send_json(self, data, status_code=200):
         body = json.dumps(data, default=str).encode('utf-8')
         accept_encoding = self.headers.get('Accept-Encoding', '')
         if 'gzip' in accept_encoding and len(body) > 350:
@@ -384,35 +294,11 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def handle_api_get(self, path, query):
-        # Public Content Endpoint - Instant zero-DB-connection cache hit
-        if path == '/api/public/content':
-            now = time.time()
-            if _PUBLIC_CONTENT_CACHE['data'] is not None and (now - _PUBLIC_CONTENT_CACHE['timestamp'] < _PUBLIC_CONTENT_CACHE['ttl']):
-                accept_encoding = self.headers.get('Accept-Encoding', '')
-                if 'gzip' in accept_encoding and _PUBLIC_CONTENT_CACHE.get('gzip_bytes'):
-                    self.send_response(200)
-                    self.send_header('Content-Type', 'application/json')
-                    self.send_header('Content-Encoding', 'gzip')
-                    self.send_header('Content-Length', str(len(_PUBLIC_CONTENT_CACHE['gzip_bytes'])))
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-                    self.send_header('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300')
-                    self.end_headers()
-                    self.wfile.write(_PUBLIC_CONTENT_CACHE['gzip_bytes'])
-                    return
-                elif _PUBLIC_CONTENT_CACHE.get('json_bytes'):
-                    self.send_response(200)
-                    self.send_header('Content-Type', 'application/json')
-                    self.send_header('Content-Length', str(len(_PUBLIC_CONTENT_CACHE['json_bytes'])))
-                    self.send_header('Access-Control-Allow-Origin', '*')
-                    self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-                    self.send_header('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300')
-                    self.end_headers()
-                    self.wfile.write(_PUBLIC_CONTENT_CACHE['json_bytes'])
-                    return
-                return self.send_json(_PUBLIC_CONTENT_CACHE['data'], cache_control='public, max-age=30, s-maxage=60, stale-while-revalidate=300')
+        user = get_auth_user(self)
+        conn = database.get_db_connection()
 
-            conn = database.get_db_connection()
+        # Public Content Endpoint
+        if path == '/api/public/content':
             hero = conn.execute("SELECT * FROM hero_banners WHERE is_active = 1 LIMIT 1").fetchone()
             reels = conn.execute("SELECT * FROM instagram_reels WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             youtube_vids = conn.execute("SELECT * FROM youtube_videos WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
@@ -421,21 +307,20 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             faqs = conn.execute("SELECT * FROM faqs WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             events = conn.execute("SELECT * FROM events WHERE status = 'UPCOMING' ORDER BY event_date ASC LIMIT 4").fetchall()
             
-            # Live Database Counters in 1 single fast query
-            counters_row = conn.execute("""
-                SELECT 
-                    (SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE') as active_members,
-                    (SELECT COUNT(*) FROM events) as published_events,
-                    (SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1) as verified_business
-            """).fetchone()
-            active_members_count = counters_row['active_members'] if counters_row else 0
-            published_events_count = counters_row['published_events'] if counters_row else 0
-            verified_biz_sum = counters_row['verified_business'] if counters_row else 0
+            # Live Database Counters
+            active_members_count = conn.execute("SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE'").fetchone()[0]
+            published_events_count = conn.execute("SELECT COUNT(*) FROM events").fetchone()[0]
+            verified_biz_sum = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1").fetchone()[0]
 
-            settings = get_site_settings(conn)
+            settings_rows = conn.execute("SELECT key_name, key_value FROM site_settings").fetchall()
+            settings = {r['key_name']: r['key_value'] for r in settings_rows}
+            if not settings.get('hero_banner_url'):
+                settings['hero_banner_url'] = '/assets/hero_banner.jpg'
+                conn.execute("INSERT INTO site_settings (key_name, key_value) VALUES ('hero_banner_url', '/assets/hero_banner.jpg') ON CONFLICT(key_name) DO UPDATE SET key_value = '/assets/hero_banner.jpg'")
+                conn.commit()
+
             conn.close()
-
-            payload = {
+            return self.send_json({
                 'hero': dict(hero) if hero else None,
                 'reels': [dict(r) for r in reels],
                 'youtube_videos': [dict(y) for y in youtube_vids],
@@ -451,20 +336,10 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     'verified_business': verified_biz_sum
                 },
                 'settings': settings
-            }
-            json_bytes = json.dumps(payload, default=str).encode('utf-8')
-            gzip_bytes = gzip.compress(json_bytes, compresslevel=6) if len(json_bytes) > 350 else None
-            _PUBLIC_CONTENT_CACHE['data'] = payload
-            _PUBLIC_CONTENT_CACHE['json_bytes'] = json_bytes
-            _PUBLIC_CONTENT_CACHE['gzip_bytes'] = gzip_bytes
-            _PUBLIC_CONTENT_CACHE['timestamp'] = now
-            return self.send_json(payload, cache_control='public, max-age=30, s-maxage=60, stale-while-revalidate=300')
-
-        user = get_auth_user(self)
-        conn = database.get_db_connection()
+            })
 
         # Public FAQs Endpoint
-        if path == '/api/public/faqs':
+        elif path == '/api/public/faqs':
             faqs = conn.execute("SELECT * FROM faqs WHERE is_active = 1 ORDER BY display_order ASC").fetchall()
             conn.close()
             return self.send_json({'faqs': [dict(f) for f in faqs]})
@@ -491,10 +366,14 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         # Auth Config Endpoint (Google Client ID & Auth Status)
         elif path == '/api/auth/config':
-            settings = get_site_settings(conn)
+            google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '').strip()
+            if not google_client_id:
+                row = conn.execute("SELECT key_value FROM site_settings WHERE key_name = 'google_client_id'").fetchone()
+                if row and row['key_value']:
+                    google_client_id = row['key_value'].strip()
             conn.close()
             return self.send_json({
-                'google_client_id': settings.get('google_client_id', ''),
+                'google_client_id': google_client_id,
                 'google_auth_enabled': True
             })
 
@@ -539,7 +418,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 sql += " AND p.business_stage = ?"
                 params.append(stage)
 
-            sql += " ORDER BY p.created_at DESC LIMIT 200"
+            sql += " ORDER BY p.created_at DESC"
             members = conn.execute(sql, params).fetchall()
             conn.close()
             return self.send_json({'members': [dict(m) for m in members]})
@@ -556,14 +435,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             sql = """
                 SELECT n.*, p.full_name as creator_name, p.business_name, p.profile_photo, p.city as creator_city,
-                       COALESCE(nr.response_count, 0) as response_count
+                       (SELECT COUNT(*) FROM need_responses WHERE need_id = n.id) as response_count
                 FROM needs_offers n 
                 JOIN member_profiles p ON n.creator_id = p.user_id 
-                LEFT JOIN (
-                    SELECT need_id, COUNT(*) as response_count 
-                    FROM need_responses 
-                    GROUP BY need_id
-                ) nr ON nr.need_id = n.id
                 WHERE n.status != 'CLOSED'
             """
             params = []
@@ -605,120 +479,27 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 'responses': [dict(r) for r in responses]
             })
 
-        # Consolidated Portal Dashboard Summary (Zero-Waterfall Data Loading)
-        elif path == '/api/portal/dashboard-summary':
-            if not user:
-                conn.close()
-                return self.send_json({'error': 'Unauthorized'}, 401)
-
-            uid = user['id']
-            now_dt = datetime.now()
-            now_str = now_dt.strftime('%Y-%m-%d %H:%M:%S')
-            start_of_month = now_dt.strftime('%Y-%m-01 00:00:00')
-            if now_dt.month == 12:
-                next_month_start = f"{now_dt.year + 1}-01-01 00:00:00"
-            else:
-                next_month_start = f"{now_dt.year}-{now_dt.month + 1:02d}-01 00:00:00"
-
-            # 1. Combined CRM & Meeting stats query (1 single indexed query)
-            crm_stats = conn.execute("""
-                SELECT 
-                    (SELECT COUNT(*) FROM leads WHERE user_id = ? AND status = 'WON') as leads_won,
-                    (SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?) as ref_rec,
-                    (SELECT COUNT(*) FROM one_on_one_meetings 
-                     WHERE (host_id = ? OR partner_id = ?) 
-                       AND meeting_date >= ? AND meeting_date < ?) as this_month_meetings
-            """, (uid, uid, uid, uid, start_of_month, next_month_start)).fetchone()
-
-            leads_won = crm_stats['leads_won'] if crm_stats else 0
-            ref_rec = crm_stats['ref_rec'] if crm_stats else 0
-            this_month_meetings = crm_stats['this_month_meetings'] if crm_stats else 0
-
-            # 2. Optimized Events for Current Month using LEFT JOINs (NO correlated subqueries)
-            events_in_month = conn.execute("""
-                SELECT e.id, e.status, e.event_date,
-                       r.status as user_rsvp,
-                       a.attended as attended,
-                       a.status as attendance_status
-                FROM events e
-                LEFT JOIN event_rsvps r ON r.event_id = e.id AND r.user_id = ?
-                LEFT JOIN event_attendance a ON a.event_id = e.id AND a.user_id = ?
-                WHERE e.event_date >= ? AND e.event_date < ?
-            """, (uid, uid, start_of_month, next_month_start)).fetchall()
-
-            events_attended = 0
-            completed_events = 0
-            for ev in events_in_month:
-                is_completed = (ev['status'] == 'COMPLETED' or (ev['event_date'] and ev['event_date'] < now_str))
-                if is_completed:
-                    completed_events += 1
-                if ev['attended'] == 1 or ev['attendance_status'] == 'PRESENT':
-                    events_attended += 1
-
-            total_events = len(events_in_month)
-            attendance_rate = 100
-            if completed_events > 0:
-                attendance_rate = round((events_attended / completed_events) * 100)
-
-            # 3. Optimized streak query with LIMIT 30
-            past_attended = conn.execute("""
-                SELECT ea.attended
-                FROM events e
-                LEFT JOIN event_attendance ea ON e.id = ea.event_id AND ea.user_id = ?
-                WHERE (e.status = 'COMPLETED' OR e.event_date < ?)
-                ORDER BY e.event_date DESC
-                LIMIT 30
-            """, (uid, now_str)).fetchall()
-            streak = 0
-            for pa in past_attended:
-                if pa['attended'] == 1:
-                    streak += 1
-                else:
-                    break
-
-            conn.close()
-            return self.send_json({
-                'crm': {
-                    'referrals_received': ref_rec,
-                    'leads_won': leads_won
-                },
-                'attendance': {
-                    'attendance_rate': attendance_rate,
-                    'attendance_streak': streak
-                },
-                'meetings': {
-                    'this_month': this_month_meetings,
-                    'current_month_name': now_dt.strftime('%B')
-                }
-            })
-
         # CRM Metrics & Active Leads
         elif path == '/api/crm/metrics':
             if not user:
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
-            uid = user['id']
-            # Fetch leads first
-            leads_list = conn.execute("SELECT * FROM leads WHERE user_id = ? ORDER BY created_at DESC", (uid,)).fetchall()
-            leads_rec = len(leads_list)
-            leads_won = sum(1 for l in leads_list if l['status'] == 'WON')
+            leads_rec = conn.execute("SELECT COUNT(*) FROM leads WHERE user_id = ?", (user['id'],)).fetchone()[0]
+            leads_won = conn.execute("SELECT COUNT(*) FROM leads WHERE user_id = ? AND status = 'WON'", (user['id'],)).fetchone()[0]
+            ref_given = conn.execute("SELECT COUNT(*) FROM referrals WHERE referrer_id = ?", (user['id'],)).fetchone()[0]
+            ref_rec = conn.execute("SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?", (user['id'],)).fetchone()[0]
+            biz_gen = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE user_id = ? AND verified_by_admin = 1", (user['id'],)).fetchone()[0]
 
-            # Combined scalar query for referrals and deals in 1 fast roundtrip
-            stats = conn.execute("""
-                SELECT 
-                    (SELECT COUNT(*) FROM referrals WHERE referrer_id = ?) as ref_given,
-                    (SELECT COUNT(*) FROM referrals WHERE referred_member_id = ?) as ref_rec,
-                    (SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE user_id = ? AND verified_by_admin = 1) as biz_gen
-            """, (uid, uid, uid)).fetchone()
+            leads_list = conn.execute("SELECT * FROM leads WHERE user_id = ? ORDER BY created_at DESC", (user['id'],)).fetchall()
 
             conn.close()
             return self.send_json({
                 'leads_received': leads_rec,
                 'leads_won': leads_won,
-                'referrals_given': stats['ref_given'] if stats else 0,
-                'referrals_received': stats['ref_rec'] if stats else 0,
-                'verified_business_generated': stats['biz_gen'] if stats else 0,
+                'referrals_given': ref_given,
+                'referrals_received': ref_rec,
+                'verified_business_generated': biz_gen,
                 'leads': [dict(l) for l in leads_list]
             })
 
@@ -732,21 +513,13 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             fmt = query.get('signature_format', [''])[0]
 
             sql = """SELECT e.*, 
-                     COALESCE(rc.rsvp_count, 0) as rsvp_count, 
-                     r.status as user_rsvp,
-                     r.payment_status as user_payment_status,
-                     r.amount_paid as user_amount_paid,
-                     r.payment_id as user_payment_id
-                     FROM events e
-                     LEFT JOIN event_rsvps r ON r.event_id = e.id AND r.user_id = ?
-                     LEFT JOIN (
-                         SELECT event_id, COUNT(*) as rsvp_count 
-                         FROM event_rsvps 
-                         WHERE status = 'ATTENDING' 
-                         GROUP BY event_id
-                     ) rc ON rc.event_id = e.id
-                     WHERE 1=1"""
-            params = [user['id']]
+                     (SELECT COUNT(*) FROM event_rsvps WHERE event_id = e.id AND status = 'ATTENDING') as rsvp_count, 
+                     (SELECT status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_rsvp,
+                     (SELECT payment_status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_payment_status,
+                     (SELECT amount_paid FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_amount_paid,
+                     (SELECT payment_id FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_payment_id
+                     FROM events e WHERE 1=1"""
+            params = [user['id'], user['id'], user['id'], user['id']]
 
             if cat:
                 sql += " AND e.category = ?"
@@ -771,38 +544,22 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 req_month = datetime.now().strftime('%Y-%m')
 
             # Get distinct available months from events
-            available_rows = conn.execute("SELECT DISTINCT substr(event_date, 1, 7) as m FROM events WHERE event_date IS NOT NULL ORDER BY m DESC LIMIT 24").fetchall()
+            available_rows = conn.execute("SELECT DISTINCT strftime('%Y-%m', event_date) as m FROM events WHERE event_date IS NOT NULL ORDER BY m DESC").fetchall()
             available_months = [r['m'] for r in available_rows if r['m']]
             if req_month not in available_months and available_months:
                 req_month = available_months[0]
 
-            # Calculate date bounds for req_month (e.g. 2026-10-01 to 2026-11-01)
-            try:
-                dt_obj = datetime.strptime(req_month, '%Y-%m')
-                month_start = dt_obj.strftime('%Y-%m-01 00:00:00')
-                if dt_obj.month == 12:
-                    month_end = f"{dt_obj.year + 1}-01-01 00:00:00"
-                else:
-                    month_end = f"{dt_obj.year}-{dt_obj.month + 1:02d}-01 00:00:00"
-                month_name = dt_obj.strftime('%B %Y')
-            except Exception:
-                month_start = f"{req_month}-01 00:00:00"
-                month_end = f"{req_month}-31 23:59:59"
-                month_name = req_month
-
-            # Fetch all events hosted in requested month with user's attendance & RSVP status via indexed LEFT JOINs
+            # Fetch all events hosted in requested month with user's attendance & RSVP status
             events_in_month = conn.execute("""
                 SELECT e.*, 
-                       r.status as user_rsvp,
-                       a.attended as attended,
-                       a.status as attendance_status,
-                       a.marked_at as marked_at
+                       (SELECT status FROM event_rsvps WHERE event_id = e.id AND user_id = ?) as user_rsvp,
+                       (SELECT attended FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attended,
+                       (SELECT status FROM event_attendance WHERE event_id = e.id AND user_id = ?) as attendance_status,
+                       (SELECT marked_at FROM event_attendance WHERE event_id = e.id AND user_id = ?) as marked_at
                 FROM events e
-                LEFT JOIN event_rsvps r ON r.event_id = e.id AND r.user_id = ?
-                LEFT JOIN event_attendance a ON a.event_id = e.id AND a.user_id = ?
-                WHERE e.event_date >= ? AND e.event_date < ?
+                WHERE strftime('%Y-%m', e.event_date) = ?
                 ORDER BY e.event_date ASC
-            """, (user['id'], user['id'], month_start, month_end)).fetchall()
+            """, (user['id'], user['id'], user['id'], user['id'], req_month)).fetchall()
 
             events_list = []
             events_attended = 0
@@ -842,7 +599,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 LEFT JOIN event_attendance ea ON e.id = ea.event_id AND ea.user_id = ?
                 WHERE (e.status = 'COMPLETED' OR e.event_date < ?)
                 ORDER BY e.event_date DESC
-                LIMIT 50
             """, (user['id'], now_str)).fetchall()
 
             streak = 0
@@ -963,12 +719,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
+            mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
             is_admin = user.get('role') in ('ADMIN', 'SUPER_ADMIN')
-            if is_admin:
-                has_active_membership = True
-            else:
-                mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
-                has_active_membership = bool(mem and mem['status'] == 'ACTIVE')
+            has_active_membership = (mem and mem['status'] == 'ACTIVE') or is_admin
 
             if not has_active_membership:
                 conn.close()
@@ -1003,18 +756,10 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Forbidden'}, 403)
 
-            metrics_row = conn.execute("""
-                SELECT 
-                    (SELECT COUNT(*) FROM users WHERE role = 'MEMBER') as total_members,
-                    (SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE') as active_members,
-                    (SELECT COUNT(*) FROM applications WHERE status IN ('SUBMITTED', 'UNDER_REVIEW')) as new_applications,
-                    (SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1) as verified_business
-            """).fetchone()
-
-            total_members = metrics_row['total_members'] if metrics_row else 0
-            active_members = metrics_row['active_members'] if metrics_row else 0
-            new_applications = metrics_row['new_applications'] if metrics_row else 0
-            total_business = metrics_row['verified_business'] if metrics_row else 0
+            total_members = conn.execute("SELECT COUNT(*) FROM users WHERE role = 'MEMBER'").fetchone()[0]
+            active_members = conn.execute("SELECT COUNT(*) FROM memberships WHERE status = 'ACTIVE'").fetchone()[0]
+            new_applications = conn.execute("SELECT COUNT(*) FROM applications WHERE status IN ('SUBMITTED', 'UNDER_REVIEW')").fetchone()[0]
+            total_business = conn.execute("SELECT COALESCE(SUM(amount), 0) FROM business_deals WHERE verified_by_admin = 1").fetchone()[0]
             mrr = active_members * 1500
 
             applications = conn.execute("SELECT * FROM applications ORDER BY created_at DESC LIMIT 30").fetchall()
@@ -1226,7 +971,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
             token = secrets.token_hex(32)
             user_dict = dict(user)
-            user_dict['_last_verified'] = time.time()
             SESSIONS[token] = user_dict
 
             profile = conn.execute("SELECT * FROM member_profiles WHERE user_id = ?", (user['id'],)).fetchone()
@@ -1337,7 +1081,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             conn.close()
 
             user_dict = dict(db_user)
-            user_dict['_last_verified'] = time.time()
             token = secrets.token_hex(32)
             SESSIONS[token] = user_dict
 
@@ -1809,7 +1552,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             meeting_id = str(uuid.uuid4())
             partner_name = (body.get('partner_name') or 'Fellow Founder').strip()
             partner_company = (body.get('partner_company') or '').strip()
-            partner_avatar = body.get('partner_avatar') or '/assets/logo.svg'
+            partner_avatar = body.get('partner_avatar') or 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
             meeting_date = body.get('meeting_date') or datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             meeting_type = body.get('meeting_type', 'In-Person')
             location_venue = (body.get('location_venue') or 'Bangalore / Virtual').strip()
@@ -1859,7 +1602,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 VALUES (?, ?, ?, ?, ?, ?, 1, ?)
             """, (photo_id, title, caption, image_url, event_date, display_order, tag))
             conn.commit()
-            invalidate_public_content_cache()
 
             new_photo = conn.execute("SELECT * FROM event_gallery WHERE id = ?", (photo_id,)).fetchone()
             conn.close()
@@ -1876,7 +1618,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self.send_json({'error': 'Photo ID required.'}, 400)
             conn.execute("DELETE FROM event_gallery WHERE id = ?", (del_id,))
             conn.commit()
-            invalidate_public_content_cache()
             conn.close()
             return self.send_json({'success': True, 'message': 'Meeting photo deleted successfully.'})
 
@@ -1887,12 +1628,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self.send_json({'error': 'Unauthorized'}, 401)
 
+            mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
             is_admin = user.get('role') in ('ADMIN', 'SUPER_ADMIN')
-            if is_admin:
-                has_active_membership = True
-            else:
-                mem = conn.execute("SELECT status FROM memberships WHERE user_id = ?", (user['id'],)).fetchone()
-                has_active_membership = bool(mem and mem['status'] == 'ACTIVE')
+            has_active_membership = (mem and mem['status'] == 'ACTIVE') or is_admin
 
             if not has_active_membership:
                 conn.close()
@@ -1974,8 +1712,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 else:
                     conn.execute("INSERT INTO site_settings (key_name, key_value) VALUES (?, ?) ON CONFLICT(key_name) DO UPDATE SET key_value = ?", (k, str(v), str(v)))
             conn.commit()
-            invalidate_public_content_cache()
-            invalidate_site_settings_cache()
             conn.close()
             return self.send_json({'success': True, 'message': 'Brand & CMS settings updated successfully.'})
 
@@ -2004,7 +1740,6 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 body.get('what_is_included', 'Included in Membership'), float(body.get('price_amount', 0)), body.get('cancellation_terms', 'Free cancellation 24h prior')
             ))
             conn.commit()
-            invalidate_public_content_cache()
             conn.close()
             return self.send_json({'success': True, 'event_id': evt_id, 'google_maps_url': google_maps_url, 'message': 'Event created successfully.'})
 

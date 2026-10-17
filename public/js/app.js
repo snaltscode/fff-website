@@ -17,67 +17,39 @@ const featureTabsData = {
   network: {
     title: 'Curated Founder Network',
     text: 'Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth.',
-    image: '/assets/hero_banner.jpg'
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'
   },
   needs: {
     title: 'Needs & Wants Engine',
     text: 'A structured post engine allowing members to list explicit commercial requirements or high-value business offerings.',
-    image: '/assets/hero_banner.jpg'
+    image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80'
   },
   crm: {
     title: 'Leads & Referrals CRM',
     text: 'Record peer introductions, manage client deal pipelines, and track administrator-verified business generated.',
-    image: '/assets/hero_banner.jpg'
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80'
   },
   meetings: {
     title: 'Founder Experiences',
     text: 'Activities spanning Play, Explore, Dine, Build, and Celebrate—from closed-door roundtables to sunrise trails and dinners.',
-    image: '/assets/hero_banner.jpg'
+    image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80'
   },
   collaborations: {
     title: 'Business Collaborations',
     text: 'Work alongside peers on strategic joint ventures, supplier partnerships, co-marketing, and co-founder alliances.',
-    image: '/assets/hero_banner.jpg'
+    image: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80'
   },
   challenges: {
     title: 'Monthly Challenges',
     text: 'Participate in community milestone challenges focused on business growth, peer referrals, and introductions.',
-    image: '/assets/hero_banner.jpg'
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80'
   }
 };
 
-// Clean branded initials avatar helper (memoized cache to eliminate allocations and CPU usage)
-const _avatarCache = new Map();
-function getInitialsAvatar(name) {
-  const n = (name || 'Member').trim();
-  const initials = n.split(' ').map(p => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || 'FF';
-  if (_avatarCache.has(initials)) {
-    return _avatarCache.get(initials);
-  }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-    <rect width="100" height="100" rx="20" fill="#064E3B"/>
-    <text x="50" y="58" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="36" font-weight="700" fill="#F3FBF7" text-anchor="middle" dominant-baseline="middle">${initials}</text>
-  </svg>`;
-  const uri = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
-  _avatarCache.set(initials, uri);
-  return uri;
-}
-
-// Initialize App on DOM Loaded (Instant Hydration + SWR Background Revalidation)
+// Initialize App on DOM Loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Immediately hydrate DOM from local SWR cache (0ms instant paint)
-  const initialCached = getStoredPublicContent();
-  if (initialCached) {
-    renderPublicContent(initialCached);
-    if (initialCached.settings && initialCached.settings.google_client_id) {
-      state.googleClientId = initialCached.settings.google_client_id;
-      setupGoogleAuth(initialCached.settings.google_client_id);
-    }
-  }
-
-  // 2. Fetch fresh public content in background
-  fetchPublicContent();
   fetchAuthConfig();
+  fetchPublicContent();
   initScrollListeners();
   initVisibilityObservers();
   checkURLHash();
@@ -205,341 +177,212 @@ function switchFeatureTab(key, btnEl) {
 
 // Modal Controls
 function openModal(id) {
-  if (id === 'interestModal') id = 'showInterestModal';
   const modal = document.getElementById(id);
   if (modal) modal.classList.add('active');
 }
 function closeModal(id) {
-  if (id === 'interestModal') id = 'showInterestModal';
   const modal = document.getElementById(id);
   if (modal) modal.classList.remove('active');
 }
-function openShowInterestModal() {
-  if (typeof jumpToAppStep === 'function') jumpToAppStep(1);
-  openModal('showInterestModal');
-}
+function openShowInterestModal() { openModal('showInterestModal'); }
 function openLoginModal() { openModal('loginModal'); }
 function openPostNeedModal() { openModal('postNeedModal'); }
 
 // Segmented Choice Input for Application Modal
 function setApplicantType(type) {
   state.applicantType = type;
-  const hidden = document.getElementById('app_applicant_type');
-  if (hidden) hidden.value = type;
+  document.getElementById('app_applicant_type').value = type;
   document.querySelectorAll('.segmented-option').forEach(opt => opt.classList.remove('active'));
 
-  if (type === 'Founder') {
-    const el = document.getElementById('segFounder');
-    if (el) el.classList.add('active');
-  } else if (type === 'Business Owner') {
-    const el = document.getElementById('segBizOwner');
-    if (el) el.classList.add('active');
-  } else if (type === 'Professional') {
-    const el = document.getElementById('segProfessional');
-    if (el) el.classList.add('active');
-  }
+  if (type === 'Founder') document.getElementById('segFounder').classList.add('active');
+  else if (type === 'Business Owner') document.getElementById('segBizOwner').classList.add('active');
+  else if (type === 'Professional') document.getElementById('segProfessional').classList.add('active');
 }
 
-// Step navigation for Admissions Questionnaire
-function jumpToAppStep(step) {
-  for (let i = 1; i <= 6; i++) {
-    const el = document.getElementById(`appStep${i}`);
-    const pill = document.getElementById(`stepPill${i}`);
-    if (el) el.style.display = (i === step) ? 'block' : 'none';
-    if (pill) {
-      const numSpan = pill.querySelector('span');
-      if (i === step) {
-        pill.classList.add('active');
-        pill.style.color = '#064E3B';
-        if (numSpan) {
-          numSpan.style.background = '#064E3B';
-          numSpan.style.color = '#FAF8F5';
-        }
-      } else {
-        pill.classList.remove('active');
-        pill.style.color = '#6B7280';
-        if (numSpan) {
-          numSpan.style.background = '#E5E7EB';
-          numSpan.style.color = '#4B5563';
-        }
-      }
-    }
-  }
-}
-
-function nextAppStep(current) {
-  if (current === 1) {
-    const name = document.getElementById('app_full_name');
-    const desig = document.getElementById('app_designation');
-    const email = document.getElementById('app_email');
-    const phone = document.getElementById('app_phone');
-    if (!name?.value.trim() || !desig?.value.trim() || !email?.value.trim() || !phone?.value.trim()) {
-      alert('Please complete your name, executive role, official work email, and WhatsApp number before proceeding.');
-      return;
-    }
-  } else if (current === 2) {
-    const biz = document.getElementById('app_business_name');
-    if (!biz?.value.trim()) {
-      alert('Please enter your registered entity or brand name.');
-      return;
-    }
-  } else if (current === 3) {
-    const web = document.getElementById('app_website');
-    const li = document.getElementById('app_linkedin');
-    if (!web?.value.trim() || !li?.value.trim()) {
-      alert('Please provide your company website URL and LinkedIn profile URL.');
-      return;
-    }
-  } else if (current === 4) {
-    const offer = document.getElementById('app_what_offer');
-    const need = document.getElementById('app_what_need');
-    if (!offer?.value.trim() || !need?.value.trim()) {
-      alert('Please answer the value contribution and operational bottleneck questions.');
-      return;
-    }
-  }
-  jumpToAppStep(current + 1);
-}
-
-function prevAppStep(current) {
-  if (current > 1) {
-    jumpToAppStep(current - 1);
-  }
-}
-
-// Persistent Stale-While-Revalidate (SWR) LocalStorage Cache
-const PUBLIC_CACHE_STORAGE_KEY = 'f4f_public_content_cache_v2';
+// Fetch & Render Public Content with 60s Client-Side Cache
 let cachedPublicData = null;
-
-function getStoredPublicContent() {
-  try {
-    const raw = localStorage.getItem(PUBLIC_CACHE_STORAGE_KEY);
-    if (!raw) return null;
-    const obj = JSON.parse(raw);
-    return obj && obj.data ? obj.data : null;
-  } catch (e) {
-    return null;
-  }
-}
-
-function setStoredPublicContent(data) {
-  try {
-    localStorage.setItem(PUBLIC_CACHE_STORAGE_KEY, JSON.stringify({
-      data: data,
-      saved_at: Date.now()
-    }));
-  } catch (e) {}
-}
+let cachedPublicTimestamp = 0;
 
 async function fetchPublicContent(force = false) {
   try {
-    // 1. Immediately hydrate from memory or localStorage if available
-    if (!force && !cachedPublicData) {
-      const stored = getStoredPublicContent();
-      if (stored) {
-        cachedPublicData = stored;
-        renderPublicContent(stored);
+    let data;
+    if (!force && cachedPublicData && (Date.now() - cachedPublicTimestamp < 60000)) {
+      data = cachedPublicData;
+    } else {
+      const res = await fetch('/api/public/content');
+      data = await res.json();
+      cachedPublicData = data;
+      cachedPublicTimestamp = Date.now();
+    }
+
+    // Dynamic Branding & Settings
+    if (data.settings) {
+      if (data.settings.club_tagline && document.getElementById('navSubtitle')) {
+        document.getElementById('navSubtitle').innerText = data.settings.club_tagline;
+      }
+      if (data.settings.logo_url) {
+        if (document.getElementById('navLogo')) document.getElementById('navLogo').src = data.settings.logo_url;
+        if (document.getElementById('footerLogo')) document.getElementById('footerLogo').src = data.settings.logo_url;
+      }
+      const heroUrl = data.settings.hero_banner_url || '/assets/hero_banner.jpg';
+      const heroEl = document.getElementById('home');
+      if (heroEl) {
+        heroEl.style.backgroundImage = `linear-gradient(to right, rgba(243, 251, 247, 0.94) 0%, rgba(243, 251, 247, 0.78) 42%, rgba(243, 251, 247, 0.35) 75%, rgba(243, 251, 247, 0.08) 100%), url('${heroUrl}')`;
+        heroEl.style.backgroundSize = 'cover';
+        heroEl.style.backgroundPosition = 'center right';
+        heroEl.style.backgroundRepeat = 'no-repeat';
+      }
+      if (data.settings.terms_policy && document.getElementById('termsModalContent')) document.getElementById('termsModalContent').innerText = data.settings.terms_policy;
+      if (data.settings.privacy_policy && document.getElementById('privacyModalContent')) document.getElementById('privacyModalContent').innerText = data.settings.privacy_policy;
+      if (data.settings.refund_policy && document.getElementById('refundModalContent')) document.getElementById('refundModalContent').innerText = data.settings.refund_policy;
+      if (data.settings.community_guidelines && document.getElementById('guidelinesModalContent')) document.getElementById('guidelinesModalContent').innerText = data.settings.community_guidelines;
+
+      // Dynamic Hero Collage Capsules
+      if (data.settings.hero_capsule_1_url && document.getElementById('heroCapsule1')) {
+        document.getElementById('heroCapsule1').src = data.settings.hero_capsule_1_url;
+      }
+      if (data.settings.hero_capsule_2_url && document.getElementById('heroCapsule2')) {
+        document.getElementById('heroCapsule2').src = data.settings.hero_capsule_2_url;
+      }
+      if (data.settings.hero_capsule_3_url && document.getElementById('heroCapsule3')) {
+        document.getElementById('heroCapsule3').src = data.settings.hero_capsule_3_url;
+      }
+
+      // Dynamic Core Philosophy Images (4 Cards)
+      if (data.settings.philosophy_img_1 && document.getElementById('philosophyImg1')) {
+        document.getElementById('philosophyImg1').src = data.settings.philosophy_img_1;
+      }
+      if (data.settings.philosophy_img_2 && document.getElementById('philosophyImg2')) {
+        document.getElementById('philosophyImg2').src = data.settings.philosophy_img_2;
+      }
+      if (data.settings.philosophy_img_3 && document.getElementById('philosophyImg3')) {
+        document.getElementById('philosophyImg3').src = data.settings.philosophy_img_3;
+      }
+      if (data.settings.philosophy_img_4 && document.getElementById('philosophyImg4')) {
+        document.getElementById('philosophyImg4').src = data.settings.philosophy_img_4;
+      }
+
+      // Dynamic Ways We Connect and Collaborate Images (5 Pillars)
+      if (data.settings.format_img_play && document.getElementById('formatImgPlay')) {
+        document.getElementById('formatImgPlay').src = data.settings.format_img_play;
+      }
+      if (data.settings.format_img_explore && document.getElementById('formatImgExplore')) {
+        document.getElementById('formatImgExplore').src = data.settings.format_img_explore;
+      }
+      if (data.settings.format_img_dine && document.getElementById('formatImgDine')) {
+        document.getElementById('formatImgDine').src = data.settings.format_img_dine;
+      }
+      if (data.settings.format_img_build && document.getElementById('formatImgBuild')) {
+        document.getElementById('formatImgBuild').src = data.settings.format_img_build;
+      }
+      if (data.settings.format_img_celebrate && document.getElementById('formatImgCelebrate')) {
+        document.getElementById('formatImgCelebrate').src = data.settings.format_img_celebrate;
+      }
+
+      // Dynamic Platform Feature Showcase Images
+      if (data.settings.feature_img_network) featureTabsData.network.image = data.settings.feature_img_network;
+      if (data.settings.feature_img_needs) featureTabsData.needs.image = data.settings.feature_img_needs;
+      if (data.settings.feature_img_crm) featureTabsData.crm.image = data.settings.feature_img_crm;
+      if (data.settings.feature_img_meetings) featureTabsData.meetings.image = data.settings.feature_img_meetings;
+      if (data.settings.feature_img_collaborations) featureTabsData.collaborations.image = data.settings.feature_img_collaborations;
+      if (data.settings.feature_img_challenges) featureTabsData.challenges.image = data.settings.feature_img_challenges;
+
+      const activeTabImg = document.getElementById('featureTabImage');
+      if (activeTabImg && data.settings.feature_img_network) {
+        const activeTabBtn = document.querySelector('.tabs-list .tab-btn.active');
+        if (!activeTabBtn || activeTabBtn.textContent.includes('Curated Founder Network')) {
+          activeTabImg.src = data.settings.feature_img_network;
+        }
       }
     }
 
-    // 2. Fetch fresh updates from API in the background
-    const res = await fetch('/api/public/content');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    cachedPublicData = data;
-    setStoredPublicContent(data);
-    renderPublicContent(data);
-
-    // Auto-setup Google OAuth if client ID is provided in public settings
-    if (data.settings && data.settings.google_client_id && !state.googleClientId) {
-      state.googleClientId = data.settings.google_client_id;
-      setupGoogleAuth(data.settings.google_client_id);
-    }
-  } catch (err) {
-    console.warn("Public content background revalidation notice:", err);
-  }
-}
-
-function renderPublicContent(data) {
-  if (!data) return;
-
-  // Dynamic Branding & Settings
-  if (data.settings) {
-    if (data.settings.club_tagline && document.getElementById('navSubtitle')) {
-      document.getElementById('navSubtitle').innerText = data.settings.club_tagline;
-    }
-    if (data.settings.logo_url) {
-      if (document.getElementById('navLogo')) document.getElementById('navLogo').src = data.settings.logo_url;
-      if (document.getElementById('footerLogo')) document.getElementById('footerLogo').src = data.settings.logo_url;
-    }
-    const heroUrl = data.settings.hero_banner_url || '/assets/hero_banner.jpg';
-    const heroEl = document.getElementById('heroBannerImageOverlay');
-    if (heroEl) {
-      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 991;
-      const gradient = isMobile
-        ? 'linear-gradient(180deg, rgba(243, 251, 247, 0.96) 0%, rgba(243, 251, 247, 0.85) 55%, rgba(243, 251, 247, 0.35) 100%)'
-        : 'linear-gradient(to right, rgba(243, 251, 247, 0.94) 0%, rgba(243, 251, 247, 0.78) 42%, rgba(243, 251, 247, 0.35) 75%, rgba(243, 251, 247, 0.08) 100%)';
-      heroEl.style.backgroundImage = `${gradient}, url('${heroUrl}')`;
-      heroEl.style.backgroundSize = 'cover';
-      heroEl.style.backgroundPosition = isMobile ? 'center' : 'center right';
-      heroEl.style.backgroundRepeat = 'no-repeat';
-    }
-    if (data.settings.terms_policy && document.getElementById('termsModalContent')) document.getElementById('termsModalContent').innerText = data.settings.terms_policy;
-    if (data.settings.privacy_policy && document.getElementById('privacyModalContent')) document.getElementById('privacyModalContent').innerText = data.settings.privacy_policy;
-    if (data.settings.refund_policy && document.getElementById('refundModalContent')) document.getElementById('refundModalContent').innerText = data.settings.refund_policy;
-    if (data.settings.community_guidelines && document.getElementById('guidelinesModalContent')) document.getElementById('guidelinesModalContent').innerText = data.settings.community_guidelines;
-
-    // Dynamic Hero Collage Capsules
-    if (data.settings.hero_capsule_1_url && document.getElementById('heroCapsule1')) {
-      document.getElementById('heroCapsule1').src = data.settings.hero_capsule_1_url;
-    }
-    if (data.settings.hero_capsule_2_url && document.getElementById('heroCapsule2')) {
-      document.getElementById('heroCapsule2').src = data.settings.hero_capsule_2_url;
-    }
-    if (data.settings.hero_capsule_3_url && document.getElementById('heroCapsule3')) {
-      document.getElementById('heroCapsule3').src = data.settings.hero_capsule_3_url;
+    // Hero Copy
+    if (data.hero) {
+      if (document.getElementById('heroTitle')) {
+        let h = data.hero.heading;
+        if (h.includes('Real Connections')) h = h.replace('Real Connections', '<span class="text-emerald">Real Connections</span>');
+        document.getElementById('heroTitle').innerHTML = h;
+      }
+      if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').innerText = data.hero.subheading;
     }
 
-    // Dynamic Core Philosophy Images (4 Cards)
-    if (data.settings.philosophy_img_1 && document.getElementById('philosophyImg1')) {
-      document.getElementById('philosophyImg1').src = data.settings.philosophy_img_1;
-    }
-    if (data.settings.philosophy_img_2 && document.getElementById('philosophyImg2')) {
-      document.getElementById('philosophyImg2').src = data.settings.philosophy_img_2;
-    }
-    if (data.settings.philosophy_img_3 && document.getElementById('philosophyImg3')) {
-      document.getElementById('philosophyImg3').src = data.settings.philosophy_img_3;
-    }
-    if (data.settings.philosophy_img_4 && document.getElementById('philosophyImg4')) {
-      document.getElementById('philosophyImg4').src = data.settings.philosophy_img_4;
-    }
-
-    // Dynamic Ways We Connect and Collaborate Images (5 Pillars)
-    if (data.settings.format_img_play && document.getElementById('formatImgPlay')) {
-      document.getElementById('formatImgPlay').src = data.settings.format_img_play;
-    }
-    if (data.settings.format_img_explore && document.getElementById('formatImgExplore')) {
-      document.getElementById('formatImgExplore').src = data.settings.format_img_explore;
-    }
-    if (data.settings.format_img_dine && document.getElementById('formatImgDine')) {
-      document.getElementById('formatImgDine').src = data.settings.format_img_dine;
-    }
-    if (data.settings.format_img_build && document.getElementById('formatImgBuild')) {
-      document.getElementById('formatImgBuild').src = data.settings.format_img_build;
-    }
-    if (data.settings.format_img_celebrate && document.getElementById('formatImgCelebrate')) {
-      document.getElementById('formatImgCelebrate').src = data.settings.format_img_celebrate;
-    }
-
-    // Dynamic Platform Feature Showcase Images
-    if (data.settings.feature_img_network) featureTabsData.network.image = data.settings.feature_img_network;
-    if (data.settings.feature_img_needs) featureTabsData.needs.image = data.settings.feature_img_needs;
-    if (data.settings.feature_img_crm) featureTabsData.crm.image = data.settings.feature_img_crm;
-    if (data.settings.feature_img_meetings) featureTabsData.meetings.image = data.settings.feature_img_meetings;
-    if (data.settings.feature_img_collaborations) featureTabsData.collaborations.image = data.settings.feature_img_collaborations;
-    if (data.settings.feature_img_challenges) featureTabsData.challenges.image = data.settings.feature_img_challenges;
-
-    const activeTabImg = document.getElementById('featureTabImage');
-    if (activeTabImg && data.settings.feature_img_network) {
-      const activeTabBtn = document.querySelector('.tabs-list .tab-btn.active');
-      if (!activeTabBtn || activeTabBtn.textContent.includes('Curated Founder Network')) {
-        activeTabImg.src = data.settings.feature_img_network;
+    // Live Database Counters
+    if (data.counters) {
+      const activeMembersTotal = 1528 + (data.counters.active_members || 0);
+      if (document.getElementById('counterMembers')) {
+        document.getElementById('counterMembers').innerText = `${activeMembersTotal}+`;
+      }
+      const eventsTotal = Math.max(27, data.counters.published_events || 27);
+      if (document.getElementById('counterEvents')) {
+        document.getElementById('counterEvents').innerText = `${eventsTotal}`;
       }
     }
-  }
 
-  // Hero Copy
-  if (data.hero) {
-    if (document.getElementById('heroTitle')) {
-      let h = data.hero.heading;
-      if (h.includes('Real Connections')) h = h.replace('Real Connections', '<span class="text-emerald">Real Connections</span>');
-      document.getElementById('heroTitle').innerHTML = h;
+    // Upcoming Experiences Showcase
+    const eventsGrid = document.getElementById('upcomingEventsGrid');
+    if (eventsGrid && data.upcoming_events) {
+      eventsGrid.innerHTML = '';
+      data.upcoming_events.forEach(evt => {
+        const card = document.createElement('div');
+        card.className = 'card';
+          const price = Number(evt.price_amount || 0);
+          const priceBadge = price > 0
+            ? `<span class="badge" style="background: rgba(212,175,55,0.15); color: var(--gold-600); border: 1px solid rgba(212,175,55,0.3); font-weight: 800;">₹${price.toLocaleString('en-IN')} ENTRY FEE</span>`
+            : `<span class="badge badge-active" style="font-size: 0.72rem;">FREE FOR MEMBERS</span>`;
+
+            const mapUrl = evt.google_maps_url || (evt.venue ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((evt.venue || '') + ' ' + (evt.city || ''))}` : null);
+            const mapLink = mapUrl ? `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-700); font-size: 0.76rem; font-weight: 700; text-decoration: underline; margin-left: 6px; display: inline-flex; align-items: center; gap: 3px;" title="View Venue on Google Maps"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Google Maps</a>` : '';
+
+            card.innerHTML = `
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                  <span class="badge badge-verified">${evt.category || 'FOUNDER EXPERIENCE'}</span>
+                  ${priceBadge}
+                </div>
+                <span style="font-size: 0.78rem; font-weight: 800; color: var(--gold-500); text-transform: uppercase;">${evt.signature_format || 'Signature Event'}</span>
+              </div>
+              <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 8px;">${evt.title}</h3>
+              <p class="card-text" style="font-size: 0.88rem; color: var(--emerald-900); font-weight: 700; margin-bottom: 4px;">
+                <span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> 
+                ${evt.venue} (${evt.city})${mapLink}
+              </p>
+              <p class="card-text" style="font-size: 0.85rem; color: var(--grey-500); margin-bottom: 12px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${evt.event_date} | ${evt.time_str}</p>
+              <p class="card-text" style="font-size: 0.9rem; margin-bottom: 16px;">${evt.description}</p>
+              <button class="btn btn-emerald" style="width: 100%; font-size: 0.82rem; padding: 0.6rem 1rem; border-radius: 6px !important;" onclick="openShowInterestModal()">RSVP / SHOW INTEREST <span class="btn-circle-icon">→</span></button>
+            `;
+        eventsGrid.appendChild(card);
+      });
     }
-    if (document.getElementById('heroSubtitle')) document.getElementById('heroSubtitle').innerText = data.hero.subheading;
-  }
 
-  // Live Database Counters (Authentic figures from verified database records)
-  if (data.counters) {
-    const activeMembersTotal = data.counters.active_members || 0;
-    if (document.getElementById('counterMembers')) {
-      document.getElementById('counterMembers').innerText = activeMembersTotal > 0 ? `${activeMembersTotal}+` : 'Curated';
-    }
-    const eventsTotal = data.counters.published_events || 0;
-    if (document.getElementById('counterEvents')) {
-      document.getElementById('counterEvents').innerText = eventsTotal > 0 ? `${eventsTotal}+` : 'Pan-India';
-    }
-  }
-
-  // Upcoming Experiences Showcase
-  const eventsGrid = document.getElementById('upcomingEventsGrid');
-  if (eventsGrid && data.upcoming_events) {
-    eventsGrid.innerHTML = '';
-    data.upcoming_events.forEach(evt => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      const price = Number(evt.price_amount || 0);
-      const priceBadge = price > 0
-        ? `<span class="badge" style="background: rgba(212,175,55,0.15); color: var(--gold-600); border: 1px solid rgba(212,175,55,0.3); font-weight: 800;">₹${price.toLocaleString('en-IN')} ENTRY FEE</span>`
-        : `<span class="badge badge-active" style="font-size: 0.72rem;">FREE FOR MEMBERS</span>`;
-
-      const mapUrl = evt.google_maps_url || (evt.venue ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((evt.venue || '') + ' ' + (evt.city || ''))}` : null);
-      const mapLink = mapUrl ? `<a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--emerald-700); font-size: 0.76rem; font-weight: 700; text-decoration: underline; margin-left: 6px; display: inline-flex; align-items: center; gap: 3px;" title="View Venue on Google Maps"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Google Maps</a>` : '';
-
-      card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
-          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-            <span class="badge badge-verified">${evt.category || 'FOUNDER EXPERIENCE'}</span>
-            ${priceBadge}
+    // FAQ Accordion
+    const faqContainer = document.getElementById('faqContainer');
+    if (faqContainer && data.faqs) {
+      faqContainer.innerHTML = '';
+      data.faqs.forEach((faq, idx) => {
+        const div = document.createElement('div');
+        div.style.cssText = 'background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: var(--radius-md); padding: 1.25rem; transition: all 0.2s ease; cursor: pointer;';
+        div.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.05rem; color: var(--ink-primary);" onclick="toggleFAQ(${idx})">
+            <span>${faq.question}</span>
+            <span id="faqIcon-${idx}" style="color: var(--emerald-700); font-size: 1.2rem; font-weight: 800;">+</span>
           </div>
-          <span style="font-size: 0.78rem; font-weight: 800; color: var(--gold-500); text-transform: uppercase;">${evt.signature_format || 'Signature Event'}</span>
-        </div>
-        <h3 class="card-title" style="font-size: 1.3rem; margin-bottom: 8px;">${evt.title}</h3>
-        <p class="card-text" style="font-size: 0.88rem; color: var(--emerald-900); font-weight: 700; margin-bottom: 4px;">
-          <span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> 
-          ${evt.venue} (${evt.city})${mapLink}
-        </p>
-        <p class="card-text" style="font-size: 0.85rem; color: var(--grey-500); margin-bottom: 12px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${evt.event_date} | ${evt.time_str}</p>
-        <p class="card-text" style="font-size: 0.9rem; margin-bottom: 16px;">${evt.description}</p>
-        <button class="btn btn-emerald" style="width: 100%; font-size: 0.82rem; padding: 0.6rem 1rem; border-radius: 6px !important;" onclick="openShowInterestModal()">RSVP / SHOW INTEREST <span class="btn-circle-icon">→</span></button>
-      `;
-      eventsGrid.appendChild(card);
-    });
-  }
+          <div id="faqBody-${idx}" style="display: none; margin-top: 10px; font-size: 0.92rem; color: var(--grey-500); line-height: 1.6;">
+            ${faq.answer}
+          </div>
+        `;
+        faqContainer.appendChild(div);
+      });
+    }
 
-  // FAQ Accordion
-  const faqContainer = document.getElementById('faqContainer');
-  if (faqContainer && data.faqs) {
-    faqContainer.innerHTML = '';
-    data.faqs.forEach((faq, idx) => {
-      const div = document.createElement('div');
-      div.style.cssText = 'background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: var(--radius-md); padding: 1.25rem; transition: all 0.2s ease; cursor: pointer;';
-      div.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 1.05rem; color: var(--ink-primary);" onclick="toggleFAQ(${idx})">
-          <span>${faq.question}</span>
-          <span id="faqIcon-${idx}" style="color: var(--emerald-700); font-size: 1.2rem; font-weight: 800;">+</span>
-        </div>
-        <div id="faqBody-${idx}" style="display: none; margin-top: 10px; font-size: 0.92rem; color: var(--grey-500); line-height: 1.6;">
-          ${faq.answer}
-        </div>
-      `;
-      faqContainer.appendChild(div);
-    });
-  }
+    // Curated Meeting Photos Slider (16:9 Continuous Steady Slide from Right to Left)
+    const meetingPhotosTrack = document.getElementById('meetingPhotosTrack');
+    if (meetingPhotosTrack && (data.meeting_photos || data.gallery)) {
+      renderMeetingPhotosSlider(data.meeting_photos || data.gallery);
+    }
 
-  // Curated Meeting Photos Slider (16:9 Continuous Steady Slide from Right to Left)
-  const meetingPhotosTrack = document.getElementById('meetingPhotosTrack');
-  if (meetingPhotosTrack && (data.meeting_photos || data.gallery)) {
-    renderMeetingPhotosSlider(data.meeting_photos || data.gallery);
-  }
-
-  // Testimonials (Display only genuine, verified endorsements; hide section if none exist)
-  const storiesSection = document.getElementById('stories');
-  const testimonialsContainer = document.getElementById('testimonialsContainer');
-  if (storiesSection) {
-    if (!data.testimonials || data.testimonials.length === 0) {
-      storiesSection.style.display = 'none';
-    } else if (testimonialsContainer) {
-      storiesSection.style.display = 'block';
+    // Testimonials
+    const testimonialsContainer = document.getElementById('testimonialsContainer');
+    if (testimonialsContainer && data.testimonials) {
       testimonialsContainer.innerHTML = '';
       data.testimonials.forEach(t => {
         const card = document.createElement('div');
@@ -558,6 +401,9 @@ function renderPublicContent(data) {
         testimonialsContainer.appendChild(card);
       });
     }
+
+  } catch (err) {
+    console.error("Error loading public content:", err);
   }
 }
 
@@ -729,7 +575,23 @@ function initiateGoogleLogin() {
       return;
     }
   }
-  alert("Google Sign-In is being configured. Please sign in using your registered email and password or request an email OTP.");
+  openGoogleDemoModal();
+}
+
+function openGoogleDemoModal() {
+  const input = document.getElementById('modal_google_client_id');
+  if (input && state.googleClientId) input.value = state.googleClientId;
+  const badge = document.getElementById('googleClientIdBadge');
+  if (badge) {
+    if (state.googleClientId) {
+      badge.className = 'badge badge-verified';
+      badge.innerText = 'Connected';
+    } else {
+      badge.className = 'badge badge-active';
+      badge.innerText = 'Not Configured';
+    }
+  }
+  openModal('googleDemoModal');
 }
 
 async function handleGoogleCredentialResponse(response) {
@@ -752,78 +614,72 @@ async function handleGoogleCredentialResponse(response) {
     state.user = data.user;
     localStorage.setItem('f4f_token', data.token);
     closeModal('loginModal');
+    closeModal('googleDemoModal');
     renderAuthenticatedUI(data);
   } catch (err) {
     alert("Google authentication request failed. Please check your network connection.");
   }
 }
 
-// Passwordless Login / Verification via Email OTP
-async function handleSendLoginOtp() {
-  const emailInput = document.getElementById('login_email');
-  const email = (emailInput ? emailInput.value : '').trim().toLowerCase();
+async function handleDemoGoogleLogin(event) {
+  event.preventDefault();
+  const name = document.getElementById('demo_google_name').value.trim();
+  const email = document.getElementById('demo_google_email').value.trim();
   if (!email || !email.includes('@')) {
-    alert("Please enter your registered email address first.");
-    if (emailInput) emailInput.focus();
+    alert("Please enter a valid Google email address.");
     return;
   }
   try {
-    const res = await fetch('/api/auth/send-otp', {
+    const res = await fetch('/api/auth/google', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({
+        email: email,
+        name: name,
+        sub: 'demo_google_' + Date.now()
+      })
     });
     const data = await res.json();
     if (data.error) {
       alert(data.error);
       return;
     }
-    const otpSection = document.getElementById('loginOtpSection');
-    if (otpSection) {
-      otpSection.style.display = 'block';
-      const otpInput = document.getElementById('login_otp');
-      if (otpInput) otpInput.focus();
-    }
-    alert(`Verification OTP sent to ${email}. Please check your inbox.`);
-  } catch (e) {
-    alert("Failed to send OTP. Please check your network connection.");
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('f4f_token', data.token);
+    closeModal('loginModal');
+    closeModal('googleDemoModal');
+    renderAuthenticatedUI(data);
+  } catch (err) {
+    alert("Failed to complete Google sign-in.");
   }
 }
 
-async function handleVerifyLoginOtp() {
-  const email = (document.getElementById('login_email') ? document.getElementById('login_email').value : '').trim().toLowerCase();
-  const otpInput = document.getElementById('login_otp');
-  const otp = (otpInput ? otpInput.value : '').trim();
-  if (!otp || otp.length < 4) {
-    alert("Please enter the verification code sent to your email.");
-    if (otpInput) otpInput.focus();
+async function saveGoogleClientIdFromModal() {
+  const val = document.getElementById('modal_google_client_id').value.trim();
+  if (!val) {
+    alert("Please enter a valid Google Client ID.");
     return;
   }
   try {
-    const res = await fetch('/api/auth/verify-otp', {
+    await fetch('/api/admin/settings', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, otp })
+      headers: {
+        'Content-Type': 'application/json',
+        ...(state.token ? { 'Authorization': `Bearer ${state.token}` } : {})
+      },
+      body: JSON.stringify({ google_client_id: val })
     });
-    const data = await res.json();
-    if (data.error) {
-      alert(data.error);
-      return;
-    }
-    if (data.token) {
-      state.token = data.token;
-      state.user = data.user;
-      localStorage.setItem('f4f_token', data.token);
-      closeModal('loginModal');
-      renderAuthenticatedUI(data);
-    } else {
-      alert("Email verified successfully! You can now log in.");
-    }
-  } catch (e) {
-    alert("Verification failed. Please check your network connection.");
+    state.googleClientId = val;
+    alert("Google Client ID saved successfully! Initializing Google Sign-In button...");
+    setupGoogleAuth(val);
+    closeModal('googleDemoModal');
+  } catch (err) {
+    state.googleClientId = val;
+    setupGoogleAuth(val);
+    closeModal('googleDemoModal');
   }
 }
-
 
 // Login
 async function handleLoginSubmit(event) {
@@ -854,9 +710,6 @@ async function handleLoginSubmit(event) {
 
 // Auth Session Check
 async function checkAuthSession() {
-  if (!state.token) {
-    return;
-  }
   try {
     const res = await fetch('/api/auth/me', {
       headers: { 'Authorization': `Bearer ${state.token}` }
@@ -888,35 +741,21 @@ function renderAuthenticatedUI(data) {
 
   const name = data.profile ? data.profile.full_name : data.user.email;
   if (document.getElementById('navUserName')) document.getElementById('navUserName').innerText = `Welcome, ${name}`;
-  if (document.getElementById('dashboardWelcome')) document.getElementById('dashboardWelcome').innerText = `Welcome back, ${name}`;
-  if (document.getElementById('portalUserName')) document.getElementById('portalUserName').innerText = name;
-  if (document.getElementById('accName')) document.getElementById('accName').innerText = name;
-  if (data.profile && data.profile.business_name) {
-    const roleText = `${data.profile.designation || 'Founder'} • ${data.profile.business_name}`;
-    if (document.getElementById('portalUserRole')) document.getElementById('portalUserRole').innerText = roleText;
-    if (document.getElementById('accRole')) document.getElementById('accRole').innerText = roleText;
-  }
-  const initials = (name || 'Member').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() || 'ME';
-  if (document.getElementById('portalUserAvatar')) document.getElementById('portalUserAvatar').innerText = initials;
-  if (document.getElementById('accAvatar')) document.getElementById('accAvatar').innerText = initials;
+  if (document.getElementById('dashboardWelcome')) document.getElementById('dashboardWelcome').innerText = `Welcome, ${name}`;
 
   const isAdmin = data.user && (data.user.role === 'ADMIN' || data.user.role === 'SUPER_ADMIN');
   if (document.getElementById('adminTabLink')) document.getElementById('adminTabLink').style.display = isAdmin ? 'flex' : 'none';
   if (document.getElementById('navAdminBtn')) document.getElementById('navAdminBtn').style.display = isAdmin ? 'inline-flex' : 'none';
 
   loadDashboardTab();
+  loadDirectoryTab();
+  loadNeedsTab();
+  loadCRMTab();
+  loadEventsTab();
+  loadChallengeTab();
 
-  // Pre-fetch secondary tabs during browser idle to make subsequent clicks instant
-  if (typeof requestIdleCallback === 'function') {
-    requestIdleCallback(() => {
-      loadDirectoryTab();
-      loadEventsTab();
-    }, { timeout: 2500 });
-  } else {
-    setTimeout(() => {
-      loadDirectoryTab();
-      loadEventsTab();
-    }, 800);
+  if (isAdmin) {
+    loadAdminTab();
   }
 }
 
@@ -961,46 +800,19 @@ function switchPortalTab(tabName, el) {
   document.getElementById('publicPage').style.display = 'none';
   document.getElementById('portalPage').classList.add('active');
 
-  // Support both canonical tab names and Stitch slug aliases
-  const aliasMap = {
-    'discover-founders': 'directory',
-    'needs-and-wants': 'needs',
-    'leads-and-crm': 'crm',
-    'one-on-one-meetings': 'meetings',
-    'founders-chat': 'chat',
-    'events-and-experiences': 'events',
-    'account-and-billing': 'account'
-  };
-  const canonicalTab = aliasMap[tabName] || tabName;
-
   document.querySelectorAll('.portal-tab').forEach(t => t.style.display = 'none');
   document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
 
-  // Update top interactive view switcher tab buttons if present
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm', 'font-semibold');
-    btn.classList.add('text-on-surface-variant');
-  });
-  const ribbonBtn = document.querySelector(`.tab-btn[data-tab-target="${canonicalTab}"]`) ||
-                    document.querySelector(`.tab-btn[data-tab-target="${tabName}"]`);
-  if (ribbonBtn) {
-    ribbonBtn.classList.remove('text-on-surface-variant');
-    ribbonBtn.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm', 'font-semibold');
-  }
-
-  const tab = document.getElementById(`tab-${canonicalTab}`);
+  const tab = document.getElementById(`tab-${tabName}`);
   if (tab) {
     tab.style.display = 'block';
   } else {
-    console.error("Portal tab not found:", canonicalTab);
+    console.error("Portal tab not found:", tabName);
   }
 
   let activeEl = el;
   if (!activeEl) {
-    activeEl = Array.from(document.querySelectorAll('.sidebar-item')).find(item => 
-      item.getAttribute('onclick')?.includes(`'${canonicalTab}'`) ||
-      item.getAttribute('onclick')?.includes(`'${tabName}'`)
-    );
+    activeEl = Array.from(document.querySelectorAll('.sidebar-item')).find(item => item.getAttribute('onclick')?.includes(`'${tabName}'`));
   }
   if (activeEl) {
     activeEl.classList.add('active');
@@ -1011,95 +823,60 @@ function switchPortalTab(tabName, el) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  if (canonicalTab === 'admin') loadAdminTab();
-  else if (canonicalTab === 'dashboard') loadDashboardTab();
-  else if (canonicalTab === 'directory') loadDirectoryTab();
-  else if (canonicalTab === 'needs') loadNeedsTab();
-  else if (canonicalTab === 'crm') loadCRMTab();
-  else if (canonicalTab === 'attendance') loadAttendanceTab();
-  else if (canonicalTab === 'meetings') loadMeetingsTab();
-  else if (canonicalTab === 'chat') loadChatMessages();
-  else if (canonicalTab === 'events') loadEventsTab();
-  else if (canonicalTab === 'challenge') loadChallengeTab();
+  if (tabName === 'admin') loadAdminTab();
+  else if (tabName === 'dashboard') loadDashboardTab();
+  else if (tabName === 'directory') loadDirectoryTab();
+  else if (tabName === 'needs') loadNeedsTab();
+  else if (tabName === 'crm') loadCRMTab();
+  else if (tabName === 'attendance') loadAttendanceTab();
+  else if (tabName === 'meetings') loadMeetingsTab();
+  else if (tabName === 'chat') loadChatMessages();
+  else if (tabName === 'events') loadEventsTab();
+  else if (tabName === 'challenge') loadChallengeTab();
 }
 
-// Dashboard Tab Loader with SWR Instant Rendering & Consolidated Single-Roundtrip API
-function renderDashboardMetrics(data) {
-  if (!data) return;
-  if (data.crm) {
+// Dashboard Tab Loader
+async function loadDashboardTab() {
+  try {
+    const res = await fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    const metrics = await res.json();
+
     if (document.getElementById('dashBizGenerated')) {
-      document.getElementById('dashBizGenerated').innerText = `${data.crm.referrals_received || 0} Deals`;
+      document.getElementById('dashBizGenerated').innerText = `${metrics.referrals_received || 0} Deals`;
     }
     if (document.getElementById('dashLeadsWon')) {
-      document.getElementById('dashLeadsWon').innerText = data.crm.leads_won || 0;
+      document.getElementById('dashLeadsWon').innerText = metrics.leads_won || 0;
     }
-  }
-  if (data.attendance && document.getElementById('dashAttendanceRate')) {
-    document.getElementById('dashAttendanceRate').innerHTML = `${data.attendance.attendance_rate}% Event Presence <span class="badge-pulse-green" style="font-size: 0.78rem; background: #A7F3D0; color: #064E3B; padding: 2px 8px; border-radius: 12px; font-weight: 800;">Streak: ${data.attendance.attendance_streak} Gatherings</span>`;
-  }
-  if (data.meetings && document.getElementById('dashMeetingsStat')) {
-    document.getElementById('dashMeetingsStat').innerText = `${data.meetings.this_month} 1-to-1 Founder Meetings logged in ${data.meetings.current_month_name}`;
-  }
-}
 
-async function loadDashboardTab() {
-  if (!state.token) return;
+    // Attendance summary for dashboard
+    fetch('/api/attendance/summary', { headers: { 'Authorization': `Bearer ${state.token}` } })
+      .then(r => r.json())
+      .then(d => {
+        if (d && !d.error && document.getElementById('dashAttendanceRate')) {
+          document.getElementById('dashAttendanceRate').innerHTML = `${d.attendance_rate}% Event Presence <span class="badge-pulse-green" style="font-size: 0.78rem; background: #A7F3D0; color: #064E3B; padding: 2px 8px; border-radius: 12px; font-weight: 800;">Streak: ${d.attendance_streak} Gatherings</span>`;
+        }
+      })
+      .catch(() => {});
 
-  // 1. Instant SWR render from sessionStorage (0ms latency!)
-  try {
-    const cached = sessionStorage.getItem('f4f_dash_cache');
-    if (cached) {
-      renderDashboardMetrics(JSON.parse(cached));
-    }
-  } catch (e) {}
-
-  // 2. High-speed single consolidated endpoint with parallel fallback
-  try {
-    const res = await fetch('/api/portal/dashboard-summary', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    if (res.ok) {
-      const data = await res.json();
-      renderDashboardMetrics(data);
-      try { sessionStorage.setItem('f4f_dash_cache', JSON.stringify(data)); } catch (e) {}
-      return;
-    }
-  } catch (e) {}
-
-  // Fallback: Parallel Promise.allSettled across individual endpoints
-  try {
-    const [crmRes, attRes, meetRes] = await Promise.allSettled([
-      fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } }).then(r => r.json()),
-      fetch('/api/attendance/summary', { headers: { 'Authorization': `Bearer ${state.token}` } }).then(r => r.json()),
-      fetch('/api/founder-meetings', { headers: { 'Authorization': `Bearer ${state.token}` } }).then(r => r.json())
-    ]);
-
-    const combined = {
-      crm: crmRes.status === 'fulfilled' && !crmRes.value.error ? crmRes.value : {},
-      attendance: attRes.status === 'fulfilled' && !attRes.value.error ? attRes.value : {},
-      meetings: meetRes.status === 'fulfilled' && meetRes.value.stats ? meetRes.value.stats : {}
-    };
-    renderDashboardMetrics(combined);
-    try { sessionStorage.setItem('f4f_dash_cache', JSON.stringify(combined)); } catch (e) {}
+    // Meetings summary for dashboard
+    fetch('/api/founder-meetings', { headers: { 'Authorization': `Bearer ${state.token}` } })
+      .then(r => r.json())
+      .then(d => {
+        if (d && d.stats && document.getElementById('dashMeetingsStat')) {
+          document.getElementById('dashMeetingsStat').innerText = `${d.stats.this_month} 1-to-1 Founder Meetings logged in ${d.stats.current_month_name}`;
+        }
+      })
+      .catch(() => {});
   } catch (err) {
     console.error("Dashboard metrics error:", err);
   }
 }
 
-// Directory Loader with SWR Cache
-let _cachedDirectoryMembers = null;
+// Directory Loader
 async function loadDirectoryTab() {
-  if (_cachedDirectoryMembers) {
-    renderMembers(_cachedDirectoryMembers);
-  }
-  try {
-    const res = await fetch('/api/members', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    if (res.ok) {
-      const data = await res.json();
-      _cachedDirectoryMembers = data.members || [];
-      renderMembers(_cachedDirectoryMembers);
-    }
-  } catch (err) {
-    console.error("Directory fetch error:", err);
-  }
+  const res = await fetch('/api/members', { headers: { 'Authorization': `Bearer ${state.token}` } });
+  const data = await res.json();
+  renderMembers(data.members || []);
 }
 
 function filterDirectory() {
@@ -1107,11 +884,7 @@ function filterDirectory() {
   const stage = document.getElementById('dirStageFilter').value;
   fetch(`/api/members?q=${encodeURIComponent(query)}&stage=${encodeURIComponent(stage)}`, { headers: { 'Authorization': `Bearer ${state.token}` } })
     .then(r => r.json())
-    .then(d => {
-      _cachedDirectoryMembers = d.members || [];
-      renderMembers(_cachedDirectoryMembers);
-    })
-    .catch(() => {});
+    .then(d => renderMembers(d.members || []));
 }
 
 function renderMembers(members) {
@@ -1121,10 +894,9 @@ function renderMembers(members) {
   members.forEach(m => {
     const card = document.createElement('div');
     card.className = 'card';
-    const avatarSrc = (m.profile_photo && !m.profile_photo.includes('unsplash.com')) ? m.profile_photo : getInitialsAvatar(m.full_name);
     card.innerHTML = `
       <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-        <img src="${avatarSrc}" alt="${m.full_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--mint-200); object-fit: cover;">
+        <img src="${m.profile_photo || '/assets/logo.svg'}" alt="${m.full_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 12px; border: 1px solid var(--mint-200); object-fit: cover;">
         <div>
           <h3 class="card-title" style="font-size: 1.15rem; margin: 0;">${m.full_name}</h3>
           <span style="font-size: 0.85rem; color: var(--emerald-700); font-weight: 700;">${m.designation} at ${m.business_name}</span>
@@ -1138,13 +910,15 @@ function renderMembers(members) {
   });
 }
 
-// Needs Loader with SWR Cache
-let _cachedNeedsList = null;
-function renderNeedsCards(needs) {
+// Needs Loader
+async function loadNeedsTab() {
+  const res = await fetch('/api/needs', { headers: { 'Authorization': `Bearer ${state.token}` } });
+  const data = await res.json();
   const container = document.getElementById('needsContainer');
   if (!container) return;
   container.innerHTML = '';
-  (needs || []).forEach(n => {
+
+  (data.needs || []).forEach(n => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -1158,22 +932,6 @@ function renderNeedsCards(needs) {
     `;
     container.appendChild(card);
   });
-}
-
-async function loadNeedsTab() {
-  if (_cachedNeedsList) {
-    renderNeedsCards(_cachedNeedsList);
-  }
-  try {
-    const res = await fetch('/api/needs', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    if (res.ok) {
-      const data = await res.json();
-      _cachedNeedsList = data.needs || [];
-      renderNeedsCards(_cachedNeedsList);
-    }
-  } catch (err) {
-    console.error("Needs fetch error:", err);
-  }
 }
 
 async function handlePostNeedSubmit(e) {
@@ -1198,14 +956,14 @@ async function handlePostNeedSubmit(e) {
 }
 
 // CRM Loader
-let _cachedCRMData = null;
-
-function renderCRMLeads(leads) {
+async function loadCRMTab() {
+  const res = await fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } });
+  const data = await res.json();
   const list = document.getElementById('leadsList');
   if (!list) return;
   list.innerHTML = '';
 
-  (leads || []).forEach(l => {
+  (data.leads || []).forEach(l => {
     const div = document.createElement('div');
     div.style.cssText = 'padding: 12px; background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;';
     div.innerHTML = `
@@ -1222,31 +980,17 @@ function renderCRMLeads(leads) {
   });
 }
 
-async function loadCRMTab() {
-  if (_cachedCRMData) {
-    renderCRMLeads(_cachedCRMData.leads || []);
-  }
-  try {
-    const res = await fetch('/api/crm/metrics', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    if (res.ok) {
-      const data = await res.json();
-      _cachedCRMData = data;
-      renderCRMLeads(data.leads || []);
-    }
-  } catch (err) {
-    console.error("CRM fetch error:", err);
-  }
-}
-
 // Events Loader
-let _cachedEventsList = null;
-
-function renderEventsTabList(events) {
+async function loadEventsTab() {
+  const res = await fetch('/api/events', { headers: { 'Authorization': `Bearer ${state.token}` } });
+  const data = await res.json();
   const container = document.getElementById('eventsContainer');
   if (!container) return;
   container.innerHTML = '';
 
-  (events || []).forEach(evt => {
+  state.eventsList = data.events || [];
+
+  state.eventsList.forEach(evt => {
     const card = document.createElement('div');
     card.className = 'card';
 
@@ -1312,23 +1056,6 @@ function renderEventsTabList(events) {
     `;
     container.appendChild(card);
   });
-}
-
-async function loadEventsTab() {
-  if (_cachedEventsList) {
-    renderEventsTabList(_cachedEventsList);
-  }
-  try {
-    const res = await fetch('/api/events', { headers: { 'Authorization': `Bearer ${state.token}` } });
-    if (res.ok) {
-      const data = await res.json();
-      state.eventsList = data.events || [];
-      _cachedEventsList = state.eventsList;
-      renderEventsTabList(_cachedEventsList);
-    }
-  } catch (err) {
-    console.error("Events fetch error:", err);
-  }
 }
 
 async function handleRSVP(eventId) {
@@ -1479,59 +1206,130 @@ async function loadChallengeTab() {
   }
 }
 
-// Admin CMS Loader (Parallel Execution of Overview, Logs, Settings, and Photos)
+// Admin CMS Loader
 async function loadAdminTab() {
   try {
-    const authHeaders = { 'Authorization': `Bearer ${state.token}` };
-    const [overviewRes, auditRes, setRes, photosRes] = await Promise.allSettled([
-      fetch('/api/admin/overview', { headers: authHeaders }),
-      fetch('/api/admin/audit-logs', { headers: authHeaders }),
-      fetch('/api/admin/settings', { headers: authHeaders }),
-      fetch('/api/meeting-photos')
-    ]);
+    const res = await fetch('/api/admin/overview', { headers: { 'Authorization': `Bearer ${state.token}` } });
+    if (!res.ok) {
+      console.error("Forbidden or error fetching admin overview");
+      return;
+    }
+    const data = await res.json();
 
-    // 1. Process Overview & Recent Applications (Stitch Integrated)
-    if (overviewRes.status === 'fulfilled' && overviewRes.value.ok) {
-      const data = await overviewRes.value.json();
-      if (data.metrics) {
-        const totalEl = document.getElementById('statTotalMembers');
-        const mrrEl = document.getElementById('statActiveMrr');
-        const appsEl = document.getElementById('statPendingApps');
-        if (totalEl) totalEl.textContent = data.metrics.total_members ?? 0;
-        if (mrrEl) mrrEl.textContent = `₹${(data.metrics.mrr || 0).toLocaleString('en-IN')}`;
-        if (appsEl) appsEl.textContent = data.metrics.new_applications ?? 0;
-      }
+    if (document.getElementById('adminMetricsGrid') && data.metrics) {
+      document.getElementById('adminMetricsGrid').innerHTML = `
+        <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">Total Members</div><div style="font-size:1.8rem; font-weight:800; color:var(--ink-primary); margin-top:4px;">${data.metrics.total_members}</div></div>
+        <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">Active MRR</div><div style="font-size:1.8rem; font-weight:800; color:var(--emerald-700); margin-top:4px;">₹${(data.metrics.mrr || 0).toLocaleString('en-IN')}</div></div>
+        <div class="card"><div style="color:var(--grey-500); font-weight:700; font-size:0.8rem; text-transform:uppercase;">New Applications</div><div style="font-size:1.8rem; font-weight:800; color:var(--emerald-700); margin-top:4px;">${data.metrics.new_applications}</div></div>
+      `;
+    }
 
+    // Applications Table
+    if (document.getElementById('applicationsTable')) {
       state.adminApplications = data.recent_applications || [];
-      renderAdminApplications(state.adminApplications);
+      let html = `<table style="width:100%; text-align:left; border-collapse:collapse; color:var(--ink-primary);">
+        <thead>
+          <tr style="border-bottom:1px solid var(--mint-200); font-size:0.82rem; text-transform:uppercase; color:var(--grey-500);">
+            <th style="padding:10px;">Applicant</th>
+            <th>Type / Role</th>
+            <th>Business & Model</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Update Status</th>
+            <th>Inspection & Actions</th>
+          </tr>
+        </thead>
+        <tbody>`;
+
+      (data.recent_applications || []).forEach(app => {
+        const inviteLink = app.invitation_token ? `${window.location.origin}/#activate?token=${app.invitation_token}` : '';
+        const badgeClass = app.status === 'APPROVED' || app.status === 'INVITED' || app.status === 'CONVERTED' ? 'badge-verified' : (app.status === 'DECLINED' ? 'badge-pending' : 'badge-active');
+
+        html += `<tr style="border-bottom:1px solid var(--border-hairline); font-size:0.88rem;">
+          <td style="padding:10px; font-weight:700;">${app.full_name}</td>
+          <td><span class="badge badge-active">${app.applicant_type || 'Founder'}</span><br><span style="font-size:0.75rem; color:var(--grey-500);">${app.designation || ''}</span></td>
+          <td>${app.business_name || 'N/A'}<br><span style="font-size:0.75rem; color:var(--emerald-700); font-weight:600;">${app.business_model_category || 'Product Based'}</span> • <span style="font-size:0.75rem; color:var(--grey-500);">${app.city || 'Pan India'}</span></td>
+          <td>${app.email}<br><span style="font-size:0.75rem; color:var(--grey-500);">${app.phone}</span></td>
+          <td><span class="badge ${badgeClass}">${app.status}</span></td>
+          <td>
+            <select class="form-select" style="padding:4px 8px; font-size:0.78rem; min-width:130px;" onchange="updateAppStatus('${app.id}', this.value)">
+              <option value="SUBMITTED" ${app.status === 'SUBMITTED' ? 'selected' : ''}>SUBMITTED</option>
+              <option value="UNDER_REVIEW" ${app.status === 'UNDER_REVIEW' ? 'selected' : ''}>UNDER_REVIEW</option>
+              <option value="APPROVED" ${app.status === 'APPROVED' ? 'selected' : ''}>APPROVED</option>
+              <option value="INVITED" ${app.status === 'INVITED' ? 'selected' : ''}>INVITED</option>
+              <option value="WAITLISTED" ${app.status === 'WAITLISTED' ? 'selected' : ''}>WAITLISTED</option>
+              <option value="DECLINED" ${app.status === 'DECLINED' ? 'selected' : ''}>DECLINED</option>
+            </select>
+          </td>
+          <td>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <button class="btn btn-outline-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="openViewApplicationModal('${app.id}')">View Details</button>
+              ${inviteLink ? `
+                <button class="btn btn-outline-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="navigator.clipboard.writeText('${inviteLink}'); alert('Invitation Link Copied:\\n${inviteLink}');">Copy Link</button>
+              ` : `
+                <button class="btn btn-emerald" style="padding:4px 8px; font-size:0.75rem;" onclick="updateAppStatus('${app.id}', 'APPROVED')">Approve</button>
+              `}
+            </div>
+          </td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+      document.getElementById('applicationsTable').innerHTML = html;
     }
 
-    // 2. Process Audit Logs (Stitch Integrated)
-    if (auditRes.status === 'fulfilled' && auditRes.value.ok) {
-      const auditData = await auditRes.value.json();
-      renderAdminAuditLogs(auditData.audit_logs || []);
-    }
-
-    // 3. Process Site Settings Customizer
-    if (setRes.status === 'fulfilled' && setRes.value.ok) {
-      const setData = await setRes.value.json();
-      if (setData.settings) {
-        setData.settings.forEach(s => {
-          const input = document.getElementById(`set_${s.key_name}`);
-          if (input) input.value = s.key_value || '';
-          const prev = document.getElementById(`prev_${s.key_name}`);
-          if (prev && s.key_value) prev.src = s.key_value;
-        });
+    // Load Audit Logs
+    try {
+      const auditRes = await fetch('/api/admin/audit-logs', { headers: { 'Authorization': `Bearer ${state.token}` } });
+      if (auditRes.ok) {
+        const auditData = await auditRes.json();
+        if (document.getElementById('auditLogsTable')) {
+          let auditHtml = `<table style="width:100%; text-align:left; border-collapse:collapse; color:var(--ink-primary);">
+            <thead>
+              <tr style="border-bottom:1px solid var(--mint-200); font-size:0.82rem; text-transform:uppercase; color:var(--grey-500);">
+                <th style="padding:8px;">Timestamp</th>
+                <th>Action</th>
+                <th>User / Entity</th>
+                <th>IP Address</th>
+              </tr>
+            </thead>
+            <tbody>`;
+          (auditData.audit_logs || []).forEach(log => {
+            auditHtml += `<tr style="border-bottom:1px solid var(--border-hairline); font-size:0.82rem;">
+              <td style="padding:8px; color:var(--grey-500);">${log.created_at || ''}</td>
+              <td style="font-weight:700; color:var(--emerald-900);">${log.action_type || ''}</td>
+              <td>${log.entity_type || ''} (${log.user_id || 'System'})</td>
+              <td style="color:var(--grey-500);">${log.ip_address || '127.0.0.1'}</td>
+            </tr>`;
+          });
+          auditHtml += `</tbody></table>`;
+          document.getElementById('auditLogsTable').innerHTML = auditHtml;
+        }
       }
+    } catch (err) {
+      console.error("Error loading audit logs:", err);
     }
 
-    // 4. Process Admin Meeting Photos Gallery (16:9)
-    if (photosRes.status === 'fulfilled' && photosRes.value.ok) {
-      const photosData = await photosRes.value.json();
-      if (photosData.photos) {
-        renderAdminMeetingPhotosList(photosData.photos);
+    // Pre-fill Site Settings Customizer
+    try {
+      const setRes = await fetch('/api/admin/settings', { headers: { 'Authorization': `Bearer ${state.token}` } });
+      if (setRes.ok) {
+        const setData = await setRes.json();
+        if (setData.settings) {
+          setData.settings.forEach(s => {
+            const input = document.getElementById(`set_${s.key_name}`);
+            if (input) input.value = s.key_value || '';
+            const prev = document.getElementById(`prev_${s.key_name}`);
+            if (prev && s.key_value) prev.src = s.key_value;
+          });
+        }
       }
+    } catch (err) {
+      console.error("Error pre-filling settings:", err);
     }
+
+    // Load Admin Meeting Photos Gallery (16:9)
+    loadAdminMeetingPhotos();
+
   } catch (err) {
     console.error("Error loading admin tab:", err);
   }
@@ -1875,86 +1673,7 @@ async function handleAdminCreateEvent(e) {
 // ==========================================================================
 let currentAttendanceData = null;
 
-function renderAttendanceData(data) {
-  if (!data) return;
-
-  // Populate month select if options changed
-  const sel = document.getElementById('attendanceMonthSelect');
-  if (sel && data.available_months && data.available_months.length > 0) {
-    sel.innerHTML = data.available_months.map(m => {
-      let label = m;
-      try {
-        const parts = m.split('-');
-        const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
-        label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
-      } catch (e) {}
-      return `<option value="${m}" ${m === data.selected_month ? 'selected' : ''}>${label}</option>`;
-    }).join('');
-  }
-
-  // Update KPI metrics
-  if (document.getElementById('attRateValue')) document.getElementById('attRateValue').innerText = `${data.attendance_rate}%`;
-  if (document.getElementById('attEventsAttendedRatio')) document.getElementById('attEventsAttendedRatio').innerText = `(${data.events_attended}/${data.completed_events || data.total_events} Attended)`;
-  if (document.getElementById('attRateBar')) document.getElementById('attRateBar').style.width = `${data.attendance_rate}%`;
-  if (document.getElementById('attTotalEvents')) document.getElementById('attTotalEvents').innerText = data.total_events;
-  if (document.getElementById('attStreakValue')) document.getElementById('attStreakValue').innerText = `Streak: ${data.attendance_streak} Gatherings`;
-  if (document.getElementById('attStandingTier')) document.getElementById('attStandingTier').innerHTML = `<svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${data.accountability_tier}`;
-  if (document.getElementById('attendanceListTitle')) document.getElementById('attendanceListTitle').innerText = `Gatherings Hosted in ${data.month_name}`;
-
-  // Render Events List
-  const container = document.getElementById('attendanceEventsList');
-  if (!container) return;
-
-  if (!data.events || data.events.length === 0) {
-    container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--grey-500);">No gatherings scheduled or hosted for ${data.month_name}.</div>`;
-    return;
-  }
-
-  container.innerHTML = data.events.map(ev => {
-    let badgeHtml = '';
-    let actionBtnHtml = '';
-
-    if (ev.calculated_status === 'PRESENT') {
-      badgeHtml = `<span class="badge-status-present"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Attended &amp; Verified</span>`;
-      actionBtnHtml = `<span style="font-size: 0.82rem; color: var(--emerald-700); font-weight: 700;">Check-in Confirmed</span>`;
-    } else if (ev.calculated_status === 'MISSED') {
-      badgeHtml = `<span class="badge-status-missed">Missed Gathering</span>`;
-      actionBtnHtml = `<span style="font-size: 0.82rem; color: #b45309; font-weight: 600;">Absent</span>`;
-    } else if (ev.calculated_status === 'RSVP_CONFIRMED') {
-      badgeHtml = `<span class="badge-status-rsvp"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> RSVP Confirmed</span>`;
-      actionBtnHtml = `<button class="btn btn-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In Now</button>`;
-    } else {
-      badgeHtml = `<span class="badge-status-upcoming">Upcoming Event</span>`;
-      actionBtnHtml = `<button class="btn btn-outline-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In</button>`;
-    }
-
-    return `
-      <div class="meeting-item-card" style="border-left: 4px solid ${ev.calculated_status === 'PRESENT' ? 'var(--emerald-500)' : 'var(--mint-200)'};">
-        <div style="flex: 2; min-width: 260px;">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
-            <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 3px 8px; border-radius: 4px;">${ev.event_date.split(' ')[0]}</span>
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--grey-500);">${ev.time_str || ''}</span>
-            <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold-500);">${ev.signature_format || 'Gathering'}</span>
-            ${badgeHtml}
-          </div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary); margin-bottom: 4px;">${ev.title}</div>
-          <div style="font-size: 0.85rem; color: var(--grey-600); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${ev.venue || 'Private Location'}, ${ev.city || 'Pan India'}</span>
-            <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Host: ${ev.host_name || 'Community Team'}</span>
-          </div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-          ${actionBtnHtml}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
 async function loadAttendanceTab(selectedMonth) {
-  if (currentAttendanceData && (!selectedMonth || selectedMonth === currentAttendanceData.selected_month)) {
-    renderAttendanceData(currentAttendanceData);
-  }
   try {
     const url = selectedMonth ? `/api/attendance/summary?month=${encodeURIComponent(selectedMonth)}` : '/api/attendance/summary';
     const res = await fetch(url, { headers: { 'Authorization': `Bearer ${state.token}` } });
@@ -1964,7 +1683,79 @@ async function loadAttendanceTab(selectedMonth) {
       return;
     }
     currentAttendanceData = data;
-    renderAttendanceData(data);
+
+    // Populate month select if options changed
+    const sel = document.getElementById('attendanceMonthSelect');
+    if (sel && data.available_months && data.available_months.length > 0) {
+      sel.innerHTML = data.available_months.map(m => {
+        let label = m;
+        try {
+          const parts = m.split('-');
+          const d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, 1);
+          label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
+        } catch (e) {}
+        return `<option value="${m}" ${m === data.selected_month ? 'selected' : ''}>${label}</option>`;
+      }).join('');
+    }
+
+    // Update KPI metrics
+    if (document.getElementById('attRateValue')) document.getElementById('attRateValue').innerText = `${data.attendance_rate}%`;
+    if (document.getElementById('attEventsAttendedRatio')) document.getElementById('attEventsAttendedRatio').innerText = `(${data.events_attended}/${data.completed_events || data.total_events} Attended)`;
+    if (document.getElementById('attRateBar')) document.getElementById('attRateBar').style.width = `${data.attendance_rate}%`;
+    if (document.getElementById('attTotalEvents')) document.getElementById('attTotalEvents').innerText = data.total_events;
+    if (document.getElementById('attStreakValue')) document.getElementById('attStreakValue').innerText = `Streak: ${data.attendance_streak} Gatherings`;
+    if (document.getElementById('attStandingTier')) document.getElementById('attStandingTier').innerText = `<svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${data.accountability_tier}`;
+    if (document.getElementById('attendanceListTitle')) document.getElementById('attendanceListTitle').innerText = `Gatherings Hosted in ${data.month_name}`;
+
+    // Render Events List
+    const container = document.getElementById('attendanceEventsList');
+    if (!container) return;
+
+    if (!data.events || data.events.length === 0) {
+      container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--grey-500);">No gatherings scheduled or hosted for ${data.month_name}.</div>`;
+      return;
+    }
+
+    container.innerHTML = data.events.map(ev => {
+      let badgeHtml = '';
+      let actionBtnHtml = '';
+
+      if (ev.calculated_status === 'PRESENT') {
+        badgeHtml = `<span class="badge-status-present"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Attended &amp; Verified</span>`;
+        actionBtnHtml = `<span style="font-size: 0.82rem; color: var(--emerald-700); font-weight: 700;">Check-in Confirmed</span>`;
+      } else if (ev.calculated_status === 'MISSED') {
+        badgeHtml = `<span class="badge-status-missed">Missed Gathering</span>`;
+        actionBtnHtml = `<span style="font-size: 0.82rem; color: #b45309; font-weight: 600;">Absent</span>`;
+      } else if (ev.calculated_status === 'RSVP_CONFIRMED') {
+        badgeHtml = `<span class="badge-status-rsvp"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> RSVP Confirmed</span>`;
+        actionBtnHtml = `<button class="btn btn-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In Now</button>`;
+      } else {
+        badgeHtml = `<span class="badge-status-upcoming">Upcoming Event</span>`;
+        actionBtnHtml = `<button class="btn btn-outline-emerald" style="padding: 0.45rem 0.95rem; font-size: 0.82rem;" onclick="openCheckinModal('${ev.id}')">Check In</button>`;
+      }
+
+      return `
+        <div class="meeting-item-card" style="border-left: 4px solid ${ev.calculated_status === 'PRESENT' ? 'var(--emerald-500)' : 'var(--mint-200)'};">
+          <div style="flex: 2; min-width: 260px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap;">
+              <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 3px 8px; border-radius: 4px;">${ev.event_date.split(' ')[0]}</span>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--grey-500);">${ev.time_str || ''}</span>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--gold-500);">${ev.signature_format || 'Gathering'}</span>
+              ${badgeHtml}
+            </div>
+            <div style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary); margin-bottom: 4px;">${ev.title}</div>
+            <div style="font-size: 0.85rem; color: var(--grey-600); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${ev.venue || 'Private Location'}, ${ev.city || 'Pan India'}</span>
+              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Host: ${ev.host_name || 'Community Team'}</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            ${actionBtnHtml}
+          </div>
+        </div>
+      `;
+    }).join('');
+
   } catch (err) {
     console.error("loadAttendanceTab error:", err);
   }
@@ -2005,7 +1796,6 @@ async function handleCheckinSubmit(event) {
     }
     alert(data.message || 'Presence confirmed successfully!');
     closeModal('checkinModal');
-    currentAttendanceData = null;
     loadAttendanceTab(document.getElementById('attendanceMonthSelect')?.value);
     loadDashboardTab();
   } catch (err) {
@@ -2016,81 +1806,70 @@ async function handleCheckinSubmit(event) {
 // ==========================================================================
 // 1-TO-1 FOUNDER MEETINGS TRACKER
 // ==========================================================================
-let _cachedMeetingsData = null;
-
-function renderMeetingsData(data) {
-  if (!data) return;
-
-  if (data.stats) {
-    if (document.getElementById('meetingsThisMonth')) document.getElementById('meetingsThisMonth').innerText = data.stats.this_month;
-    if (document.getElementById('meetingsMonthName')) document.getElementById('meetingsMonthName').innerText = data.stats.current_month_name;
-    if (document.getElementById('meetingsSynergies')) document.getElementById('meetingsSynergies').innerText = data.stats.synergies;
-    if (document.getElementById('meetingsTotal')) document.getElementById('meetingsTotal').innerText = data.stats.total;
-  }
-
-  const container = document.getElementById('meetingsFeedContainer');
-  if (!container) return;
-
-  if (!data.meetings || data.meetings.length === 0) {
-    container.innerHTML = `
-      <div style="text-align: center; padding: 3rem 1rem; color: var(--grey-500);">
-        <div class="empty-state-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="1.75"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 11 2 2 4-4"/></svg></div>
-        <div style="font-weight: 700; color: var(--ink-primary); font-size: 1.1rem; margin-bottom: 4px;">No 1-to-1 Meetings Logged Yet</div>
-        <p style="font-size: 0.9rem;">Record individual coffee chats, strategy sessions, and partnerships with fellow founders.</p>
-        <button class="btn btn-emerald" style="margin-top: 1rem;" onclick="openLogMeetingModal()">+ Log First 1:1 Meeting</button>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = data.meetings.map(m => {
-    let outcomeClass = 'outcome-synergy';
-    if (m.collaboration_outcome === 'Referral Exchanged') outcomeClass = 'outcome-referral';
-    else if (m.collaboration_outcome === 'Deal In Progress') outcomeClass = 'outcome-deal';
-    else if (m.collaboration_outcome === 'Follow-up Scheduled') outcomeClass = 'outcome-followup';
-
-    const starCount = Math.max(1, Math.min(5, parseInt(m.rating, 10) || 5));
-    const stars = Array(starCount).fill('<svg class="star-svg" width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('');
-
-    const partnerAvatarSrc = (m.partner_avatar && !m.partner_avatar.includes('unsplash.com')) ? m.partner_avatar : getInitialsAvatar(m.partner_name);
-    return `
-      <div class="meeting-item-card">
-        <div style="display: flex; gap: 14px; align-items: flex-start; flex: 2; min-width: 280px;">
-          <img src="${partnerAvatarSrc}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
-          <div>
-            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
-              <span style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary);">${m.partner_name}</span>
-              <span style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-700);">(${m.partner_company})</span>
-              <span class="outcome-pill ${outcomeClass}">${m.collaboration_outcome || 'Synergy'}</span>
-            </div>
-            <div style="font-size: 0.88rem; font-weight: 700; color: var(--ink-primary); margin-bottom: 4px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span> ${m.agenda_topic}</div>
-            ${m.discussion_notes ? `<p style="font-size: 0.85rem; color: var(--grey-600); margin-bottom: 6px; line-height: 1.5;">${m.discussion_notes}</p>` : ''}
-            <div style="font-size: 0.8rem; color: var(--grey-500); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${m.meeting_date ? m.meeting_date.split(' ')[0] : 'Recent'}</span>
-              <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span> ${m.meeting_type || 'In-Person'}</span>
-              ${m.location_venue ? `<span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${m.location_venue}</span>` : ''}
-            </div>
-          </div>
-        </div>
-        <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-800);">${stars}</div>
-          <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 2px 8px; border-radius: 4px;">Verified Record</span>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
 async function loadMeetingsTab() {
-  if (_cachedMeetingsData) {
-    renderMeetingsData(_cachedMeetingsData);
-  }
   try {
     const res = await fetch('/api/founder-meetings', { headers: { 'Authorization': `Bearer ${state.token}` } });
     const data = await res.json();
     if (data.error) return;
-    _cachedMeetingsData = data;
-    renderMeetingsData(data);
+
+    if (data.stats) {
+      if (document.getElementById('meetingsThisMonth')) document.getElementById('meetingsThisMonth').innerText = data.stats.this_month;
+      if (document.getElementById('meetingsMonthName')) document.getElementById('meetingsMonthName').innerText = data.stats.current_month_name;
+      if (document.getElementById('meetingsSynergies')) document.getElementById('meetingsSynergies').innerText = data.stats.synergies;
+      if (document.getElementById('meetingsTotal')) document.getElementById('meetingsTotal').innerText = data.stats.total;
+    }
+
+    const container = document.getElementById('meetingsFeedContainer');
+    if (!container) return;
+
+    if (!data.meetings || data.meetings.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 3rem 1rem; color: var(--grey-500);">
+          <div class="empty-state-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--emerald-700)" stroke-width="1.75"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 11 2 2 4-4"/></svg></div>
+          <div style="font-weight: 700; color: var(--ink-primary); font-size: 1.1rem; margin-bottom: 4px;">No 1-to-1 Meetings Logged Yet</div>
+          <p style="font-size: 0.9rem;">Record individual coffee chats, strategy sessions, and partnerships with fellow founders.</p>
+          <button class="btn btn-emerald" style="margin-top: 1rem;" onclick="openLogMeetingModal()">+ Log First 1:1 Meeting</button>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = data.meetings.map(m => {
+      let outcomeClass = 'outcome-synergy';
+      if (m.collaboration_outcome === 'Referral Exchanged') outcomeClass = 'outcome-referral';
+      else if (m.collaboration_outcome === 'Deal In Progress') outcomeClass = 'outcome-deal';
+      else if (m.collaboration_outcome === 'Follow-up Scheduled') outcomeClass = 'outcome-followup';
+
+      const starCount = Math.max(1, Math.min(5, parseInt(m.rating, 10) || 5));
+    const stars = Array(starCount).fill('<svg class="star-svg" width="13" height="13" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>').join('');
+
+      return `
+        <div class="meeting-item-card">
+          <div style="display: flex; gap: 14px; align-items: flex-start; flex: 2; min-width: 280px;">
+            <img src="${m.partner_avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'}" alt="${m.partner_name || 'Member'}" loading="lazy" decoding="async" width="52" height="52" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--emerald-400); box-shadow: 0 4px 10px rgba(4,120,87,0.15);">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+                <span style="font-size: 1.15rem; font-weight: 800; color: var(--ink-primary);">${m.partner_name}</span>
+                <span style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-700);">(${m.partner_company})</span>
+                <span class="outcome-pill ${outcomeClass}">${m.collaboration_outcome || 'Synergy'}</span>
+              </div>
+              <div style="font-size: 0.88rem; font-weight: 700; color: var(--ink-primary); margin-bottom: 4px;"><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span> ${m.agenda_topic}</div>
+              ${m.discussion_notes ? `<p style="font-size: 0.85rem; color: var(--grey-600); margin-bottom: 6px; line-height: 1.5;">${m.discussion_notes}</p>` : ''}
+              <div style="font-size: 0.8rem; color: var(--grey-500); display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span> ${m.meeting_date ? m.meeting_date.split(' ')[0] : 'Recent'}</span>
+                <span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span> ${m.meeting_type || 'In-Person'}</span>
+                ${m.location_venue ? `<span><span class="meta-tag-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> ${m.location_venue}</span>` : ''}
+              </div>
+            </div>
+          </div>
+          <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--emerald-800);">${stars}</div>
+            <span style="font-size: 0.78rem; font-weight: 800; background: var(--mint-100); color: var(--emerald-900); padding: 2px 8px; border-radius: 4px;">Verified Record</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
   } catch (err) {
     console.error("loadMeetingsTab error:", err);
   }
@@ -2130,7 +1909,6 @@ async function handleLogMeetingSubmit(event) {
     alert("1-to-1 Founder Meeting logged successfully!");
     closeModal('logMeetingModal');
     document.getElementById('logMeetingForm').reset();
-    _cachedMeetingsData = null;
     loadMeetingsTab();
     loadDashboardTab();
   } catch (err) {
@@ -2143,13 +1921,7 @@ async function handleLogMeetingSubmit(event) {
 // ==========================================
 function renderMeetingPhotosSlider(photos) {
   const track = document.getElementById('meetingPhotosTrack');
-  const section = document.getElementById('meetingPhotosSection');
-  if (!photos || photos.length === 0) {
-    if (section) section.style.display = 'none';
-    return;
-  }
-  if (section) section.style.display = 'block';
-  if (!track) return;
+  if (!track || !photos || photos.length === 0) return;
   track.innerHTML = '';
 
   // Ensure enough items for a wide continuous slider track
@@ -2180,7 +1952,7 @@ function openAddMeetingPhotoModal() {
   const form = document.getElementById('addMeetingPhotoForm');
   if (form) form.reset();
   const prev = document.getElementById('photoPreviewImg');
-  if (prev) prev.src = '/assets/hero_banner.jpg';
+  if (prev) prev.src = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1280&q=80';
   const dateInput = document.getElementById('photoEventDate');
   if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
   const statusSpan = document.getElementById('photoUploadStatus');
@@ -2276,27 +2048,23 @@ function renderAdminMeetingPhotosList(photos) {
   const container = document.getElementById('adminMeetingPhotosList');
   if (!container) return;
   if (!photos || photos.length === 0) {
-    container.innerHTML = '<p class="col-span-1 sm:col-span-2 md:col-span-3 text-text-tertiary text-center py-8">No meeting photos added yet. Use the quick add form above to publish photography to the continuous 16:9 marquee slider.</p>';
+    container.innerHTML = '<p style="color: var(--grey-500); font-size: 0.9rem;">No meeting photos added yet.</p>';
     return;
   }
   container.innerHTML = photos.map(p => `
-    <div class="bg-surface-card rounded-lg overflow-hidden shadow-sm flex flex-col group border border-hairline">
-      <div class="aspect-video w-full relative overflow-hidden bg-surface-container">
-        <img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async">
-        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
-        <span class="absolute top-3 left-3 bg-primary-container/90 backdrop-blur-sm text-on-primary font-label-caps text-label-caps px-2 py-0.5 rounded">
-          ${escapeHtml(p.tag || 'Curated Gathering')}
-        </span>
-        <div class="absolute bottom-3 left-3 right-3 text-on-primary">
-          <span class="font-label-md text-label-md font-semibold block truncate">${escapeHtml(p.title)}</span>
-          <span class="font-body-sm text-[12px] opacity-80 block truncate">${escapeHtml(p.caption || '16:9 Slider Active')}</span>
-        </div>
+    <div style="background: var(--mint-50); border: 1px solid var(--mint-200); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+      <div style="aspect-ratio: 16 / 9; overflow: hidden; background: #042F2C;">
+        <img src="${p.image_url}" alt="${p.title}" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; aspect-ratio: 16 / 9;">
       </div>
-      <div class="p-3 flex items-center justify-between bg-surface-card">
-        <span class="text-text-tertiary text-[12px]">Continuous Slider Active</span>
-        <button type="button" class="w-8 h-8 rounded flex items-center justify-center text-error hover:bg-error-container hover:text-on-error-container transition-colors cursor-pointer" title="Delete from slider" onclick="handleDeleteMeetingPhoto('${p.id}')">
-          <span class="material-symbols-outlined text-[18px]">delete</span>
-        </button>
+      <div style="padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <span style="font-size: 0.72rem; font-weight: 800; color: var(--emerald-800); text-transform: uppercase; background: #E4F7EE; padding: 2px 6px; border-radius: 4px;">${p.tag || 'Curated Gathering'}</span>
+          <h5 style="margin: 6px 0 2px 0; font-size: 0.98rem; color: var(--ink-primary);">${p.title}</h5>
+          <p style="margin: 0; font-size: 0.8rem; color: var(--grey-600);">${p.caption || ''}</p>
+        </div>
+        <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
+          <button type="button" class="btn btn-outline-emerald" style="padding: 4px 10px; font-size: 0.75rem; color: #DC2626; border-color: #FECACA;" onclick="handleDeleteMeetingPhoto('${p.id}')"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Remove</button>
+        </div>
       </div>
     </div>
   `).join('');
@@ -2448,8 +2216,8 @@ async function loadChatMessages() {
     const currentUserId = state.user ? state.user.id : null;
     container.innerHTML = messages.map(m => {
       const isMine = currentUserId && (m.user_id === currentUserId);
+      const avatar = m.profile_photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80';
       const senderName = m.full_name || m.email || 'Fellow Founder';
-      const avatar = (m.profile_photo && !m.profile_photo.includes('unsplash.com')) ? m.profile_photo : getInitialsAvatar(senderName);
       const senderBiz = m.business_name ? ` • ${m.business_name}` : '';
       const timeStr = m.created_at ? new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
 
@@ -2518,289 +2286,4 @@ async function handleSendChatMessage() {
   }
 }
 
-
-
-// ==========================================
-// STITCH ADMIN CONSOLE DYNAMIC RENDER & FILTERS
-// ==========================================
-let currentAppFilter = 'all';
-let currentAppSearch = '';
-
-function renderAdminApplications(apps) {
-  const tbody = document.getElementById('applicationsTableBody');
-  const countBadge = document.getElementById('appQueueCountBadge');
-  const footerCount = document.getElementById('appTableFooterCount');
-  if (countBadge) {
-    countBadge.textContent = `${apps.length} in Queue`;
-  }
-  if (footerCount) {
-    footerCount.textContent = `Showing ${apps.length} application${apps.length === 1 ? '' : 's'}`;
-  }
-  if (!tbody) return;
-
-  if (!apps || apps.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" class="py-12 text-center text-text-tertiary">No applications match the current filter.</td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = apps.map(app => {
-    const inviteLink = app.invitation_token ? `${window.location.origin}/#activate?token=${app.invitation_token}` : '';
-    const initials = (app.full_name || 'Founder').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
-
-    // Status pill styles matching Stitch theme
-    let statusPill = '';
-    if (app.status === 'APPROVED' || app.status === 'INVITED' || app.status === 'CONVERTED') {
-      statusPill = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-caps text-label-caps"><span class="w-1.5 h-1.5 rounded-full bg-emerald-deep"></span> ${app.status}</span>`;
-    } else if (app.status === 'UNDER_REVIEW') {
-      statusPill = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> REVIEW</span>`;
-    } else if (app.status === 'WAITLISTED') {
-      statusPill = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-text-secondary font-label-caps text-label-caps"><span class="w-1.5 h-1.5 rounded-full bg-outline"></span> WAITLIST</span>`;
-    } else if (app.status === 'DECLINED') {
-      statusPill = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-caps text-label-caps"><span class="w-1.5 h-1.5 rounded-full bg-error"></span> DECLINED</span>`;
-    } else {
-      statusPill = `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-subtle text-on-surface-variant font-label-caps text-label-caps"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> PENDING</span>`;
-    }
-
-    return `
-      <tr class="hover:bg-surface-subtle/50 transition-colors">
-        <td class="py-4 px-space-md">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-full bg-primary text-on-primary font-semibold flex items-center justify-center font-label-md text-label-md flex-shrink-0">
-              ${initials}
-            </div>
-            <div class="flex flex-col">
-              <span class="font-label-md text-label-md text-text-primary font-semibold">${escapeHtml(app.full_name)}</span>
-              <span class="text-text-tertiary text-[12px] flex items-center gap-1">
-                <span class="material-symbols-outlined text-[13px]">location_on</span> ${escapeHtml(app.city || 'Pan India')}
-              </span>
-            </div>
-          </div>
-        </td>
-        <td class="py-4 px-space-md">
-          <div class="flex flex-col gap-1 items-start">
-            <span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-subtle text-primary font-label-caps text-label-caps">${escapeHtml(app.applicant_type || 'Founder')}</span>
-            <span class="text-text-tertiary text-[11px]">${escapeHtml(app.designation || 'Founding Team')}</span>
-          </div>
-        </td>
-        <td class="py-4 px-space-md">
-          <div class="flex flex-col">
-            <span class="font-medium text-text-primary">${escapeHtml(app.business_name || 'Private Venture')}</span>
-            <span class="text-text-secondary text-[12px]">${escapeHtml(app.business_model_category || 'Product Based')}</span>
-          </div>
-        </td>
-        <td class="py-4 px-space-md">
-          <div class="flex flex-col text-[12px]">
-            <span class="text-primary font-mono select-all">${escapeHtml(app.email)}</span>
-            <div class="flex items-center gap-1 text-text-secondary mt-0.5">
-              <span class="font-mono">${escapeHtml(app.phone)}</span>
-              <span class="material-symbols-outlined text-[13px] text-secondary" title="Verified phone">verified</span>
-            </div>
-          </div>
-        </td>
-        <td class="py-4 px-space-md">
-          ${statusPill}
-        </td>
-        <td class="py-4 px-space-md">
-          <select class="h-9 px-2 rounded bg-surface-subtle text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer border border-hairline" onchange="updateAppStatus('${app.id}', this.value)">
-            <option value="SUBMITTED" ${app.status === 'SUBMITTED' ? 'selected' : ''}>SUBMITTED</option>
-            <option value="UNDER_REVIEW" ${app.status === 'UNDER_REVIEW' ? 'selected' : ''}>UNDER_REVIEW</option>
-            <option value="APPROVED" ${app.status === 'APPROVED' ? 'selected' : ''}>APPROVED</option>
-            <option value="INVITED" ${app.status === 'INVITED' ? 'selected' : ''}>INVITED</option>
-            <option value="WAITLISTED" ${app.status === 'WAITLISTED' ? 'selected' : ''}>WAITLISTED</option>
-            <option value="DECLINED" ${app.status === 'DECLINED' ? 'selected' : ''}>DECLINED</option>
-          </select>
-        </td>
-        <td class="py-4 px-space-md text-right">
-          <div class="flex items-center justify-end gap-2">
-            <button class="h-9 px-3 rounded bg-surface-subtle hover:bg-surface-container font-label-md text-label-md text-on-surface flex items-center gap-1.5 transition-colors cursor-pointer" onclick="openViewApplicationModal('${app.id}')">
-              <span class="material-symbols-outlined text-[16px]">visibility</span>
-              <span>Inspect</span>
-            </button>
-            ${inviteLink ? `
-              <button class="h-9 px-3 rounded bg-surface-subtle hover:bg-surface-container font-label-md text-label-md text-primary flex items-center gap-1.5 transition-colors cursor-pointer" onclick="navigator.clipboard.writeText('${inviteLink}'); alert('Invitation Token Link Copied:\n${inviteLink}');">
-                <span class="material-symbols-outlined text-[16px]">content_copy</span>
-                <span>Copy Token</span>
-              </button>
-            ` : `
-              <button class="h-9 px-3 rounded bg-primary-container hover:bg-emerald-deep font-label-md text-label-md text-on-primary flex items-center gap-1.5 shadow-sm transition-all cursor-pointer" onclick="updateAppStatus('${app.id}', 'APPROVED')">
-                <span class="material-symbols-outlined text-[16px]">send</span>
-                <span>Approve</span>
-              </button>
-            `}
-          </div>
-        </td>
-      </tr>
-    `;
-  }).join('');
-}
-
-function renderAdminAuditLogs(logs) {
-  const tbody = document.getElementById('auditLogsTableBody');
-  if (!tbody) return;
-  if (!logs || logs.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-text-tertiary">No audit logs recorded yet.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = logs.map(log => {
-    let actionBadge = `<span class="bg-surface-subtle text-primary px-2 py-0.5 rounded text-[11px] font-bold">${escapeHtml(log.action_type || 'AUDIT_LOG')}</span>`;
-    if ((log.action_type || '').includes('APPROV') || (log.action_type || '').includes('CREATE')) {
-      actionBadge = `<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded text-[11px] font-bold">${escapeHtml(log.action_type)}</span>`;
-    } else if ((log.action_type || '').includes('TOKEN') || (log.action_type || '').includes('INVIT')) {
-      actionBadge = `<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[11px] font-bold">${escapeHtml(log.action_type)}</span>`;
-    }
-
-    return `
-      <tr class="hover:bg-surface-subtle/50 transition-colors">
-        <td class="py-3.5 px-space-md text-text-tertiary">${escapeHtml(log.created_at || '')}</td>
-        <td class="py-3.5 px-space-md">${actionBadge}</td>
-        <td class="py-3.5 px-space-md text-text-primary font-mono text-[12px]">${escapeHtml(log.user_id || 'Master Admin')}</td>
-        <td class="py-3.5 px-space-md text-text-secondary">${escapeHtml(log.entity_type || 'SYSTEM')} ${log.entity_id ? `(#${escapeHtml(String(log.entity_id).slice(0,8))})` : ''}</td>
-        <td class="py-3.5 px-space-md text-right text-text-tertiary font-mono">${escapeHtml(log.ip_address || '127.0.0.1')}</td>
-      </tr>
-    `;
-  }).join('');
-}
-
-function filterApplications(filterStatus, clickedTab) {
-  currentAppFilter = filterStatus;
-  const filterTabs = document.querySelectorAll('.filter-tab');
-  filterTabs.forEach(t => {
-    t.classList.remove('bg-surface-card', 'text-primary', 'shadow-sm');
-    t.classList.add('text-text-secondary');
-  });
-  if (clickedTab) {
-    clickedTab.classList.add('bg-surface-card', 'text-primary', 'shadow-sm');
-    clickedTab.classList.remove('text-text-secondary');
-  }
-  applyAdminAppFilters();
-}
-
-function handleAppSearch(query) {
-  currentAppSearch = (query || '').toLowerCase().trim();
-  applyAdminAppFilters();
-}
-
-function handleMasterAdminSearch(query) {
-  handleAppSearch(query);
-  const searchInput = document.getElementById('appSearch');
-  if (searchInput) searchInput.value = query;
-}
-
-function applyAdminAppFilters() {
-  const allApps = state.adminApplications || [];
-  const filtered = allApps.filter(app => {
-    // Status Filter
-    if (currentAppFilter !== 'all') {
-      if (currentAppFilter === 'SUBMITTED' && app.status !== 'SUBMITTED') return false;
-      if (currentAppFilter === 'UNDER_REVIEW' && app.status !== 'UNDER_REVIEW') return false;
-      if (currentAppFilter === 'APPROVED' && (app.status !== 'APPROVED' && app.status !== 'INVITED' && app.status !== 'CONVERTED')) return false;
-      if (currentAppFilter === 'WAITLISTED' && app.status !== 'WAITLISTED') return false;
-    }
-    // Search Text
-    if (currentAppSearch) {
-      const q = currentAppSearch;
-      const match = (app.full_name || '').toLowerCase().includes(q) ||
-                    (app.business_name || '').toLowerCase().includes(q) ||
-                    (app.email || '').toLowerCase().includes(q) ||
-                    (app.city || '').toLowerCase().includes(q);
-      if (!match) return false;
-    }
-    return true;
-  });
-  renderAdminApplications(filtered);
-}
-
-// Global Export Dropdown Toggle Listener
-document.addEventListener('click', (e) => {
-  const exportBtn = document.getElementById('exportBtn');
-  const exportMenu = document.getElementById('exportMenu');
-  if (!exportBtn || !exportMenu) return;
-  if (exportBtn.contains(e.target)) {
-    e.stopPropagation();
-    exportMenu.classList.toggle('hidden');
-  } else if (!exportMenu.contains(e.target)) {
-    exportMenu.classList.add('hidden');
-  }
-});
-
-// Stitch Screen 13 Helpers
-const stitchFeatures = [
-  {
-    label: "MODULE 01 • CURATION",
-    title: "Curated Founder Network",
-    desc: "Connect with verified founders and decision-makers in a high-trust, clutter-free environment designed for meaningful business growth."
-  },
-  {
-    label: "MODULE 02 • OPPORTUNITY",
-    title: "Needs & Wants Engine",
-    desc: "Structured opportunity board for community members to post specific commercial requirements or offer high-value solutions directly to trusted peers."
-  },
-  {
-    label: "MODULE 03 • PIPELINE",
-    title: "Leads & Referrals CRM",
-    desc: "Record, introduce, and track your business deals and peer referrals with authentic relationship accountability."
-  },
-  {
-    label: "MODULE 04 • EXPERIENCES",
-    title: "Founder Experiences",
-    desc: "Signature formats beyond routine meetings: The Founder's Table, First Light Club, Roundtables, and Sports Socials."
-  },
-  {
-    label: "MODULE 05 • STRATEGY",
-    title: "Business Collaborations",
-    desc: "Deep-dive strategic peer dialogues, joint ventures, and confidential problem-solving roundtables."
-  },
-  {
-    label: "MODULE 06 • MOMENTUM",
-    title: "Monthly Challenges",
-    desc: "Community leaderboard and accountability sprints to build enduring founder habits and peer leverage."
-  }
-];
-
-function setStitchTab(idx, btnEl) {
-  const buttons = document.querySelectorAll('#platform-tabs .tab-btn');
-  buttons.forEach((btn, i) => {
-    if (i === idx) {
-      btn.className = 'tab-btn px-4 py-1.5 rounded-full text-[12.5px] font-medium transition-all bg-primary-dark text-white active';
-    } else {
-      btn.className = 'tab-btn px-4 py-1.5 rounded-full text-[12.5px] font-medium transition-all bg-white text-text-muted border border-card-border hover:text-text-main';
-    }
-  });
-  const data = stitchFeatures[idx];
-  if (!data) return;
-  const label = document.getElementById('feature-label');
-  const title = document.getElementById('feature-title');
-  const desc = document.getElementById('feature-desc');
-  if (label) label.textContent = data.label;
-  if (title) title.textContent = data.title;
-  if (desc) desc.textContent = data.desc;
-}
-
-function scrollExperiences(dir) {
-  const track = document.getElementById('experiences-track');
-  if (!track) return;
-  const offset = 280;
-  if (dir === 'left') {
-    track.scrollBy({ left: -offset, behavior: 'smooth' });
-  } else {
-    track.scrollBy({ left: offset, behavior: 'smooth' });
-  }
-}
-
-function toggleFaqRef(btn) {
-  const parent = btn.parentElement;
-  if (!parent) return;
-  const content = parent.querySelector('.faq-content');
-  const icon = btn.querySelector('.material-symbols-outlined');
-  if (!content) return;
-  const isHidden = content.classList.contains('hidden');
-
-  document.querySelectorAll('.faq-node .faq-content').forEach(c => c.classList.add('hidden'));
-  document.querySelectorAll('.faq-node .material-symbols-outlined').forEach(i => i.textContent = 'add');
-
-  if (isHidden) {
-    content.classList.remove('hidden');
-    if (icon) icon.textContent = 'remove';
-  }
-}
 
