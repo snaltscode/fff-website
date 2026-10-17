@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "installCommand": "echo 'Standard library only - no dependencies required'",
   "buildCommand": "echo 'Build complete'",
   "headers": [
@@ -24,8 +25,16 @@
   ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api",
       "destination": "/api/index.py"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api?__slug=$1"
+    },
+    {
+      "source": "/apply",
+      "destination": "/public/apply.html"
     },
     {
       "source": "/privacy-policy",

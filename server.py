@@ -9,7 +9,7 @@ import hashlib
 import uuid
 import csv
 import io
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import secrets
 import base64
 import re
@@ -146,11 +146,26 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Cache-Control', 'public, max-age=0, must-revalidate')
         super().end_headers()
 
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+        self.send_header('Access-Control-Max-Age', '86400')
+        self.end_headers()
+
     def get_effective_path(self):
         for hdr in ('x-forwarded-uri', 'x-matched-path', 'x-rewrite-url', 'x-original-uri'):
             val = self.headers.get(hdr)
             if val:
                 return val
+
+        parsed_self = urllib.parse.urlparse(self.path)
+        qs = urllib.parse.parse_qs(parsed_self.query)
+        if '__slug' in qs and qs['__slug']:
+            slug = qs['__slug'][0].lstrip('/')
+            return '/api/' + slug
+
         return self.path
 
     def do_GET(self):
@@ -159,7 +174,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         path = parsed_url.path
         query_params = urllib.parse.parse_qs(parsed_url.query)
 
-        if path.startswith('/api/'):
+        if path.startswith('/api/') or path == '/api':
             try:
                 return self.handle_api_get(path, query_params)
             except Exception as e:
@@ -178,6 +193,9 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         elif path in ('/community-guidelines', '/guidelines'):
             path = '/community-guidelines.html'
             self.path = '/community-guidelines.html'
+        elif path == '/apply':
+            path = '/apply.html'
+            self.path = '/apply.html'
 
         # High-Speed Gzip compression for static text assets
         accept_encoding = self.headers.get('Accept-Encoding', '')
@@ -223,7 +241,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         effective_path = self.get_effective_path()
         parsed_url = urllib.parse.urlparse(effective_path)
         path = parsed_url.path
-        if path.startswith('/api/'):
+        if path.startswith('/api/') or path == '/api':
             try:
                 return self.handle_api_post(path)
             except Exception as e:
@@ -235,7 +253,7 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         effective_path = self.get_effective_path()
         parsed_url = urllib.parse.urlparse(effective_path)
         path = parsed_url.path
-        if path.startswith('/api/'):
+        if path.startswith('/api/') or path == '/api':
             try:
                 return self.handle_api_patch(path)
             except Exception as e:
@@ -244,9 +262,10 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_error(404, "Endpoint Not Found")
 
     def do_DELETE(self):
-        parsed_url = urllib.parse.urlparse(self.path)
+        effective_path = self.get_effective_path()
+        parsed_url = urllib.parse.urlparse(effective_path)
         path = parsed_url.path
-        if path.startswith('/api/'):
+        if path.startswith('/api/') or path == '/api':
             try:
                 return self.handle_api_delete(path)
             except Exception as e:
@@ -296,6 +315,15 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     def handle_api_get(self, path, query):
         user = get_auth_user(self)
         conn = database.get_db_connection()
+
+        # API Health Check Endpoint
+        if path in ('/api', '/api/', '/api/health'):
+            conn.close()
+            return self.send_json({
+                'status': 'ok',
+                'service': 'Founder for Founder API',
+                'timestamp': datetime.now(timezone.utc).isoformat()
+            })
 
         # Public Content Endpoint
         if path == '/api/public/content':

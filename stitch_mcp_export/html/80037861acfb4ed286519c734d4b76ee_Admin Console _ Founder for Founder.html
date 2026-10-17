@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&amp;family=Plus+Jakarta+Sans:wght@300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface": "#131b2e", "primary-fixed": "#b0f0d6", "on-primary": "#ffffff", "inverse-surface": "#283044", "outline-variant": "#bfc9c3", "surface-container": "#eaedff", "on-tertiary-fixed": "#2f1500", "on-secondary": "#ffffff", "on-primary-fixed-variant": "#0b513d", "surface-container-highest": "#dae2fd", "inverse-on-surface": "#eef0ff", "secondary-fixed-dim": "#4edea3", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#005236", "surface-bright": "#faf8ff", "on-primary-fixed": "#002117", "on-tertiary": "#ffffff", "on-secondary-fixed": "#002113", "on-background": "#131b2e", "tertiary": "#4a2400", "on-primary-container": "#80bea6", "inverse-primary": "#95d3ba", "on-tertiary-fixed-variant": "#6e3900", "outline": "#707974", "surface-container-low": "#f2f3ff", "surface-container-high": "#e2e7ff", "tertiary-fixed-dim": "#ffb77d", "error-container": "#ffdad6", "error": "#ba1a1a", "surface-variant": "#dae2fd", "surface-container-lowest": "#ffffff", "secondary": "#006c49", "primary": "#003527", "on-error": "#ffffff", "background": "#faf8ff", "surface-tint": "#2b6954", "tertiary-fixed": "#ffdcc3", "on-surface-variant": "#404944", "secondary-fixed": "#6ffbbe", "tertiary-container": "#6a3700", "primary-container": "#064e3b", "surface": "#faf8ff", "on-secondary-container": "#00714d", "surface-dim": "#d2d9f4", "on-tertiary-container": "#ff9939", "primary-fixed-dim": "#95d3ba", "secondary-container": "#6cf8bb" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "gutter-sm": "1rem", "space-md": "1rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin-desktop": "3rem", "space-lg": "1.5rem", "gutter-lg": "2rem", "space-sm": "0.5rem", "margin": "2rem", "gutter": "1.5rem", "space-xs": "0.25rem" }, "fontFamily": { "label-status": [ "Plus Jakarta Sans" ], "title-lg": [ "Plus Jakarta Sans" ], "label-md": [ "Plus Jakarta Sans" ], "headline-lg-mobile": [ "Domine" ], "headline-lg": [ "Domine" ], "title-md": [ "Plus Jakarta Sans" ], "headline-hero": [ "Domine" ], "body-sm": [ "Plus Jakarta Sans" ], "body-lg": [ "Plus Jakarta Sans" ], "headline-hero-mobile": [ "Domine" ], "headline-sm": [ "Domine" ], "body-md": [ "Plus Jakarta Sans" ], "headline-md": [ "Domine" ], "label-lg": [ "Plus Jakarta Sans" ] }, "fontSize": { "label-status": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" } ], "title-lg": [ "18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "headline-lg-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "headline-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "title-md": [ "16px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "600" } ], "headline-hero": [ "56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-hero-mobile": [ "36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "headline-sm": [ "22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-md": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(6,78,59,0.04)]"><div class="h-16 max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-sm group" data-path="member-portal" href="#"><div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center p-space-xs"><img alt="Founder for Founder Gold Knot Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XoGYDAxoMk0LCjzdNFfwOV4tq-2YMWeHpUo3FsuvrNM-aZYP_eM4yYdiCC98XV3f_Rw-vJrYphvXABrXA6R4wNOy0lXJ1pbZ8HhcwgtnOIdlVqYTDl3ApgepaO-INjJ6x0rP8JUxtsPXqCr45MTaI3HzrPhkmTDcDUUo32VmxjcB7qJfRquljamzoWQmiBbA5AnFZ8QE7TzK4JEvMVIBGYCDh7JNdy96fWxWrk2pRfFPel93Gzg0J8NN0mZiMW4OLoYD391BaRui4"/></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight font-semibold leading-none">f4f</span><span class="font-label-status text-label-status text-on-surface-variant uppercase tracking-wider">by snalts.co</span></div></a><div class="hidden lg:block h-6 w-px bg-outline-variant/40"></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="bg-primary-container text-on-primary font-title-md text-title-md rounded-xl"><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors rounded-xl" data-path="member-portal" href="#">Member Portal</a><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors rounded-xl" data-path="needs-wants" href="#">Needs &amp; Wants</a><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors rounded-xl" data-path="experiences" href="#">Experiences</a><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors rounded-xl" data-path="leads-crm" href="#">Leads CRM</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary font-title-md text-title-md rounded-xl" data-path="admin-console" href="#">Admin Console</a></nav></div><div class="flex items-center gap-space-md"><button class="hidden sm:flex items-center gap-space-xs px-space-sm py-space-xs rounded-xl bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-lg leading-none">search</span><span class="font-label-md text-label-md">Search directory</span><kbd class="font-label-status text-label-status bg-surface-container-lowest px-1.5 py-0.5 rounded shadow-[0_1px_2px_rgba(0,0,0,0.06)] text-on-surface-variant">⌘K</kbd></button><div class="flex items-center gap-space-sm pl-space-xs bg-surface-container-lowest border border-outline-variant/50 rounded-full py-1 pr-space-md pl-1 shadow-[0_1px_4px_rgba(0,0,0,0.04)]"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1XoGYDAxoMk0LCjzdNFfwOV4tq-2YMWeHpUo3FsuvrNM-aZYP_eM4yYdiCC98XV3f_Rw-vJrYphvXABrXA6R4wNOy0lXJ1pbZ8HhcwgtnOIdlVqYTDl3ApgepaO-INjJ6x0rP8JUxtsPXqCr45MTaI3HzrPhkmTDcDUUo32VmxjcB7qJfRquljamzoWQmiBbA5AnFZ8QE7TzK4JEvMVIBGYCDh7JNdy96fWxWrk2pRfFPel93Gzg0J8NN0mZiMW4OLoYD391BaRui4"/><div class="flex flex-col text-left"><div class="flex items-center gap-1"><span class="font-title-md text-body-sm font-semibold text-on-surface leading-tight">Julian Vance</span><span class="inline-flex items-center px-1 rounded bg-secondary-fixed text-on-secondary-fixed font-label-status text-[9px] leading-3 uppercase">Verified</span></div><span class="font-label-md text-body-sm text-on-surface-variant leading-none">Managing Founder</span></div><button class="ml-1 text-on-surface-variant hover:text-on-surface focus:outline-none" type="button"><span class="material-symbols-outlined leading-none">expand_more</span></button></div></div></div></header><main class="w-full pt-16 bg-surface"><div class="flex flex-col w-full">
+<!-- Console Master Container -->
+<div class="max-w-[1440px] w-full mx-auto px-margin-mobile md:px-margin-desktop py-space-lg flex flex-col gap-space-xl">
+<!-- Action Header & Institutional Identity -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-primary-container text-on-primary font-label-status text-label-status uppercase">Restricted Tier-0</span>
+<span class="font-label-md text-label-md text-on-surface-variant">snalts.co governance v4.12</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight font-semibold">Founder Operations Console</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Real-time member verification, cohort curation, syndicate trust verification, and high-touch gathering administration.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-xl bg-surface-container-low text-on-surface hover:bg-surface-container font-label-md text-label-md transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-base">download</span>
+<span>Export Members (CSV)</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-xl bg-surface-container-low text-on-surface hover:bg-surface-container font-label-md text-label-md transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-base">table_view</span>
+<span>Export Applications (CSV)</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-2.5 rounded-xl bg-primary-container text-on-primary hover:bg-secondary transition-all shadow-md" onclick="openGatheringModal()" type="button">
+<span class="material-symbols-outlined text-base">add</span>
+<span class="font-title-md text-title-md">+ Publish New Gathering</span>
+</button>
+</div>
+</section>
+<!-- Operational Metrics Bar (4 Key Signals) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Metric 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-status text-label-status uppercase tracking-wider">Pending Applications</span>
+<span class="material-symbols-outlined text-lg text-secondary">pending_actions</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-md text-headline-md font-semibold text-primary">14 Under Review</div>
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-secondary font-medium mt-1">
+<span class="material-symbols-outlined text-xs">arrow_upward</span>
+<span>+3 new in last 24h</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-2/3"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-status text-label-status uppercase tracking-wider">Active Verified Founders</span>
+<span class="material-symbols-outlined text-lg text-primary">verified_user</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-md text-headline-md font-semibold text-on-surface">1,528</div>
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant mt-1">
+<span class="text-secondary font-medium">94.2%</span>
+<span>attendance retention</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full rounded-full w-[94%]"></div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-status text-label-status uppercase tracking-wider">Monthly Gatherings</span>
+<span class="material-symbols-outlined text-lg text-tertiary">dinner_dining</span>
+</div>
+<div class="my-space-sm">
+<div class="font-headline-md text-headline-md font-semibold text-on-surface">4 Scheduled</div>
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-on-surface-variant mt-1">
+<span>Next:</span>
+<span class="font-semibold text-primary">The Founder's Table (Oct 24)</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary-fixed-dim h-full rounded-full w-1/2"></div>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-status text-label-status uppercase tracking-wider">Platform Health</span>
+<span class="material-symbols-outlined text-lg text-secondary">security</span>
+</div>
+<div class="my-space-sm flex items-baseline justify-between">
+<div class="font-headline-md text-headline-md font-semibold text-secondary">99.4%</div>
+<span class="font-label-status text-label-status bg-secondary-fixed text-on-secondary-fixed px-1.5 py-0.5 rounded">Optimal</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">High-Trust Index &amp; Zero Data Exposure</p>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden mt-1">
+<div class="bg-secondary-fixed-dim h-full rounded-full w-[99.4%]"></div>
+</div>
+</div>
+</section>
+<!-- Queue & Applications (Dual Column Interactive Layout) -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">Membership Applications &amp; Vetting Queue</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manual consensus review mandated by the snalts.co Guild Charter.</p>
+</div>
+<!-- Filter Tab Controls -->
+<div class="flex items-center p-1 bg-surface-container-low rounded-xl" id="queueFilters">
+<button class="filter-tab px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-colors bg-surface-container-lowest text-primary shadow-sm font-semibold" onclick="setFilter('all', this)" type="button">All (14)</button>
+<button class="filter-tab px-space-sm py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" onclick="setFilter('screening', this)" type="button">Pending Screening (8)</button>
+<button class="filter-tab px-space-sm py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" onclick="setFilter('committee', this)" type="button">Committee Review (4)</button>
+<button class="filter-tab px-space-sm py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" onclick="setFilter('approved', this)" type="button">Approved for Invite (2)</button>
+</div>
+</div>
+<!-- Applicant Cards Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md" id="applicantGrid">
+<!-- Applicant 1 -->
+<div class="applicant-card p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-space-md hover:-translate-y-0.5 transition-transform" data-category="screening">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<img class="w-12 h-12 rounded-full object-cover shadow-inner" data-alt="High-resolution editorial studio headshot of male tech founder in dark minimal blazer against neutral warm grey architectural backdrop, warm subtle lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2P6ssqwnCO0kmQ0-iHkPeXS3zu1QDzTFx1YhZ9v_dWIGUkR7lDQoLT8B7rUuUFConMSse9bpgWcW4Wp1h1Qg7rSSp4i8pr1Xovm7p-kE_1-vp2B35oZgWY3vVfFzoh6hlm-TfKPYLfQa1rj9MKdGjosnjX570kNJjzUhJi6LO72H7q0ssY2LU2PHd74zagvA5PofvuU4pMFYSEIlkydq2qV4LCcCS9veB4gb_EfGVMoAujWAAGJTUFw"/>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold leading-tight">Rohan Mehra</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">CEO &amp; Co-founder</span>
+<span class="font-label-status text-label-status text-secondary uppercase font-bold">Quantix AI</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-status text-label-status uppercase">Screening</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+<div>
+<span class="font-label-status text-label-status text-outline block uppercase">Category</span>
+<span class="font-medium text-on-surface">B2B SaaS / Product</span>
+</div>
+<div>
+<span class="font-label-status text-label-status text-outline block uppercase">Stage &amp; City</span>
+<span class="font-medium text-on-surface">Growth • Bengaluru</span>
+</div>
+<div class="col-span-2 pt-1">
+<span class="font-label-status text-label-status text-outline block uppercase">Vouch Sponsor</span>
+<span class="font-medium text-primary">Julian Vance (Managing Founder)</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" type="button">
+              View Dossier
+            </button>
+<div class="flex items-center gap-space-xs">
+<button class="p-2 rounded-lg text-error hover:bg-error-container/20 transition-colors" title="Decline Application" type="button">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary hover:bg-secondary font-label-md text-label-md transition-colors shadow-sm" type="button">
+                Approve &amp; Send Token
+              </button>
+</div>
+</div>
+</div>
+<!-- Applicant 2 -->
+<div class="applicant-card p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-space-md hover:-translate-y-0.5 transition-transform" data-category="committee">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<img class="w-12 h-12 rounded-full object-cover shadow-inner" data-alt="Professional studio portrait of an Asian woman founder with glasses and sleek minimal turtleneck against soft slate studio background, high contrast daylight aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqKP7VlvmZYghS5CWY_W1rWJ4x_wRWupF2PrCS-a1lowhxnzgMIq_7JwVz_Lq3fgRQ208BR82VHVmettiBZnsvSaO8p4VS_ao7oH8bnQ3MBzFvTrQ4pzNPihX9I2iIZdDyRN7m1qfGlxOrEVSnlS14Oz6ow97vIPB5t6pFHlYsBP7_psuOGN41shotRNuuyRzk5sDUiOj_OKvRXrHbZEYqpuAieGe2jAIqoz3m7Qr3IaCNrKo9q8GlpQ"/>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold leading-tight">Elena Vasquez</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Founder &amp; CTO</span>
+<span class="font-label-status text-label-status text-secondary uppercase font-bold">Aether CleanTech</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-status text-label-status uppercase">Committee</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+<div>
+<span class="font-label-status text-label-status text-outline block uppercase">Category</span>
+<span class="font-medium text-on-surface">DeepTech / Energy</span>
+</div>
+<div>
+<span class="font-label-status text-label-status text-outline block uppercase">Stage &amp; City</span>
+<span class="font-medium text-on-surface">Series A • Singapore</span>
+</div>
+<div class="col-span-2 pt-1">
+<span class="font-label-status text-label-status text-outline block uppercase">ARR Verified</span>
+<span class="font-medium text-primary">$3.8M ARR • Audited Stripe Data</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" type="button">
+              View Dossier
+            </button>
+<div class="flex items-center gap-space-xs">
+<button class="p-2 rounded-lg text-error hover:bg-error-container/20 transition-colors" title="Decline Application" type="button">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary hover:bg-secondary font-label-md text-label-md transition-colors shadow-sm" type="button">
+                Approve &amp; Send Token
+              </button>
+</div>
+</div>
+</div>
+<!-- Applicant 3 -->
+<div class="applicant-card p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between gap-space-md hover:-translate-y-0.5 transition-transform" data-category="approved">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<img class="w-12 h-12 rounded-full object-cover shadow-inner" data-alt="Monochrome styled corporate portrait of a male fintech founder wearing linen button-up in an architectural daylight loft setting, refined sharp depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-1NfwCnoBsWYGRuBw-Wrw7cqyfCWcj419C7Yx2xyBNzgCJ5DzyGiqNLn1Py_10Y66AhOIaWgcKw7KjGfDOV8fgsxfU0I11diAePUdKDoMggl9mQqEAZ5Xud5e96V5k0mjjPKFIQYSpoeHO1_HvZMTDxZ_y1kdwdhlsXcXHjsihurLZiUC81i9j6UKuxNeE6fis6IGdZuf-Xn29D5VmYjmGD23chlWvgSV7mw6WU7qokvyPmWkjZv91g"/>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-semibold leading-tight">Devon Thorne</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Principal Operator</span>
+<span class="font-label-status text-label-status text-secondary uppercase font-bold">Knot Ledger</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-status text-label-status uppercase">Invite Ready</span>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+<div>
+<span class="font-label-status text-label-status text-outline block uppercase">Category</span>
+<span class="font-medium text-on-surface">FinTech Infra</span>
+</div>
+<div>
+<span class="font-label-status text-label-status text-outline block uppercase">Stage &amp; City</span>
+<span class="font-medium text-on-surface">Series B • London</span>
+</div>
+<div class="col-span-2 pt-1">
+<span class="font-label-status text-label-status text-outline block uppercase">Status</span>
+<span class="font-medium text-secondary">Token Genesis Pending Dispatch</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors" type="button">
+              View Dossier
+            </button>
+<div class="flex items-center gap-space-xs">
+<button class="p-2 rounded-lg text-error hover:bg-error-container/20 transition-colors" title="Revoke" type="button">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-secondary text-on-primary font-label-md text-label-md transition-colors shadow-sm" type="button">
+                Dispatch Token (#8821)
+              </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Mid-Split: Gatherings Publisher & Hero CMS Reel -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Gatherings & Experience Publisher (7 cols) -->
+<section class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">Gatherings &amp; Experience Publisher</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Curated salon access codes and capacity monitoring.</p>
+</div>
+<span class="font-label-status text-label-status bg-surface-container-low text-on-surface-variant px-2.5 py-1 rounded-full uppercase">Realtime Gatekeeper</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Gathering 1 -->
+<div class="p-space-md sm:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface font-semibold">The Founder's Table — Edition VIII</span>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-status text-label-status uppercase">Confirmed</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Private Dining Room • The Oberoi, Bengaluru</p>
+<div class="flex items-center gap-space-md mt-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-sm text-secondary">group</span>
+<span>16 / 16 RSVP (Waitlist 8)</span>
+</span>
+<span>•</span>
+<span class="flex items-center gap-1 font-mono font-medium text-primary">
+<span class="material-symbols-outlined text-sm">key</span>
+<span>PIN: <strong class="tracking-widest">F4F2026</strong></span>
+</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-end justify-between gap-space-xs shrink-0">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors w-full sm:w-auto text-center" type="button">
+                Edit Protocol
+              </button>
+<span class="font-label-status text-label-status text-secondary uppercase font-semibold">Check-in Open</span>
+</div>
+</div>
+<!-- Gathering 2 -->
+<div class="p-space-md sm:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-low text-on-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Strategic Salon: Sovereign AI Architectures</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-status text-label-status uppercase">Curation Phase</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Private Vault Room • Soho House, Mumbai</p>
+<div class="flex items-center gap-space-md mt-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-sm text-secondary">group</span>
+<span>22 / 30 RSVP</span>
+</span>
+<span>•</span>
+<span class="flex items-center gap-1 font-mono font-medium text-primary">
+<span class="material-symbols-outlined text-sm">key</span>
+<span>PIN: <strong class="tracking-widest">SALON99</strong></span>
+</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-end justify-between gap-space-xs shrink-0">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors w-full sm:w-auto text-center" type="button">
+                Edit Protocol
+              </button>
+<span class="font-label-status text-label-status text-outline uppercase font-semibold">Drafting Agenda</span>
+</div>
+</div>
+<!-- Gathering 3 -->
+<div class="p-space-md sm:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed-dim/20 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface font-semibold">First Light Run &amp; Sauna Syndicate</span>
+<span class="px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-status text-label-status uppercase">Confirmed</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cubbon Park to Club Sanctuary • 06:00 AM IST</p>
+<div class="flex items-center gap-space-md mt-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-sm text-secondary">group</span>
+<span>24 / 24 RSVP (Full)</span>
+</span>
+<span>•</span>
+<span class="flex items-center gap-1 font-mono font-medium text-primary">
+<span class="material-symbols-outlined text-sm">key</span>
+<span>PIN: <strong class="tracking-widest">DAWN500</strong></span>
+</span>
+</div>
+</div>
+</div>
+<div class="flex sm:flex-col items-end justify-between gap-space-xs shrink-0">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors w-full sm:w-auto text-center" type="button">
+                Edit Protocol
+              </button>
+<span class="font-label-status text-label-status text-secondary uppercase font-semibold">Ready</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Dynamic Media & Hero CMS Quick Controls (5 cols) -->
+<section class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary font-semibold">CMS &amp; Media Assets</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Direct landing copy &amp; gathering visual reel control.</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">tune</span>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<!-- Live Headline Control -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Active Member Portal Hero Title</label>
+<span class="font-label-status text-label-status text-secondary">Live on Web</span>
+</div>
+<input class="w-full h-11 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-secondary transition-all" type="text" value="The Peer Sovereign Guild for Verified Founders."/>
+</div>
+<!-- 16:9 Meeting Photo Reel Slider Preview -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Gathering Photo Reel (16:9 Carousel)</label>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Slot 1 of 4</span>
+</div>
+<div class="relative w-full aspect-video rounded-lg overflow-hidden group shadow-sm bg-inverse-surface">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="High-contrast warm cinematic photo of eight tech entrepreneurs conversing intimately over an elegant candlelit walnut dining table with wine glasses, warm ambient architectural lighting, dark green velvet backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr98VAPCX78TPFawXWwCSZ1taGtvk0OLsx3RCu-4lDHRvimSLyzs9KW1_Nw1adXhiJ1M0toyzmll1AVrgV5ws9tfMGf8_qT7jnoq6HQS9e0-kUi9xWdOMzjRnqiGgichFuBmXpYIpiibKyQhlLWTM6mOxNZTPayjbk7C7PXmcEWnr8cFpF_5xaSCPHjqYkCW-Aw4FMdR88xZ4SdgNUp13PMkqf-dC3vWCAuMXcnIID5WTWHxfW6zh-kg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-space-md text-on-primary">
+<span class="font-label-status text-label-status uppercase text-secondary-fixed">The Founder's Table VII • Bengaluru</span>
+<span class="font-title-md text-title-md font-medium">Discussion: Sovereign GPU Clusters &amp; Valuation Moats</span>
+</div>
+<button class="absolute top-2 right-2 p-1.5 rounded-md bg-surface-container-lowest/80 backdrop-blur text-primary hover:bg-surface-container-lowest transition-colors shadow" type="button">
+<span class="material-symbols-outlined text-base">swap_horiz</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Asset: <code class="font-mono text-xs text-primary">reel_blr_salon_nov.webp</code></span>
+<button class="text-primary hover:text-secondary font-label-md text-label-md font-semibold inline-flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-sm">cloud_upload</span>
+<span>Replace Asset</span>
+</button>
+</div>
+</div>
+<!-- Directory Permission Quick Switch -->
+<div class="pt-space-xs flex flex-col gap-space-xs">
+<span class="font-label-status text-label-status uppercase text-on-surface-variant">Directory Visibility Settings</span>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-title-md text-body-sm font-semibold text-on-surface">Stealth Syndicate Roster</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Enforce end-to-end pseudonyms in unvetted tabs</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<button class="w-full py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container text-primary font-label-md text-label-md font-semibold transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-base">save</span>
+<span>Publish CMS Changes Live</span>
+</button>
+</div>
+</section>
+</div>
+<!-- System Audit & Security Ombudsman Log -->
+<section class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed/30 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-base">policy</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary font-semibold">Zero-Leak Audit Trail &amp; Ombudsman Oversight</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cryptographic audit stream strictly maintained under snalts.co confidentiality covenant.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-secondary-fixed/40 text-on-secondary-fixed-variant font-label-status text-label-status uppercase font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>0 Active Grievances</span>
+</div>
+<span class="font-label-status text-label-status text-outline-variant">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-mono">Ledger Block #771,904</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-status text-label-status uppercase">
+<th class="py-2.5 px-space-md">Timestamp (UTC)</th>
+<th class="py-2.5 px-space-md">Executive Actor</th>
+<th class="py-2.5 px-space-md">Action Classification</th>
+<th class="py-2.5 px-space-md">Target Entity</th>
+<th class="py-2.5 px-space-md text-right">Integrity Verification</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-space-md font-mono text-outline">2025-10-24 09:14:22</td>
+<td class="py-3 px-space-md font-semibold text-primary">Julian Vance</td>
+<td class="py-3 px-space-md">Token Key Generated</td>
+<td class="py-3 px-space-md">Devon Thorne (Knot Ledger)</td>
+<td class="py-3 px-space-md text-right">
+<span class="font-mono text-xs bg-surface-container-low px-2 py-0.5 rounded text-secondary font-medium">SHA-256: 8a4f...3c99</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-space-md font-mono text-outline">2025-10-24 08:41:05</td>
+<td class="py-3 px-space-md font-semibold text-primary">Automated Sentry</td>
+<td class="py-3 px-space-md">Confidentiality Watermark Refresh</td>
+<td class="py-3 px-space-md">Member Directory PDF Engine</td>
+<td class="py-3 px-space-md text-right">
+<span class="font-mono text-xs bg-surface-container-low px-2 py-0.5 rounded text-secondary font-medium">SHA-256: e189...994b</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="py-3 px-space-md font-mono text-outline">2025-10-23 21:05:49</td>
+<td class="py-3 px-space-md font-semibold text-primary">Vetting Committee</td>
+<td class="py-3 px-space-md">Stage Verification Completed</td>
+<td class="py-3 px-space-md">Elena Vasquez (Aether CleanTech)</td>
+<td class="py-3 px-space-md text-right">
+<span class="font-mono text-xs bg-surface-container-low px-2 py-0.5 rounded text-secondary font-medium">SHA-256: 09fe...aa21</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Interactive Slide-out Modal for Publishing New Gathering -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden flex items-center justify-center p-space-md" id="newGatheringModal">
+<div class="w-full max-w-xl rounded-xl bg-surface-container-lowest shadow-2xl p-space-xl flex flex-col gap-space-lg relative animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-status text-label-status uppercase text-secondary font-bold">Confidential Dispatch</span>
+<h3 class="font-headline-sm text-headline-sm text-primary font-semibold">Publish New Founder Gathering</h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded-lg" onclick="closeGatheringModal()" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-space-md" onsubmit="handleGatheringSubmit(event)">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Gathering Name &amp; Edition</label>
+<input class="w-full h-11 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary focus:outline-none" placeholder="e.g. The Strategic Salon IX — Cross-Border Liquidity" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Location / Venue</label>
+<input class="w-full h-11 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary focus:outline-none" placeholder="e.g. Oberoi Presidential Suite, BLR" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Attendee Cap</label>
+<input class="w-full h-11 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary focus:outline-none" max="40" min="4" required="" type="number" value="16"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Gatekeeper PIN (Alphanumeric)</label>
+<input class="w-full h-11 px-3 rounded-lg bg-surface-container-low text-on-surface font-mono font-bold tracking-wider text-body-md uppercase focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary focus:outline-none" required="" type="text" value="F4F2026"/>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-status text-label-status uppercase text-on-surface-variant">Eligibility Tier</label>
+<select class="w-full h-11 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:ring-2 focus:ring-secondary focus:outline-none">
+<option>All Verified Founders ($1M+ ARR)</option>
+<option>Scale Tier Only ($10M+ ARR)</option>
+<option>Stealth Founders Syndicate</option>
+</select>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-md">
+<button class="px-space-md py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface font-label-md text-label-md" onclick="closeGatheringModal()" type="button">Cancel</button>
+<button class="px-space-lg py-2.5 rounded-lg bg-primary-container text-on-primary hover:bg-secondary font-label-md text-label-md font-semibold transition-all shadow-sm" type="submit">
+            Deploy to Member Calendar
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Inline Micro-Interactions Script -->
+<script>
+    function setFilter(category, button) {
+      const tabs = document.querySelectorAll('#queueFilters .filter-tab');
+      tabs.forEach(t => {
+        t.className = 'filter-tab px-space-sm py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors';
+      });
+      button.className = 'filter-tab px-space-sm py-1.5 rounded-lg font-label-md text-label-md transition-colors bg-surface-container-lowest text-primary shadow-sm font-semibold';
+
+      const cards = document.querySelectorAll('#applicantGrid .applicant-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function openGatheringModal() {
+      const modal = document.getElementById('newGatheringModal');
+      modal.classList.remove('hidden');
+    }
+
+    function closeGatheringModal() {
+      const modal = document.getElementById('newGatheringModal');
+      modal.classList.add('hidden');
+    }
+
+    function handleGatheringSubmit(e) {
+      e.preventDefault();
+      alert('Gathering published to f4f internal ledger. Calendar invites primed for push dispatch.');
+      closeGatheringModal();
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-space-xl flex flex-col md:flex-row items-center justify-between gap-space-lg"><div class="flex flex-col md:flex-row items-center gap-space-md text-center md:text-left"><div class="flex items-center gap-space-sm"><div class="w-6 h-6 rounded-lg bg-primary-container flex items-center justify-center p-1"><img alt="Founder for Founder Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XoGYDAxoMk0LCjzdNFfwOV4tq-2YMWeHpUo3FsuvrNM-aZYP_eM4yYdiCC98XV3f_Rw-vJrYphvXABrXA6R4wNOy0lXJ1pbZ8HhcwgtnOIdlVqYTDl3ApgepaO-INjJ6x0rP8JUxtsPXqCr45MTaI3HzrPhkmTDcDUUo32VmxjcB7qJfRquljamzoWQmiBbA5AnFZ8QE7TzK4JEvMVIBGYCDh7JNdy96fWxWrk2pRfFPel93Gzg0J8NN0mZiMW4OLoYD391BaRui4"/></div><span class="font-headline-sm text-title-md text-primary font-semibold">Founder for Founder</span></div><span class="hidden md:inline text-outline-variant">•</span><p class="font-body-sm text-body-sm text-on-surface-variant">Powered by <span class="font-semibold text-on-surface">snalts.co</span> — Private Guild for High-Growth Operators</p></div><div class="flex items-center gap-space-lg font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-on-surface transition-colors" data-path="member-portal" href="#">Charter &amp; Bylaws</a><a class="hover:text-on-surface transition-colors" data-path="admin-console" href="#">Security &amp; Trust</a><a class="hover:text-on-surface transition-colors" data-path="needs-wants" href="#">Syndicate Guidelines</a><span class="text-outline-variant">© 2025 f4f. All rights reserved.</span></div></div></footer></body></html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Admissions Questionnaire — Founder for Founder</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+  tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"on-primary-fixed":"#002117","on-secondary-container":"#00714d","error":"#ba1a1a","on-background":"#131b2e","surface-container-low":"#f2f3ff","on-primary-fixed-variant":"#0b513d","secondary-fixed":"#6ffbbe","on-surface":"#131b2e","surface":"#faf8ff","tertiary":"#4a2400","on-secondary-fixed":"#002113","on-tertiary-fixed":"#2f1500","tertiary-fixed-dim":"#ffb77d","surface-tint":"#2b6954","surface-container-highest":"#dae2fd","error-container":"#ffdad6","surface-container":"#eaedff","background":"#faf8ff","secondary":"#006c49","secondary-container":"#6cf8bb","on-primary":"#ffffff","outline":"#707974","inverse-primary":"#95d3ba","on-error":"#ffffff","primary-fixed-dim":"#95d3ba","surface-container-lowest":"#ffffff","outline-variant":"#bfc9c3","inverse-on-surface":"#eef0ff","secondary-fixed-dim":"#4edea3","primary":"#003527","on-tertiary":"#ffffff","primary-fixed":"#b0f0d6","tertiary-container":"#6a3700","on-tertiary-container":"#ff9939","on-error-container":"#93000a","tertiary-fixed":"#ffdcc3","surface-variant":"#dae2fd","on-secondary-fixed-variant":"#005236","on-secondary":"#ffffff","surface-bright":"#faf8ff","primary-container":"#064e3b","on-surface-variant":"#404944","surface-container-high":"#e2e7ff","on-primary-container":"#80bea6","inverse-surface":"#283044","surface-dim":"#d2d9f4","on-tertiary-fixed-variant":"#6e3900"}}}};
+  </script>
+  <style>
+    h1, h2, h3, .font-headline-hero, .font-headline-lg, .font-headline-md, .font-headline-sm {
+      font-family: 'Domine', serif !important;
+    }
+    body, p, span, button, input, select, textarea, label {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+  <!-- Top Navigation -->
+  <header class="w-full bg-surface-container-lowest border-b border-surface-container sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <img src="/assets/logo.svg" alt="f4f Logo" class="h-8 w-8">
+        <span class="font-headline-md text-primary font-bold tracking-tight text-lg">FOUNDER FOR FOUNDER</span>
+      </a>
+      <a href="/" class="text-sm font-semibold text-secondary hover:text-primary transition-colors flex items-center gap-1">
+        ← Back to Homepage
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 sm:py-12">
+    <input type="hidden" id="app_why_join" name="why_join" value="I seek high-trust peer exchange and strategic collaboration with vetted founders across India.">
+<div class="flex flex-col w-full">
+<div class="w-full max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-12 flex flex-col gap-10">
+<!-- Trust Crest & Top Editorial Eyebrow -->
+<header class="flex flex-col items-center text-center gap-6">
+<div class="flex items-center gap-3">
+<div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden shadow-sm bg-surface-container-lowest p-1.5 flex items-center justify-center">
+<img alt="Founder for Founder Crest" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtrwLGf09mfChmgxXONUtg-LA7p8bdKlPb0PN5KgrCaTif3OUZXq9J7esIDJWFrCsadKzqIac17V_OD1SWrntFeHBWzU9rWDxuAJa2FjSjFGMLY-I6L26sehYez-VfccDS9H9XwVvd-oJBT_9yr96wfUm17vGnDQv4L4mN_lUo41P5ql6lXG7017YzzXPhy008pHgdZa9caKal-oQNnHk7zhn9G1QR5DnfDoSPh4t_FowyngikwvMaT06KiYR1XpBBgPo"/>
+</div>
+<div class="flex flex-col items-start text-left">
+<span class="font-label-status text-label-status text-primary tracking-widest uppercase">FOUNDER FOR FOUNDER</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">India Cohort • Class of '26</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-3 max-w-3xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-surface-container text-primary font-label-status text-label-status tracking-widest">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+          CURATED FOUNDER NETWORK • BY APPLICATION ONLY
+        </div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+          Admissions Questionnaire &amp; Application
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+          Join a vetted, high-trust network of ambitious entrepreneurs, business owners, and operators across India. Applications are reviewed on a rolling 72-hour window.
+        </p>
+</div>
+<!-- Trust Metrics Ticker -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-2 pt-4">
+<div class="flex flex-col items-center p-3 rounded-lg bg-surface-container-low shadow-sm">
+<span class="font-title-lg text-title-lg text-primary">72 Hours</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Admissions Decision</span>
+</div>
+<div class="flex flex-col items-center p-3 rounded-lg bg-surface-container-low shadow-sm">
+<span class="font-title-lg text-title-lg text-primary">12.4%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Acceptance Rate</span>
+</div>
+<div class="flex flex-col items-center p-3 rounded-lg bg-surface-container-low shadow-sm">
+<span class="font-title-lg text-title-lg text-primary">₹1,500 <span class="text-xs font-normal text-on-surface-variant">+GST</span></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Annual Dues</span>
+</div>
+<div class="flex flex-col items-center p-3 rounded-lg bg-surface-container-low shadow-sm">
+<span class="font-title-lg text-title-lg text-primary">Strict NDA</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Chatham House Rule</span>
+</div>
+</div>
+</header>
+<!-- Multi-step Timeline Progress Bar -->
+<nav aria-label="Application Progress" class="w-full bg-surface-container-lowest p-4 md:p-6 rounded-xl shadow-sm">
+<div class="flex items-center justify-between gap-2 overflow-x-auto pb-2 md:pb-0" id="step-indicators">
+<!-- Step 1 Indicator -->
+<div class="flex items-center gap-3 cursor-pointer group flex-shrink-0" onclick="navigateToStep(1)">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center transition-all" id="step-bubble-1">
+            1
+          </div>
+<div class="flex flex-col hidden sm:flex">
+<span class="font-label-status text-label-status text-primary tracking-wider uppercase">STEP 1</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Identity &amp; Role</span>
+</div>
+</div>
+<div class="h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors" id="line-1"></div>
+<!-- Step 2 Indicator -->
+<div class="flex items-center gap-3 cursor-pointer group flex-shrink-0" onclick="navigateToStep(2)">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all" id="step-bubble-2">
+            2
+          </div>
+<div class="flex flex-col hidden sm:flex">
+<span class="font-label-status text-label-status text-on-surface-variant tracking-wider uppercase">STEP 2</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Business Scale</span>
+</div>
+</div>
+<div class="h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors" id="line-2"></div>
+<!-- Step 3 Indicator -->
+<div class="flex items-center gap-3 cursor-pointer group flex-shrink-0" onclick="navigateToStep(3)">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all" id="step-bubble-3">
+            3
+          </div>
+<div class="flex flex-col hidden sm:flex">
+<span class="font-label-status text-label-status text-on-surface-variant tracking-wider uppercase">STEP 3</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Web Footprint</span>
+</div>
+</div>
+<div class="h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors" id="line-3"></div>
+<!-- Step 4 Indicator -->
+<div class="flex items-center gap-3 cursor-pointer group flex-shrink-0" onclick="navigateToStep(4)">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all" id="step-bubble-4">
+            4
+          </div>
+<div class="flex flex-col hidden sm:flex">
+<span class="font-label-status text-label-status text-on-surface-variant tracking-wider uppercase">STEP 4</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Network Fit</span>
+</div>
+</div>
+<div class="h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors" id="line-4"></div>
+<!-- Step 5 Indicator -->
+<div class="flex items-center gap-3 cursor-pointer group flex-shrink-0" onclick="navigateToStep(5)">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all" id="step-bubble-5">
+            5
+          </div>
+<div class="flex flex-col hidden sm:flex">
+<span class="font-label-status text-label-status text-on-surface-variant tracking-wider uppercase">STEP 5</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Collaboration</span>
+</div>
+</div>
+<div class="h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors" id="line-5"></div>
+<!-- Step 6 Indicator -->
+<div class="flex items-center gap-3 cursor-pointer group flex-shrink-0" onclick="navigateToStep(6)">
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all" id="step-bubble-6">
+            6
+          </div>
+<div class="flex flex-col hidden sm:flex">
+<span class="font-label-status text-label-status text-on-surface-variant tracking-wider uppercase">STEP 6</span>
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Affirmation</span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Questionnaire Container -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-md p-6 md:p-10 flex flex-col gap-8 relative overflow-hidden">
+<!-- Form Context Banner Inside -->
+<div class="flex items-center justify-between pb-4">
+<div>
+<span class="font-label-status text-label-status text-primary tracking-widest uppercase" id="form-step-tracker">SECTION 1 OF 6</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight" id="form-step-title">Founder Identity &amp; Contact Anchor</h2>
+</div>
+<div class="hidden md:flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full">
+<span class="material-symbols-outlined text-sm text-primary">verified_user</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Private Vault</span>
+</div>
+</div>
+<form class="flex flex-col gap-8" id="showInterestForm" onsubmit="handleShowInterestSubmit(event)">
+<!-- =================== STEP 1: IDENTITY & ROLE =================== -->
+<div class="flex flex-col gap-6" id="form-step-1">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Full Name <span class="text-error">*</span></label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="e.g. Varun Krishnamurthy" required="" type="text"/ id="app_full_name" name="full_name">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Legal name matching government identification</span>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Designation / Role <span class="text-error">*</span></label>
+<select class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" required="" id="app_designation" name="designation">
+<option disabled="" selected="" value="">Select executive position</option>
+<option value="Founder / CEO">Founder &amp; Chief Executive Officer</option>
+<option value="Co-Founder">Co-Founder &amp; Executive Director</option>
+<option value="Managing Director">Managing Director (Promoter)</option>
+<option value="Founding Principal">Founding Principal / General Partner</option>
+</select>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Network membership is restricted exclusively to equity founders</span>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Official Work Email <span class="text-error">*</span></label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="name@yourcompany.com" required="" type="email"/ id="app_email" name="email">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Personal addresses (e.g. Gmail) will trigger manual identity validation</span>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Direct WhatsApp Number <span class="text-error">*</span></label>
+<div class="flex gap-2">
+<span class="h-11 px-3 bg-surface-container rounded flex items-center font-body-md text-body-md text-on-surface-variant font-medium">+91</span>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" pattern="[0-9]{10}" placeholder="98765 43210" required="" type="tel"/ id="app_phone" name="phone">
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">For confidential executive salon invites &amp; city circles</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">City Hub / Primary Base <span class="text-error">*</span></label>
+<input type="hidden" id="app_city" name="city" value="Bengaluru"/>
+
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input checked="" class="accent-primary" name="city_hub" type="radio" value="Bengaluru"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Bengaluru</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Mumbai"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Mumbai MMR</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Delhi NCR"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Delhi NCR</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Hyderabad"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Hyderabad</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Pune"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Pune</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Chennai"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Chennai</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Ahmedabad"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Ahmedabad</span>
+</label>
+<label class="cursor-pointer flex items-center gap-2 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<input class="accent-primary" name="city_hub" type="radio" value="Other"/ onchange="document.getElementById(\'app_city\').value = this.value">
+<span class="font-body-md text-body-md text-on-surface font-medium">Other Metros</span>
+</label>
+</div>
+</div>
+</div>
+<!-- =================== STEP 2: BUSINESS PROFILE & SCALE =================== -->
+<div class="hidden flex-col gap-6" id="form-step-2">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Registered Entity / Company Name <span class="text-error">*</span></label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="e.g. Acme Technologies Solutions Pvt Ltd" type="text"/ id="app_business_name" name="business_name">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Provide formal legal or brand name</span>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Corporate Structure <span class="text-error">*</span></label>
+<select class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="app_firm_type" name="firm_type">
+<option value="Private Limited">Private Limited Company (India)</option>
+<option value="LLP">Limited Liability Partnership (LLP)</option>
+<option value="Delaware C-Corp">Delaware C-Corp / Flip Entity</option>
+<option value="Public Limited">Listed / Unlisted Public Limited</option>
+<option value="Partnership / Sole Prop">Partnership / Sole Proprietorship</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex flex-col gap-2">
+<input type="hidden" id="app_business_category" name="business_category" value="Technology & Scaled Ventures"/>
+<label class="font-label-lg text-label-lg text-on-surface">Business Archetype <span class="text-error">*</span></label>
+<select class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="app_business_model_category" name="business_model_category">
+<option value="SaaS &amp; Enterprise Tech">B2B SaaS / Enterprise Software</option>
+<option value="D2C &amp; Consumer Brands">D2C &amp; High-Growth Retail</option>
+<option value="Manufacturing &amp; DeepTech">Precision Manufacturing &amp; Industrial</option>
+<option value="Fintech &amp; Insurtech">Fintech &amp; Capital Markets</option>
+<option value="Healthcare &amp; Bio">HealthTech, Biotech &amp; Medtech</option>
+<option value="Supply Chain &amp; Logistics">Logistics &amp; Mobility Infra</option>
+<option value="Services &amp; Agency">Specialized Tech Consulting &amp; Agency</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Operating Vintage <span class="text-error">*</span></label>
+<select class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="app_years_in_business" name="years_in_business">
+<option value="&lt; 1 Year">0 - 12 Months (Seed Genesis)</option>
+<option value="1-3 Years">1 - 3 Years (PMR &amp; Initial Scale)</option>
+<option value="3-7 Years">3 - 7 Years (Mature Growth)</option>
+<option value="7+ Years">7+ Years (Established Cash Flow)</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Active Team Size <span class="text-error">*</span></label>
+<select class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="app_team_size" name="team_size">
+<option value="1-10">1 - 10 Full-time Operators</option>
+<option value="11-50">11 - 50 FTEs</option>
+<option value="51-200">51 - 200 FTEs</option>
+<option value="200+">200+ Team Members</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<input type="hidden" id="app_business_stage" name="business_stage" value="Bootstrapped"/>
+<label class="font-label-lg text-label-lg text-on-surface">Capital &amp; Profitability Trajectory <span class="text-error">*</span></label>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+<label class="p-4 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Bootstrapped</span>
+<input checked="" class="accent-primary" name="funding_stage" type="radio" value="Bootstrapped"/ onchange="document.getElementById(\'app_business_stage\').value = this.value">
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Self-funded, positive cash flows</span>
+</label>
+<label class="p-4 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Angel / Seed</span>
+<input class="accent-primary" name="funding_stage" type="radio" value="Seed"/ onchange="document.getElementById(\'app_business_stage\').value = this.value">
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Institutional pre-seed or marquee angels</span>
+</label>
+<label class="p-4 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Venture Backed</span>
+<input class="accent-primary" name="funding_stage" type="radio" value="Venture"/ onchange="document.getElementById(\'app_business_stage\').value = this.value">
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Series A through Pre-IPO backing</span>
+</label>
+<label class="p-4 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-all flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Profitable / Scale</span>
+<input class="accent-primary" name="funding_stage" type="radio" value="Profitable"/ onchange="document.getElementById(\'app_business_stage\').value = this.value">
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">High EBITDA, dividend-generating</span>
+</label>
+</div>
+</div>
+</div>
+<!-- =================== STEP 3: WEB & DIGITAL FOOTPRINT =================== -->
+<div class="hidden flex-col gap-6" id="form-step-3">
+<div class="p-4 rounded-lg bg-surface-container-low flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">travel_explore</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Verification Footprint</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Our admissions committee conducts cross-checks against registered directories, public product presence, and social leadership.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Company Website URL <span class="text-error">*</span></label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="https://yourbrand.com" type="url"/ id="app_website" name="website">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Founder LinkedIn Profile <span class="text-error">*</span></label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="https://linkedin.com/in/founderhandle" type="url"/ id="app_linkedin" name="linkedin">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Twitter / X Handle (Optional)</label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="@yourhandle" type="text"/ id="app_instagram" name="instagram">
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Press / Public Coverage Link (Optional)</label>
+<input class="w-full h-11 px-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="https://yourstory.com/or-mint-coverage" type="url"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface">Short Executive Pitch / Product Thesis (100-150 words)</label>
+<textarea class="w-full p-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm resize-none" placeholder="Tell us in 2-3 sentences what breakthrough your venture provides and why your model wins..." rows="3" id="app_business_description" name="business_description"></textarea>
+</div>
+</div>
+<!-- =================== STEP 4: COMMUNITY CONTRIBUTION & NEEDS =================== -->
+<div class="hidden flex-col gap-6" id="form-step-4">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface">What specific value or expertise can you contribute to fellow founders? <span class="text-error">*</span></label>
+<span class="font-label-status text-label-status text-primary">CORE SELECTION METRIC</span>
+</div>
+<textarea class="w-full p-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="e.g. Scaling enterprise GTM to US customers, optimizing supply chain margins in Gujarat, managing RBI compliance hurdles, fundraising playbook for Series A..." required="" rows="4" id="app_what_offer" name="what_offer"></textarea>
+<span class="font-body-sm text-body-sm text-on-surface-variant">We prioritize high-give founders who actively share operational playbooks and hard-earned scars.</span>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-lg text-label-lg text-on-surface">What are your most critical operational bottlenecks or immediate needs right now? <span class="text-error">*</span></label>
+<span class="font-label-status text-label-status text-on-surface-variant">CONFIDENTIAL</span>
+</div>
+<textarea class="w-full p-4 rounded bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" placeholder="e.g. Finding a verified VP of Engineering, cross-border remittance architecture, unblocking enterprise procurement cycles, founder mental resilience..." required="" rows="4" id="app_what_need" name="what_need"></textarea>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Used by the admissions team to immediately pair you with peer circles facing identical milestones.</span>
+</div>
+</div>
+<!-- =================== STEP 5: COLLABORATION PREFERENCES =================== -->
+<div class="hidden flex-col gap-6" id="form-step-5">
+<div class="flex flex-col gap-1">
+<h3 class="font-title-lg text-title-lg text-on-surface font-semibold">Active Collaboration Formats</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Select all formats in which you are committed to actively participating within the chapter.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<label class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex items-start gap-4 cursor-pointer">
+<input checked="" class="w-5 h-5 mt-1 accent-primary rounded" type="checkbox"/ name="collab_pref" value="Curated Founder Dinners" name="collab_pref" value="Closed-Door Salons"><div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">dinner_dining</span>
+<span class="font-title-md text-title-md text-on-surface">Curated Founder Dinners</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Private 8-person dinners hosted bi-monthly at secluded venues. Zero pitching, purely candid discussions.</p>
+</div>
+</label>
+<label class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex items-start gap-4 cursor-pointer">
+<input checked="" class="w-5 h-5 mt-1 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">meeting_room</span>
+<span class="font-title-md text-title-md text-on-surface">Closed-Door Salons</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Deep-dive masterminds on tax structuring, debt syndication, cross-border M&amp;A, and key operator hiring.</p>
+</div>
+</label>
+<label class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex items-start gap-4 cursor-pointer">
+<input class="w-5 h-5 mt-1 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">fitness_center</span>
+<span class="font-title-md text-title-md text-on-surface">Sports, Movement &amp; Wellness</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Weekend padel tournaments, morning cycling pelotons, and founder wellness retreats across regional hubs.</p>
+</div>
+</label>
+<label class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex items-start gap-4 cursor-pointer">
+<input checked="" class="w-5 h-5 mt-1 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">coffee</span>
+<span class="font-title-md text-title-md text-on-surface">1:1 High-Trust Coffee Matchups</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Algorithmically matched bi-weekly coffee meetings with founders at parallel revenue or stage inflection points.</p>
+</div>
+</label>
+<label class="p-4 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex items-start gap-4 cursor-pointer md:col-span-2">
+<input checked="" class="w-5 h-5 mt-1 accent-primary rounded" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">cottage</span>
+<span class="font-title-md text-title-md text-on-surface">Annual Founders' Sanctuary (Goa / Coorg / Himachal)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">An exclusive 3-day annual offsite gathering 120 verified founders for unfiltered vulnerability, intellectual exchange, and enduring bonds.</p>
+</div>
+</label>
+</div>
+</div>
+<!-- =================== STEP 6: CONFIDENTIALITY & AFFIRMATION =================== -->
+<div class="hidden flex-col gap-6" id="form-step-6">
+<div class="p-6 rounded-xl bg-surface-container-low flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">gavel</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">Charter of Conduct &amp; Discretion</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+              Founder for Founder (f4f) exists strictly as a safe haven. To preserve integrity, every applicant binds themselves to non-negotiable community tenets:
+            </p>
+<ul class="flex flex-col gap-2 font-body-sm text-body-sm text-on-surface">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span><strong>Chatham House Discretion:</strong> Information shared within f4f salons, dinners, and private forums may never be quoted, leaked, or disclosed publicly.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span><strong>Zero-Solicitation Code:</strong> Unsolicited sales pitching, cold agency outreach, or mercenary recruiting results in immediate, irrevocable expulsion.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+<span><strong>Radical Authenticity:</strong> Members commit to transparently discussing real revenue, challenges, and lessons rather than PR-polished narratives.</span>
+</li>
+</ul>
+</div>
+<!-- Acceptance Checkboxes -->
+<div class="flex flex-col gap-4">
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="w-5 h-5 mt-0.5 accent-primary rounded" required="" type="checkbox"/ id="app_consent" name="consent_given">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface group-hover:text-primary transition-colors">I accept the Chatham House Rule &amp; Zero-Solicitation Policy</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">I understand violating member confidentiality results in immediate revocation of credentials.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="w-5 h-5 mt-0.5 accent-primary rounded" required="" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface group-hover:text-primary transition-colors">I acknowledge the Annual Network Fee of ₹1,500 + GST</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Payable only upon official curation acceptance. Never charged during the evaluation phase.</span>
+</div>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="w-5 h-5 mt-0.5 accent-primary rounded" required="" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface group-hover:text-primary transition-colors">I affirm that all business scale &amp; designation data provided is authentic</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">The admissions committee reserves the right to cross-verify Ministry of Corporate Affairs records.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Navigation Buttons -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
+<button class="w-full sm:w-auto px-6 py-2.5 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-all hidden" id="prev-step-btn" onclick="goToPreviousStep()" type="button">
+            ← PREVIOUS STEP
+          </button>
+<div class="w-full sm:w-auto flex items-center justify-end gap-3 ml-auto">
+<button class="w-full sm:w-auto px-8 py-3 rounded bg-primary-container text-on-primary font-label-lg text-label-lg shadow hover:bg-primary transition-all" id="next-step-btn" onclick="goToNextStep()" type="button">
+              CONTINUE TO SECTION 2 →
+            </button>
+<button class="w-full sm:w-auto px-8 py-3 rounded bg-primary-container text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary transition-all hidden" id="submit-form-btn" type="submit">
+              SUBMIT APPLICATION FOR CURATION REVIEW →
+            </button>
+</div>
+</div>
+</form>
+<!-- Trust Footer Inside Card -->
+<div class="flex flex-wrap items-center justify-center gap-6 pt-6 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">lock</span>
+<span>256-bit encrypted</span>
+</div>
+<span class="inline-block w-1 h-1 rounded-full bg-surface-container-high"></span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">security</span>
+<span>Strict non-disclosure</span>
+</div>
+<span class="inline-block w-1 h-1 rounded-full bg-surface-container-high"></span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary">verified</span>
+<span>Verified review committee</span>
+</div>
+</div>
+</div>
+<!-- Application FAQ / Reassurance Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+<div class="p-6 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-base">timer</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Rolling 72-Hour Intake</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The admissions committee convenes every Tuesday and Friday to review applicant dossiers. You will receive an SMS and WhatsApp notification.</p>
+</div>
+<div class="p-6 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-base">handshake</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Zero Sales Sponsorships</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">f4f does not accept corporate booth sponsors or vendor product pushes. The platform is entirely founder-funded to ensure zero bias.</p>
+</div>
+<div class="p-6 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-base">workspace_premium</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Membership Onboarding</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Upon acceptance, members are invited to a private 20-minute welcome call with their regional Chapter Lead and added to secure circles.</p>
+</div>
+</section>
+</div>
+</div>
+<script>
+  let currentStep = 1;
+  const totalSteps = 6;
+
+  const stepMeta = {
+    1: { tracker: "SECTION 1 OF 6", title: "Founder Identity & Contact Anchor" },
+    2: { tracker: "SECTION 2 OF 6", title: "Business Profile & Operating Scale" },
+    3: { tracker: "SECTION 3 OF 6", title: "Digital Presence & Web Footprint" },
+    4: { tracker: "SECTION 4 OF 6", title: "Community Contribution & Immediate Needs" },
+    5: { tracker: "SECTION 5 OF 6", title: "Collaboration & Gathering Preferences" },
+    6: { tracker: "SECTION 6 OF 6", title: "Confidentiality & Founder Affirmation" }
+  };
+
+  function updateStepUI() {
+    // Hide all step sections
+    for (let i = 1; i <= totalSteps; i++) {
+      const stepElem = document.getElementById('form-step-' + i);
+      if (stepElem) {
+        if (i === currentStep) {
+          stepElem.classList.remove('hidden');
+          stepElem.classList.add('flex');
+        } else {
+          stepElem.classList.remove('flex');
+          stepElem.classList.add('hidden');
+        }
+      }
+
+      // Update indicator bubbles
+      const bubble = document.getElementById('step-bubble-' + i);
+      if (bubble) {
+        if (i < currentStep) {
+          bubble.className = "w-8 h-8 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center transition-all";
+          bubble.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
+        } else if (i === currentStep) {
+          bubble.className = "w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center transition-all ring-2 ring-primary/20";
+          bubble.innerText = i;
+        } else {
+          bubble.className = "w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all";
+          bubble.innerText = i;
+        }
+      }
+
+      // Update connecting line
+      if (i < totalSteps) {
+        const line = document.getElementById('line-' + i);
+        if (line) {
+          if (i < currentStep) {
+            line.className = "h-0.5 flex-1 min-w-4 bg-primary transition-colors";
+          } else {
+            line.className = "h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors";
+          }
+        }
+      }
+    }
+
+    // Update section context header
+    const trackerLabel = document.getElementById('form-step-tracker');
+    const titleLabel = document.getElementById('form-step-title');
+    if (trackerLabel && titleLabel && stepMeta[currentStep]) {
+      trackerLabel.innerText = stepMeta[currentStep].tracker;
+      titleLabel.innerText = stepMeta[currentStep].title;
+    }
+
+    // Update bottom actions
+    const prevBtn = document.getElementById('prev-step-btn');
+    const nextBtn = document.getElementById('next-step-btn');
+    const submitBtn = document.getElementById('submit-form-btn');
+
+    if (currentStep === 1) {
+      prevBtn.classList.add('hidden');
+    } else {
+      prevBtn.classList.remove('hidden');
+    }
+
+    if (currentStep === totalSteps) {
+      nextBtn.classList.add('hidden');
+      submitBtn.classList.remove('hidden');
+    } else {
+      nextBtn.classList.remove('hidden');
+      submitBtn.classList.add('hidden');
+      nextBtn.innerText = "CONTINUE TO SECTION " + (currentStep + 1) + " →";
+    }
+
+    // Scroll to the card smoothly
+    const formCard = document.getElementById('f4f-application-form');
+    if (formCard) {
+      formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function goToNextStep() {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStepUI();
+    }
+  }
+
+  function goToPreviousStep() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStepUI();
+    }
+  }
+
+  function navigateToStep(step) {
+    if (step >= 1 && step <= totalSteps) {
+      currentStep = step;
+      updateStepUI();
+    }
+  }
+
+  function handleFormSubmission(e) {
+    e.preventDefault();
+    const formContainer = document.getElementById('f4f-application-form');
+    if (formContainer) {
+      formContainer.innerHTML = `
+        <div class="flex flex-col items-center text-center py-12 px-4 gap-4 animate-fade-in">
+          <div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-2">
+            <span class="material-symbols-outlined text-4xl">check_circle</span>
+          </div>
+          <span class="font-label-status text-label-status text-primary tracking-widest uppercase">APPLICATION DOSSIER REGISTERED</span>
+          <h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Application Successfully Submitted</h2>
+          <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+            Thank you for applying to Founder for Founder. Your profile has entered the 72-hour review pipeline. A member of the curation committee will reach out to you via WhatsApp and verified email.
+          </p>
+          <div class="mt-4 p-4 rounded-lg bg-surface-container-low max-w-md w-full text-left flex flex-col gap-1 text-sm font-body-sm text-on-surface">
+            <div class="flex justify-between py-1"><span class="text-on-surface-variant">Reference ID:</span><span class="font-semibold text-primary">#F4F-2026-IND-` + Math.floor(1000 + Math.random() * 9000) + `</span></div>
+            <div class="flex justify-between py-1"><span class="text-on-surface-variant">Review Status:</span><span class="font-semibold text-primary">In Curation Queue</span></div>
+            <div class="flex justify-between py-1"><span class="text-on-surface-variant">Response Target:</span><span>Within 72 Hours</span></div>
+          </div>
+        </div>
+      `;
+    }
+  }
+</script>
+  </main>
+
+  <footer class="w-full border-t border-surface-container py-8 text-center text-sm text-on-surface-variant">
+    <p>© 2026 Founder for Founder Private Alliance. Strictly confidential and proprietary.</p>
+  </footer>
+
+  
+<!-- Dynamic Modal Control Helpers -->
+<script>
+function openShowInterestModal() {
+  const m = document.getElementById('showInterestModal');
+  if (m) {
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    navigateToStep(1);
+  }
+}
+function openLoginModal() {
+  const m = document.getElementById('loginModal');
+  if (m) {
+    m.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (m) {
+    m.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Multi-Step Admissions Wizard Engine
+let currentStep = 1;
+const totalSteps = 6;
+const stepMeta = {
+  1: { tracker: "SECTION 1 OF 6", title: "Founder Identity & Contact Anchor" },
+  2: { tracker: "SECTION 2 OF 6", title: "Business Profile & Operating Scale" },
+  3: { tracker: "SECTION 3 OF 6", title: "Digital Presence & Web Footprint" },
+  4: { tracker: "SECTION 4 OF 6", title: "Community Contribution & Immediate Needs" },
+  5: { tracker: "SECTION 5 OF 6", title: "Collaboration & Gathering Preferences" },
+  6: { tracker: "SECTION 6 OF 6", title: "Confidentiality & Founder Affirmation" }
+};
+
+function updateStepUI() {
+  for (let i = 1; i <= totalSteps; i++) {
+    const stepElem = document.getElementById('form-step-' + i);
+    if (stepElem) {
+      if (i === currentStep) {
+        stepElem.classList.remove('hidden');
+        stepElem.classList.add('flex');
+      } else {
+        stepElem.classList.remove('flex');
+        stepElem.classList.add('hidden');
+      }
+    }
+
+    const bubble = document.getElementById('step-bubble-' + i);
+    if (bubble) {
+      if (i < currentStep) {
+        bubble.className = "w-8 h-8 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center transition-all";
+        bubble.innerHTML = '<span class="material-symbols-outlined text-sm">check</span>';
+      } else if (i === currentStep) {
+        bubble.className = "w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center transition-all ring-2 ring-primary/20";
+        bubble.innerText = i;
+      } else {
+        bubble.className = "w-8 h-8 rounded-full bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-all";
+        bubble.innerText = i;
+      }
+    }
+
+    if (i < totalSteps) {
+      const line = document.getElementById('line-' + i);
+      if (line) {
+        line.className = (i < currentStep) ? "h-0.5 flex-1 min-w-4 bg-primary transition-colors" : "h-0.5 flex-1 min-w-4 bg-surface-container-high transition-colors";
+      }
+    }
+  }
+
+  const trackerLabel = document.getElementById('form-step-tracker');
+  const titleLabel = document.getElementById('form-step-title');
+  if (trackerLabel && titleLabel && stepMeta[currentStep]) {
+    trackerLabel.innerText = stepMeta[currentStep].tracker;
+    titleLabel.innerText = stepMeta[currentStep].title;
+  }
+
+  const prevBtn = document.getElementById('prev-step-btn');
+  const nextBtn = document.getElementById('next-step-btn');
+  const submitBtn = document.getElementById('submit-form-btn');
+
+  if (prevBtn) {
+    if (currentStep === 1) prevBtn.classList.add('hidden');
+    else prevBtn.classList.remove('hidden');
+  }
+
+  if (nextBtn && submitBtn) {
+    if (currentStep === totalSteps) {
+      nextBtn.classList.add('hidden');
+      submitBtn.classList.remove('hidden');
+    } else {
+      nextBtn.classList.remove('hidden');
+      submitBtn.classList.add('hidden');
+      nextBtn.innerText = "CONTINUE TO SECTION " + (currentStep + 1) + " →";
+    }
+  }
+
+  const formCard = document.getElementById('showInterestForm');
+  if (formCard) formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function goToNextStep() {
+  if (currentStep < totalSteps) {
+    currentStep++;
+    updateStepUI();
+  }
+}
+
+function goToPreviousStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateStepUI();
+  }
+}
+
+function navigateToStep(step) {
+  if (step >= 1 && step <= totalSteps) {
+    currentStep = step;
+    updateStepUI();
+  }
+}
+
+// Ensure first step is visible on page load
+document.addEventListener('DOMContentLoaded', () => {
+  navigateToStep(1);
+});
+</script>
+
+<script src="/js/app.js?v=8.0" defer></script>
+
+</body>
+</html>
