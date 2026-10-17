@@ -1,7 +1,9 @@
 {
-  "version": 2,
-  "installCommand": "echo 'Standard library only - no dependencies required'",
-  "buildCommand": "echo 'Build complete'",
+  "build": {
+    "env": {
+      "NODE_OPTIONS": "--experimental-sqlite"
+    }
+  },
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -20,44 +22,6 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/privacy-policy",
-      "destination": "/public/privacy-policy.html"
-    },
-    {
-      "source": "/terms",
-      "destination": "/public/terms.html"
-    },
-    {
-      "source": "/terms-and-conditions",
-      "destination": "/public/terms.html"
-    },
-    {
-      "source": "/refund-policy",
-      "destination": "/public/refund-policy.html"
-    },
-    {
-      "source": "/refund-and-cancellation-policy",
-      "destination": "/public/refund-policy.html"
-    },
-    {
-      "source": "/community-guidelines",
-      "destination": "/public/community-guidelines.html"
-    },
-    {
-      "source": "/guidelines",
-      "destination": "/public/community-guidelines.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/public/$1"
     }
   ]
 }

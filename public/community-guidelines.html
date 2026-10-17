@@ -1,751 +1,401 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Community Guidelines — Founder for Founder</title>
-  <meta name="description" content="Official Community Guidelines for Founder for Founder. Discover our standards on member respect, zero-tolerance spam policy, leads, referrals, and professional etiquette.">
-  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="/css/styles.css?v=9.0">
-  <style>
-    /* Community Guidelines Dedicated Page Styles */
-    :root {
-      --guidelines-max-w: 860px;
-    }
 
-    body {
-      background-color: #F8FAF9;
-      color: #1A202C;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-style: normal !important;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    * {
-      font-style: normal !important;
-      box-sizing: border-box;
-    }
-
-    .guidelines-hero {
-      background: linear-gradient(180deg, #FFFFFF 0%, #F0FDF4 100%);
-      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
-      padding: 110px 20px 48px;
-      text-align: center;
-      position: relative;
-    }
-
-    .guidelines-container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .guidelines-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      background: #ECFDF5;
-      border: 1px solid #A7F3D0;
-      border-radius: 6px !important;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: #065F46;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-
-    .guidelines-title {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(2.2rem, 4vw, 3.2rem);
-      font-weight: 400;
-      color: #0F172A;
-      line-height: 1.2;
-      margin-bottom: 14px;
-      letter-spacing: -0.02em;
-    }
-
-    .guidelines-subtitle {
-      font-size: 1.1rem;
-      color: #475569;
-      max-width: 680px;
-      margin: 0 auto 24px;
-    }
-
-    .guidelines-meta-bar {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      font-size: 0.88rem;
-      color: #475569;
-      background: #FFFFFF;
-      padding: 10px 20px;
-      border: 1px solid #E2E8F0;
-      border-radius: 6px !important;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .guidelines-meta-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .guidelines-meta-item strong {
-      color: #0F172A;
-      font-weight: 600;
-    }
-
-    /* Layout: Sidebar + Document */
-    .guidelines-layout {
-      display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 40px;
-      margin: 48px auto 80px;
-      align-items: start;
-    }
-
-    @media (max-width: 960px) {
-      .guidelines-layout {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-    }
-
-    /* Sticky Sidebar Navigation */
-    .guidelines-sidebar {
-      position: sticky;
-      top: 90px;
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 6px !important;
-      padding: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
-      max-height: calc(100vh - 120px);
-      overflow-y: auto;
-    }
-
-    @media (max-width: 960px) {
-      .guidelines-sidebar {
-        position: static;
-        max-height: none;
-      }
-    }
-
-    .sidebar-title {
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #0F172A;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #E2E8F0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .sidebar-nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .sidebar-link {
-      display: block;
-      padding: 7px 10px;
-      font-size: 0.86rem;
-      color: #475569;
-      text-decoration: none;
-      border-radius: 6px !important;
-      transition: all 0.15s ease;
-      line-height: 1.4;
-    }
-
-    .sidebar-link:hover, .sidebar-link.active {
-      background: #ECFDF5;
-      color: #065F46;
-      font-weight: 600;
-      transform: translateX(3px);
-    }
-
-    /* Document Body */
-    .guidelines-doc {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 6px !important;
-      padding: 44px 48px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    }
-
-    @media (max-width: 640px) {
-      .guidelines-doc {
-        padding: 24px 20px;
-      }
-    }
-
-    .guidelines-section {
-      margin-bottom: 48px;
-      padding-bottom: 36px;
-      border-bottom: 1px solid #F1F5F9;
-      scroll-margin-top: 100px;
-    }
-
-    .guidelines-section:last-of-type {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .guidelines-h2 {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.85rem;
-      color: #0F172A;
-      margin-top: 0;
-      margin-bottom: 18px;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: #ECFDF5;
-      color: #065F46;
-      border-radius: 6px !important;
-      font-size: 0.95rem;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .guidelines-h3 {
-      font-size: 1.15rem;
-      color: #1E293B;
-      font-weight: 700;
-      margin-top: 24px;
-      margin-bottom: 12px;
-      letter-spacing: -0.01em;
-    }
-
-    .guidelines-p {
-      color: #334155;
-      font-size: 1rem;
-      line-height: 1.75;
-      margin-bottom: 16px;
-    }
-
-    .guidelines-ul, .guidelines-ol {
-      margin: 14px 0 20px 24px;
-      padding: 0;
-      color: #334155;
-    }
-
-    .guidelines-ul li, .guidelines-ol li {
-      margin-bottom: 10px;
-      line-height: 1.65;
-      padding-left: 4px;
-    }
-
-    .guidelines-ul li::marker {
-      color: #10B981;
-    }
-
-    .guidelines-callout {
-      background: #F0FDF4;
-      border-left: 4px solid #10B981;
-      padding: 16px 20px;
-      border-radius: 0 6px 6px 0 !important;
-      margin: 20px 0;
-    }
-
-    .guidelines-callout.warning {
-      background: #FFFBEB;
-      border-left-color: #F59E0B;
-    }
-
-    .guidelines-callout p {
-      margin: 0;
-      color: #1E293B;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .guidelines-callout strong {
-      color: #0F172A;
-    }
-
-    .back-home-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      background: #FFFFFF;
-      border: 1px solid #0F4C3A;
-      color: #0F4C3A;
-      font-size: 0.88rem;
-      font-weight: 600;
-      border-radius: 6px !important;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .back-home-btn:hover {
-      background: #0F4C3A;
-      color: #FFFFFF;
-    }
-
-    .contact-box {
-      background: #F8FAFC;
-      border: 1px solid #E2E8F0;
-      border-radius: 6px !important;
-      padding: 24px;
-      margin-top: 18px;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-      font-size: 0.95rem;
-      color: #334155;
-    }
-
-    .contact-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .contact-item strong {
-      color: #0F172A;
-      min-width: 140px;
-    }
-
-    .contact-item a {
-      color: #065F46;
-      font-weight: 600;
-      text-decoration: underline;
-    }
-
-    /* Print styles */
-    @media print {
-      .navbar, .guidelines-sidebar, .footer, .scroll-progress-bar {
-        display: none !important;
-      }
-      .guidelines-layout {
-        display: block !important;
-      }
-      .guidelines-doc {
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Top Progress Bar -->
-  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-
-  <!-- Top Navbar -->
-  <header class="navbar" id="mainNavbar">
-    <div class="nav-container">
-      <a href="/" class="nav-brand">
-        <img src="/assets/logo.svg" alt="Founder for Founder Logo" class="nav-logo" width="42" height="42" decoding="async">
-        <div class="nav-brand-text">
-          <div class="nav-title">FOUNDER FOR FOUNDER</div>
-          <div class="nav-subtitle">CREATE. CONNECT. COLLABORATE.</div>
-        </div>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Domine:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-secondary": "#ffffff", "on-primary": "#ffffff", "primary-container": "#064e3b", "on-error-container": "#93000a", "on-tertiary-container": "#ff9939", "inverse-primary": "#95d3ba", "tertiary-container": "#6a3700", "inverse-on-surface": "#eef0ff", "tertiary": "#4a2400", "on-secondary-fixed": "#002113", "on-surface": "#131b2e", "primary": "#003527", "tertiary-fixed-dim": "#ffb77d", "outline-variant": "#bfc9c3", "background": "#faf8ff", "on-primary-fixed-variant": "#0b513d", "surface-tint": "#2b6954", "surface-container-high": "#e2e7ff", "on-primary-fixed": "#002117", "error-container": "#ffdad6", "on-error": "#ffffff", "on-primary-container": "#80bea6", "on-background": "#131b2e", "surface-bright": "#faf8ff", "primary-fixed": "#b0f0d6", "on-secondary-fixed-variant": "#005236", "tertiary-fixed": "#ffdcc3", "secondary": "#006c49", "inverse-surface": "#283044", "on-surface-variant": "#404944", "surface-container-lowest": "#ffffff", "secondary-container": "#6cf8bb", "secondary-fixed-dim": "#4edea3", "on-secondary-container": "#00714d", "on-tertiary-fixed-variant": "#6e3900", "surface-container": "#eaedff", "on-tertiary-fixed": "#2f1500", "error": "#ba1a1a", "primary-fixed-dim": "#95d3ba", "surface-container-low": "#f2f3ff", "outline": "#707974", "secondary-fixed": "#6ffbbe", "surface-container-highest": "#dae2fd", "surface-dim": "#d2d9f4", "surface": "#faf8ff", "surface-variant": "#dae2fd", "on-tertiary": "#ffffff" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "margin-desktop": "3rem", "space-lg": "1.5rem", "margin-mobile": "1rem", "gutter-lg": "2rem", "gutter-sm": "1rem", "gutter": "1.5rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "margin": "2rem", "space-xs": "0.25rem", "space-md": "1rem" }, fontFamily: { "label-md": ["Plus Jakarta Sans"], "headline-hero": ["Domine"], "body-sm": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-lg": ["Domine"], "headline-lg-mobile": ["Domine"], "title-md": ["Plus Jakarta Sans"], "label-status": ["Plus Jakarta Sans"], "headline-hero-mobile": ["Domine"], "headline-sm": ["Domine"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Domine"], "title-lg": ["Plus Jakarta Sans"] }, fontSize: { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "600" }], "label-status": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "700" }], "headline-hero-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-sm": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "title-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col justify-between antialiased selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,53,39,0.03)] pt-safe"><div class="h-16 px-gutter-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Navigate back" class="w-11 h-11 flex items-center justify-center rounded-xl text-primary transition-colors hover:bg-surface-container-low active:bg-surface-container-high" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[20px]">arrow_back</span></button><div class="flex flex-col"><span class="font-label-status text-label-status text-secondary uppercase tracking-[0.08em]">F4F Institutional</span><h1 class="font-title-md text-title-md text-on-surface truncate">Community Guidelines</h1></div></div><div class="flex items-center gap-space-sm"><span class="font-label-status text-label-status px-space-xs py-0.5 rounded bg-surface-container text-on-surface-variant uppercase">Legal</span><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-container/10" src="https://lh3.googleusercontent.com/aida/AEtjO1XoGYDAxoMk0LCjzdNFfwOV4tq-2YMWeHpUo3FsuvrNM-aZYP_eM4yYdiCC98XV3f_Rw-vJrYphvXABrXA6R4wNOy0lXJ1pbZ8HhcwgtnOIdlVqYTDl3ApgepaO-INjJ6x0rP8JUxtsPXqCr45MTaI3HzrPhkmTDcDUUo32VmxjcB7qJfRquljamzoWQmiBbA5AnFZ8QE7TzK4JEvMVIBGYCDh7JNdy96fWxWrk2pRfFPel93Gzg0J8NN0mZiMW4OLoYD391BaRui4"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive Top Search & Hero Context -->
+<div class="px-margin-mobile pt-space-md pb-space-lg flex flex-col gap-space-md">
+<!-- Editorial Crest Card -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg overflow-hidden bg-primary-container flex items-center justify-center p-1.5 shadow-sm">
+<img alt="Founder for Founder Emblem" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVNvedUKLs89ulmlkjDTGWdLXq6oaJAcmZa2QEzIxCdmwKcM5ZttV6MFRNApUgPsxuaS98uVzoF6p77C_aJ7C0ARM_yAjtIhCfhdIvJmhKRMudw_owu9gQ8cYAmvHKf5uJxMSTqWyq1eeefv5gZDv1_Z76glD60EzoeG10DrXcHS-k97XnZFopM7toGXNyKdJMniIVweVIA-2Jyt5qbDIte3tdK2l5tZE6-rIxOtBiiDZ-neTDkSiShlvRkM04SGGQgtE"/>
+</div>
+<div>
+<span class="font-label-status text-label-status text-secondary uppercase tracking-[0.08em] block">Governance &amp; Ethics</span>
+<span class="font-title-lg text-title-lg text-on-surface">Community Charter</span>
+</div>
+</div>
+<span class="font-label-status text-label-status px-2 py-0.5 rounded bg-surface-container text-on-primary-fixed-variant uppercase">v3.4 · 2026</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Founder for Founder (<span class="font-label-md text-primary">f4f</span>) is a closed covenant. We safeguard founder capital, strategic vulnerabilities, and high-velocity deal flow through reciprocal discretion and institutional rigor.
+      </p>
+<!-- Key Commitments Strip -->
+<div class="grid grid-cols-3 gap-space-xs pt-space-xs">
+<div class="bg-surface-container-lowest rounded-lg p-space-sm flex flex-col items-center text-center shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary mb-1">lock</span>
+<span class="font-label-status text-label-status text-on-surface font-semibold">Chatham House</span>
+<span class="font-body-sm text-body-sm text-outline text-[11px]">Strict Non-Attribution</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-sm flex flex-col items-center text-center shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary mb-1">handshake</span>
+<span class="font-label-status text-label-status text-on-surface font-semibold">Zero Solicitation</span>
+<span class="font-body-sm text-body-sm text-outline text-[11px]">Pure Peer Exchange</span>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-space-sm flex flex-col items-center text-center shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary mb-1">verified_user</span>
+<span class="font-label-status text-label-status text-on-surface font-semibold">Ombudsman</span>
+<span class="font-body-sm text-body-sm text-outline text-[11px]">Direct Redress</span>
+</div>
+</div>
+</div>
+<!-- Search & Filter Controls -->
+<div class="flex flex-col gap-space-sm">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full h-11 pl-10 pr-3 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-bright shadow-sm" id="guidelineSearch" placeholder="Filter standards (e.g. solicitation, dinners, NDA)..." type="text"/>
+</div>
+<!-- Filter Category Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 no-scrollbar" id="filterPillGroup">
+<button class="filter-pill active px-3 py-1.5 rounded-full font-label-md text-label-md bg-primary-container text-on-primary whitespace-nowrap shadow-sm" data-filter="all" type="button">
+          All Standards (6)
+        </button>
+<button class="filter-pill px-3 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant whitespace-nowrap" data-filter="ethics" type="button">
+          Safety &amp; Ethics
+        </button>
+<button class="filter-pill px-3 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant whitespace-nowrap" data-filter="gatherings" type="button">
+          Gatherings
+        </button>
+<button class="filter-pill px-3 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant whitespace-nowrap" data-filter="deals" type="button">
+          Deals &amp; Referrals
+        </button>
+<button class="filter-pill px-3 py-1.5 rounded-full font-label-md text-label-md bg-surface-container text-on-surface-variant whitespace-nowrap" data-filter="enforcement" type="button">
+          Enforcement
+        </button>
+</div>
+</div>
+<!-- Guidelines Accordion Stack -->
+<div class="flex flex-col gap-space-sm" id="guidelinesContainer">
+<!-- Pillar 1 -->
+<article class="guideline-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-200" data-category="ethics">
+<button class="accordion-toggle w-full px-space-md py-space-md flex items-center justify-between text-left gap-space-sm" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center font-label-status text-label-status text-primary font-bold shrink-0">01</span>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">High-Trust &amp; Psychological Safety</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Chatham House rule, non-solicitation, privacy</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden px-space-md pb-space-md pt-0 flex flex-col gap-space-sm">
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs">
+<span class="font-label-status text-label-status text-secondary uppercase">Core Tenet</span>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Every boardroom confession, cap table dispute, or internal distress shared within f4f remains strictly governed by the Chatham House Rule. Information disclosed in roundtables or closed circles may never be attributed directly or indirectly outside the circle.
+            </p>
+</div>
+<div class="flex flex-col gap-space-xs text-on-surface-variant font-body-md text-body-md">
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">check_circle</span>
+<span><strong class="text-on-surface font-semibold">Zero Hard-Selling:</strong> Direct pitch desks, unsolicited product sales, or pitching advisory retainers to fellow founders without explicit request is strictly barred.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">check_circle</span>
+<span><strong class="text-on-surface font-semibold">Mutual Discretion:</strong> Taking screenshots of intra-app threads, sharing member contact info with recruiters or agencies triggers automatic termination.</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Pillar 2 -->
+<article class="guideline-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-200" data-category="ethics">
+<button class="accordion-toggle w-full px-space-md py-space-md flex items-center justify-between text-left gap-space-sm" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center font-label-status text-label-status text-primary font-bold shrink-0">02</span>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">Needs &amp; Wants Authenticity</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Verified queries, no multi-level spam</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden px-space-md pb-space-md pt-0 flex flex-col gap-space-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">
+            The f4f bulletin board and intra-founder channels exist exclusively for mission-critical inquiries: vendor recommendations, key executive backchanneling, international regulatory introductions, and institutional banking guidance.
+          </p>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs">
+<span class="font-label-status text-label-status text-secondary uppercase">Prohibited Activity</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Multi-level marketing, crypto token shills, generic lead magnets, or automated broadcast requests result in immediate removal of network privileges.
+            </p>
+</div>
+</div>
+</article>
+<!-- Pillar 3 -->
+<article class="guideline-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-200" data-category="gatherings">
+<button class="accordion-toggle w-full px-space-md py-space-md flex items-center justify-between text-left gap-space-sm" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center font-label-status text-label-status text-primary font-bold shrink-0">03</span>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">Meeting &amp; Gathering Etiquette</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Dinners, roundtables, sports &amp; punctuality</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden px-space-md pb-space-md pt-0 flex flex-col gap-space-sm">
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="bg-surface-container-low p-space-sm rounded-lg">
+<span class="font-label-status text-label-status text-primary uppercase block mb-1">Founder Dinners</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Strict RSVP commitment. Cancellations inside 24 hours require seat reimbursement and ombudsman review.
+              </p>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg">
+<span class="font-label-status text-label-status text-primary uppercase block mb-1">Sports &amp; Tracks</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Padel, tennis, and run-clubs emphasize athletic collegiality over corporate hierarchy.
+              </p>
+</div>
+</div>
+<div class="flex items-start gap-space-xs text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">check_circle</span>
+<span><strong class="text-on-surface font-semibold">Active Presence:</strong> Devices on silent during intimate salons. Prioritize dialogue over digital distraction.</span>
+</div>
+</div>
+</article>
+<!-- Pillar 4 -->
+<article class="guideline-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-200" data-category="deals">
+<button class="accordion-toggle w-full px-space-md py-space-md flex items-center justify-between text-left gap-space-sm" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center font-label-status text-label-status text-primary font-bold shrink-0">04</span>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">Commercial Deals &amp; Referrals</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Consent, syndicate terms, accountability</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden px-space-md pb-space-md pt-0 flex flex-col gap-space-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">
+            When cross-referring clients, co-investing via syndicates, or entering vendor partnerships with fellow members, transparency is paramount.
+          </p>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">handshake</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant"><strong class="text-on-surface font-semibold">Double Opt-In Intros:</strong> Never introduce a peer to an external investor or candidate without prior written consent.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary mt-0.5 shrink-0">price_check</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant"><strong class="text-on-surface font-semibold">Finder Fees Disclosure:</strong> Any economic interest or referral compensation between members must be declared upfront.</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Pillar 5 -->
+<article class="guideline-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-200" data-category="enforcement">
+<button class="accordion-toggle w-full px-space-md py-space-md flex items-center justify-between text-left gap-space-sm" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center font-label-status text-label-status text-primary font-bold shrink-0">05</span>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">Zero-Tolerance Violations</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Immediate badge revocation &amp; blacklisting</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden px-space-md pb-space-md pt-0 flex flex-col gap-space-sm">
+<div class="bg-error-container text-on-error-container p-space-sm rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+<span class="font-label-status text-label-status font-bold uppercase">Non-Negotiable Threshold</span>
+</div>
+<p class="font-body-sm text-body-sm leading-relaxed">
+              Breach of NDA, leakage of member data to third-party press, harassment, deceptive financial disclosures, or predatory talent poaching will result in permanent expulsion and reciprocal revocation across partner networks.
+            </p>
+</div>
+</div>
+</article>
+<!-- Pillar 6 -->
+<article class="guideline-card bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all duration-200" data-category="enforcement">
+<button class="accordion-toggle w-full px-space-md py-space-md flex items-center justify-between text-left gap-space-sm" type="button">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center font-label-status text-label-status text-primary font-bold shrink-0">06</span>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">Grievance &amp; Ombudsman Channel</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Confidential reporting &amp; arbitration</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline transition-transform duration-200 chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden px-space-md pb-space-md pt-0 flex flex-col gap-space-sm">
+<p class="font-body-md text-body-md text-on-surface-variant">
+            If you encounter friction, unaligned conduct, or integrity issues with another founder, lodge an expedited case with our peer arbitration council.
+          </p>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-status text-label-status text-outline uppercase">Ombudsman Desk</span>
+<span class="font-label-md text-label-md text-on-surface">connect.f4f@gmail.com</span>
+</div>
+</div>
+<a class="px-3 py-1.5 rounded bg-primary text-on-primary font-label-md text-label-md hover:bg-secondary transition-colors" href="mailto:connect.f4f@gmail.com?subject=[f4f%20Ombudsman%20Inquiry]">
+              Dispatch
+            </a>
+</div>
+</div>
+</article>
+</div>
+<!-- Interactive Founder Pledge Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md mt-space-xs">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-status text-label-status text-secondary uppercase tracking-[0.08em]">Annual Affirmation</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Commit to the Charter</h2>
+</div>
+<div class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-status text-label-status uppercase flex items-center gap-1" id="pledgeStatusBadge">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Pending</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        By certifying your adherence, your verified status stays active within the institutional syndicate directory and all private dinner allocations.
+      </p>
+<!-- Interactive Checkbox -->
+<label class="flex items-start gap-space-sm cursor-pointer select-none bg-surface-container-low p-space-sm rounded-lg">
+<input class="mt-0.5 w-4 h-4 rounded text-primary focus:ring-secondary accent-primary" id="pledgeCheckbox" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">
+          I formally uphold the <strong class="font-semibold text-primary">Founder for Founder</strong> code of conduct, confidentiality obligations, and ombudsman jurisdiction for 2026.
+        </span>
+</label>
+<!-- Action Button -->
+<button class="w-full h-11 rounded-lg bg-surface-container text-outline font-label-lg text-label-lg transition-all duration-200 flex items-center justify-center gap-space-xs opacity-60 cursor-not-allowed" disabled="" id="pledgeButton" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Record My Commitment</span>
+</button>
+<!-- Timestamp feedback -->
+<div class="hidden flex items-center justify-center gap-space-xs text-secondary font-label-status text-label-status uppercase" id="pledgeConfirmation">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Affirmed on Ledger · Institutional ID: F4F-2026-OK</span>
+</div>
+</div>
+<!-- Editorial Quote Card with Image reference styling -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-center gap-space-md shadow-sm">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Editorial portrait of a high-achieving tech founder with soft studio lighting, sharp dark suit, serene focused gaze, warm amber rim light, subtle architectural modern office background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZeqmv_Pao9m2cSqZTD2aJFZ3nXq6IzKpFBo9tZvYdVuQc0h8a1Dz0_HGRme8b6yrq0yvOxCN0CfA59Qm4YlbbjEpyzqWvcFrZE-3qWVNsEhGzxG1D5Tik-keUjdqZPdPnZV5dgNyDl7vLzEl6rilxTB9yqLfcj8lOiLAGbiHVHONd-wbV2hbbDGtQY0kMQXFg50Ayn8c3ARIasGJYZhSFxlf16MCee1RueuW9yIUJfCFqgA1YLVH6g"/>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="font-body-sm text-body-sm text-on-surface font-medium line-clamp-2">
+          "The greatest asset in an asymmetric network is total, unquestioned confidentiality."
+        </p>
+<span class="font-label-status text-label-status text-outline uppercase mt-1">Founders Council Secretariat</span>
+</div>
+</div>
+<!-- Need Guidance Banner -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">help_center</span>
+<span class="font-body-sm text-body-sm text-on-surface">Need policy clarifications or dinner RSVP advice?</span>
+</div>
+<a class="font-label-status text-label-status uppercase text-primary font-bold hover:underline" href="mailto:connect.f4f@gmail.com">
+        Inquire
       </a>
+</div>
+</div>
+<!-- Interactive Logic -->
+<script>
+    (function initCharter() {
+      // 1. Accordion Mechanics
+      const toggles = document.querySelectorAll('.accordion-toggle');
+      toggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const content = toggle.nextElementSibling;
+          const chevron = toggle.querySelector('.chevron-icon');
+          const isExpanded = !content.classList.contains('hidden');
 
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <a href="/" class="back-home-btn">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Back to Home
-        </a>
-      </div>
-    </div>
-  </header>
+          if (isExpanded) {
+            content.classList.add('hidden');
+            chevron.classList.remove('rotate-180');
+          } else {
+            content.classList.remove('hidden');
+            chevron.classList.add('rotate-180');
+          }
+        });
+      });
 
-  <!-- Hero Header -->
-  <section class="guidelines-hero">
-    <div class="guidelines-container">
-      <div class="guidelines-eyebrow">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Community Standards &amp; Code of Conduct
-      </div>
-      <h1 class="guidelines-title">Community Guidelines</h1>
-      <p class="guidelines-subtitle">Create. Connect. Collaborate. Our shared standards of mutual respect, trust, and professional integrity across India&rsquo;s curated founder network.</p>
-      
-      <div class="guidelines-meta-bar">
-        <div class="guidelines-meta-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span>Effective Date: <strong>October 11, 2026</strong></span>
-        </div>
-        <div class="guidelines-meta-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-          <span>Last Updated: <strong>October 11, 2026</strong></span>
-        </div>
-        <div class="guidelines-meta-item">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-          <span>Network: <strong>Founder for Founder</strong></span>
-        </div>
-      </div>
-    </div>
-  </section>
+      // 2. Search & Filter System
+      const searchInput = document.getElementById('guidelineSearch');
+      const cards = document.querySelectorAll('.guideline-card');
+      const pills = document.querySelectorAll('.filter-pill');
+      let currentFilter = 'all';
 
-  <!-- Main Content Layout -->
-  <main class="guidelines-container">
-    <div class="guidelines-layout">
+      function applyFiltering() {
+        const query = searchInput.value.toLowerCase().trim();
 
-      <!-- Sticky Table of Contents Sidebar -->
-      <aside class="guidelines-sidebar" aria-label="Table of Contents">
-        <div class="sidebar-title">
-          <span>Table of Contents</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-        </div>
-        <nav>
-          <ul class="sidebar-nav-list">
-            <li><a href="#sec-1" class="sidebar-link">1. Our Philosophy</a></li>
-            <li><a href="#sec-2" class="sidebar-link">2. Respect Every Member</a></li>
-            <li><a href="#sec-3" class="sidebar-link">3. Zero Tolerance for Spam</a></li>
-            <li><a href="#sec-4" class="sidebar-link">4. Needs &amp; Wants</a></li>
-            <li><a href="#sec-5" class="sidebar-link">5. Leads &amp; Referrals</a></li>
-            <li><a href="#sec-6" class="sidebar-link">6. Disruptive Behaviour</a></li>
-            <li><a href="#sec-7" class="sidebar-link">7. Communication</a></li>
-            <li><a href="#sec-8" class="sidebar-link">8. Privacy &amp; Confidentiality</a></li>
-            <li><a href="#sec-9" class="sidebar-link">9. Authenticity &amp; Truth</a></li>
-            <li><a href="#sec-10" class="sidebar-link">10. Events and Meetings</a></li>
-            <li><a href="#sec-11" class="sidebar-link">11. Fair Feature Use</a></li>
-            <li><a href="#sec-12" class="sidebar-link">12. Moderation Process</a></li>
-            <li><a href="#sec-13" class="sidebar-link">13. Reporting a Concern</a></li>
-            <li><a href="#sec-14" class="sidebar-link">14. Administration</a></li>
-            <li><a href="#sec-15" class="sidebar-link">15. Our Shared Standard</a></li>
-          </ul>
-        </nav>
-      </aside>
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          const text = card.innerText.toLowerCase();
+          const matchesSearch = query === '' || text.includes(query);
+          const matchesCategory = currentFilter === 'all' || category === currentFilter;
 
-      <!-- Main Document Content -->
-      <article class="guidelines-doc">
+          if (matchesSearch && matchesCategory) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      }
 
-        <!-- 1. Our Community Philosophy -->
-        <section class="guidelines-section" id="sec-1">
-          <h2 class="guidelines-h2"><span class="section-num">1</span> Our Community Philosophy</h2>
-          <p class="guidelines-p">Founder for Founder is a curated business network built for founders, entrepreneurs, and professionals who value meaningful relationships, mutual respect, collaboration, and long-term growth.</p>
-          <p class="guidelines-p">Our community is designed to encourage productive conversations, relevant business connections, credible opportunities, and shared learning.</p>
-          <p class="guidelines-p">Every member contributes to the quality of this network. Membership is a privilege accompanied by the responsibility to maintain a respectful, professional, and constructive environment.</p>
-        </section>
+      if (searchInput) {
+        searchInput.addEventListener('input', applyFiltering);
+      }
 
-        <!-- 2. Respect Every Member -->
-        <section class="guidelines-section" id="sec-2">
-          <h2 class="guidelines-h2"><span class="section-num">2</span> Respect Every Member</h2>
-          <p class="guidelines-p">Treat every member with courtesy and professionalism, regardless of their business size, experience, background, designation, or professional standing.</p>
-          <p class="guidelines-p">Members must not engage in:</p>
-          <ul class="guidelines-ul">
-            <li>Personal attacks, insults, abusive language, harassment, or intimidation.</li>
-            <li>Public shaming, targeted humiliation, or attempts to provoke other members.</li>
-            <li>Discrimination or hateful conduct.</li>
-            <li>Repeated arguments intended to disrupt discussions rather than resolve issues.</li>
-            <li>Threats, bullying, or retaliation against members who disagree or raise genuine concerns.</li>
-          </ul>
-          <div class="guidelines-callout">
-            <p><strong>Golden Rule:</strong> Disagreement is acceptable. Disrespect is not.</p>
-          </div>
-        </section>
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          pills.forEach(p => {
+            p.classList.remove('bg-primary-container', 'text-on-primary', 'shadow-sm');
+            p.classList.add('bg-surface-container', 'text-on-surface-variant');
+          });
 
-        <!-- 3. Zero Tolerance for Spam -->
-        <section class="guidelines-section" id="sec-3">
-          <h2 class="guidelines-h2"><span class="section-num">3</span> Zero Tolerance for Spam</h2>
-          <p class="guidelines-p">The community is not a platform for indiscriminate advertising or unsolicited solicitation.</p>
-          <p class="guidelines-p">The following activities are strictly prohibited unless expressly permitted through an official community feature or authorised by the administration:</p>
-          <ul class="guidelines-ul">
-            <li>Repeated promotional posts, advertisements, or sales pitches.</li>
-            <li>Posting the same message, offer, link, or request multiple times.</li>
-            <li>Unsolicited bulk messages, cold pitches, or repetitive direct messages to members.</li>
-            <li>Irrelevant links, unrelated content, chain messages, or engagement bait.</li>
-            <li>Repeatedly tagging members or administrators to attract attention.</li>
-            <li>Using the community primarily to collect contact details, generate unrelated traffic, or solicit sales.</li>
-            <li>Creating multiple accounts to promote the same business or bypass moderation.</li>
-          </ul>
-          <div class="guidelines-callout warning">
-            <p><strong>Designated Channels:</strong> Promotional content must be relevant, appropriate, and shared exclusively through designated opportunity features or channels.</p>
-          </div>
-        </section>
+          pill.classList.remove('bg-surface-container', 'text-on-surface-variant');
+          pill.classList.add('bg-primary-container', 'text-on-primary', 'shadow-sm');
 
-        <!-- 4. Meaningful Use of Needs & Wants -->
-        <section class="guidelines-section" id="sec-4">
-          <h2 class="guidelines-h2"><span class="section-num">4</span> Meaningful Use of Needs &amp; Wants</h2>
-          <p class="guidelines-p">The Needs &amp; Wants feature exists to help members communicate genuine business requirements and relevant opportunities.</p>
-          <p class="guidelines-p">Members should:</p>
-          <ul class="guidelines-ul">
-            <li>Describe their requirements clearly and honestly.</li>
-            <li>Include relevant details, such as the type of service, product, expertise, or connection required.</li>
-            <li>Share opportunities that are relevant to the network.</li>
-            <li>Avoid vague, misleading, exaggerated, or repeatedly reposted requests.</li>
-            <li>Update or close a request when it has been fulfilled or is no longer relevant.</li>
-            <li>Respect the other party&rsquo;s time, budget, confidentiality, and decision-making process.</li>
-          </ul>
-          <p class="guidelines-p">Do not post fake requirements, fabricated opportunities, misleading offers, or requests designed solely to promote your own business.</p>
-        </section>
+          currentFilter = pill.getAttribute('data-filter');
+          applyFiltering();
+        });
+      });
 
-        <!-- 5. Leads, Referrals, and Business Conduct -->
-        <section class="guidelines-section" id="sec-5">
-          <h2 class="guidelines-h2"><span class="section-num">5</span> Leads, Referrals, and Business Conduct</h2>
-          <p class="guidelines-p">Business introductions and referrals should be based on relevance, transparency, and mutual consent.</p>
-          <p class="guidelines-p">Members must not:</p>
-          <ul class="guidelines-ul">
-            <li>Fabricate leads, referrals, client relationships, testimonials, or business credentials.</li>
-            <li>Misrepresent their products, services, expertise, pricing, or ability to deliver.</li>
-            <li>Claim a referral or introduction without a reasonable basis.</li>
-            <li>Pressure other members into purchasing, investing, partnering, or making introductions.</li>
-            <li>Share another member&rsquo;s confidential information without permission.</li>
-            <li>Misuse an introduction to repeatedly solicit unrelated products or services.</li>
-          </ul>
-          <p class="guidelines-p">Members are encouraged to communicate expectations clearly and honour commitments made to other members.</p>
-          <div class="guidelines-callout">
-            <p><strong>Note on Facilitation:</strong> Founder for Founder facilitates connections but does not guarantee the quality, accuracy, performance, or commercial outcome of every member or referral.</p>
-          </div>
-        </section>
+      // 3. Founder Pledge Interactivity
+      const checkbox = document.getElementById('pledgeCheckbox');
+      const pledgeBtn = document.getElementById('pledgeButton');
+      const statusBadge = document.getElementById('pledgeStatusBadge');
+      const confirmationMsg = document.getElementById('pledgeConfirmation');
 
-        <!-- 6. No Unnecessary Drama or Disruptive Behaviour -->
-        <section class="guidelines-section" id="sec-6">
-          <h2 class="guidelines-h2"><span class="section-num">6</span> No Unnecessary Drama or Disruptive Behaviour</h2>
-          <p class="guidelines-p">We encourage members to resolve disagreements constructively and keep community discussions focused on their intended purpose.</p>
-          <p class="guidelines-p">The following behaviours may result in moderation:</p>
-          <ul class="guidelines-ul">
-            <li>Repeatedly derailing discussions with unrelated complaints or personal disputes.</li>
-            <li>Turning professional disagreements into prolonged public arguments.</li>
-            <li>Repeatedly posting provocative messages to attract attention or create conflict.</li>
-            <li>Making baseless allegations, spreading rumours, or deliberately misrepresenting another member&rsquo;s statements.</li>
-            <li>Flooding discussions with complaints after the administration has acknowledged the matter and provided a reasonable response.</li>
-            <li>Organising other members to target, intimidate, or disrupt an individual or the community.</li>
-            <li>Refusing to follow reasonable moderation instructions and repeatedly restarting a closed dispute.</li>
-          </ul>
-          <p class="guidelines-p">Raising a genuine concern is always permitted. Members may contact the administration privately to report misconduct, unfair treatment, suspected fraud, or a moderation issue. Good-faith complaints will not be treated as misconduct simply because they are critical.</p>
-          <p class="guidelines-p">The administration may move sensitive disputes to a private channel to protect members&rsquo; privacy and minimise disruption.</p>
-        </section>
+      if (checkbox && pledgeBtn) {
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) {
+            pledgeBtn.disabled = false;
+            pledgeBtn.classList.remove('opacity-60', 'cursor-not-allowed', 'bg-surface-container', 'text-outline');
+            pledgeBtn.classList.add('bg-primary-container', 'text-on-primary', 'hover:bg-secondary');
+          } else {
+            pledgeBtn.disabled = true;
+            pledgeBtn.classList.add('opacity-60', 'cursor-not-allowed', 'bg-surface-container', 'text-outline');
+            pledgeBtn.classList.remove('bg-primary-container', 'text-on-primary', 'hover:bg-secondary');
+          }
+        });
 
-        <!-- 7. Professional Communication -->
-        <section class="guidelines-section" id="sec-7">
-          <h2 class="guidelines-h2"><span class="section-num">7</span> Professional Communication</h2>
-          <p class="guidelines-p">Communicate with clarity, courtesy, and purpose.</p>
-          <p class="guidelines-p">Members should avoid excessive tagging, repeated follow-ups, aggressive demands for immediate responses, and messages that create unnecessary pressure.</p>
-          <p class="guidelines-p">Respect that members have different schedules and responsibilities. No member is obligated to respond to every message, accept every invitation, purchase a service, or enter a business relationship.</p>
-          <div class="guidelines-callout warning">
-            <p><strong>Boundary Respect:</strong> Members must respect a clear refusal and must not continue pursuing another member after being asked to stop.</p>
-          </div>
-        </section>
-
-        <!-- 8. Privacy and Confidentiality -->
-        <section class="guidelines-section" id="sec-8">
-          <h2 class="guidelines-h2"><span class="section-num">8</span> Privacy and Confidentiality</h2>
-          <p class="guidelines-p">Members must respect the privacy of others and the confidentiality of community interactions.</p>
-          <p class="guidelines-p">Without appropriate permission, members must not:</p>
-          <ul class="guidelines-ul">
-            <li>Publish screenshots of private conversations or member-only discussions.</li>
-            <li>Share personal phone numbers, email addresses, financial information, or other non-public details.</li>
-            <li>Distribute confidential business information, proposals, or documents.</li>
-            <li>Record or redistribute private meetings or events where doing so is not authorised.</li>
-            <li>Use member information for unrelated marketing, bulk outreach, or external databases.</li>
-          </ul>
-          <p class="guidelines-p">These restrictions do not prevent lawful reporting of misconduct or sharing information where legally required.</p>
-        </section>
-
-        <!-- 9. Authenticity and Accountability -->
-        <section class="guidelines-section" id="sec-9">
-          <h2 class="guidelines-h2"><span class="section-num">9</span> Authenticity and Accountability</h2>
-          <p class="guidelines-p">Members are expected to provide accurate information about their identity, professional background, business, and offerings.</p>
-          <p class="guidelines-p">Impersonation, fraudulent activity, fake profiles, misleading claims, manipulated testimonials, and deliberate misrepresentation are strictly prohibited.</p>
-          <p class="guidelines-p">If a member identifies an error in a post or claim, they should correct it promptly. Honest mistakes may be addressed constructively; deliberate or repeated deception may result in disciplinary action.</p>
-        </section>
-
-        <!-- 10. Events and Meetings -->
-        <section class="guidelines-section" id="sec-10">
-          <h2 class="guidelines-h2"><span class="section-num">10</span> Events and Meetings</h2>
-          <p class="guidelines-p">Members participating in Founder for Founder events, meetings, activities, or challenges must:</p>
-          <ul class="guidelines-ul">
-            <li>Respect the event schedule, venue, organisers, speakers, and fellow attendees.</li>
-            <li>Follow registration, attendance, safety, and venue requirements.</li>
-            <li>Avoid aggressive selling, disruptive interruptions, or monopolising group discussions.</li>
-            <li>Seek consent before recording, photographing, or publicly sharing identifiable images or private conversations where appropriate.</li>
-            <li>Honour confirmed commitments or notify the organisers promptly if unable to attend.</li>
-            <li>Behave professionally during introductions, networking, and follow-up interactions.</li>
-          </ul>
-          <p class="guidelines-p">The administration may restrict participation in future events when conduct repeatedly disrupts the experience of others.</p>
-        </section>
-
-        <!-- 11. Fair Use of Community Features -->
-        <section class="guidelines-section" id="sec-11">
-          <h2 class="guidelines-h2"><span class="section-num">11</span> Fair Use of Community Features</h2>
-          <p class="guidelines-p">Members must use the Platform, directory, messaging features, and other community tools for their intended professional purposes.</p>
-          <p class="guidelines-p">Attempts to bypass access restrictions, scrape member information, manipulate engagement, misuse reporting features, or interfere with the operation of the Platform are prohibited.</p>
-          <p class="guidelines-p">Access to member information does not grant permission to use it for unrelated commercial purposes.</p>
-        </section>
-
-        <!-- 12. Moderation and Consequences -->
-        <section class="guidelines-section" id="sec-12">
-          <h2 class="guidelines-h2"><span class="section-num">12</span> Moderation and Consequences</h2>
-          <p class="guidelines-p">Founder for Founder reserves the right to moderate content and take proportionate action when these guidelines or the Platform&rsquo;s Terms &amp; Conditions are violated.</p>
-          <p class="guidelines-p">Depending on the nature, severity, frequency, and impact of the conduct, actions may include:</p>
-          <ul class="guidelines-ul">
-            <li><strong>Informal reminder:</strong> For minor or first-time issues.</li>
-            <li><strong>Formal warning:</strong> For repeated or more serious violations.</li>
-            <li><strong>Content removal or feature restriction:</strong> Where content or behaviour is inappropriate or disruptive.</li>
-            <li><strong>Temporary suspension:</strong> Where further review or a cooling-off period is necessary.</li>
-            <li><strong>Membership termination:</strong> For serious misconduct, fraud, harassment, repeated spam, retaliation, or continued violations after warnings.</li>
-            <li><strong>Immediate protective action:</strong> Where necessary to address credible threats, suspected fraud, serious harassment, or risks to member safety.</li>
-          </ul>
-          <p class="guidelines-p">The administration may skip earlier steps when the seriousness of the situation warrants it. Where reasonably appropriate, members may be given an opportunity to explain their position before a final decision.</p>
-          <p class="guidelines-p">Membership fees and refunds following suspension or termination will be governed by the applicable membership terms and Refund and Cancellation Policy, subject to applicable law.</p>
-        </section>
-
-        <!-- 13. Reporting a Concern -->
-        <section class="guidelines-section" id="sec-13">
-          <h2 class="guidelines-h2"><span class="section-num">13</span> Reporting a Concern</h2>
-          <p class="guidelines-p">If you encounter spam, harassment, misleading business conduct, privacy violations, or other behaviour that breaches these guidelines, report it to the administration at <a href="mailto:connect.f4f@gmail.com" style="color: #065F46; font-weight: 600;">connect.f4f@gmail.com</a>.</p>
-          <p class="guidelines-p">Please provide relevant details and supporting evidence where available. Reports will be reviewed as reasonably practicable and handled with appropriate discretion.</p>
-          <div class="guidelines-callout warning">
-            <p><strong>Integrity in Reporting:</strong> Do not use reporting tools to threaten, harass, retaliate against, or deliberately target another member.</p>
-          </div>
-        </section>
-
-        <!-- 14. Administration and Interpretation -->
-        <section class="guidelines-section" id="sec-14">
-          <h2 class="guidelines-h2"><span class="section-num">14</span> Administration and Interpretation</h2>
-          <p class="guidelines-p">Founder for Founder may interpret and update these guidelines as the community evolves. The administration will seek to apply them consistently, fairly, and in a manner that protects the community&rsquo;s purpose and its members.</p>
-          <p class="guidelines-p">Repeated or serious violations may affect a member&rsquo;s continued participation in the network.</p>
-          <p class="guidelines-p">These Community Guidelines should be read alongside the Platform&rsquo;s Terms &amp; Conditions, Privacy Policy, and Refund and Cancellation Policy. Where a conflict arises, applicable law and the relevant contractual terms will govern.</p>
-        </section>
-
-        <!-- 15. Our Shared Standard -->
-        <section class="guidelines-section" id="sec-15">
-          <h2 class="guidelines-h2"><span class="section-num">15</span> Our Shared Standard</h2>
-          <p class="guidelines-p">Founder for Founder works best when members bring genuine intent, professional integrity, mutual respect, and a willingness to contribute.</p>
-          <p class="guidelines-p">We welcome constructive criticism, different perspectives, honest questions, and ambitious ideas. We do not welcome spam, manipulation, harassment, or behaviour that consistently takes away from the value of the network.</p>
+        pledgeBtn.addEventListener('click', () => {
+          if (!checkbox.checked) return;
           
-          <div class="guidelines-callout" style="text-align: center; padding: 24px;">
-            <p style="font-size: 1.15rem; font-weight: 700; color: #065F46; margin-bottom: 6px;">
-              Bring value. Respect boundaries. Build meaningful relationships.
-            </p>
-            <p style="font-size: 0.95rem; color: #334155; margin: 0;">
-              By participating in Founder for Founder, members agree to follow these Community Guidelines.
-            </p>
-          </div>
+          pledgeBtn.disabled = true;
+          pledgeBtn.innerHTML = `
+            <span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+            <span>Certifying Signature...</span>
+          `;
 
-          <div class="contact-box">
-            <div class="contact-item">
-              <strong>Community Desk:</strong>
-              <span>Founder for Founder Administration</span>
-            </div>
-            <div class="contact-item">
-              <strong>Email Reports:</strong>
-              <a href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a>
-            </div>
-            <div class="contact-item">
-              <strong>Admin Email:</strong>
-              <a href="mailto:admin@founderforfounder.in">admin@founderforfounder.in</a>
-            </div>
-            <div class="contact-item">
-              <strong>Official Website:</strong>
-              <a href="https://founderforfounder.com" target="_blank" rel="noopener noreferrer">founderforfounder.com</a>
-            </div>
-          </div>
-        </section>
-
-      </article>
-
-    </div>
-  </main>
-
-  <!-- Standard Footer -->
-  <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-          <img src="/assets/logo.svg" alt="Founder for Founder Logo" width="36" height="36" loading="lazy" decoding="async">
-          <span style="font-family: 'DM Serif Display', Georgia, serif; font-size: 1.3rem; color: #fff;">Founder for Founder</span>
-        </div>
-        <p class="footer-text">A private, curated business network connecting entrepreneurs, founders, and industry leaders to share insights, build trust, and collaborate across India.</p>
-      </div>
-
-      <div>
-        <h4 class="footer-title">Navigation</h4>
-        <ul class="footer-links">
-          <li><a href="/" class="footer-link">Home</a></li>
-          <li><a href="/#about" class="footer-link">About Community</a></li>
-          <li><a href="/#events" class="footer-link">Experiences</a></li>
-          <li><a href="/#manifesto" class="footer-link">Our Manifesto</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="footer-title">Contact &amp; Entity</h4>
-        <ul class="footer-links">
-          <li>Email: <a href="mailto:connect.f4f@gmail.com" class="footer-link">connect.f4f@gmail.com</a></li>
-          <li>Powered by: <span style="color: #fff;">snalts.co</span></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="footer-title">Legal Disclosures</h4>
-        <ul class="footer-links">
-          <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
-          <li><a href="/terms" class="footer-link">Terms &amp; Conditions</a></li>
-          <li><a href="/refund-policy" class="footer-link">Refund &amp; Cancellation</a></li>
-          <li><a href="/community-guidelines" class="footer-link" style="color: #fff; font-weight: 700;">Community Guidelines</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      &copy; 2026 Founder for Founder. All rights reserved. Powered by snalts.co
-    </div>
-  </footer>
-
-  <!-- Scroll Progress & Sidebar Active Highlight Script -->
-  <script>
-    window.addEventListener('scroll', () => {
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      const bar = document.getElementById('scrollProgressBar');
-      if (bar) bar.style.width = scrolled + '%';
-
-      // Active section in sidebar
-      const sections = document.querySelectorAll('.guidelines-section');
-      const navLinks = document.querySelectorAll('.sidebar-link');
-      let currentSectionId = '';
-
-      sections.forEach(section => {
-        const top = section.offsetTop - 150;
-        if (winScroll >= top) {
-          currentSectionId = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSectionId) {
-          link.classList.add('active');
-        }
-      });
-    }, { passive: true });
+          setTimeout(() => {
+            pledgeBtn.classList.add('hidden');
+            checkbox.disabled = true;
+            statusBadge.className = 'px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-status text-label-status uppercase flex items-center gap-1 font-bold';
+            statusBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Charter Signed</span>`;
+            confirmationMsg.classList.remove('hidden');
+          }, 800);
+        });
+      }
+    })();
   </script>
-</body>
-</html>
+</div></main><footer class="w-full bg-surface-container-lowest/80 backdrop-blur-md px-gutter-sm py-space-md pb-safe flex flex-col items-center justify-center gap-space-xs mt-auto"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span><span>Founder for Founder (f4f) Institutional Network</span></div><p class="font-body-sm text-body-sm text-outline">Architected &amp; powered by <a class="font-label-md text-label-md text-primary hover:text-secondary transition-colors underline decoration-outline-variant underline-offset-2" href="https://snalts.co" rel="noopener" target="_blank">snalts.co</a></p></footer></body></html>

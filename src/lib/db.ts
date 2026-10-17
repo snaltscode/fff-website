@@ -8,8 +8,23 @@ export function getDb() {
   }
 
   try {
+    const fs = require('fs');
+    let dbPath = path.resolve(process.cwd(), 'f4f_community.db');
+    if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+      const tmpPath = '/tmp/f4f_community.db';
+      if (!fs.existsSync(tmpPath) && fs.existsSync(dbPath)) {
+        try {
+          fs.copyFileSync(dbPath, tmpPath);
+        } catch (copyErr) {
+          console.error('Failed to copy seed db to /tmp:', copyErr);
+        }
+      }
+      if (fs.existsSync(tmpPath)) {
+        dbPath = tmpPath;
+      }
+    }
+
     const { DatabaseSync } = require('node:sqlite');
-    const dbPath = path.resolve(process.cwd(), 'f4f_community.db');
     const db = new DatabaseSync(dbPath);
 
     // Apply high-performance SQLite PRAGMAs
