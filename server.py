@@ -209,9 +209,16 @@ class F4FHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
     def get_effective_path(self):
-        for hdr in ('x-forwarded-uri', 'x-matched-path', 'x-rewrite-url', 'x-original-uri'):
+        parsed = urllib.parse.urlparse(self.path)
+        qs = urllib.parse.parse_qs(parsed.query)
+        if '__slug' in qs:
+            slug = qs['__slug'][0]
+            other_qs = {k: v for k, v in qs.items() if k != '__slug'}
+            new_q = ('?' + urllib.parse.urlencode(other_qs, doseq=True)) if other_qs else ''
+            return f"/api/{slug}{new_q}"
+        for hdr in ('x-forwarded-uri', 'x-matched-path', 'x-rewrite-url', 'x-original-uri', 'x-vercel-matched-path'):
             val = self.headers.get(hdr)
-            if val:
+            if val and not val.endswith('index.py'):
                 return val
         return self.path
 

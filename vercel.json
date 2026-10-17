@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "destination": "/api/index.py?__slug=$1"
     },
     {
       "source": "/terms",
@@ -12,7 +12,7 @@
     },
     {
       "source": "/terms-and-conditions",
-      "destination": "/terms.html"
+      "destination": "/terms-and-conditions.html"
     },
     {
       "source": "/privacy-policy",
@@ -24,7 +24,7 @@
     },
     {
       "source": "/refund-and-cancellation-policy",
-      "destination": "/refund-policy.html"
+      "destination": "/refund-and-cancellation-policy.html"
     },
     {
       "source": "/community-guidelines",
@@ -32,7 +32,7 @@
     },
     {
       "source": "/guidelines",
-      "destination": "/community-guidelines.html"
+      "destination": "/guidelines.html"
     }
   ],
   "headers": [
