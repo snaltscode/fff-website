@@ -1,9 +1,39 @@
 {
-  "build": {
-    "env": {
-      "NODE_OPTIONS": "--experimental-sqlite"
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/terms-and-conditions",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy-policy.html"
+    },
+    {
+      "source": "/refund-policy",
+      "destination": "/refund-policy.html"
+    },
+    {
+      "source": "/refund-and-cancellation-policy",
+      "destination": "/refund-policy.html"
+    },
+    {
+      "source": "/community-guidelines",
+      "destination": "/community-guidelines.html"
+    },
+    {
+      "source": "/guidelines",
+      "destination": "/community-guidelines.html"
     }
-  },
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
