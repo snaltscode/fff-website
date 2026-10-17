@@ -239,6 +239,42 @@ def build_home():
     span:not(.material-symbols-outlined):not(.material-symbols) {
       font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
+    /* Executive Dark Footer with Pure White Text */
+    footer {
+      background: #002117 !important;
+      color: #ffffff !important;
+    }
+    footer h1, footer h2, footer h3, footer h4,
+    footer p, footer a, footer span, footer div, footer li {
+      color: #ffffff !important;
+    }
+    footer a {
+      color: rgba(255, 255, 255, 0.8) !important;
+      transition: color 0.2s ease;
+    }
+    footer a:hover {
+      color: #ffffff !important;
+    }
+    footer .text-secondary-fixed,
+    footer .font-label-status {
+      color: #6ffbbe !important;
+    }
+    footer .text-white\\/60 {
+      color: rgba(255, 255, 255, 0.6) !important;
+    }
+    footer .text-white\\/70 {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    footer .text-white\\/75 {
+      color: rgba(255, 255, 255, 0.75) !important;
+    }
+    footer .text-white\\/80 {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    footer .text-white\\/85 {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+
     /* Mobile font scale for inputs (prevents iOS auto-zoom) */
     input, select, textarea {
       font-size: 16px !important;
@@ -312,7 +348,7 @@ def build_home():
       </div>
       <div class="pt-2 flex flex-col gap-2">
         <button onclick="toggleMobileMenu(); openShowInterestModal();" class="w-full py-3 rounded-[6px] bg-primary-container text-on-primary font-bold text-center text-sm shadow">
-          Request Admissions →
+          Request Admissions &rarr;
         </button>
         <button onclick="toggleMobileMenu(); openLoginModal();" class="w-full py-2.5 rounded-[6px] bg-surface-container text-primary font-semibold text-center text-sm">
           Member Login
@@ -608,6 +644,82 @@ def build_home():
 '''
     mcp_home = mcp_home.replace('<!-- FINAL CALL TO ACTION BANNER -->', dynamic_cms_section + '\n<!-- FINAL CALL TO ACTION BANNER -->')
 
+    # 10.5 Replace Footer with Executive Dark Theme & Pure White Text
+    old_footer_match = re.search(r'<footer[^>]*>.*?</footer>', mcp_home, re.DOTALL)
+    if old_footer_match:
+        executive_white_footer = '''
+<footer class="w-full bg-[#002117] text-white mt-space-xl shadow-[0_-4px_24px_rgba(0,33,23,0.18)] border-t border-[#064e3b]/60">
+  <div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop py-space-xl">
+    <div class="flex flex-col lg:flex-row justify-between items-start gap-gutter-lg pb-space-xl border-b border-[#064e3b]/50">
+      
+      <!-- Brand & Mission Column -->
+      <div class="flex flex-col gap-space-md max-w-sm">
+        <div class="flex items-center gap-space-sm">
+          <div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed shadow-sm">
+            <span class="material-symbols-outlined text-sm leading-none">handshake</span>
+          </div>
+          <span class="font-headline-sm text-headline-sm text-white font-bold tracking-tight">Founder for Founder</span>
+        </div>
+        <p class="font-body-md text-body-md text-white/80 leading-relaxed">
+          The curated private alliance for high-growth founders, institutional operators, and venture builders across India.
+        </p>
+        <div class="flex items-center gap-2 font-label-md text-label-md text-white/85">
+          <span class="material-symbols-outlined text-base text-secondary-fixed">mail</span>
+          <a class="hover:text-white transition-colors underline decoration-white/30 underline-offset-4" href="mailto:connect.f4f@gmail.com">connect.f4f@gmail.com</a>
+        </div>
+        <div class="font-label-md text-label-md text-white/70">
+          Powered by <a class="font-title-md text-white font-semibold hover:underline" href="https://snalts.co" target="_blank" rel="noopener">snalts.co</a>
+        </div>
+      </div>
+
+      <!-- Footer Navigation Columns -->
+      <div class="flex flex-col sm:flex-row gap-gutter-lg">
+        <!-- Platform Links -->
+        <div class="flex flex-col gap-space-sm">
+          <span class="font-label-status text-label-status uppercase text-secondary-fixed font-bold tracking-wider">Platform</span>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#philosophy">The Alliance</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#pillars">5 Pillars of Engagement</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#gatherings">Curated Gatherings</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/#testimonials-faqs">Clarity &amp; FAQ</a>
+          <a class="font-body-md text-body-md text-secondary-fixed font-semibold hover:text-white transition-colors" href="javascript:void(0)" onclick="openShowInterestModal()">Apply for Membership &rarr;</a>
+        </div>
+
+        <!-- Governance & Legal Links -->
+        <div class="flex flex-col gap-space-sm">
+          <span class="font-label-status text-label-status uppercase text-secondary-fixed font-bold tracking-wider">Governance &amp; Legal</span>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/terms">Terms &amp; Conditions</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/privacy-policy">Privacy Policy</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/refund-policy">Refund &amp; Cancellation</a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors" href="/community-guidelines">Community Guidelines</a>
+        </div>
+
+        <!-- Connect Links -->
+        <div class="flex flex-col gap-space-sm">
+          <span class="font-label-status text-label-status uppercase text-secondary-fixed font-bold tracking-wider">Connect</span>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors flex items-center gap-space-xs" href="https://linkedin.com" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined text-base text-secondary-fixed">public</span>LinkedIn
+          </a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors flex items-center gap-space-xs" href="https://instagram.com" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined text-base text-secondary-fixed">photo_camera</span>Instagram
+          </a>
+          <a class="font-body-md text-body-md text-white/75 hover:text-white transition-colors flex items-center gap-space-xs" href="https://facebook.com" target="_blank" rel="noopener">
+            <span class="material-symbols-outlined text-base text-secondary-fixed">share</span>Facebook
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Copyright & Privacy Notice -->
+    <div class="pt-space-lg flex flex-col sm:flex-row justify-between items-center gap-space-md text-center sm:text-left">
+      <p class="font-label-md text-label-md text-white/60">© 2026 Founder for Founder (f4f). All rights reserved.</p>
+      <p class="font-label-md text-label-md text-white/60">Private Membership Alliance • Chatham House Rule • Verified Founders Only</p>
+    </div>
+  </div>
+</footer>
+'''
+        mcp_home = mcp_home[:old_footer_match.start()] + executive_white_footer + mcp_home[old_footer_match.end():]
+
     # 11. Wrap public content in <div id="publicPage"> with pb-20 for mobile bottom bar
     main_pos = mcp_home.find('<main')
     footer_end_pos = mcp_home.find('</footer>') + len('</footer>')
@@ -811,7 +923,7 @@ function updateStepUI() {
     } else {
       nextBtn.classList.remove('hidden');
       submitBtn.classList.add('hidden');
-      nextBtn.innerText = "CONTINUE TO SECTION " + (currentStep + 1) + " →";
+      nextBtn.innerText = "CONTINUE TO SECTION " + (currentStep + 1) + " &rarr;";
     }
   }
 

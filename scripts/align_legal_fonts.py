@@ -52,6 +52,27 @@ font_override_style = '''
     font-family: 'Plus Jakarta Sans', sans-serif !important;
   }
 
+  /* Executive Dark Footer with Pure White Text */
+  footer {
+    background: #002117 !important;
+    color: #ffffff !important;
+  }
+  footer h1, footer h2, footer h3, footer h4,
+  footer p, footer a, footer span, footer div, footer li {
+    color: #ffffff !important;
+  }
+  footer a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: color 0.2s ease;
+  }
+  footer a:hover {
+    color: #ffffff !important;
+  }
+  footer .text-secondary-fixed,
+  footer .font-label-status {
+    color: #6ffbbe !important;
+  }
+
   /* Unblocked Natural Scrolling */
   html {
     overflow-x: hidden !important;
@@ -96,7 +117,10 @@ for fpath in target_files:
     # Append our robust font override style to head
     content = content.replace('</head>', f'{font_override_style}\n</head>')
 
+    # Ensure footer in legal pages has dark background and white text classes
+    content = re.sub(r'<footer[^>]*class="([^"]*)"', r'<footer class="\1 bg-[#002117] text-white border-t border-[#064e3b]/60"', content)
+
     with open(fpath, 'w', encoding='utf-8') as f:
         f.write(content)
 
-    print(f'Aligned fonts and symbols for {fpath}')
+    print(f'Aligned fonts, symbols, and footer for {fpath}')
